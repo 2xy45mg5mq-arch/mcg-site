@@ -124,7 +124,8 @@
       margin-top: 12px;
     }
     
-    .nav-item:hover .dropdown {
+    .nav-item:hover .dropdown,
+    .nav-item .dropdown.open {
       opacity: 1;
       visibility: visible;
     }
@@ -1730,8 +1731,8 @@
       .detail-page { padding: 80px 0 60px; }
       .detail-page .container { padding: 0 16px; }
       .detail-header { margin-bottom: 32px; }
-      .detail-header h1 { 
-        font-size: clamp(1.8rem, 8vw, 3rem); 
+      .detail-header h1 {
+        font-size: clamp(2.8rem, 10vw, 4.5rem);
         letter-spacing: 0.1em;
         word-break: break-word;
       }
@@ -2156,7 +2157,7 @@
 
         <!-- 3. Tagline -->
         <div style="text-align: center; margin: 50px 0 60px; position: relative;">
-          <p style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: 0.4em; margin: 0; background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.4) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">NOTHING IS FREE</p>
+          <p style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 5vw, 3.5rem); letter-spacing: 0.4em; margin: 0; background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.4) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">NOTHING IS FREE</p>
         </div>
 
         <!-- 4. Synopsis -->
@@ -2396,6 +2397,34 @@
         }
       }
     });
+
+    // Mobile dropdown toggle
+    (function() {
+      const navItem = document.querySelector('.nav-item');
+      const dropdown = document.querySelector('.dropdown');
+      if (!navItem || !dropdown) return;
+
+      const workLink = navItem.querySelector(':scope > a');
+      workLink.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+        }
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!navItem.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+
+      // Close dropdown when a dropdown link is clicked
+      dropdown.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => dropdown.classList.remove('open'));
+      });
+    })();
 
     // Slideshow class with prev/next and counter
     function createSlideshow(containerId, navId, counterId, autoAdvance = 5000) {

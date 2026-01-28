@@ -772,6 +772,34 @@
       margin-bottom: 20px;
     }
 
+    .project-card .view-project {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s, color 0.3s;
+    }
+
+    .project-card .view-project::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover .view-project {
+      opacity: 1;
+      transform: translateY(0);
+      color: var(--text);
+    }
+
+    .project-card:hover .view-project::after {
+      transform: translateX(4px);
+    }
+
     .project-tags {
       font-size: 0.7rem;
       color: var(--accent);
@@ -1935,8 +1963,7 @@
 
     <section class="hero" style="opacity:1;transform:none;">
       <div class="hero-slideshow">
-        <div class="hero-slide active" style="background-image: url('images/img_46.jpg')"></div>
-        <div class="hero-slide" style="background-image: url('images/img_47.jpg')"></div>
+        <div class="hero-slide active" style="background-image: url('images/img_47.jpg')"></div>
         <div class="hero-slide" style="background-image: url('images/img_48.jpg')"></div>
         <div class="hero-slide" style="background-image: url('images/img_49.jpg')"></div>
         <div class="hero-slide" style="background-image: url('images/img_50.jpg')"></div>
@@ -1992,6 +2019,7 @@
             <div class="project-card-content">
               <div class="type">Feature · Crime Thriller</div>
               <p class="logline">An ambitious Manhattan doorman moves into the penthouse of his dreams—only to be trapped in a dangerous new identity.</p>
+              <span class="view-project">View Project</span>
             </div>
           </div>
 
@@ -2002,6 +2030,7 @@
             <div class="project-card-content">
               <div class="type">TV Pilot · US/Turkey Co-Production</div>
               <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
+              <span class="view-project">View Project</span>
             </div>
           </div>
 

@@ -516,6 +516,36 @@
       opacity: 0.4;
     }
 
+    .contact .label::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* COPYRIGHT FOOTER */
+    .copyright-footer {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+
+    .copyright-footer p {
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      opacity: 0.5;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .copyright-footer p:first-child {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
     /* FEATURED */
     .featured-grid {
       display: grid;
@@ -880,9 +910,9 @@
 
     .dev-item h4 {
       font-family: 'Bebas Neue', sans-serif; font-weight: 600;
-      font-size: 1.3rem;
-      letter-spacing: 3px;
-      margin-bottom: 6px;
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
     }
 
     .dev-item .type {
@@ -1756,14 +1786,17 @@
       }
 
       /* Stills slideshow mobile */
-      .stills-slideshow { 
-        min-height: 200px; 
+      .stills-slideshow {
+        min-height: 200px;
         margin-bottom: 32px;
         border-radius: 4px;
       }
       .stills-arrow { opacity: 0.7; width: 40px; height: 40px; }
       .stills-arrow.prev { left: 8px; }
       .stills-arrow.next { right: 8px; }
+
+      /* Hide desktop-only images on mobile */
+      .stills-slideshow .desktop-only { display: none !important; }
 
       /* Text blocks mobile */
       .text-block { 
@@ -2113,6 +2146,12 @@
       </div>
     </section>
 
+    <!-- COPYRIGHT FOOTER -->
+    <footer class="copyright-footer">
+      <p>© 2026 Max Coyne-Green. All rights reserved.</p>
+      <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
+    </footer>
+
   </div>
 
   <!-- Floating back button for all detail pages -->
@@ -2241,8 +2280,8 @@
         </div>
 
         <div class="stills-slideshow" id="tf-stills">
-          <img src="images/img_31.jpg" alt="4-Act Overview" class="active">
-          <img src="images/img_32.jpg" alt="Act One: Bottom">
+          <img src="images/img_31.jpg" alt="4-Act Overview" class="active desktop-only">
+          <img src="images/img_32.jpg" alt="Act One: Bottom" class="mobile-first">
           <img src="images/tf_pushups1.jpg" alt="Ambition">
           <img src="images/img_33.jpg" alt="Doorman">
           <img src="images/img_34.jpg" alt="Act Two: Up">
@@ -2430,16 +2469,33 @@
     function createSlideshow(containerId, navId, counterId, autoAdvance = 5000) {
       const container = document.getElementById(containerId);
       if (!container) return null;
-      const imgs = container.querySelectorAll('img');
+      const allImgs = container.querySelectorAll('img');
       const nav = document.getElementById(navId);
       const counter = document.getElementById(counterId);
-      let idx = 0;
       let autoTimer = null;
 
-      // Create dots
+      // Filter out hidden images (desktop-only on mobile)
+      const isMobile = window.innerWidth <= 700;
+      const imgs = Array.from(allImgs).filter(img => {
+        if (isMobile && img.classList.contains('desktop-only')) return false;
+        return true;
+      });
+
+      // Find initial active index
+      let idx = imgs.findIndex(img => img.classList.contains('active') && !img.classList.contains('desktop-only'));
+      if (idx === -1 || (isMobile && imgs[idx]?.classList.contains('desktop-only'))) {
+        // On mobile, start at mobile-first or index 0
+        idx = imgs.findIndex(img => img.classList.contains('mobile-first'));
+        if (idx === -1) idx = 0;
+        // Set correct active states
+        allImgs.forEach(img => img.classList.remove('active'));
+        if (imgs[idx]) imgs[idx].classList.add('active');
+      }
+
+      // Create dots only for visible images
       imgs.forEach((_, i) => {
         const dot = document.createElement('span');
-        dot.className = 'stills-dot' + (i === 0 ? ' active' : '');
+        dot.className = 'stills-dot' + (i === idx ? ' active' : '');
         dot.onclick = () => { goTo(i); resetAuto(); };
         nav.appendChild(dot);
       });
@@ -2528,7 +2584,7 @@
     }
     
     function sendProEmail() {
-      const mailto = 'mailto:mcoynegreen@gmail.com?subject=' + encodeURIComponent('Professional Inquiry');
+      const mailto = 'mailto:max@deltastud.io?subject=' + encodeURIComponent('Business Inquiry');
       window.location.href = mailto;
       closeConnectModal();
     }
@@ -2620,7 +2676,7 @@
       
       <div class="modal-divider">or</div>
       
-      <button class="modal-pro-btn" onclick="sendProEmail()">Professional Inquiries →</button>
+      <button class="modal-pro-btn" onclick="sendProEmail()">Business Inquiries →</button>
     </div>
   </div>
 

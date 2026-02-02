@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://coyne-green.com/sitemap.xml

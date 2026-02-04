@@ -21,6 +21,9 @@
   <meta name="twitter:title" content="Max Coyne-Green | Screenwriter & Producer">
   <meta name="twitter:description" content="Writer/Producer splitting time between İstanbul and New York.">
   <title>Max Coyne-Green | Screenwriter & Producer | New York</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/favicon.png">
   <link rel="canonical" href="https://coyne-green.com/">
   <!-- Person Schema Markup -->
   <script type="application/ld+json">
@@ -295,6 +298,27 @@
       font-size: 0.95rem;
     }
     
+    .modal-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--muted);
+    }
+
+    .modal-input::placeholder {
+      color: var(--muted);
+    }
+
     .modal-textarea {
       width: 100%;
       background: var(--bg);
@@ -307,12 +331,12 @@
       resize: vertical;
       min-height: 80px;
     }
-    
+
     .modal-textarea:focus {
       outline: none;
       border-color: var(--muted);
     }
-    
+
     .modal-textarea::placeholder {
       color: var(--muted);
     }
@@ -2043,11 +2067,11 @@
 
     <section class="hero" style="opacity:1;transform:none;">
       <div class="hero-slideshow">
-        <div class="hero-slide active" style="background-image: url('images/img_47.jpg')"></div>
-        <div class="hero-slide" style="background-image: url('images/img_48.jpg')"></div>
-        <div class="hero-slide" style="background-image: url('images/img_49.jpg')"></div>
-        <div class="hero-slide" style="background-image: url('images/img_50.jpg')"></div>
-        <div class="hero-slide" style="background-image: url('images/img_51.jpg')"></div>
+        <div class="hero-slide active" style="background-image: url('images/img_47.webp')"></div>
+        <div class="hero-slide" style="background-image: url('images/img_48.webp')"></div>
+        <div class="hero-slide" style="background-image: url('images/img_49.webp')"></div>
+        <div class="hero-slide" style="background-image: url('images/img_50.webp')"></div>
+        <div class="hero-slide" style="background-image: url('images/img_51.webp')"></div>
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -2065,7 +2089,7 @@
         <div class="label">Featured</div>
         <div class="featured-grid">
           <div class="poster-wrap" onclick="showPage('hr')">
-            <img src="images/img_0.jpg" alt="Human Resource">
+            <img src="images/img_0.webp" alt="Human Resource">
           </div>
           <div class="featured-info">
             <h2>HUMAN RESOURCE</h2>
@@ -2076,11 +2100,11 @@
               <a href="#" class="text-link" onclick="showPage('hr'); setTimeout(() => document.querySelector('.video-container video').scrollIntoView({behavior:'smooth'}), 200); return false;">Watch Trailer</a>
             </div>
             <div class="laurels">
-              <img src="images/img_1.png" alt="Chattanooga Film Festival">
-              <img src="images/img_2.png" alt="Screamfest NOLA">
-              <img src="images/img_3.png" alt="Brooklyn International">
-              <img src="images/img_4.png" alt="Malibu Film Festival">
-              <img src="images/img_5.png" alt="Dances With Films">
+              <img src="images/img_1.webp" alt="Chattanooga Film Festival" loading="lazy">
+              <img src="images/img_2.webp" alt="Screamfest NOLA" loading="lazy">
+              <img src="images/img_3.webp" alt="Brooklyn International" loading="lazy">
+              <img src="images/img_4.webp" alt="Malibu Film Festival" loading="lazy">
+              <img src="images/img_5.webp" alt="Dances With Films" loading="lazy">
             </div>
           </div>
         </div>
@@ -2094,7 +2118,7 @@
 
           <div class="project-card tf-card" onclick="showPage('topfloor')">
             <div class="project-card-image">
-              <img src="images/img_6.jpg" alt="Top Floor">
+              <img src="images/img_6.webp" alt="Top Floor" loading="lazy">
             </div>
             <div class="project-card-content">
               <div class="type">Feature · Crime Thriller</div>
@@ -2105,7 +2129,7 @@
 
                     <div class="project-card kv-card" onclick="showPage('kanvatan')">
             <div class="project-card-image">
-              <img src="images/img_7.jpg" alt="Kan Vatan - Blood at the Roots">
+              <img src="images/img_7.webp" alt="Kan Vatan - Blood at the Roots" loading="lazy">
             </div>
             <div class="project-card-content">
               <div class="type">TV Pilot · US/Turkey Co-Production</div>
@@ -2171,7 +2195,7 @@
     <section class="about" id="about">
       <div class="container">
         <div class="about-grid">
-          <img src="images/img_8.jpg" alt="Max Coyne-Green" class="about-photo bw">
+          <img src="images/img_8.webp" alt="Max Coyne-Green" class="about-photo bw" loading="lazy">
           <div class="about-text">
             <h2>MAX COYNE-GREEN</h2>
             <p class="bio-subtitle">Small Language Model · 1990</p>
@@ -2185,7 +2209,7 @@
       <div class="container">
         <div class="label">Contact</div>
         <div class="contact-links">
-          <a href="mailto:mcoynegreen@gmail.com">mcoynegreen@gmail.com</a>
+          <a href="#" onclick="openConnectModal(); return false;">Get in Touch</a>
           <a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">IMDb</a>
           <a href="https://mcgwrites.substack.com" target="_blank" rel="noopener noreferrer">Essays</a>
         </div>
@@ -2215,25 +2239,25 @@
 
         <!-- 2. Slideshow -->
         <div class="stills-slideshow" id="hr-stills">
-          <img src="images/img_9.jpg" alt="Still" class="active">
-          <img src="images/img_10.jpg" alt="Still">
-          <img src="images/img_11.jpg" alt="Still">
-          <img src="images/img_12.jpg" alt="Still">
-          <img src="images/img_13.jpg" alt="Still">
-          <img src="images/img_14.jpg" alt="Still">
-          <img src="images/img_15.jpg" alt="Still">
-          <img src="images/img_16.jpg" alt="Still">
-          <img src="images/img_17.jpg" alt="Still">
-          <img src="images/img_18.jpg" alt="Still">
-          <img src="images/img_19.jpg" alt="Still">
-          <img src="images/img_20.jpg" alt="Still">
-          <img src="images/img_21.jpg" alt="Still">
-          <img src="images/img_22.jpg" alt="Still">
-          <img src="images/img_23.jpg" alt="Still">
-          <img src="images/img_24.jpg" alt="Still">
-          <img src="images/img_25.jpg" alt="Still">
-          <img src="images/img_26.jpg" alt="Still">
-          <img src="images/img_27.jpg" alt="Still">
+          <img src="images/img_9.webp" alt="Still" class="active" loading="lazy">
+          <img src="images/img_10.webp" alt="Still" loading="lazy">
+          <img src="images/img_11.webp" alt="Still" loading="lazy">
+          <img src="images/img_12.webp" alt="Still" loading="lazy">
+          <img src="images/img_13.webp" alt="Still" loading="lazy">
+          <img src="images/img_14.webp" alt="Still" loading="lazy">
+          <img src="images/img_15.webp" alt="Still" loading="lazy">
+          <img src="images/img_16.webp" alt="Still" loading="lazy">
+          <img src="images/img_17.webp" alt="Still" loading="lazy">
+          <img src="images/img_18.webp" alt="Still" loading="lazy">
+          <img src="images/img_19.webp" alt="Still" loading="lazy">
+          <img src="images/img_20.webp" alt="Still" loading="lazy">
+          <img src="images/img_21.webp" alt="Still" loading="lazy">
+          <img src="images/img_22.webp" alt="Still" loading="lazy">
+          <img src="images/img_23.webp" alt="Still" loading="lazy">
+          <img src="images/img_24.webp" alt="Still" loading="lazy">
+          <img src="images/img_25.webp" alt="Still" loading="lazy">
+          <img src="images/img_26.webp" alt="Still" loading="lazy">
+          <img src="images/img_27.webp" alt="Still" loading="lazy">
           <button class="stills-arrow prev" onclick="hrSlideshow.prev()">‹</button>
           <button class="stills-arrow next" onclick="hrSlideshow.next()">›</button>
           <div class="stills-counter" id="hr-counter">1 / 19</div>
@@ -2258,7 +2282,7 @@
 
         <!-- 6. Request Feature Script -->
         <div class="detail-actions" style="justify-content: center; margin-bottom: 100px;">
-          <a href="mailto:mcoynegreen@gmail.com?subject=HUMAN%20RESOURCE%20-%20Script%20Request&body=Hi%20Max%2C%0A%0ACould%20I%20read%20the%20Human%20Resource%20script%3F" class="btn btn-primary" style="padding: 16px 40px; font-size: 0.75rem; letter-spacing: 3px;">Request Feature Script</a>
+          <a href="#" class="btn btn-primary" style="padding: 16px 40px; font-size: 0.75rem; letter-spacing: 3px;" onclick="openConnectModal({heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'}); return false;">Request Feature Script</a>
         </div>
 
         <!-- 7. Proof of Concept Section -->
@@ -2270,18 +2294,18 @@
           </div>
 
           <div class="laurels" style="justify-content: center; margin-bottom: 60px;">
-            <img src="images/img_1.png" alt="Chattanooga Film Festival">
-            <img src="images/img_2.png" alt="Screamfest NOLA">
-            <img src="images/img_3.png" alt="Brooklyn International">
-            <img src="images/img_4.png" alt="Malibu Film Festival">
-            <img src="images/img_5.png" alt="Dances With Films">
+            <img src="images/img_1.webp" alt="Chattanooga Film Festival" loading="lazy">
+            <img src="images/img_2.webp" alt="Screamfest NOLA" loading="lazy">
+            <img src="images/img_3.webp" alt="Brooklyn International" loading="lazy">
+            <img src="images/img_4.webp" alt="Malibu Film Festival" loading="lazy">
+            <img src="images/img_5.webp" alt="Dances With Films" loading="lazy">
           </div>
 
           <p style="text-align: center; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px;">▶ Watch the Trailer</p>
 
           <!-- 8. Trailer -->
           <div class="video-container">
-            <video controls poster="images/img_52.jpg">
+            <video controls poster="images/img_52.webp">
               <source src="images/video.mp4" type="video/mp4">
             </video>
           </div>
@@ -2304,7 +2328,7 @@
 
           <!-- 10. Request Screener -->
           <div class="detail-actions" style="justify-content: center; margin-top: 50px;">
-            <a href="mailto:mcoynegreen@gmail.com?subject=HUMAN%20RESOURCE%20-%20Screener%20Request&body=Hi%20Max%2C%0A%0ACould%20I%20see%20the%20Human%20Resource%20short%20film%3F" class="btn" style="padding: 14px 32px; font-size: 0.7rem; letter-spacing: 2px;">Request Screener</a>
+            <a href="#" class="btn" style="padding: 14px 32px; font-size: 0.7rem; letter-spacing: 2px;" onclick="openConnectModal({heading:'REQUEST SCREENER',subtitle:'Human Resource — Short Film',interest:'Human Resource',request:'Human Resource - Screener',placeholder:'Introduce yourself briefly...'}); return false;">Request Screener</a>
           </div>
         </div>
 
@@ -2326,19 +2350,19 @@
         </div>
 
         <div class="stills-slideshow" id="tf-stills">
-          <img src="images/img_31.jpg" alt="4-Act Overview" class="active desktop-only">
-          <img src="images/img_32.jpg" alt="Act One: Bottom" class="mobile-first">
-          <img src="images/tf_pushups1.jpg" alt="Ambition">
-          <img src="images/img_33.jpg" alt="Doorman">
-          <img src="images/img_34.jpg" alt="Act Two: Up">
-          <img src="images/img_35.jpg" alt="Penthouse">
-          <img src="images/tf_penthouse_window.jpg" alt="City View">
-          <img src="images/tf_penthouse_meeting.jpg" alt="The Meeting">
-          <img src="images/img_37.jpg" alt="Act Three: Drop">
-          <img src="images/tf_jump.jpg" alt="The Edge">
-          <img src="images/tf_sera_car.jpg" alt="Sera Investigates">
-          <img src="images/img_39.jpg" alt="Act Four: Top">
-          <img src="images/tf_pyramid_ref.jpg" alt="Pyramid House">
+          <img src="images/img_31.webp" alt="4-Act Overview" class="active desktop-only" loading="lazy">
+          <img src="images/img_32.webp" alt="Act One: Bottom" class="mobile-first" loading="lazy">
+          <img src="images/tf_pushups1.webp" alt="Ambition" loading="lazy">
+          <img src="images/img_33.webp" alt="Doorman" loading="lazy">
+          <img src="images/img_34.webp" alt="Act Two: Up" loading="lazy">
+          <img src="images/img_35.webp" alt="Penthouse" loading="lazy">
+          <img src="images/tf_penthouse_window.webp" alt="City View" loading="lazy">
+          <img src="images/tf_penthouse_meeting.webp" alt="The Meeting" loading="lazy">
+          <img src="images/img_37.webp" alt="Act Three: Drop" loading="lazy">
+          <img src="images/tf_jump.webp" alt="The Edge" loading="lazy">
+          <img src="images/tf_sera_car.webp" alt="Sera Investigates" loading="lazy">
+          <img src="images/img_39.webp" alt="Act Four: Top" loading="lazy">
+          <img src="images/tf_pyramid_ref.webp" alt="Pyramid House" loading="lazy">
           <button class="stills-arrow prev" onclick="tfSlideshow.prev()">‹</button>
           <button class="stills-arrow next" onclick="tfSlideshow.next()">›</button>
           <div class="stills-counter" id="tf-counter">1 / 13</div>
@@ -2357,7 +2381,7 @@
         </div>
 
         <div class="detail-actions">
-          <a href="mailto:mcoynegreen@gmail.com?subject=TOP%20FLOOR%20-%20Script%20Request&body=Hi%20Max%2C%0A%0ACould%20I%20read%20the%20Top%20Floor%20script%3F" class="btn btn-primary">Request Script</a>
+          <a href="#" class="btn btn-primary" onclick="openConnectModal({heading:'REQUEST SCRIPT',subtitle:'Top Floor — Feature Film',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'}); return false;">Request Script</a>
         </div>
 
         <p class="tagline-big" style="text-align: center; font-family: 'EB Garamond', Georgia, serif; font-size: clamp(1.4rem, 5vw, 2.2rem); letter-spacing: 0.08em; margin-top: 80px; opacity: 0.6; font-style: italic; line-height: 1.4;">"It's not personal, it's just&nbsp;Manhattan."</p>
@@ -2377,11 +2401,11 @@
         </div>
 
         <div class="stills-slideshow" id="kv-stills">
-          <img src="images/img_41.jpg" alt="Olive Tree" class="active">
-          <img src="images/img_42.jpg" alt="Syria">
-          <img src="images/img_43.jpg" alt="Graveyard">
-          <img src="images/img_44.jpg" alt="Village">
-          <img src="images/img_45.jpg" alt="Landscape">
+          <img src="images/img_41.webp" alt="Olive Tree" class="active" loading="lazy">
+          <img src="images/img_42.webp" alt="Syria" loading="lazy">
+          <img src="images/img_43.webp" alt="Graveyard" loading="lazy">
+          <img src="images/img_44.webp" alt="Village" loading="lazy">
+          <img src="images/img_45.webp" alt="Landscape" loading="lazy">
           <button class="stills-arrow prev" onclick="kvSlideshow.prev()">‹</button>
           <button class="stills-arrow next" onclick="kvSlideshow.next()">›</button>
           <div class="stills-counter" id="kv-counter">1 / 6</div>
@@ -2397,7 +2421,7 @@
 
 
         <div class="detail-actions">
-          <a href="mailto:mcoynegreen@gmail.com?subject=KAN%20VATAN%20-%20Pilot%20Request&body=Hi%20Max%2C%0A%0ACould%20I%20read%20the%20Kan%20Vatan%20pilot%3F" class="btn btn-primary">Request Pilot</a>
+          <a href="#" class="btn btn-primary" onclick="openConnectModal({heading:'REQUEST PILOT',subtitle:'Kan Vatan — TV Series',interest:'Kan Vatan',request:'Kan Vatan - Pilot',placeholder:'Introduce yourself briefly...'}); return false;">Request Pilot</a>
         </div>
         <div style="text-align: center; margin-top: 40px;">
         </div>
@@ -2592,49 +2616,45 @@
     const kvSlideshow = createSlideshow('kv-stills', 'kv-stills-nav', 'kv-counter', 5000);
   
     // CONNECT MODAL FUNCTIONS
-    function openConnectModal() {
+    function openConnectModal(preset) {
+      // Reset form first
+      const form = document.getElementById('connectForm');
+      if (form) form.reset();
+      document.getElementById('connectRequest').value = '';
+
+      const heading = document.getElementById('connectHeading');
+      const subtitle = document.getElementById('connectSubtitle');
+      const message = document.getElementById('connectMessage');
+
+      if (preset) {
+        // Context-aware mode: came from a specific request button
+        heading.textContent = preset.heading || "LET'S CONNECT";
+        subtitle.textContent = preset.subtitle || "What brings you here?";
+        message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
+        document.getElementById('connectRequest').value = preset.request || '';
+        // Pre-check the relevant interest
+        if (preset.interest) {
+          const cb = form.querySelector('input[name="interest"][value="' + preset.interest + '"]');
+          if (cb) cb.checked = true;
+        }
+      } else {
+        // Default mode: general connect
+        heading.textContent = "LET'S CONNECT";
+        subtitle.textContent = "What brings you here?";
+        message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
+      }
+
+      document.getElementById('connectFormState').style.display = '';
+      document.getElementById('connectSuccessState').style.display = 'none';
       document.getElementById('connectModal').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
-    
+
     function closeConnectModal() {
       document.getElementById('connectModal').classList.remove('active');
       document.body.style.overflow = '';
-      document.querySelectorAll('#connectModal input[type="checkbox"]').forEach(cb => cb.checked = false);
-      document.getElementById('connectMessage').value = '';
     }
-    
-    function sendConnectEmail() {
-      const interests = [];
-      document.querySelectorAll('#connectModal input[name="interest"]:checked').forEach(cb => {
-        interests.push(cb.value);
-      });
-      const message = document.getElementById('connectMessage').value;
-      
-      let subject = 'Hello from your website';
-      if (interests.length > 0) {
-        subject = 'Interest in: ' + interests.join(', ');
-      }
-      
-      let body = '';
-      if (interests.length > 0) {
-        body += "I'm interested in discussing: " + interests.join(', ') + '\n\n';
-      }
-      if (message) {
-        body += message;
-      }
-      
-      const mailto = 'mailto:mcoynegreen@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      window.location.href = mailto;
-      closeConnectModal();
-    }
-    
-    function sendProEmail() {
-      const mailto = 'mailto:max@deltastud.io?subject=' + encodeURIComponent('Business Inquiry');
-      window.location.href = mailto;
-      closeConnectModal();
-    }
-    
+
     // URL ROUTING
     function handleRoute() {
       const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
@@ -2678,53 +2698,127 @@
   </script>
 
 
+  <!-- Hidden Netlify form for build-time detection -->
+  <form name="connect" netlify netlify-honeypot="bot-field" hidden>
+    <input name="name">
+    <input name="email">
+    <input name="request">
+    <input name="interest" type="checkbox" value="Human Resource">
+    <input name="interest" type="checkbox" value="Top Floor">
+    <input name="interest" type="checkbox" value="Kan Vatan">
+    <input name="interest" type="checkbox" value="General Meeting">
+    <textarea name="message"></textarea>
+    <input name="bot-field">
+  </form>
+
   <!-- CONNECT MODAL -->
   <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
     <div class="modal">
-      <h2>LET'S CONNECT</h2>
-      <p class="modal-subtitle">What brings you here?</p>
-      
-      <div class="modal-section">
-        <div class="modal-section-label">I'm interested in</div>
-        <div class="checkbox-group">
-          <label class="checkbox-item">
-            <input type="checkbox" name="interest" value="Human Resource">
-            <span class="checkbox-box"></span>
-            <span class="checkbox-label">Human Resource</span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="interest" value="Top Floor">
-            <span class="checkbox-box"></span>
-            <span class="checkbox-label">Top Floor</span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="interest" value="Kan Vatan">
-            <span class="checkbox-box"></span>
-            <span class="checkbox-label">Kan Vatan</span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="interest" value="General Meeting">
-            <span class="checkbox-box"></span>
-            <span class="checkbox-label">General meeting with Max</span>
-          </label>
-        </div>
+      <!-- Form State -->
+      <div id="connectFormState">
+        <h2 id="connectHeading">LET'S CONNECT</h2>
+        <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
+
+        <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="connect">
+          <input type="hidden" name="request" id="connectRequest" value="">
+          <p class="hidden" style="display:none;"><input name="bot-field"></p>
+
+          <div class="modal-section">
+            <div class="modal-section-label">Your info</div>
+            <input type="text" name="name" class="modal-input" placeholder="Name" required>
+            <input type="email" name="email" class="modal-input" placeholder="Email" required>
+          </div>
+
+          <div class="modal-section">
+            <div class="modal-section-label">I'm interested in</div>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Human Resource">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Human Resource</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Top Floor">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Top Floor</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Kan Vatan">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Kan Vatan</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="General Meeting">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">General meeting with Max</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <div class="modal-section-label">Anything else? (optional)</div>
+            <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Tell me a bit about yourself or what you'd like to discuss..."></textarea>
+          </div>
+
+          <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
+            <button type="submit" class="modal-btn modal-btn-primary">Send</button>
+          </div>
+        </form>
       </div>
-      
-      <div class="modal-section">
-        <div class="modal-section-label">Anything else? (optional)</div>
-        <textarea class="modal-textarea" id="connectMessage" placeholder="Tell me a bit about yourself or what you'd like to discuss..."></textarea>
+
+      <!-- Success State -->
+      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
+        <h2>SENT</h2>
+        <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
+        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
       </div>
-      
-      <div class="modal-buttons">
-        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
-        <button class="modal-btn modal-btn-primary" onclick="sendConnectEmail()">Send Email</button>
-      </div>
-      
-      <div class="modal-divider">or</div>
-      
-      <button class="modal-pro-btn" onclick="sendProEmail()">Business Inquiries →</button>
     </div>
   </div>
+
+  <script>
+    // Form submission — must run after the modal HTML exists
+    (function() {
+      var form = document.getElementById('connectForm');
+      if (!form) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
+
+        if (!isNetlify) {
+          setTimeout(function() {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          }, 400);
+          return;
+        }
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        })
+        .then(function(res) {
+          if (res.ok) {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          } else {
+            throw new Error('fail');
+          }
+        })
+        .catch(function() {
+          btn.textContent = 'Send';
+          btn.disabled = false;
+          alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>

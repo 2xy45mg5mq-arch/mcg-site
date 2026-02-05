@@ -194,7 +194,9 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -2402,13 +2404,17 @@
 
         <div class="stills-slideshow" id="kv-stills">
           <img src="images/img_41.webp" alt="Olive Tree" class="active" loading="lazy">
+          <img src="images/kv_village.webp" alt="Turkish Village at Dusk" loading="lazy">
           <img src="images/img_42.webp" alt="Syria" loading="lazy">
+          <img src="images/kv_corridor.webp" alt="Family" loading="lazy">
           <img src="images/img_43.webp" alt="Graveyard" loading="lazy">
+          <img src="images/kv_fire.webp" alt="The Blight" loading="lazy">
           <img src="images/img_44.webp" alt="Village" loading="lazy">
+          <img src="images/kv_arrival.webp" alt="The Operative" loading="lazy">
           <img src="images/img_45.webp" alt="Landscape" loading="lazy">
           <button class="stills-arrow prev" onclick="kvSlideshow.prev()">‹</button>
           <button class="stills-arrow next" onclick="kvSlideshow.next()">›</button>
-          <div class="stills-counter" id="kv-counter">1 / 6</div>
+          <div class="stills-counter" id="kv-counter">1 / 9</div>
           <div class="stills-nav" id="kv-stills-nav"></div>
         </div>
 
@@ -2766,6 +2772,7 @@
             <button type="submit" class="modal-btn modal-btn-primary">Send</button>
           </div>
         </form>
+        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
       </div>
 
       <!-- Success State -->

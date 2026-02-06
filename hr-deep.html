@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUMAN RESOURCE — Deep Dive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d10;
+      --text: #e4e4e4;
+      --muted: #6b7a88;
+      --accent: #9a8b6e;
+      --accent-dim: rgba(154, 139, 110, 0.15);
+      --red: #8b3a3a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- NAV --- */
+    .dd-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 28px;
+      background: linear-gradient(180deg, var(--bg) 60%, transparent);
+      pointer-events: none;
+    }
+
+    .dd-nav a {
+      pointer-events: auto;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .dd-nav a:hover { opacity: 1; }
+
+    /* --- DEEP DIVE CONTENT --- */
+    .deep-dive {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .deep-dive--first {
+      padding-top: 100px;
+    }
+
+    /* --- SECTION --- */
+    .dd-section {
+      padding: 72px 0 64px;
+    }
+
+    .dd-section + .dd-section {
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Section heading — Bebas, big, left-aligned */
+    .dd-section .section-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 5.5rem);
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      margin-bottom: 28px;
+      line-height: 1.05;
+    }
+
+    /* Body copy — EB Garamond, generous size */
+    .dd-section p {
+      font-size: clamp(1.2rem, 2.4vw, 1.35rem);
+      line-height: 1.85;
+      margin-bottom: 24px;
+      color: rgba(228, 228, 228, 0.85);
+    }
+
+    .dd-section p:last-child { margin-bottom: 0; }
+
+    .dd-section p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* --- PULL QUOTE (big centered Bebas) --- */
+    .pull-quote {
+      text-align: center;
+      padding: 56px 0;
+      margin: 24px 0;
+    }
+
+    .pull-quote p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      color: var(--accent);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Dialogue pull quote — muted, corporate voice */
+    .pull-quote--dialogue p {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* --- INLINE QUOTE (border-left, EB Garamond italic) --- */
+    .inline-quote {
+      border-left: 2px solid var(--accent);
+      padding: 4px 0 4px 28px;
+      margin: 40px 0;
+    }
+
+    .inline-quote p {
+      font-size: clamp(1.25rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(228, 228, 228, 0.7);
+      margin: 0;
+    }
+
+    /* --- FULL BLEED IMAGE --- */
+    .full-image {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      height: clamp(35vh, 45vh, 55vh);
+      overflow: hidden;
+      position: relative;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .full-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .full-image::before,
+    .full-image::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 80px;
+      z-index: 2;
+    }
+    .full-image::before {
+      top: 0;
+      background: linear-gradient(180deg, var(--bg), transparent);
+    }
+    .full-image::after {
+      bottom: 0;
+      background: linear-gradient(0deg, var(--bg), transparent);
+    }
+
+    /* --- BIG TITLE IMAGE + HEADING --- */
+    .title-hero {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      height: clamp(50vh, 60vh, 70vh);
+      overflow: hidden;
+      margin-top: 20px;
+      margin-bottom: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .title-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .title-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--bg) 0%, rgba(10,13,16,0.15) 30%, rgba(10,13,16,0.55) 70%, var(--bg) 100%);
+      z-index: 1;
+    }
+
+    .title-hero h2 {
+      position: relative;
+      z-index: 2;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 8rem);
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-align: center;
+      padding-bottom: 48px;
+    }
+
+    /* --- QUARTERS (horizontal 4-column) --- */
+    .quarters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 48px 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      padding: 0 24px;
+    }
+
+    .quarter-item {
+      padding: 28px 24px;
+      border-right: 1px solid rgba(154, 139, 110, 0.15);
+    }
+
+    .quarter-item:last-child {
+      border-right: none;
+    }
+
+    .quarter-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .quarter-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .quarter-blurb {
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+      line-height: 1.7;
+      color: rgba(228, 228, 228, 0.7);
+    }
+
+    /* --- STATS --- */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      text-align: center;
+      padding: 60px 0;
+      border-top: 1px solid var(--accent-dim);
+      border-bottom: 1px solid var(--accent-dim);
+      margin: 44px 0;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* --- LAURELS --- */
+    .laurels {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin: 48px 0;
+      padding: 40px 0;
+      border-top: 1px solid rgba(154, 139, 110, 0.3);
+      border-bottom: 1px solid rgba(154, 139, 110, 0.3);
+    }
+
+    .laurels-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .laurels-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      color: var(--muted);
+    }
+
+    .laurels-sub {
+      font-size: 1.1rem;
+      margin-top: 4px;
+      color: rgba(228, 228, 228, 0.7);
+    }
+
+    /* --- WRITER LINK --- */
+    .writer-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(154,139,110,0.3);
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .writer-link:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    /* --- CHARACTER CARDS --- */
+    .cast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    .cast-card {
+      position: relative;
+      height: clamp(280px, 40vh, 380px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px 28px;
+    }
+
+    .cast-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.4);
+      transition: filter 0.5s ease;
+    }
+
+    .cast-card:hover img {
+      filter: brightness(0.55);
+    }
+
+    .cast-card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cast-card .cast-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: 0.06em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .cast-card .cast-role {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.55rem, 1vw, 0.7rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .cast-card .cast-line {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+      font-style: italic;
+      line-height: 1.5;
+      color: rgba(228, 228, 228, 0.7);
+    }
+
+    /* Supporting cast — smaller cards, 4-across */
+    .cast-grid--supporting {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .cast-grid--supporting .cast-card {
+      height: clamp(200px, 28vh, 260px);
+      padding: 24px 20px;
+    }
+
+    .cast-grid--supporting .cast-name {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    }
+
+    .cast-grid--supporting .cast-line {
+      font-size: clamp(0.85rem, 1.3vw, 0.95rem);
+    }
+
+    @media (max-width: 768px) {
+      .cast-grid { grid-template-columns: 1fr; }
+      .cast-grid--supporting { grid-template-columns: 1fr 1fr; }
+      .cast-grid--supporting .cast-card { height: 220px; }
+    }
+
+    /* --- CLOSING --- */
+    .dd-close {
+      text-align: center;
+      padding: 80px 24px 120px;
+    }
+
+    .dd-close .btn {
+      display: inline-block;
+      padding: 14px 40px;
+      border: 1px solid var(--accent-dim);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      transition: all 0.3s;
+      margin: 6px;
+    }
+
+    .dd-close .btn:hover {
+      background: rgba(154, 139, 110, 0.08);
+      border-color: rgba(154, 139, 110, 0.4);
+    }
+
+    /* --- REVEAL --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .stats-row { gap: 16px; }
+      .full-image { height: 35vh; }
+      .dd-section { padding: 56px 0 48px; }
+      .dd-nav { padding: 16px 20px; }
+      .laurels { flex-direction: column; text-align: center; }
+      .quarters { grid-template-columns: 1fr 1fr; padding: 0 16px; }
+      .quarter-item:nth-child(2) { border-right: none; }
+      .quarter-item:nth-child(1), .quarter-item:nth-child(2) { border-bottom: 1px solid rgba(154, 139, 110, 0.15); }
+      .pull-quote { padding: 40px 0; }
+      .pull-quote p { font-size: 1.6rem; }
+      .section-label { font-size: 2.8rem; }
+      .title-hero { height: 45vh; }
+      .title-hero h2 { font-size: 3.5rem; padding-bottom: 32px; }
+      .deep-dive--first { padding-top: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="dd-nav">
+    <a href="index.html#hr">&larr; HUMAN RESOURCE</a>
+    <a href="index.html">HOME</a>
+  </nav>
+
+  <div class="deep-dive deep-dive--first">
+
+    <!-- THE FEAR -->
+    <section class="dd-section reveal">
+      <p class="section-label">The Fear</p>
+      <p>isn't robot uprisings. It's not alignment problems. The true terror in offices around the country is waking up one day to find you have no value left to offer.</p>
+    </section>
+
+    <div class="full-image reveal">
+      <img src="images/img_12.webp" alt="Shae holds a coffee cup in the empty office" loading="lazy">
+    </div>
+
+    <!-- A GENERATION -->
+    <section class="dd-section reveal">
+      <p class="section-label">A Generation</p>
+      <p>leaned in. Brought our whole selves to work. For decades, the deal was simple: you give your labor, they give you security. And everything else we could need to keep us there. Food. Facilities. Freezing our eggs.</p>
+    </section>
+
+    <div class="pull-quote pull-quote--dialogue reveal">
+      <p>"The perks are here to keep you here. And here you are."</p>
+    </div>
+
+    <!-- NOTHING IS FREE -->
+    <section class="dd-section reveal">
+      <p class="section-label">Nothing Is Free</p>
+      <p>and the perks were never gifts. They were purchases of our time and attention. And in the golden era of millennial corporate America, it might have been a fair&nbsp;trade.</p>
+    </section>
+
+    <!-- BUT THE PARTY'S OVER -->
+    <section class="dd-section reveal">
+      <p class="section-label">But the Party's Over</p>
+      <p>and something has fundamentally changed about the nature of work. Suddenly, we realize HR was never about providing resources for humans.</p>
+    </section>
+
+    <section class="dd-section reveal">
+      <p class="section-label">The Humans Are the Resources</p>
+      <p>And now, we're just one of many. With other options on the table, our value is open to&nbsp;question.</p>
+    </section>
+
+    <div class="full-image reveal">
+      <img src="images/img_15.webp" alt="A face peers through office partitions" loading="lazy">
+    </div>
+
+    <!-- HOSTILE TAKEOVER -->
+    <section class="dd-section reveal">
+      <p class="section-label">Hostile Takeover</p>
+      <p>When we first meet SHAE, all she can think about is her promotion to Vice President. But that dream could only come true in a bull market.</p>
+      <p>And now, the bear is here.</p>
+    </section>
+
+    <!-- HER NAME IS ELLSIE -->
+    <section class="dd-section reveal">
+      <p class="section-label">Her Name Is Ellsie</p>
+      <p>And she's here to optimize the workforce. Liquidate the liabilities. Extract the value.</p>
+      <p>And over the next four quarters, that's exactly what she'll do.</p>
+    </section>
+
+  </div>
+
+  <!-- HUMAN RESOURCE — big title over image -->
+  <div class="title-hero reveal">
+    <img src="images/img_17.webp" alt="Human Resource" loading="lazy">
+    <h2>Human Resource</h2>
+  </div>
+
+  <div class="deep-dive">
+
+    <section class="dd-section reveal">
+      <p>is Shae's journey into efficiency. Desperate to save her people, she makes a dangerous deal with Ellsie: she'll become the most valuable asset she can be. But along the way, she discovers a terrifying new understanding of human value.</p>
+    </section>
+
+    <div class="inline-quote reveal">
+      <p>"Your culture is a luxury, and a relic of low interest rates."</p>
+    </div>
+
+    <!-- THE ARCHITECTURE — Four Quarters -->
+    <section class="dd-section reveal">
+      <p class="section-label">The Architecture</p>
+
+      <div class="quarters">
+        <div class="quarter-item">
+          <p class="quarter-num">Q1</p>
+          <p class="quarter-label">Lean In</p>
+          <p class="quarter-blurb">Head of HR, Shae, tries to save her people from a hostile takeover of their tech company.</p>
+        </div>
+        <div class="quarter-item">
+          <p class="quarter-num">Q2</p>
+          <p class="quarter-label">Lean Ops</p>
+          <p class="quarter-blurb">Shae makes a unique deal with the new operating partner to help manage the people and maximize their value during the restructuring.</p>
+        </div>
+        <div class="quarter-item">
+          <p class="quarter-num">Q3</p>
+          <p class="quarter-label">Going Remote</p>
+          <p class="quarter-blurb">Shae's strategy is a success, saving everyone's jobs while making the company more efficient than ever.</p>
+        </div>
+        <div class="quarter-item">
+          <p class="quarter-num">Q4</p>
+          <p class="quarter-label">Liquidation</p>
+          <p class="quarter-blurb">Shae discovers the true nature of her work and finds herself trapped in the office with monsters of her own creation.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="full-image reveal">
+      <img src="images/img_9.webp" alt="Ellsie at her desk" loading="lazy">
+    </div>
+
+    <!-- EFFICIENTLY DESIGNED -->
+    <section class="dd-section reveal">
+      <p class="section-label">Efficiently Designed</p>
+      <p>The entire film takes place inside a single office building. The building is the story. The open floor plan becomes a panopticon. The wellness room becomes a cell. The meditation pod becomes a place to hide.</p>
+
+      <div class="stats-row">
+        <div>
+          <div class="stat-num">1</div>
+          <div class="stat-label">Location</div>
+        </div>
+        <div>
+          <div class="stat-num">8</div>
+          <div class="stat-label">Speaking Roles</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE STRATEGY -->
+    <section class="dd-section reveal">
+      <p class="section-label">The Strategy</p>
+      <p>The proof-of-concept short has screened at festivals worldwide and validated the concept with audiences. The feature script is ready.</p>
+
+      <p>A contained, culturally urgent thriller. One location. A lean cast. And one office building that feels like it's watching you.</p>
+    </section>
+
+    <!-- THE OPPORTUNITY -->
+    <section class="dd-section reveal">
+      <p class="section-label">The Opportunity</p>
+      <p>Tech companies laid off hundreds of thousands of people. Then did it again. While posting record profits. The meditation rooms are still there. They're just empty now.</p>
+      <p>Every month that passes makes it harder to call this fiction. The window is now.</p>
+    </section>
+
+    <!-- THE WRITER -->
+    <section class="dd-section reveal">
+      <p class="section-label">The Writer</p>
+      <p>Written from inside the building. A former hedge fund researcher and startup executive, currently consulting for AI companies. The details in this script aren't invented. They're documented.</p>
+      <p><a href="#" class="writer-link">More about the writer &rarr;</a></p>
+    </section>
+
+  </div>
+
+  <!-- CLOSE -->
+  <div class="dd-close reveal">
+    <a href="#" class="btn">Request Script</a>
+    <a href="#" class="btn">Watch Proof of Concept</a>
+  </div>
+
+  <div style="text-align:center; padding: 80px 0 100px;">
+    <a href="hr-slideshow.html" style="display:inline-block; font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:6px; color:var(--text); text-decoration:none; padding:20px 48px; border:1px solid var(--muted); border-radius:4px; transition:all 0.3s;" onmouseover="this.style.borderColor='var(--text)';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.borderColor='var(--muted)';this.style.background='transparent'">MEET THE CHARACTERS &rarr;</a>
+  </div>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>

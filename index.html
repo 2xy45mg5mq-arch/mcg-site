@@ -615,7 +615,7 @@
     /* FEATURED */
     .featured-grid {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: auto 1fr;
       gap: 64px;
       align-items: start;
     }
@@ -623,39 +623,95 @@
     .poster-wrap {
       position: relative;
       cursor: pointer;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.4s ease;
     }
 
-    .poster-wrap:hover { transform: translateY(-8px); }
+    .poster-wrap:hover { transform: scale(1.02); }
 
     .poster-wrap img {
-      width: 100%;
-      border-radius: 6px;
       display: block;
-      box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+      height: 520px;
+      width: auto;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .poster-wrap img.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    .featured-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      min-height: 520px;
     }
 
     .featured-info h2 {
-      font-family: 'Bebas Neue', sans-serif; font-weight: 600;
-      font-size: 3.2rem;
-      letter-spacing: 4px;
-      margin-bottom: 6px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 5rem);
+      letter-spacing: 6px;
+      line-height: 1;
+      color: var(--accent);
+      margin: 0;
     }
 
     .featured-meta {
       color: var(--muted);
-      font-size: 0.8rem;
-      letter-spacing: 1px;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 32px;
+    }
+
+    .featured-top {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .featured-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .featured-logline {
-      font-size: 1.35rem;
-      font-weight: 300;
+      font-size: 1.15rem;
+      font-style: italic;
       line-height: 1.7;
-      margin-bottom: 40px;
-      max-width: 540px;
+      color: var(--text);
+      max-width: 480px;
+    }
+
+    .featured-credits {
+      font-size: 1.1rem;
+      line-height: 2.2;
+      color: var(--muted);
+    }
+
+    .featured-credits a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .featured-credits a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .featured-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 8px;
     }
 
     .laurels {
@@ -1788,8 +1844,8 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      .featured-grid { grid-template-columns: 1fr; gap: 48px; }
-      .poster-wrap { max-width: 280px; }
+      .featured-grid { grid-template-columns: 1fr; gap: 40px; justify-items: center; text-align: center; }
+      .poster-wrap img { height: auto; max-height: 450px; width: 100%; max-width: 320px; object-fit: contain; }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-photo { max-width: 160px; }
       .projects-grid { grid-template-columns: 1fr; }
@@ -2066,11 +2122,11 @@
           <a href="#work" onclick="showPage('home'); setTimeout(() => document.getElementById('work').scrollIntoView({behavior:'smooth'}), 100); return false;">Work</a>
           <div class="dropdown">
             <a href="#hr" onclick="showPage('hr'); return false;">Human Resource</a>
-            <a href="#topfloor" onclick="showPage('topfloor'); return false;">Top Floor</a>
+            <a href="topfloor-deep.html">Top Floor</a>
             <a href="#kanvatan" onclick="showPage('kanvatan'); return false;">Kan Vatan</a>
           </div>
         </div>
-        <a href="#about" onclick="showPage('home'); setTimeout(() => document.getElementById('about').scrollIntoView({behavior:'smooth'}), 100); return false;">About</a>
+        <a href="about.html">About</a>
         <a href="#" onclick="openConnectModal(); return false;">Connect</a>
       </div>
     </div>
@@ -2100,28 +2156,28 @@
 
     <section class="featured" id="work">
       <div class="container">
-        <div class="label">Featured</div>
         <div class="featured-grid">
-          <div class="poster-wrap" onclick="showPage('hr')">
-            <img src="images/hr-poster-v9.webp" alt="Human Resource">
+          <div class="poster-wrap" onclick="showPage('hr')" id="featured-poster">
+            <img src="images/Website_v5_Peering_C_Spread.webp" alt="Human Resource - Peering" class="poster-rotate active">
+            <img src="images/Website_v5_Desktop_Top.webp" alt="Human Resource - Desktop" class="poster-rotate">
           </div>
           <div class="featured-info">
-            <h2>HUMAN RESOURCE</h2>
-            <div class="featured-meta">Feature Film · Corporate Thriller</div>
-            <p class="featured-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.</p>
-            <div class="featured-links">
-              <a href="#" class="text-link" onclick="showPage('hr'); return false;">View Project</a>
-              <a href="#" class="text-link" onclick="showPage('hr'); setTimeout(() => document.querySelector('.video-container video').scrollIntoView({behavior:'smooth'}), 200); return false;">Watch Trailer</a>
+            <div class="featured-top">
+              <h2>HUMAN RESOURCE</h2>
+              <p class="featured-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she&nbsp;thought.</p>
+              <div class="featured-buttons">
+                <a href="#" class="text-link" onclick="showPage('hr'); return false;">View Project</a>
+                <a href="#" class="text-link" onclick="showPage('hr'); setTimeout(() => document.querySelector('.video-container video').scrollIntoView({behavior:'smooth'}), 200); return false;">Watch Trailer</a>
+              </div>
             </div>
-            <div class="laurels">
-              <img src="images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy">
-              <img src="images/img_55.webp" alt="Screamfest NOLA 2025" loading="lazy">
-              <img src="images/img_3.webp" alt="Beloit International Film Festival 2026" loading="lazy">
-              <img src="images/img_4.webp" alt="Malibu Film Festival 2025" loading="lazy">
-              <img src="images/img_5.webp" alt="Dancing With Films NY 2026" loading="lazy">
-              <img src="images/img_53.webp" alt="Montreal Independent Film Festival - Award Winner" loading="lazy">
-              <img src="images/img_54.webp" alt="Big Bear Film Festival 2025" loading="lazy">
-              <img src="images/img_56.webp" alt="Venice Shorts Film Awards - Award Winner" loading="lazy">
+            <div class="featured-bottom">
+              <div class="featured-credits">
+                Starring <a href="https://www.imdb.com/name/nm3123429/" target="_blank" rel="noopener noreferrer">Mia Vallet</a> &amp; <a href="https://www.imdb.com/name/nm0185274/" target="_blank" rel="noopener noreferrer">Veanne Cox</a><br>
+                Directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a><br>
+                Cinematography by <a href="https://www.imdb.com/name/nm5279424/" target="_blank" rel="noopener noreferrer">Justin Derry</a><br>
+                Written &amp; Produced by <a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">Max Coyne-Green</a><br>
+                Story by Max Coyne-Green &amp; Mia Vallet
+              </div>
             </div>
           </div>
         </div>
@@ -2133,7 +2189,7 @@
         <div class="label">Current Projects</div>
         <div class="projects-grid">
 
-          <div class="project-card tf-card" onclick="showPage('topfloor')">
+          <div class="project-card tf-card" onclick="window.location.href='topfloor-deep.html'">
             <div class="project-card-image">
               <img src="images/img_6.webp" alt="Top Floor" loading="lazy">
             </div>
@@ -2217,6 +2273,7 @@
             <h2>MAX COYNE-GREEN</h2>
             <p class="bio-subtitle">Small Language Model · 1990</p>
             <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://www.linkedin.com/in/mcgwrites/" target="_blank" rel="noopener noreferrer">here</a>.</p>
+            <a href="about.html" style="display:inline-block; margin-top:20px; font-family:'Bebas Neue',sans-serif; font-size:0.7rem; letter-spacing:3px; color:var(--muted); text-decoration:none; transition:color 0.3s;">THE FULL STORY &rarr;</a>
           </div>
         </div>
       </div>
@@ -2251,6 +2308,18 @@
         <!-- 1. Title -->
         <div class="detail-header">
           <h1>HUMAN RESOURCE</h1>
+        </div>
+
+        <!-- 1b. Laurels — one flat line -->
+        <div style="display: flex; flex-wrap: nowrap; justify-content: center; gap: 0 28px; align-items: center; margin: 10px auto 50px;">
+          <img src="images/img_1.webp" alt="Chattanooga Film Festival 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_55.webp" alt="Screamfest NOLA 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_4.webp" alt="Malibu Film Festival 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_5.webp" alt="Dancing With Films NY 2026" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_3.webp" alt="Beloit International Film Festival 2026" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_53.webp" alt="Montreal Independent Film Festival" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_54.webp" alt="Big Bear Film Festival 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+          <img src="images/img_56.webp" alt="Venice Shorts Film Awards" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
         </div>
 
         <!-- 2. Slideshow -->
@@ -2313,17 +2382,6 @@
             <p style="font-family: 'EB Garamond', Georgia, serif; font-size: 1.3rem; font-weight: 500; color: var(--muted); letter-spacing: 0.25em; text-transform: uppercase; margin: 0;">Short Film</p>
           </div>
 
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 28px; align-items: center; margin-bottom: 60px;">
-              <img src="images/img_1.webp" alt="Chattanooga Film Festival 2025" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_55.webp" alt="Screamfest NOLA 2025" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_3.webp" alt="Beloit International Film Festival 2026" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_4.webp" alt="Malibu Film Festival 2025" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_5.webp" alt="Dancing With Films NY 2026" style="height: 48px; width: auto; max-width: 120px; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_53.webp" alt="Montreal Independent Film Festival - Award Winner" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_54.webp" alt="Big Bear Film Festival 2025" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-              <img src="images/img_56.webp" alt="Venice Shorts Film Awards - Award Winner" style="height: 48px; width: auto; opacity: 0.85; filter: brightness(1.1);" loading="lazy">
-          </div>
-
           <p style="text-align: center; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px;">▶ Watch the Trailer</p>
 
           <!-- 8. Trailer -->
@@ -2355,11 +2413,10 @@
           </div>
         </div>
 
-        <!-- SAVED FOR LATER: Deep Dive link
-        <div style="text-align: center; margin-top: 40px;">
-          <a href="hr_deep.html" class="text-link" style="opacity: 0.5; font-size: 0.9rem;">→ Deep Dive: Structure, Themes & Process</a>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 60px;">
+          <a href="hr-deep.html" class="text-link" style="font-size: 1.1rem; padding: 16px 32px;">Deep Dive →</a>
+          <a href="hr-slideshow.html" class="text-link" style="font-size: 1.1rem; padding: 16px 32px;">Meet the Characters →</a>
         </div>
-        -->
       </div>
     </div>
   </div>
@@ -2408,8 +2465,6 @@
         </div>
 
         <p class="tagline-big" style="text-align: center; font-family: 'EB Garamond', Georgia, serif; font-size: clamp(1.4rem, 5vw, 2.2rem); letter-spacing: 0.08em; margin-top: 80px; opacity: 0.6; font-style: italic; line-height: 1.4;">"It's not personal, it's just&nbsp;Manhattan."</p>
-        <div style="text-align: center; margin-top: 40px;">
-        </div>
       </div>
     </div>
   </div>
@@ -2464,7 +2519,7 @@
       heroSlides[heroIdx].classList.remove('active');
       heroIdx = (heroIdx + 1) % heroSlides.length;
       heroSlides[heroIdx].classList.add('active');
-    }, 6000);
+    }, 5000);
 
     // Nav scroll
     window.addEventListener('scroll', () => {
@@ -2846,6 +2901,20 @@
         });
       });
     })();
+  </script>
+
+  <script>
+  // Rotate featured posters
+  (function() {
+    const posters = document.querySelectorAll('.poster-rotate');
+    if (posters.length < 2) return;
+    let current = 0;
+    setInterval(function() {
+      posters[current].classList.remove('active');
+      current = (current + 1) % posters.length;
+      posters[current].classList.add('active');
+    }, 15000);
+  })();
   </script>
 
 </body>

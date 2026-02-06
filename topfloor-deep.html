@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOP FLOOR — The Elevator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d10;
+      --text: #e4e4e4;
+      --muted: #6b7a88;
+      --gold: #b8a472;
+      --gold-dim: rgba(184, 164, 114, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    #scroll-container {
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #scroll-container::-webkit-scrollbar { display: none; }
+    #scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* --- ACT CARD (full-viewport image) --- */
+    .act-card {
+      height: 100vh;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .act-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: var(--bg);
+    }
+
+    /* --- STORY BEAT (text block) --- */
+    .beat {
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 24px 80px calc(80px + 56px);
+    }
+
+    .beat-text {
+      max-width: 780px;
+    }
+
+    .beat-text p {
+      font-size: clamp(1.65rem, 3.5vw, 2.05rem);
+      line-height: 1.85;
+      margin-bottom: 28px;
+      color: rgba(228, 228, 228, 0.9);
+      text-wrap: balance;
+    }
+
+    .beat-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .beat-text p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .beat-text p em {
+      font-style: italic;
+      color: rgba(228, 228, 228, 0.65);
+    }
+
+    /* Single-line emphasis beat — left-aligned, slightly larger */
+    .beat--emphasis {
+      min-height: 45vh;
+    }
+
+    .beat--emphasis .beat-text p {
+      font-size: clamp(1.75rem, 4vw, 2.3rem);
+      color: rgba(228, 228, 228, 0.6);
+      line-height: 1.6;
+    }
+
+    .beat--emphasis .beat-text p em {
+      color: rgba(228, 228, 228, 0.5);
+    }
+
+    /* Big dramatic tagline beat */
+    .beat-tagline {
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px 80px calc(80px + 56px);
+      text-align: center;
+    }
+
+    .beat-tagline p {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(3rem, 7.5vw, 5rem);
+      line-height: 1.25;
+      color: var(--text);
+      max-width: 800px;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 60px rgba(184, 164, 114, 0.12);
+    }
+
+    /* --- STILL (full-bleed image) --- */
+    .still {
+      min-height: 80vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .still img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .still::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg,
+        var(--bg) 0%,
+        rgba(10, 13, 16, 0.12) 18%,
+        rgba(10, 13, 16, 0.12) 82%,
+        var(--bg) 100%);
+      z-index: 1;
+    }
+
+    /* --- LOBBY --- */
+    .lobby {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 80px 24px;
+    }
+
+    .lobby-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .lobby-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: brightness(0.5);
+    }
+
+    .lobby-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center 60%, transparent 20%, var(--bg) 75%);
+    }
+
+    .lobby-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .lobby-content h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 14vw, 9rem);
+      letter-spacing: 0.15em;
+      line-height: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .lobby-content .comps {
+      font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* --- ENDING (4-act overview + CTA) --- */
+    .ending {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px 80px calc(80px + 56px);
+      position: relative;
+    }
+
+    .ending .tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .ending .overview-img {
+      width: 100%;
+      max-width: 1400px;
+      height: auto;
+      margin-bottom: 48px;
+    }
+
+    .ending .btn {
+      display: inline-block;
+      padding: 16px 48px;
+      border: 1px solid var(--gold-dim);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      transition: all 0.3s;
+    }
+
+    .ending .btn:hover {
+      background: rgba(184, 164, 114, 0.08);
+      border-color: rgba(184, 164, 114, 0.4);
+    }
+
+    /* --- ELEVATOR PANEL (combined floor indicator + figure) --- */
+    .elevator-panel {
+      position: fixed;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(8, 10, 14, 0.88);
+      border: 1px solid rgba(184, 164, 114, 0.15);
+      border-radius: 8px;
+      padding: 14px 8px;
+      box-shadow: 0 0 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+      width: 56px;
+      gap: 0;
+    }
+
+    /* Floor labels */
+    .elevator-panel .ep-floor {
+      width: 44px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      color: var(--muted);
+      opacity: 0.25;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .elevator-panel .ep-floor:hover {
+      opacity: 0.5;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .elevator-panel .ep-floor.active {
+      color: var(--gold);
+      opacity: 1;
+      font-size: 1.4rem;
+      background: rgba(184, 164, 114, 0.1);
+      text-shadow: 0 0 14px rgba(184, 164, 114, 0.35);
+    }
+
+    /* Separator line */
+    .elevator-panel .ep-sep {
+      width: 28px;
+      height: 1px;
+      background: rgba(184, 164, 114, 0.12);
+      margin: 4px 0;
+    }
+
+    /* Figure area at bottom of panel */
+    .elevator-panel .ep-figure {
+      width: 36px;
+      height: 80px;
+      position: relative;
+      margin-top: 6px;
+    }
+
+    .elevator-panel .ep-figure .fig-layer {
+      position: absolute;
+      inset: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .elevator-panel .ep-figure .fig-layer svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .elevator-panel .ep-figure .fig-doorman { opacity: 1; }
+    .elevator-panel .ep-figure .fig-nik { opacity: 0; }
+
+    .elevator-panel .ep-figure-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.7;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    /* --- PROGRESS LINE --- */
+    .progress-line {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 2px;
+      height: 0%;
+      background: var(--gold);
+      z-index: 100;
+      transition: height 0.12s ease-out;
+      opacity: 0.7;
+    }
+
+    /* --- SCROLL PROMPT --- */
+    .scroll-prompt {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 150;
+      text-align: center;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .scroll-prompt .arrow {
+      display: block;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 6px;
+      animation: float-up 1.8s ease-in-out infinite;
+    }
+
+    .scroll-prompt .prompt-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .scroll-prompt.hidden { opacity: 0; }
+
+    @keyframes float-up {
+      0%, 100% { transform: translateY(4px); opacity: 0.5; }
+      50% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    @keyframes prompt-bounce {
+      0%   { transform: translateX(-50%) translateY(0); }
+      20%  { transform: translateX(-50%) translateY(-14px); }
+      40%  { transform: translateX(-50%) translateY(0); }
+      60%  { transform: translateX(-50%) translateY(-6px); }
+      80%  { transform: translateX(-50%) translateY(0); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+
+    .scroll-prompt.bounce {
+      animation: prompt-bounce 0.6s ease-out;
+    }
+
+    @media (max-width: 768px) {
+      .elevator-panel {
+        left: 6px;
+        width: 42px;
+        padding: 8px 4px;
+      }
+      .elevator-panel .ep-floor { font-size: 0.9rem; width: 34px; height: 30px; }
+      .elevator-panel .ep-floor.active { font-size: 1.15rem; }
+      .elevator-panel .ep-figure { width: 28px; height: 62px; }
+      .elevator-panel .ep-figure-label { font-size: 0.4rem; }
+      .beat-text { max-width: 100%; }
+      .beat-text p { font-size: 1.4rem; }
+      .beat { padding: 60px 20px 60px 60px; min-height: 50vh; }
+      .beat--emphasis { min-height: 35vh; }
+      .beat--emphasis .beat-text p { font-size: 1.5rem; }
+      .beat-tagline { padding: 60px 20px 60px 60px; }
+      .beat-tagline p { font-size: clamp(2.2rem, 6vw, 3rem); }
+      .ending { padding: 60px 20px 60px 60px; }
+      .ending .overview-img { width: 100%; }
+    }
+
+    /* --- ELEVATOR DOORS --- */
+    .elevator-doors {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      pointer-events: none;
+      display: flex;
+    }
+    .elevator-doors::before,
+    .elevator-doors::after {
+      content: '';
+      flex: 1;
+      background: var(--bg);
+      transform: scaleX(0);
+      transition: transform 0.35s ease-in-out;
+    }
+    .elevator-doors::before { transform-origin: left; }
+    .elevator-doors::after { transform-origin: right; }
+    .elevator-doors.closing::before,
+    .elevator-doors.closing::after {
+      transform: scaleX(1);
+    }
+
+    /* --- DROP MECHANIC --- */
+    @keyframes elevator-shake {
+      0%   { transform: translateY(0) translateX(0); }
+      10%  { transform: translateY(-4px) translateX(3px); }
+      20%  { transform: translateY(5px) translateX(-2px); }
+      30%  { transform: translateY(-3px) translateX(4px); }
+      40%  { transform: translateY(4px) translateX(-3px); }
+      50%  { transform: translateY(-5px) translateX(2px); }
+      60%  { transform: translateY(3px) translateX(-4px); }
+      70%  { transform: translateY(-2px) translateX(3px); }
+      80%  { transform: translateY(4px) translateX(-2px); }
+      90%  { transform: translateY(-3px); }
+      100% { transform: translateY(0); }
+    }
+    .shake { animation: elevator-shake 0.5s ease-in-out; }
+
+    @keyframes figure-fall {
+      0%   { transform: translateY(0); opacity: 1; }
+      60%  { transform: translateY(100px); opacity: 0.5; }
+      100% { transform: translateY(200px); opacity: 0; }
+    }
+    .ep-figure.falling {
+      animation: figure-fall 0.9s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+    }
+
+    @keyframes impact-bounce {
+      0%   { transform: translateY(0); }
+      25%  { transform: translateY(-10px); }
+      50%  { transform: translateY(4px); }
+      75%  { transform: translateY(-2px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* --- DROP PROMPT --- */
+    .drop-prompt {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 13, 16, 0.94);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    .drop-prompt.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drop-prompt-question {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .drop-prompt-actions {
+      display: flex;
+      gap: 24px;
+    }
+    .drop-prompt-btn {
+      display: inline-block;
+      padding: 16px 48px;
+      border: 1px solid var(--gold-dim);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .drop-prompt-btn:hover {
+      background: rgba(184, 164, 114, 0.08);
+      border-color: rgba(184, 164, 114, 0.4);
+    }
+    .drop-prompt-yes {
+      border-color: rgba(184, 164, 114, 0.4);
+      color: var(--gold);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .shake { animation: none; }
+      .ep-figure.falling { animation: none; opacity: 0; }
+    }
+
+    /* --- REVEAL --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" style="position:fixed; top:24px; left:24px; z-index:9999; font-family:'Bebas Neue',sans-serif; font-size:0.7rem; letter-spacing:2px; color:var(--muted); text-decoration:none; transition:color 0.3s;">&larr; HOME</a>
+
+  <!-- Elevator Panel: combined floor indicator + Murry figure -->
+  <div class="elevator-panel" id="elevator-panel">
+    <div class="ep-floor" data-floor="act4" id="ep-ph">PH</div>
+    <div class="ep-sep"></div>
+    <div class="ep-floor" data-floor="act3" id="ep-4">4</div>
+    <div class="ep-floor" data-floor="act2" id="ep-3">3</div>
+    <div class="ep-floor" data-floor="act1" id="ep-2">2</div>
+    <div class="ep-sep"></div>
+    <div class="ep-floor active" data-floor="lobby" id="ep-b">B</div>
+    <div class="ep-sep"></div>
+    <!-- Inline figure -->
+    <div class="ep-figure">
+      <!-- Doorman Murry — warm skin tone -->
+      <div class="fig-layer fig-doorman" id="fig-doorman">
+        <svg viewBox="0 0 36 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Doorman cap -->
+          <ellipse cx="18" cy="10" rx="10" ry="2.8" fill="#2e2a24"/>
+          <rect x="10" y="4" width="16" height="7" rx="2.5" fill="#28231e"/>
+          <rect x="12" y="3" width="12" height="3.5" rx="1.5" fill="#2e2a24"/>
+          <line x1="10" y1="10" x2="26" y2="10" stroke="#b8a472" stroke-width="0.8" opacity="0.9"/>
+          <!-- Head — warm medium skin -->
+          <ellipse cx="18" cy="16" rx="5.5" ry="6.5" fill="#a67c52"/>
+          <!-- Uniform body -->
+          <path d="M8 25 L10 22 Q18 19 26 22 L28 25 L29 56 L7 56 Z" fill="#1e2030"/>
+          <!-- Gold buttons -->
+          <circle cx="16" cy="33" r="0.9" fill="#b8a472" opacity="0.85"/>
+          <circle cx="16" cy="38" r="0.9" fill="#b8a472" opacity="0.85"/>
+          <circle cx="16" cy="43" r="0.9" fill="#b8a472" opacity="0.85"/>
+          <!-- Epaulettes -->
+          <rect x="8" y="23" width="3.5" height="1.2" rx="0.4" fill="#5a2020" opacity="0.8"/>
+          <rect x="24.5" y="23" width="3.5" height="1.2" rx="0.4" fill="#5a2020" opacity="0.8"/>
+          <!-- Gold tie -->
+          <path d="M16.5 22 L18 23.5 L19.5 22 L19 33 L17 33 Z" fill="#b8a472" opacity="0.6"/>
+          <!-- Hands — warm skin -->
+          <ellipse cx="7.5" cy="48" rx="2" ry="2.5" fill="#a67c52"/>
+          <ellipse cx="28.5" cy="48" rx="2" ry="2.5" fill="#a67c52"/>
+          <!-- Legs -->
+          <rect x="10" y="56" width="6" height="20" rx="2" fill="#1e2030"/>
+          <rect x="20" y="56" width="6" height="20" rx="2" fill="#1e2030"/>
+          <!-- Shoes -->
+          <ellipse cx="13" cy="76.5" rx="4" ry="2" fill="#161412"/>
+          <ellipse cx="23" cy="76.5" rx="4" ry="2" fill="#161412"/>
+        </svg>
+      </div>
+      <!-- Nik / suited Murry — warm skin tone -->
+      <div class="fig-layer fig-nik" id="fig-nik">
+        <svg viewBox="0 0 36 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Slicked hair -->
+          <path d="M12 12 Q12 4 18 3 Q24 4 24 12 L22.5 10.5 Q18 9 13.5 10.5 Z" fill="#28231e"/>
+          <!-- Head — warm medium skin -->
+          <ellipse cx="18" cy="16" rx="5.5" ry="6.5" fill="#a67c52"/>
+          <!-- Suit jacket -->
+          <path d="M8 25 L10 22 Q18 19 26 22 L28 25 L29 56 L7 56 Z" fill="#1e1e1e"/>
+          <!-- Lapels -->
+          <path d="M14 22 L16.5 33 L14 33 L12 25 Z" fill="#2a2a2a"/>
+          <path d="M22 22 L19.5 33 L22 33 L24 25 Z" fill="#2a2a2a"/>
+          <!-- Pocket square -->
+          <path d="M23 31 L25.5 29.5 L26.5 32 L23.5 32 Z" fill="#b8a472" opacity="0.85"/>
+          <!-- Dark tie -->
+          <path d="M16.5 22 L18 23.5 L19.5 22 L19 36 L17 36 Z" fill="#2a2a2a"/>
+          <!-- Watch glint -->
+          <circle cx="7.5" cy="44" r="1" fill="none" stroke="#b8a472" stroke-width="0.5" opacity="0.7"/>
+          <!-- Hands — warm skin -->
+          <ellipse cx="7" cy="48" rx="2" ry="2.5" fill="#a67c52"/>
+          <ellipse cx="29" cy="48" rx="2" ry="2.5" fill="#a67c52"/>
+          <!-- Legs -->
+          <rect x="11" y="56" width="5.5" height="20" rx="2" fill="#1e1e1e"/>
+          <rect x="19.5" y="56" width="5.5" height="20" rx="2" fill="#1e1e1e"/>
+          <!-- Nice shoes -->
+          <ellipse cx="13.5" cy="76.5" rx="3.8" ry="1.8" fill="#161412"/>
+          <ellipse cx="22.5" cy="76.5" rx="3.8" ry="1.8" fill="#161412"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ep-figure-label" id="ep-figure-label">MURRY</div>
+  </div>
+
+  <div class="progress-line" id="progress-line"></div>
+
+  <div class="scroll-prompt" id="scroll-prompt">
+    <span class="arrow">&#8593;</span>
+    <span class="prompt-text" id="prompt-text">It's Only Up from Here</span>
+  </div>
+
+  <!-- Elevator door transition effect -->
+  <div class="elevator-doors" id="elevator-doors"></div>
+
+  <!-- Drop prompt -->
+  <div class="drop-prompt" id="drop-prompt">
+    <div class="drop-prompt-actions">
+      <a href="#" class="drop-prompt-btn drop-prompt-yes" id="drop-yes">Request Script</a>
+    </div>
+  </div>
+
+  <div id="scroll-container">
+
+    <!-- ===================== ENDING: 4-ACT OVERVIEW ===================== -->
+    <div class="ending reveal" id="floor-ending" data-floor-name="act4">
+      <img src="images/img_31.webp" alt="The four-act structure: Bottom, Up, Drop, Top" class="overview-img">
+    </div>
+
+    <!-- "It's not personal. It's just Manhattan." — big italic two-liner -->
+    <div class="beat-tagline" data-floor-name="act4">
+      <p class="reveal">It's not personal.<br>It's just Manhattan.</p>
+    </div>
+
+    <!-- Still: Sera investigates -->
+    <div class="still" data-floor-name="act4">
+      <img src="images/tf_sera_car.webp" alt="Sera investigates at night">
+    </div>
+
+    <!-- ===================== ACT FOUR: TOP ===================== -->
+
+    <!-- Combined: Murry doesn't come home + the investor in the penthouse -->
+    <div class="beat" data-floor-name="act4">
+      <div class="beat-text reveal">
+        <p>When Murry doesn't come home, Sera goes looking. The only lead: the last person he ever mentioned.</p>
+        <p><strong>The investor in the penthouse.</strong></p>
+      </div>
+    </div>
+
+    <!-- Act Four title card -->
+    <div class="act-card" id="floor-act4" data-floor-name="act4">
+      <img src="images/img_39.webp" alt="Act Four: Top">
+    </div>
+
+    <!-- ===================== ACT THREE: DROP ===================== -->
+
+    <!-- Still: The edge -->
+    <div class="still" data-floor-name="act3">
+      <img src="images/tf_jump.webp" alt="On the edge of the balcony">
+    </div>
+
+    <!-- The dream turns — combined into one beat -->
+    <div class="beat" data-floor-name="act3">
+      <div class="beat-text reveal">
+        <p>Life upstairs is everything Murry imagined.</p>
+        <p>Until he discovers that the man he's pretending to be isn't who he thought.</p>
+      </div>
+    </div>
+
+    <!-- Act Three title card -->
+    <div class="act-card" id="floor-act3" data-floor-name="act3">
+      <img src="images/img_37.webp" alt="Act Three: Drop">
+    </div>
+
+    <!-- ===================== ACT TWO: UP ===================== -->
+
+    <!-- The catch + He'll have to make sure everyone sees Nik -->
+    <div class="beat" data-floor-name="act2">
+      <div class="beat-text reveal">
+        <p>But there's a catch.</p>
+        <p>He'll have to make sure everyone sees Nik.</p>
+      </div>
+    </div>
+
+    <!-- Still: Penthouse interior -->
+    <div class="still" data-floor-name="act2">
+      <img src="images/img_35.webp" alt="Penthouse interior">
+    </div>
+
+    <!-- The offer -->
+    <div class="beat" data-floor-name="act2">
+      <div class="beat-text reveal">
+        <p>So when Nik has a work emergency out of town, he turns to Murry with an offer: stay with Snacks in the&nbsp;penthouse.</p>
+      </div>
+    </div>
+
+    <!-- Still: Penthouse meeting -->
+    <div class="still" data-floor-name="act2">
+      <img src="images/tf_penthouse_meeting.webp" alt="The meeting in the penthouse">
+    </div>
+
+    <!-- Nik introduction -->
+    <div class="beat" data-floor-name="act2">
+      <div class="beat-text reveal">
+        <p><strong>NIK</strong> lives at the top.</p>
+        <p>Unlike the other tenants at the Pyramid, the suave investor in Penthouse B always looks Murry right in the&nbsp;face.</p>
+        <p>He helps give insulin to his diabetic dog, Snacks. But because, besides Murry's beard, the two look strikingly&nbsp;similar.</p>
+      </div>
+    </div>
+
+    <!-- Act Two title card -->
+    <div class="act-card" id="floor-act2" data-floor-name="act2">
+      <img src="images/img_34.webp" alt="Act Two: Up">
+    </div>
+
+    <!-- ===================== TRANSITION: SERA → ACT TWO ===================== -->
+
+    <!-- "...and there is someone he's always wanted to be." -->
+    <div class="beat beat--emphasis" data-floor-name="act1">
+      <div class="beat-text reveal">
+        <p>...and there is someone he's always wanted to&nbsp;be.</p>
+      </div>
+    </div>
+
+    <!-- Still: The view from the top -->
+    <div class="still" data-floor-name="act1">
+      <img src="images/tf_penthouse_window.webp" alt="The view from the penthouse">
+    </div>
+
+    <!-- Hustle culture beat -->
+    <div class="beat beat--emphasis" data-floor-name="act1">
+      <div class="beat-text reveal">
+        <p>But Murry's listened to enough hustle culture podcasts to know he can be <em>anyone he wants to&nbsp;be</em>.</p>
+      </div>
+    </div>
+
+    <!-- Still: Sera -->
+    <div class="still" data-floor-name="act1">
+      <img src="images/tf_sera_car.webp" alt="Sera">
+    </div>
+
+    <!-- SERA page -->
+    <div class="beat" data-floor-name="act1">
+      <div class="beat-text reveal">
+        <p>Though <strong>SERA</strong> doesn't look down on her little brother.</p>
+        <p>She just wants him to stay grounded. Their whole lives, he's been getting stuck in holes, leaving her to dig him out. She just wants him to be happy with <em>who he&nbsp;is</em>.</p>
+      </div>
+    </div>
+
+    <!-- ===================== ACT ONE: BOTTOM ===================== -->
+
+    <!-- Still: Basement pushups -->
+    <div class="still" data-floor-name="act1">
+      <img src="images/tf_pushups1.webp" alt="Pushups in the basement">
+    </div>
+
+    <!-- Dreaming + basement -->
+    <div class="beat" data-floor-name="act1">
+      <div class="beat-text reveal">
+        <p>He's dreaming of the top.</p>
+        <p>But he lives in his sister's basement.</p>
+      </div>
+    </div>
+
+    <!-- Still: Doorman through car window -->
+    <div class="still" data-floor-name="act1">
+      <img src="images/img_33.webp" alt="Murry through the car window">
+    </div>
+
+    <!-- Murry opens the door + entrepreneur — combined -->
+    <div class="beat" data-floor-name="act1">
+      <div class="beat-text reveal">
+        <p><strong>MURRY</strong> opens the door.</p>
+        <p>That's what he does. Six days a week in the green marble lobby of the storied uptown Pyramid&nbsp;House.</p>
+        <p>But if you asked him, he wouldn't say he's a doorman. He'd say he's an <em>entrepreneur working as a doorman</em>. Waiting for the right door to open for&nbsp;him.</p>
+      </div>
+    </div>
+
+    <!-- Act One title card — FIRST THING after lobby -->
+    <div class="act-card" id="floor-act1" data-floor-name="act1">
+      <img src="images/img_32.webp" alt="Act One: Bottom">
+    </div>
+
+    <!-- ===================== LOBBY ===================== -->
+    <div class="lobby" id="floor-lobby" data-floor-name="lobby">
+      <div class="lobby-bg">
+        <img src="images/tf_pyramid_ref.webp" alt="Pyramid House at night">
+      </div>
+      <div class="lobby-content">
+        <h1>TOP FLOOR</h1>
+        <p class="comps">Ripley meets Parasite in a Manhattan high-rise</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ==========================================================
+       TOP FLOOR — Interactive Elevator + DROP Mechanic
+       ==========================================================
+       Reverse-scroll: DOM top = ending, DOM bottom = lobby.
+       User starts at lobby (scrollTop = max) and scrolls UP.
+       DROP: At Act 3, shake → fall → gravity scroll to lobby →
+             "Request Script" overlay.
+       ========================================================== */
+
+    // --- DOM refs ---
+    const container    = document.getElementById('scroll-container');
+    const progressLine = document.getElementById('progress-line');
+    const scrollPrompt = document.getElementById('scroll-prompt');
+    const promptText   = document.getElementById('prompt-text');
+    const namedFloors  = document.querySelectorAll('[data-floor-name]');
+    const elevatorDoors = document.getElementById('elevator-doors');
+    const dropPrompt   = document.getElementById('drop-prompt');
+    const dropYes      = document.getElementById('drop-yes');
+
+    // Panel elements
+    const epPH  = document.getElementById('ep-ph');
+    const epB   = document.getElementById('ep-b');
+    const ep4   = document.getElementById('ep-4');
+    const ep3   = document.getElementById('ep-3');
+    const ep2   = document.getElementById('ep-2');
+    const allFloorBtns = [epB, ep2, ep3, ep4, epPH];
+
+    // Figure elements
+    const figDoorman = document.getElementById('fig-doorman');
+    const figNik     = document.getElementById('fig-nik');
+    const figLabel   = document.getElementById('ep-figure-label');
+    const epFigure   = document.querySelector('.ep-figure');
+
+    // Floor targets (scroll-to anchors)
+    const floorTargets = {
+      lobby: document.getElementById('floor-lobby'),
+      act1:  document.getElementById('floor-act1'),
+      act2:  document.getElementById('floor-act2'),
+      act3:  document.getElementById('floor-act3'),
+      act4:  document.getElementById('floor-act4')
+    };
+
+    // State
+    let activeFloor    = 'lobby';
+    let dropTriggered  = false;
+    let isDropping     = false;
+    let scrollLocked   = false;
+    let initialized    = false;
+
+    // Act 4 is visible from the start — no hiding
+
+    // --- IntersectionObserver for scroll reveals ---
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // --- Init: scroll to bottom (lobby), then arm the drop observer ---
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    function scrollToLobby() {
+      const target = container.scrollHeight - container.clientHeight;
+      container.scrollTop = target;
+    }
+
+    function initComplete() {
+      if (initialized) return;
+      scrollToLobby();
+      updateUI();
+      initialized = true;
+      setTimeout(armDropObserver, 300);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      scrollToLobby();
+    });
+
+    window.addEventListener('load', () => {
+      scrollToLobby();
+      requestAnimationFrame(() => {
+        scrollToLobby();
+        updateUI();
+        requestAnimationFrame(() => {
+          initComplete();
+        });
+      });
+    });
+
+    container.addEventListener('scroll', () => {
+      if (!scrollLocked) updateUI();
+    });
+
+    // --- Prevent scrolling past lobby ---
+    container.addEventListener('wheel', (e) => {
+      if (scrollLocked) { e.preventDefault(); return; }
+      const maxScroll = container.scrollHeight - container.clientHeight;
+      if (container.scrollTop >= maxScroll - 2 && e.deltaY > 0) {
+        e.preventDefault();
+        showScrollHint();
+      }
+    }, { passive: false });
+
+    let touchStartY = 0;
+    container.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+      if (scrollLocked) return;
+      const maxScroll = container.scrollHeight - container.clientHeight;
+      if (container.scrollTop >= maxScroll - 5 && (touchStartY - e.touches[0].clientY) > 0) {
+        showScrollHint();
+      }
+    }, { passive: true });
+
+    function showScrollHint() {
+      scrollPrompt.classList.remove('bounce');
+      void scrollPrompt.offsetWidth;
+      scrollPrompt.classList.add('bounce');
+    }
+
+    // ==========================================
+    //  ELEVATOR DOOR ANIMATION
+    // ==========================================
+    function closeDoors() {
+      return new Promise(resolve => {
+        elevatorDoors.classList.add('closing');
+        setTimeout(resolve, 400);
+      });
+    }
+
+    function openDoors() {
+      return new Promise(resolve => {
+        elevatorDoors.classList.remove('closing');
+        setTimeout(resolve, 400);
+      });
+    }
+
+    // ==========================================
+    //  FLOOR NAVIGATION (clickable buttons)
+    // ==========================================
+    function navigateToFloor(floorName) {
+      if (isDropping || scrollLocked) return;
+
+      const target = floorTargets[floorName];
+      if (!target) return;
+
+      closeDoors().then(() => {
+        target.scrollIntoView({ block: 'center' });
+        updateUI();
+        setTimeout(() => {
+          openDoors();
+        }, 300);
+      });
+    }
+
+    epB.addEventListener('click', () => navigateToFloor('lobby'));
+    ep2.addEventListener('click', () => navigateToFloor('act1'));
+    ep3.addEventListener('click', () => navigateToFloor('act2'));
+    ep4.addEventListener('click', () => navigateToFloor('act3'));
+    epPH.addEventListener('click', () => navigateToFloor('act4'));
+
+    // ==========================================
+    //  DROP MECHANIC
+    // ==========================================
+    let dropTrigger = null;
+
+    function armDropObserver() {
+      const act3Card = document.getElementById('floor-act3');
+      if (!act3Card) return;
+
+      dropTrigger = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !dropTriggered && initialized) {
+            dropTriggered = true;
+            dropTrigger.unobserve(e.target);
+            setTimeout(() => initiateTheDrop(), 1200);
+          }
+        });
+      }, { threshold: 0.5, root: container });
+
+      dropTrigger.observe(act3Card);
+    }
+
+    function initiateTheDrop() {
+      isDropping = true;
+      scrollLocked = true;
+
+      // 1. SHAKE
+      container.classList.add('shake');
+
+      setTimeout(() => {
+        container.classList.remove('shake');
+
+        // 2. Figure FALLS
+        epFigure.classList.add('falling');
+
+        // 3. Gravity scroll back to lobby
+        setTimeout(() => {
+          dropScroll();
+        }, 400);
+      }, 500);
+    }
+
+    function blockScroll(e) { e.preventDefault(); }
+    function lockUserScroll() {
+      container.addEventListener('wheel', blockScroll, { passive: false });
+      container.addEventListener('touchmove', blockScroll, { passive: false });
+    }
+    function unlockUserScroll() {
+      container.removeEventListener('wheel', blockScroll);
+      container.removeEventListener('touchmove', blockScroll);
+    }
+
+    function dropScroll() {
+      const maxScroll = container.scrollHeight - container.clientHeight;
+      const start = container.scrollTop;
+      const end = maxScroll;
+      const distance = end - start;
+      const duration = 2200;
+      let startTime = null;
+
+      lockUserScroll();
+
+      function gravityEase(t) {
+        return t * t * t;
+      }
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = gravityEase(progress);
+
+        container.scrollTop = start + (distance * eased);
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          container.scrollTop = maxScroll;
+          onDropLanded();
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function onDropLanded() {
+      // Impact bounce
+      container.style.animation = 'impact-bounce 0.4s ease-out';
+      container.addEventListener('animationend', function handler() {
+        container.style.animation = '';
+        container.removeEventListener('animationend', handler);
+      });
+
+      // Show "Request Script" overlay
+      setTimeout(() => {
+        dropPrompt.classList.add('visible');
+        isDropping = false;
+      }, 600);
+    }
+
+    // --- "Request Script" button: dismiss overlay, resume scrolling ---
+    dropYes.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropPrompt.classList.remove('visible');
+      scrollLocked = false;
+      unlockUserScroll();
+
+      // Reset figure
+      epFigure.classList.remove('falling');
+      figDoorman.style.opacity = '1';
+      figNik.style.opacity = '0';
+      figLabel.textContent = 'MURRY';
+
+      updateUI();
+    });
+
+    // ==========================================
+    //  UI UPDATE (scroll-driven)
+    // ==========================================
+    function updateUI() {
+      const maxScroll = container.scrollHeight - container.clientHeight;
+      const st = container.scrollTop;
+      const pct = maxScroll > 0 ? 1 - (st / maxScroll) : 0;
+
+      // Progress line
+      progressLine.style.height = (pct * 100) + '%';
+
+      // Show/hide scroll prompt — only at lobby
+      if (st >= maxScroll - 100) {
+        scrollPrompt.classList.remove('hidden');
+      } else {
+        scrollPrompt.classList.add('hidden');
+      }
+
+      // Determine active floor from scroll position
+      let active = 'lobby';
+      const vc = st + container.clientHeight / 2;
+      namedFloors.forEach(f => {
+        const t = f.offsetTop, b = t + f.offsetHeight;
+        if (vc >= t && vc <= b) active = f.dataset.floorName;
+      });
+      activeFloor = active;
+
+      // Map to elevator panel
+      const floorMap = { lobby: 'ep-b', act1: 'ep-2', act2: 'ep-3', act3: 'ep-4', act4: 'ep-ph' };
+
+      allFloorBtns.forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(floorMap[active]);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Crossfade doorman → nik based on scroll progress
+      if (!isDropping) {
+        const fadePct = Math.max(0, Math.min(1, (pct - 0.2) / 0.3));
+        figDoorman.style.opacity = 1 - fadePct;
+        figNik.style.opacity = fadePct;
+        figLabel.textContent = fadePct > 0.5 ? 'NIK' : 'MURRY';
+      }
+    }
+  </script>
+
+</body>
+</html>

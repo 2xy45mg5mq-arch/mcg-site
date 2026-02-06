@@ -88,6 +88,7 @@
       line-height: 1.7;
       font-size: 18px;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
@@ -2517,8 +2518,6 @@
         <div class="detail-actions">
           <a href="#" class="btn btn-primary" onclick="openConnectModal({heading:'REQUEST PILOT',subtitle:'Kan Vatan — TV Series',interest:'Kan Vatan',request:'Kan Vatan - Pilot',placeholder:'Introduce yourself briefly...'}); return false;">Request Pilot</a>
         </div>
-        <div style="text-align: center; margin-top: 40px;">
-        </div>
       </div>
     </div>
   </div>
@@ -2761,10 +2760,7 @@
         'tf': 'topfloor',
         'kanvatan': 'kanvatan',
         'kan-vatan': 'kanvatan',
-        'kv': 'kanvatan',
-        'memorydocs': 'memorydocs',
-        'memory-docs': 'memorydocs',
-        'md': 'memorydocs'
+        'kv': 'kanvatan'
       };
       
       if (routes[path]) {

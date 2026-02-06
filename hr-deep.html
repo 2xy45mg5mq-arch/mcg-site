@@ -12,7 +12,7 @@
       --muted: #6b7a88;
       --accent: #9a8b6e;
       --accent-dim: rgba(154, 139, 110, 0.15);
-      --red: #8b3a3a;
+      --gold: #b8a472;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,6 +26,8 @@
       line-height: 1.7;
       font-size: 18px;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     /* --- NAV --- */
@@ -284,37 +286,6 @@
       margin-top: 8px;
     }
 
-    /* --- LAURELS --- */
-    .laurels {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin: 48px 0;
-      padding: 40px 0;
-      border-top: 1px solid rgba(154, 139, 110, 0.3);
-      border-bottom: 1px solid rgba(154, 139, 110, 0.3);
-    }
-
-    .laurels-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 4rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .laurels-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 4px;
-      color: var(--muted);
-    }
-
-    .laurels-sub {
-      font-size: 1.1rem;
-      margin-top: 4px;
-      color: rgba(228, 228, 228, 0.7);
-    }
-
     /* --- WRITER LINK --- */
     .writer-link {
       font-family: 'Bebas Neue', sans-serif;
@@ -329,96 +300,6 @@
 
     .writer-link:hover {
       color: var(--text);
-    }
-
-    /* --- CHARACTER CARDS --- */
-    .cast-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      margin-top: 20px;
-      margin-bottom: 0;
-    }
-
-    .cast-card {
-      position: relative;
-      height: clamp(280px, 40vh, 380px);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 32px 28px;
-    }
-
-    .cast-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.4);
-      transition: filter 0.5s ease;
-    }
-
-    .cast-card:hover img {
-      filter: brightness(0.55);
-    }
-
-    .cast-card-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .cast-card .cast-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      letter-spacing: 0.06em;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .cast-card .cast-role {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(0.55rem, 1vw, 0.7rem);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-
-    .cast-card .cast-line {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-      font-style: italic;
-      line-height: 1.5;
-      color: rgba(228, 228, 228, 0.7);
-    }
-
-    /* Supporting cast — smaller cards, 4-across */
-    .cast-grid--supporting {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .cast-grid--supporting .cast-card {
-      height: clamp(200px, 28vh, 260px);
-      padding: 24px 20px;
-    }
-
-    .cast-grid--supporting .cast-name {
-      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-    }
-
-    .cast-grid--supporting .cast-line {
-      font-size: clamp(0.85rem, 1.3vw, 0.95rem);
-    }
-
-    @media (max-width: 768px) {
-      .cast-grid { grid-template-columns: 1fr; }
-      .cast-grid--supporting { grid-template-columns: 1fr 1fr; }
-      .cast-grid--supporting .cast-card { height: 220px; }
     }
 
     /* --- CLOSING --- */
@@ -463,7 +344,6 @@
       .full-image { height: 35vh; }
       .dd-section { padding: 56px 0 48px; }
       .dd-nav { padding: 16px 20px; }
-      .laurels { flex-direction: column; text-align: center; }
       .quarters { grid-template-columns: 1fr 1fr; padding: 0 16px; }
       .quarter-item:nth-child(2) { border-right: none; }
       .quarter-item:nth-child(1), .quarter-item:nth-child(2) { border-bottom: 1px solid rgba(154, 139, 110, 0.15); }

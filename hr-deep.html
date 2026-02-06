@@ -23,6 +23,8 @@
       font-family: 'EB Garamond', Georgia, serif;
       background: var(--bg);
       color: var(--text);
+      line-height: 1.7;
+      font-size: 18px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -274,7 +276,8 @@
     }
 
     .stat-label {
-      font-size: 0.6rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.65rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--muted);
@@ -314,14 +317,17 @@
 
     /* --- WRITER LINK --- */
     .writer-link {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
       color: var(--accent);
       text-decoration: none;
-      border-bottom: 1px solid rgba(154,139,110,0.3);
-      transition: border-color 0.3s, color 0.3s;
+      border-bottom: none;
+      transition: color 0.3s;
     }
 
     .writer-link:hover {
-      border-color: var(--accent);
       color: var(--text);
     }
 
@@ -463,10 +469,12 @@
       .quarter-item:nth-child(1), .quarter-item:nth-child(2) { border-bottom: 1px solid rgba(154, 139, 110, 0.15); }
       .pull-quote { padding: 40px 0; }
       .pull-quote p { font-size: 1.6rem; }
-      .section-label { font-size: 2.8rem; }
+      .dd-section .section-label { font-size: 2.8rem; }
       .title-hero { height: 45vh; }
       .title-hero h2 { font-size: 3.5rem; padding-bottom: 32px; }
       .deep-dive--first { padding-top: 80px; }
+      .dd-close { padding: 56px 24px 100px; }
+      .dd-close .btn { display: block; width: 100%; max-width: 320px; margin: 6px auto; }
     }
   </style>
 </head>
@@ -474,8 +482,8 @@
 
   <!-- NAV -->
   <nav class="dd-nav">
-    <a href="index.html#hr">&larr; HUMAN RESOURCE</a>
-    <a href="index.html">HOME</a>
+    <a href="/hr">&larr; HUMAN RESOURCE</a>
+    <a href="/">HOME</a>
   </nav>
 
   <div class="deep-dive deep-dive--first">
@@ -621,19 +629,15 @@
     <section class="dd-section reveal">
       <p class="section-label">The Writer</p>
       <p>Written from inside the building. A former hedge fund researcher and startup executive, currently consulting for AI companies. The details in this script aren't invented. They're documented.</p>
-      <p><a href="#" class="writer-link">More about the writer &rarr;</a></p>
+      <p><a href="/about" class="writer-link">More About the Writer &rarr;</a></p>
     </section>
 
   </div>
 
   <!-- CLOSE -->
   <div class="dd-close reveal">
-    <a href="#" class="btn">Request Script</a>
-    <a href="#" class="btn">Watch Proof of Concept</a>
-  </div>
-
-  <div style="text-align:center; padding: 80px 0 100px;">
-    <a href="hr-slideshow.html" style="display:inline-block; font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:6px; color:var(--text); text-decoration:none; padding:20px 48px; border:1px solid var(--muted); border-radius:4px; transition:all 0.3s;" onmouseover="this.style.borderColor='var(--text)';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.borderColor='var(--muted)';this.style.background='transparent'">MEET THE CHARACTERS &rarr;</a>
+    <a href="/hr" class="btn">Watch Proof of Concept</a>
+    <a href="/hr/characters" class="btn">Meet the Characters</a>
   </div>
 
   <script>

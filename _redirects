@@ -1,1 +1,13 @@
+# Sub-page clean URLs
+/hr/deep          /hr-deep.html       200
+/hr/characters    /hr-slideshow.html   200
+/about            /about.html          200
+/topfloor         /topfloor-deep.html  200
+/top-floor        /topfloor-deep.html  200
+
+# SPA section anchors
+/hr               /index.html          200
+/kanvatan         /index.html          200
+
+# SPA fallback — must be last
 /* /index.html 200

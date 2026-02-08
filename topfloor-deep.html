@@ -647,7 +647,7 @@
   <!-- Drop prompt -->
   <div class="drop-prompt" id="drop-prompt">
     <div class="drop-prompt-actions">
-      <a href="#" class="drop-prompt-btn drop-prompt-yes" id="drop-yes">Request Script</a>
+      <a href="/about" class="drop-prompt-btn drop-prompt-yes" id="drop-yes">Request Script</a>
     </div>
   </div>
 
@@ -1096,20 +1096,17 @@
       }, 600);
     }
 
-    // --- "Request Script" button: dismiss overlay, resume scrolling ---
+    // --- "Request Script" button: fade out overlay, then navigate to about page ---
     dropYes.addEventListener('click', (e) => {
       e.preventDefault();
       dropPrompt.classList.remove('visible');
       scrollLocked = false;
       unlockUserScroll();
 
-      // Reset figure
-      epFigure.classList.remove('falling');
-      figDoorman.style.opacity = '1';
-      figNik.style.opacity = '0';
-      figLabel.textContent = 'MURRY';
-
-      updateUI();
+      // Navigate after overlay fade completes (matches 0.8s CSS transition)
+      setTimeout(function() {
+        window.location.href = '/about';
+      }, 850);
     });
 
     // ==========================================

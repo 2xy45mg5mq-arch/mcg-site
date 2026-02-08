@@ -1,0 +1,13 @@
+# Sandbox/experiment files
+sandbox-*.html
+
+# Backups and previews
+*-backup.html
+push-preview.html
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

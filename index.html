@@ -2004,10 +2004,26 @@
         gap: 12px; 
         align-items: stretch;
       }
-      .text-link { 
+      .text-link {
         justify-content: center;
         padding: 14px 20px;
         font-size: 0.8rem;
+        height: 48px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .hr-bottom-links {
+        flex-direction: column !important;
+        gap: 16px !important;
+        align-items: stretch !important;
+        margin-top: 40px !important;
+      }
+      .hr-bottom-links .text-link {
+        height: 48px !important;
+        font-size: 0.9rem !important;
+        padding: 14px 24px !important;
+        justify-content: center;
+        width: 100%;
       }
 
       /* Laurels mobile */
@@ -2463,9 +2479,9 @@
           </div>
         </div>
 
-        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 60px;">
-          <a href="/hr/deep" class="text-link" style="font-size: 1.1rem; padding: 16px 32px;">Deep Dive →</a>
-          <a href="/hr/characters" class="text-link" style="font-size: 1.1rem; padding: 16px 32px;">Meet the Characters →</a>
+        <div class="hr-bottom-links" style="display: flex; justify-content: center; gap: 40px; margin-top: 60px;">
+          <a href="/hr/deep" class="text-link" style="font-size: 1.1rem; padding: 16px 32px; height: 54px; display: inline-flex; align-items: center;">Deep Dive →</a>
+          <a href="/hr/characters" class="text-link" style="font-size: 1.1rem; padding: 16px 32px; height: 54px; display: inline-flex; align-items: center;">Characters →</a>
         </div>
       </div>
     </div>

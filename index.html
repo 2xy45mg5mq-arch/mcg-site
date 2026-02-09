@@ -746,6 +746,24 @@
       filter: brightness(1.1);
     }
 
+    /* HR page laurels — single horizontal row */
+    .hr-laurels {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin: 10px auto 50px;
+      flex-wrap: nowrap;
+    }
+
+    .hr-laurels img {
+      height: 56px;
+      width: auto;
+      flex-shrink: 0;
+      opacity: 0.9;
+      filter: brightness(1.1);
+    }
+
     .text-link {
       color: var(--text);
       text-decoration: none;
@@ -1936,11 +1954,17 @@
         letter-spacing: 1px !important;
       }
 
-      /* HR laurels mobile */
+      /* HR laurels mobile — horizontal scroll, no wrap */
       .hr-laurels {
-        gap: 8px 12px !important;
-        margin: 8px auto 32px !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        gap: 16px !important;
+        margin: 8px 0 32px !important;
+        padding: 0 16px 8px;
+        scrollbar-width: none;
       }
+      .hr-laurels::-webkit-scrollbar { display: none; }
       .hr-laurels img {
         height: 40px !important;
       }
@@ -2184,8 +2208,8 @@
       <div class="container">
         <div class="featured-grid">
           <div class="poster-wrap" onclick="showPage('hr')" id="featured-poster">
-            <img src="/images/Website_v5_Peering_C_Spread.webp?v=2" alt="Human Resource - Peering" class="poster-rotate active">
-            <img src="/images/Website_v5_Desktop_Top.webp?v=2" alt="Human Resource - Desktop" class="poster-rotate">
+            <img src="/images/Website_v5_Peering_C_Spread.webp" alt="Human Resource - Nothing Is Free" class="poster-rotate active">
+            <img src="/images/Website_v5_Desktop_Top.webp?v=3" alt="Human Resource - Desktop" class="poster-rotate">
           </div>
           <div class="featured-info">
             <div class="featured-top">
@@ -2202,7 +2226,7 @@
                 Directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a><br>
                 Cinematography by <a href="https://www.imdb.com/name/nm5279424/" target="_blank" rel="noopener noreferrer">Justin Derry</a><br>
                 Written &amp; Produced by <a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">Max Coyne-Green</a><br>
-                Story by Max Coyne-Green &amp; Mia Vallet
+                Story by Max Coyne-Green &amp; Mia Blake Vallet
               </div>
             </div>
           </div>
@@ -2336,14 +2360,16 @@
           <h1>HUMAN RESOURCE</h1>
         </div>
 
-        <!-- 1b. Laurels — one flat line -->
-        <div class="hr-laurels" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px; align-items: center; margin: 10px auto 50px;">
-          <img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
-          <img src="/images/img_55.webp" alt="Screamfest NOLA 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
-          <img src="/images/img_4.webp" alt="Malibu Film Festival 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
-          <img src="/images/img_5.webp" alt="Dancing With Films NY 2026" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
-          <img src="/images/img_3.webp" alt="Beloit International Film Festival 2026" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
-          <img src="/images/img_54.webp" alt="Big Bear Film Festival 2025" style="height: 56px; width: auto; opacity: 0.9; filter: brightness(1.1);" loading="lazy">
+        <!-- 1b. Laurels — single horizontal row, scrollable on mobile -->
+        <div class="hr-laurels">
+          <img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy">
+          <img src="/images/img_5.webp" alt="Dances With Films NY 2026" loading="lazy">
+          <img src="/images/img_55.webp" alt="Screamfest NOLA 2025" loading="lazy">
+          <img src="/images/img_3.webp" alt="Beloit International Film Festival 2026" loading="lazy">
+          <img src="/images/img_54.webp" alt="Big Bear Film Summit 2025" loading="lazy">
+          <img src="/images/img_montreal.webp" alt="Montreal Independent Film Festival" loading="lazy">
+          <img src="/images/img_venice.webp" alt="Venice Shorts Film Festival" loading="lazy">
+          <img src="/images/img_4.webp" alt="Malibu Film Festival 2025" loading="lazy">
         </div>
 
         <!-- 2. Slideshow -->
@@ -2390,7 +2416,7 @@
         <p class="comps" style="text-align: center; margin: 48px 0 20px; font-style: italic; color: rgba(228, 228, 228, 0.55); letter-spacing: 0.02em; line-height: 1.6; text-wrap: balance;"><em>Severance</em> meets <em>Margin Call</em> in this financial horror story about the future of work.</p>
 
         <!-- 5b. Story credit -->
-        <p style="text-align: center; font-size: 0.78rem; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin: 0 0 56px 0;">Story by Max Coyne-Green & Mia Vallet</p>
+        <p style="text-align: center; font-size: 0.78rem; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin: 0 0 56px 0;">Story by Max Coyne-Green & Mia Blake Vallet</p>
 
         <!-- 6. Request Feature Script -->
         <div class="detail-actions" style="justify-content: center; margin-bottom: 100px;">

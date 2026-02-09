@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUMAN RESOURCE — Characters</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d10;
+      --text: #e4e4e4;
+      --muted: #6b7a88;
+      --accent: #9a8b6e;
+      --accent-dim: rgba(154, 139, 110, 0.15);
+      --gold: #b8a472;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+      height: 100vh;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(154, 139, 110, 0.4);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, border-color 0.3s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor.hover {
+      transform: translate(-50%, -50%) scale(1.5);
+      border-color: var(--accent);
+    }
+
+    /* --- SLIDESHOW --- */
+    .slideshow {
+      position: fixed;
+      inset: 0;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Image layer - FULL SCREEN */
+    .slide-image {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .slide-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 9s ease-out;
+      filter: brightness(0.75) contrast(1.05) saturate(0.9);
+    }
+
+    .slide.active .slide-image img {
+      transform: scale(1.08);
+    }
+
+    /* Feature-only: abstract gradient bg */
+    .slide-image--abstract {
+      background: radial-gradient(ellipse at 30% 70%, rgba(154,139,110,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, rgba(107,122,136,0.06) 0%, transparent 50%),
+                  var(--bg);
+    }
+
+    .slide-image--abstract::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(154,139,110,0.015) 2px,
+        rgba(154,139,110,0.015) 3px
+      );
+    }
+
+    /* Gradient overlays — lighter to let images breathe */
+    .slide-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,13,16,0.3) 0%, transparent 30%, transparent 50%, rgba(10,13,16,0.85) 100%),
+        linear-gradient(90deg, rgba(10,13,16,0.4) 0%, transparent 45%);
+      z-index: 1;
+    }
+
+    /* --- CONTENT --- */
+    .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      padding: 0 72px 100px;
+      max-width: 800px;
+    }
+
+    .slide-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 12vw, 8rem);
+      letter-spacing: 0.06em;
+      line-height: 0.9;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease 0.4s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+    }
+
+    .slide.active .slide-name {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-role {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.6rem, 1vw, 0.75rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.7s, transform 0.7s ease 0.7s;
+    }
+
+    .slide.active .slide-role {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 20px 0;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: opacity 0.5s ease 0.9s, transform 0.6s ease 0.9s;
+    }
+
+    .slide.active .slide-divider {
+      opacity: 0.6;
+      transform: scaleX(1);
+    }
+
+    .slide-bio {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      line-height: 1.75;
+      color: rgba(228, 228, 228, 0.7);
+      max-width: 480px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 1s, transform 0.7s ease 1s;
+    }
+
+    .slide.active .slide-bio {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-tag {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(184, 164, 114, 0.25);
+      padding: 4px 14px 3px;
+      margin-top: 16px;
+      opacity: 0;
+      transition: opacity 0.5s ease 1.3s;
+    }
+
+    .slide.active .slide-tag {
+      opacity: 1;
+    }
+
+    /* --- NAV BAR (bottom) --- */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: stretch;
+      height: 44px;
+      border-top: 1px solid rgba(154,139,110,0.1);
+      background: rgba(10,13,16,0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-right: 1px solid rgba(154,139,110,0.06);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .nav-item:last-child { border-right: none; }
+
+    .nav-item:hover {
+      background: rgba(154,139,110,0.05);
+    }
+
+    .nav-item-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-item.active .nav-item-label {
+      color: var(--accent);
+    }
+
+    .nav-item:hover .nav-item-label {
+      color: var(--text);
+    }
+
+    /* Feature-only nav items — dimmed with dot indicator */
+    .nav-item.feature-only {
+      opacity: 0.45;
+    }
+    .nav-item.feature-only:hover {
+      opacity: 0.75;
+    }
+    .nav-item.feature-only.active {
+      opacity: 1;
+    }
+    .nav-item.feature-only .nav-item-label {
+      color: var(--muted);
+      font-size: 0.45rem;
+    }
+    .nav-item.feature-only.active .nav-item-label {
+      color: var(--gold);
+    }
+    /* Thin top border to separate feature section */
+    .nav-item.feature-only:first-of-type {
+      border-left: 1px solid rgba(184,164,114,0.15);
+    }
+    .nav-item.feature-only::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(184,164,114,0.12);
+    }
+
+    /* Feature separator in nav */
+    .nav-separator {
+      width: 1px;
+      background: rgba(184,164,114,0.2);
+      align-self: stretch;
+      position: relative;
+    }
+    .nav-separator::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    /* Progress fill inside nav item */
+    .nav-item-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--accent);
+      width: 0;
+      transition: none;
+    }
+
+    .nav-item.feature-only .nav-item-fill {
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .nav-item.active .nav-item-fill {
+      transition: width linear;
+    }
+
+    /* --- TOP HEADER --- */
+    .ss-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 40px;
+      background: linear-gradient(180deg, rgba(10,13,16,0.7) 0%, transparent);
+    }
+
+    .ss-header a, .ss-header span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+
+    .ss-header a:hover { color: var(--text); }
+
+    .ss-title {
+      color: var(--accent) !important;
+      opacity: 0.7;
+    }
+
+    /* --- COUNTER (right side) --- */
+    .slide-counter {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      z-index: 50;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      transform-origin: center center;
+    }
+
+    .slide-counter .cn { color: var(--accent); }
+
+    /* --- KEYBOARD HINT --- */
+    .key-hint {
+      position: fixed;
+      bottom: 56px;
+      right: 40px;
+      z-index: 50;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      opacity: 0.4;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .slide-content { padding: 0 28px 100px; }
+      .slide-name { font-size: 3.5rem; }
+      .nav-item-label { font-size: 0.4rem; letter-spacing: 0.1em; }
+      .ss-header { padding: 20px 24px; }
+      .slide-counter { right: 16px; }
+      .key-hint { display: none; }
+      body { cursor: auto; }
+      .cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <header class="ss-header">
+    <a href="/hr">&larr; HUMAN RESOURCE</a>
+    <span class="ss-title">HUMAN RESOURCE &mdash; THE CAST</span>
+    <span style="display:flex; gap:24px; align-items:center;">
+      <a href="/hr/deep" style="font-size:0.6rem; letter-spacing:2px; text-decoration:none; color:var(--muted); transition:color 0.3s;">DEEP DIVE &rarr;</a>
+      <a href="/" style="font-size:0.6rem; letter-spacing:2px; text-decoration:none; color:var(--muted); transition:color 0.3s;">HOME</a>
+    </span>
+  </header>
+
+  <div class="slideshow" id="slideshow">
+
+    <!-- SHAE -->
+    <div class="slide active" data-name="SHAE">
+      <div class="slide-image">
+        <img src="/images/hr_shae.webp?v=2" alt="Shae" style="object-position: 55% center;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">Shae</div>
+        <div class="slide-role">Head of HR &middot; H&uuml;m Automations</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">The ultimate people person. But the world is changing its mind about the value of&nbsp;people.</p>
+      </div>
+    </div>
+
+    <!-- ELLSIE -->
+    <div class="slide" data-name="ELLSIE">
+      <div class="slide-image">
+        <img src="/images/hr_ellsie.webp" alt="Ellsie" style="object-position: 55% center;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">Ellsie</div>
+        <div class="slide-role">Operating Partner &middot; Olympus Capital</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">The ruthless investor is here to cut liabilities and maximize the value of her new&nbsp;assets.</p>
+      </div>
+    </div>
+
+    <!-- RAM -->
+    <div class="slide" data-name="RAM">
+      <div class="slide-image">
+        <img src="/images/hr_ram.webp" alt="Ram" style="object-position: center 35%;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">Ram</div>
+        <div class="slide-role">Interim CEO &middot; H&uuml;m Automations</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">Shae's mentor has been at the company so long, he can barely remember what he&nbsp;does.</p>
+      </div>
+    </div>
+
+    <!-- DARA -->
+    <div class="slide" data-name="DARA">
+      <div class="slide-image">
+        <img src="/images/hr_dara.webp" alt="Dara" style="object-position: 60% 25%;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">Dara</div>
+        <div class="slide-role">Junior Associate, HR &middot; H&uuml;m Automations</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">Dependent on her mama bear for support, but may need to find another way to take care of&nbsp;herself.</p>
+      </div>
+    </div>
+
+    <!-- GRADY -->
+    <div class="slide" data-name="GRADY">
+      <div class="slide-image">
+        <img src="/images/hr_grady.webp" alt="Grady" style="object-position: center 20%;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">Grady</div>
+        <div class="slide-role">Sales &middot; H&uuml;m Automations</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">Fleece-vested sales guy eager to prove his worth in the new&nbsp;regime.</p>
+      </div>
+    </div>
+
+    <!-- KEVIN -->
+    <div class="slide" data-name="KEVIN">
+      <div class="slide-image">
+        <img src="/images/hr_kevin.webp" alt="Kevin" style="object-position: 35% center;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">Kevin</div>
+        <div class="slide-role">Coffee Guy &middot; H&uuml;m Automations</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">The sweet natured coffee guy is Shae's rock, but Ellsie thinks a Keurig could do his&nbsp;job.</p>
+      </div>
+    </div>
+
+    <!-- THE ANALYST -->
+    <div class="slide" data-name="ANALYST">
+      <div class="slide-image">
+        <img src="/images/hr_analyst.webp" alt="The Analyst" style="object-position: center center;">
+      </div>
+      <div class="slide-content">
+        <div class="slide-name">The Analyst</div>
+        <div class="slide-role">Analyst &middot; Olympus Capital</div>
+        <div class="slide-divider"></div>
+        <p class="slide-bio">Ellsie's analyst is a Wall Street refugee who shows Shae the mysterious world of&nbsp;finance.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NAV BAR -->
+  <div class="nav-bar" id="navBar"></div>
+
+  <!-- COUNTER -->
+  <div class="slide-counter">
+    <span class="cn" id="cCurrent">01</span> / <span id="cTotal">07</span>
+  </div>
+
+  <!-- KEY HINT -->
+  <div class="key-hint">&larr; &rarr; NAVIGATE &middot; SPACE PAUSE</div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const navBar = document.getElementById('navBar');
+    const cCurrent = document.getElementById('cCurrent');
+    const cTotal = document.getElementById('cTotal');
+    const cursor = document.getElementById('cursor');
+
+    let current = 0;
+    let paused = false;
+    const DURATION = 6500;
+    let elapsed = 0;
+    let lastTime = performance.now();
+
+    cTotal.textContent = String(slides.length).padStart(2, '0');
+
+    // Build nav bar with separator before feature-only section
+    let featureStarted = false;
+    slides.forEach((slide, i) => {
+      const isFeature = slide.dataset.feature === 'true';
+
+      // Add separator before first feature-only item
+      if (isFeature && !featureStarted) {
+        featureStarted = true;
+        const sep = document.createElement('div');
+        sep.className = 'nav-separator';
+        navBar.appendChild(sep);
+      }
+
+      const item = document.createElement('div');
+      item.className = 'nav-item' + (i === 0 ? ' active' : '') + (isFeature ? ' feature-only' : '');
+      item.innerHTML = `
+        <span class="nav-item-label">${slide.dataset.name}</span>
+        <div class="nav-item-fill"></div>
+      `;
+      item.addEventListener('click', () => {
+        elapsed = 0;
+        goTo(i);
+      });
+      navBar.appendChild(item);
+    });
+
+    const navItems = document.querySelectorAll('.nav-item');
+
+    function goTo(index) {
+      if (index === current) return;
+      slides[current].classList.remove('active');
+      navItems[current].classList.remove('active');
+      navItems[current].querySelector('.nav-item-fill').style.width = '0';
+
+      current = index;
+      elapsed = 0;
+
+      slides[current].classList.add('active');
+      navItems[current].classList.add('active');
+      cCurrent.textContent = String(current + 1).padStart(2, '0');
+    }
+
+    function next() { goTo((current + 1) % slides.length); }
+    function prev() { goTo((current - 1 + slides.length) % slides.length); }
+
+    // Animation loop
+    function tick(now) {
+      if (!paused) {
+        elapsed += now - lastTime;
+        const pct = Math.min((elapsed / DURATION) * 100, 100);
+        const fill = navItems[current].querySelector('.nav-item-fill');
+        fill.style.width = pct + '%';
+
+        if (elapsed >= DURATION) {
+          elapsed = 0;
+          next();
+        }
+      }
+      lastTime = now;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { elapsed = 0; next(); }
+      else if (e.key === 'ArrowLeft') { elapsed = 0; prev(); }
+      else if (e.key === ' ') { e.preventDefault(); paused = !paused; }
+    });
+
+    // Pause on hover content
+    document.querySelectorAll('.slide-content').forEach(el => {
+      el.addEventListener('mouseenter', () => paused = true);
+      el.addEventListener('mouseleave', () => paused = false);
+    });
+
+    // Custom cursor
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('.nav-item, a, .slide-arrow').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+  </script>
+
+</body>
+</html>

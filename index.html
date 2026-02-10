@@ -2203,7 +2203,8 @@
 
     <section class="hero" style="opacity:1;transform:none;">
       <div class="hero-slideshow">
-        <div class="hero-slide active" style="background-image: url('/images/img_47.webp')"></div>
+        <div class="hero-slide active" style="background-image: url('/images/hr_hero_new.webp?v=1')"></div>
+        <div class="hero-slide" style="background-image: url('/images/img_47.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/img_48.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/img_49.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/img_50.webp')"></div>
@@ -2834,7 +2835,23 @@
     // Run routing on page load
     handleRoute();
 
-  
+    // Auto-open connect modal if ?connect=script param is present (from deep dive pages)
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('connect') === 'script') {
+        const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
+        const presets = {
+          'topfloor': {heading:'REQUEST SCRIPT',subtitle:'Top Floor — Feature Film',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'},
+          'hr': {heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'}
+        };
+        if (presets[path]) {
+          setTimeout(() => openConnectModal(presets[path]), 400);
+        }
+        // Clean URL
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    })();
+
     // FADE IN ON SCROLL
     const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

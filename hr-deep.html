@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HUMAN RESOURCE — Deep Dive</title>
+  <meta name="description" content="Human Resource is a contained corporate thriller about the terror of becoming obsolete. One location. Eight characters. One office building that feels like it's watching you.">
+  <meta property="og:title" content="HUMAN RESOURCE — Deep Dive">
+  <meta property="og:description" content="A contained corporate thriller about the terror of becoming obsolete. One location. One office building that feels like it's watching you.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://coyne-green.com/og-image.jpg">
+  <meta property="og:url" content="https://coyne-green.com/hr/deep">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HUMAN RESOURCE — Deep Dive">
+  <meta name="twitter:description" content="A contained corporate thriller about the terror of becoming obsolete.">
+  <meta name="twitter:image" content="https://coyne-green.com/og-image.jpg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="canonical" href="https://coyne-green.com/hr/deep">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -80,7 +94,7 @@
     /* Section heading — Bebas, big, left-aligned */
     .dd-section .section-label {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 10vw, 5.5rem);
+      font-size: clamp(2.9rem, 8.3vw, 4.5rem);
       letter-spacing: 0.04em;
       color: var(--accent);
       margin-bottom: 28px;
@@ -327,6 +341,81 @@
       border-color: rgba(154, 139, 110, 0.4);
     }
 
+    /* --- BTS SLIDESHOW --- */
+    .bts-slideshow {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      height: clamp(40vh, 50vh, 60vh);
+      overflow: hidden;
+      margin-top: 40px;
+      background: #000;
+    }
+
+    .bts-slideshow img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .bts-slideshow img.active {
+      opacity: 1;
+    }
+
+    .bts-slideshow::before,
+    .bts-slideshow::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 80px;
+      z-index: 2;
+    }
+    .bts-slideshow::before {
+      top: 0;
+      background: linear-gradient(180deg, var(--bg), transparent);
+      pointer-events: none;
+    }
+    .bts-slideshow::after {
+      bottom: 0;
+      background: linear-gradient(0deg, var(--bg), transparent);
+      pointer-events: none;
+    }
+
+    .bts-slideshow .bts-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 16px;
+      transition: color 0.3s;
+    }
+    .bts-slideshow .bts-arrow:hover {
+      color: rgba(255,255,255,0.9);
+    }
+    .bts-slideshow .bts-arrow.prev { left: 16px; }
+    .bts-slideshow .bts-arrow.next { right: 16px; }
+
+    .bts-slideshow .bts-counter {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+    }
+
     /* --- REVEAL --- */
     .reveal {
       opacity: 0;
@@ -349,10 +438,11 @@
       .quarter-item:nth-child(1), .quarter-item:nth-child(2) { border-bottom: 1px solid rgba(154, 139, 110, 0.15); }
       .pull-quote { padding: 40px 0; }
       .pull-quote p { font-size: 1.6rem; }
-      .dd-section .section-label { font-size: 2.8rem; }
+      .dd-section .section-label { font-size: 2.3rem; }
       .title-hero { height: 45vh; }
       .title-hero h2 { font-size: 3.5rem; padding-bottom: 32px; }
       .deep-dive--first { padding-top: 80px; }
+      .bts-slideshow { height: 35vh; }
       .dd-close { padding: 56px 24px 100px; }
       .dd-close .btn { display: block; width: 100%; max-width: 320px; margin: 6px auto; }
     }
@@ -496,6 +586,19 @@
       <p>The proof-of-concept short has screened at festivals worldwide and validated the concept with audiences. The feature script is ready.</p>
 
       <p>A contained, culturally urgent thriller. One location. A lean cast. And one office building that feels like it's watching you.</p>
+
+      <div class="bts-slideshow" id="bts-stills">
+        <img src="/images/bts_1.webp?v=1" alt="Behind the scenes" class="active" loading="lazy">
+        <img src="/images/bts_2.webp?v=1" alt="Behind the scenes" loading="lazy">
+        <img src="/images/bts_3.webp?v=1" alt="Behind the scenes" loading="lazy">
+        <img src="/images/bts_4.webp?v=1" alt="Behind the scenes" loading="lazy">
+        <img src="/images/bts_5.webp?v=1" alt="Behind the scenes" loading="lazy">
+        <img src="/images/bts_6.webp?v=1" alt="Behind the scenes" loading="lazy">
+        <img src="/images/bts_7.webp?v=1" alt="Behind the scenes" loading="lazy">
+        <button class="bts-arrow prev" onclick="btsSlideshow.prev()">&lsaquo;</button>
+        <button class="bts-arrow next" onclick="btsSlideshow.next()">&rsaquo;</button>
+        <div class="bts-counter" id="bts-counter">1 / 7</div>
+      </div>
     </section>
 
     <!-- THE OPPORTUNITY -->
@@ -531,6 +634,32 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(r => observer.observe(r));
+
+    // BTS Slideshow
+    const btsSlideshow = (() => {
+      const imgs = document.querySelectorAll('#bts-stills img');
+      const counter = document.getElementById('bts-counter');
+      let idx = 0;
+      let timer;
+
+      function show(i) {
+        imgs[idx].classList.remove('active');
+        idx = (i + imgs.length) % imgs.length;
+        imgs[idx].classList.add('active');
+        counter.textContent = (idx + 1) + ' / ' + imgs.length;
+      }
+
+      function next() { show(idx + 1); resetTimer(); }
+      function prev() { show(idx - 1); resetTimer(); }
+
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(next, 5000);
+      }
+
+      resetTimer();
+      return { next, prev };
+    })();
   </script>
 
 </body>

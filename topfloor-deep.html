@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TOP FLOOR — The Elevator</title>
+  <meta name="description" content="Top Floor is a psychological thriller set inside a luxury skyscraper's elevator. A vertical descent into power, paranoia, and the architecture of control.">
+  <meta property="og:title" content="TOP FLOOR — The Elevator">
+  <meta property="og:description" content="A psychological thriller set inside a luxury skyscraper's elevator. A vertical descent into power, paranoia, and the architecture of control.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://coyne-green.com/og-image.jpg">
+  <meta property="og:url" content="https://coyne-green.com/topfloor">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TOP FLOOR — The Elevator">
+  <meta name="twitter:description" content="A psychological thriller set inside a luxury skyscraper's elevator.">
+  <meta name="twitter:image" content="https://coyne-green.com/og-image.jpg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="canonical" href="https://coyne-green.com/topfloor">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -647,7 +661,7 @@
   <!-- Drop prompt -->
   <div class="drop-prompt" id="drop-prompt">
     <div class="drop-prompt-actions">
-      <a href="/about" class="drop-prompt-btn drop-prompt-yes" id="drop-yes">Request Script</a>
+      <a href="/topfloor" class="drop-prompt-btn drop-prompt-yes" id="drop-yes">Request Script</a>
     </div>
   </div>
 
@@ -1096,7 +1110,7 @@
       }, 600);
     }
 
-    // --- "Request Script" button: fade out overlay, then navigate to about page ---
+    // --- "Request Script" button: fade out overlay, then navigate to Top Floor connect modal ---
     dropYes.addEventListener('click', (e) => {
       e.preventDefault();
       dropPrompt.classList.remove('visible');
@@ -1105,7 +1119,7 @@
 
       // Navigate after overlay fade completes (matches 0.8s CSS transition)
       setTimeout(function() {
-        window.location.href = '/about';
+        window.location.href = '/topfloor?connect=script';
       }, 850);
     });
 

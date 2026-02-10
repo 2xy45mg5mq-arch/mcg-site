@@ -2463,7 +2463,7 @@
 
           <!-- 8. Trailer -->
           <div class="video-container">
-            <video controls poster="images/img_52.webp">
+            <video controls poster="/images/img_52.webp">
               <source src="/images/video.mp4" type="video/mp4">
             </video>
           </div>
@@ -2660,9 +2660,14 @@
     // Initialize history state on page load
     history.replaceState({ page: 'home' }, '', '/');
 
-    // Keyboard navigation: Escape goes back to home
+    // Keyboard navigation: Escape closes modal first, then goes back to home
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
+        const modal = document.getElementById('connectModal');
+        if (modal && modal.classList.contains('active')) {
+          closeConnectModal();
+          return;
+        }
         const activePage = document.querySelector('.page.active');
         if (activePage && activePage.id !== 'page-home') {
           showPage('home');

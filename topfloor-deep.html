@@ -460,7 +460,9 @@
       .beat--emphasis .beat-text p { font-size: 1.55rem; }
       .beat-tagline { padding: 40px 20px 40px 58px; min-height: auto; }
       .beat-tagline p { font-size: clamp(2.2rem, 6vw, 3rem); }
-      .still { min-height: auto; }
+      .still { min-height: auto; position: relative; }
+      .still img { position: relative; height: auto; }
+      .still::after { pointer-events: none; }
       .ending { padding: 40px 20px 40px 58px; min-height: auto; }
       .ending .overview-img { width: 100%; }
     }
@@ -736,11 +738,58 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ============ SITE NAV ============ */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 36px;
+      background: linear-gradient(180deg, rgba(10,13,16,0.95) 0%, rgba(10,13,16,0.6) 70%, transparent);
+      pointer-events: none;
+    }
+    .site-nav a {
+      pointer-events: auto;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .site-nav a:hover { color: var(--text); }
+    .site-nav-logo {
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      color: var(--text) !important;
+    }
+    .site-nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    @media (max-width: 600px) {
+      .site-nav { padding: 16px 16px; }
+      .site-nav-links { gap: 16px; }
+      .site-nav a { font-size: 0.55rem; letter-spacing: 2px; }
+    }
   </style>
 </head>
 <body>
 
-  <a href="/" style="position:fixed; top:24px; left:24px; z-index:9999; font-family:'Bebas Neue',sans-serif; font-size:0.7rem; letter-spacing:2px; color:var(--muted); text-decoration:none; transition:color 0.3s;">&larr; HOME</a>
+  <nav class="site-nav">
+    <a href="/" class="site-nav-logo">HOME</a>
+    <div class="site-nav-links">
+      <a href="/">Work</a>
+      <a href="/about">About</a>
+      <a href="/?connect=true">Connect</a>
+    </div>
+  </nav>
 
   <!-- Elevator Panel: combined floor indicator + Murry figure -->
   <div class="elevator-panel" id="elevator-panel">

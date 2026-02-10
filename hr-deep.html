@@ -454,15 +454,79 @@
       .dd-close { padding: 56px 24px 100px; }
       .dd-close .btn { display: block; width: 100%; max-width: 320px; margin: 6px auto; }
     }
+
+    /* ============ SITE NAV ============ */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 36px;
+      background: linear-gradient(180deg, rgba(10,13,16,0.95) 0%, rgba(10,13,16,0.6) 70%, transparent);
+      pointer-events: none;
+    }
+    .site-nav a {
+      pointer-events: auto;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .site-nav a:hover { color: var(--text); }
+    .site-nav-logo {
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      color: var(--text) !important;
+    }
+    .site-nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    .dd-breadcrumb {
+      position: fixed;
+      top: 52px;
+      left: 28px;
+      z-index: 100;
+      pointer-events: auto;
+    }
+    .dd-breadcrumb a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .dd-breadcrumb a:hover { color: var(--text); }
+    @media (max-width: 600px) {
+      .site-nav { padding: 16px 16px; }
+      .site-nav-links { gap: 16px; }
+      .site-nav a { font-size: 0.55rem; letter-spacing: 2px; }
+      .dd-breadcrumb { top: 44px; left: 16px; }
+      .dd-breadcrumb a { font-size: 0.5rem; letter-spacing: 2px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="dd-nav">
-    <a href="/hr">&larr; HUMAN RESOURCE</a>
-    <a href="/">HOME</a>
+  <nav class="site-nav">
+    <a href="/" class="site-nav-logo">HOME</a>
+    <div class="site-nav-links">
+      <a href="/">Work</a>
+      <a href="/about">About</a>
+      <a href="/?connect=true">Connect</a>
+    </div>
   </nav>
+  <div class="dd-breadcrumb">
+    <a href="/hr">&larr; HUMAN RESOURCE</a>
+  </div>
 
   <div class="deep-dive deep-dive--first">
 

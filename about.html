@@ -48,7 +48,7 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body {
+body {
   font-family: 'EB Garamond', Georgia, serif;
   background: var(--bg);
   color: var(--text);
@@ -68,17 +68,13 @@ html, body {
   justify-content: center;
   background: var(--bg);
   position: relative;
-  padding: 80px 24px 60px;
-}
-
-.about-hero-content {
-  max-width: 900px;
-  width: 100%;
+  padding: 0 24px 100px;
 }
 
 .about-hero-heading {
   text-align: center;
   margin-bottom: 64px;
+  position: relative;
 }
 
 .about-hero-heading h1 {
@@ -92,72 +88,95 @@ html, body {
   color: var(--text);
 }
 
-.about-hero-heading .subtitle {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 400;
+
+/* Full-bleed photo background */
+.about-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.about-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 52% 20%;
+  filter: grayscale(100%);
 }
 
-.about-hero-heading .location {
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  font-weight: 300;
-  margin-top: 12px;
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(10,13,16,0.15) 0%,
+    rgba(10,13,16,0.5) 25%,
+    rgba(10,13,16,0.8) 50%,
+    rgba(10,13,16,0.95) 75%,
+    rgba(10,13,16,1) 100%
+  );
+}
+
+.about-hero-content {
+  max-width: 900px;
+  width: 100%;
+  margin-top: 60px;
+  position: relative;
+  z-index: 2;
 }
 
 .about-hero-body {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 56px;
-  align-items: start;
-  margin-bottom: 48px;
-}
-
-.about-hero-photo {
-  width: 100%;
-  border-radius: 4px;
-  filter: grayscale(100%);
-  transition: filter 0.4s;
-}
-
-.about-hero-photo:hover {
-  filter: grayscale(0%);
+  max-width: 800px;
+  margin: 0 auto 0;
 }
 
 .about-hero-text .bio-subtitle {
   color: var(--accent);
-  font-size: 0.9rem;
-  letter-spacing: 1px;
+  font-size: 1.05rem;
+  letter-spacing: 2px;
   font-style: italic;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+  text-align: center;
 }
 
 .about-hero-text p {
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.9;
-  max-width: 520px;
   margin-bottom: 14px;
 }
 
-.about-hero-cta {
-  display: block;
+/* Journey trigger (bottom of hero) */
+.journey-trigger {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 3px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.3s;
-  margin-top: 16px;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  z-index: 10;
 }
-
-.about-hero-cta:hover {
-  color: var(--text);
+.journey-trigger.hidden { opacity: 0; pointer-events: none; }
+.journey-trigger-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 5px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 8px;
+}
+.journey-trigger-arrow {
+  font-size: 1.5rem;
+  color: var(--muted);
+  animation: floatY 2s ease-in-out infinite;
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
 
 /* ============ CAROUSEL SECTION ============ */
@@ -174,7 +193,7 @@ html, body {
 
 /* ============ PANEL TRACK ============ */
 .viewport { width: 100vw; height: 100vh; overflow: hidden; position: relative; z-index: 10; }
-.h-track { display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); }
+.h-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); }
 .panel {
   flex-shrink: 0; width: 100vw; height: 100vh;
   display: flex; align-items: center; justify-content: center;
@@ -232,10 +251,45 @@ html, body {
 .nav-btn:disabled { opacity: 0.2; cursor: default; }
 .nav-hint { font-family: 'Bebas Neue', sans-serif; font-size: 0.45rem; letter-spacing: 2px; color: var(--muted); opacity: 0.5; }
 
-/* ============ BACK LINK ============ */
-.back-link { position: absolute; top: 28px; left: 36px; z-index: 200; font-family: 'Bebas Neue', sans-serif; font-size: 0.6rem; letter-spacing: 3px; color: var(--muted); text-decoration: none; opacity: 1; transition: color 0.2s; }
-.back-link.visible { opacity: 1; }
-.back-link:hover { color: var(--gold); }
+/* ============ SITE NAV ============ */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 36px;
+  background: linear-gradient(180deg, rgba(10,13,16,0.95) 0%, rgba(10,13,16,0.6) 70%, transparent);
+  pointer-events: none;
+}
+.site-nav a {
+  pointer-events: auto;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.site-nav a:hover { color: var(--text); }
+.site-nav-logo {
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--text) !important;
+}
+.site-nav-links {
+  display: flex;
+  gap: 32px;
+}
+@media (max-width: 600px) {
+  .site-nav { padding: 16px 16px; }
+  .site-nav-links { gap: 16px; }
+  .site-nav a { font-size: 0.55rem; letter-spacing: 2px; }
+}
 
 /* ============ CONTENT ============ */
 .p-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.55rem; letter-spacing: 4px; margin-bottom: 12px; color: var(--muted); }
@@ -375,6 +429,29 @@ html, body {
 }
 .end-cta:hover { border-color: var(--gold); color: var(--gold); }
 
+/* Work links (last panel) */
+.work-links { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+.work-link-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 0; border-bottom: 1px solid var(--border);
+  text-decoration: none; transition: all 0.3s;
+  gap: 32px;
+}
+.work-link-item:hover { padding-left: 12px; border-color: var(--green); }
+.wl-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+  letter-spacing: 3px; color: var(--text); transition: color 0.3s;
+  flex-shrink: 0;
+}
+.work-link-item:hover .wl-title { color: var(--green); }
+.wl-type {
+  font-family: 'Bebas Neue', sans-serif; font-size: 0.5rem;
+  letter-spacing: 3px; color: var(--muted);
+}
+.wl-meta {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+
 /* Project links */
 .project-link {
   display: inline-block; margin-top: 18px;
@@ -399,19 +476,11 @@ html, body {
 
 /* ============ MOBILE ============ */
 @media (max-width: 768px) {
-  .about-hero { padding: 60px 20px 40px; }
-  .about-hero-heading { margin-bottom: 40px; }
+  .about-hero { padding: 0 20px 100px; }
+  .about-hero-bg img { object-position: 46% 20%; }
+  .about-hero-heading { margin-bottom: 48px; }
   .about-hero-heading h1 { letter-spacing: 6px; }
-  .about-hero-heading .subtitle { font-size: 0.7rem; letter-spacing: 3px; }
-  .about-hero-heading .location { font-size: 0.6rem; letter-spacing: 4px; }
-  .about-hero-body {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    justify-items: center;
-    text-align: center;
-  }
-  .about-hero-photo { max-width: 180px; }
-  .about-hero-text p { max-width: none; }
+  .about-hero-text p { max-width: none; line-height: 2; }
   .panel { padding: 40px 24px 120px; }
   .bottom-bar { padding: 0 16px; }
   .panel-counter { right: 16px; }
@@ -428,41 +497,126 @@ html, body {
 }
 
 @media (max-width: 480px) {
-  .about-hero-heading h1 { font-size: clamp(1.8rem, 10vw, 3rem); letter-spacing: 4px; }
-  .about-hero-photo { max-width: 150px; }
+  .about-hero { padding: 0 16px 100px; }
+  .about-hero-heading { margin-bottom: 36px; }
+  .about-hero-heading h1 { font-size: clamp(1.6rem, 9vw, 2.5rem); letter-spacing: 3px; white-space: normal; }
+  .about-hero-body { gap: 24px; }
+  .about-hero-text p { font-size: 0.95rem; line-height: 1.85; margin-bottom: 12px; }
+  .about-hero-text .bio-subtitle { font-size: 0.8rem; margin-bottom: 12px; }
   .panel { padding: 32px 16px 110px; }
   .pc.left { margin-left: 0; }
   .pc.right { margin-right: 0; }
+}
+
+/* ============ TRANSITION FROM HOMEPAGE ============ */
+/* Timing variables — tune these live */
+:root {
+  --t-body-delay: 0.6s;       /* delay before bio content appears */
+  --t-body-duration: 0.6s;    /* how long bio fade-in takes */
+  --t-stagger: 0.15s;         /* stagger between heading/body/cta */
+}
+
+/* Transition-only subtitle/location — hidden by default, absolutely positioned
+   so they never affect heading layout (prevents jump on cleanup) */
+.transition-subtitle {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+#transSubtitle {
+  top: 100%;
+}
+#transLocation {
+  top: calc(100% + 24px);
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 6px;
+  font-weight: 300;
+}
+
+/* Transition uses transform on heading — no layout changes needed */
+
+/* Body fades in with opacity + transform only — no max-height (no layout shift) */
+.about-hero-content.transition-in .about-hero-body {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: aboutBodyFadeIn var(--t-body-duration) ease-out forwards;
+  animation-delay: var(--t-body-delay);
+}
+
+@keyframes aboutBodyFadeIn {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Carousel section hidden during transition, fades in after */
+.about-carousel-section.transition-hidden {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.about-carousel-section.transition-visible {
+  opacity: 1;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-content.transition-in .about-hero-body {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 </style>
 </head>
 <body>
 
+<nav class="site-nav">
+  <a href="/" class="site-nav-logo">HOME</a>
+  <div class="site-nav-links">
+    <a href="/">Work</a>
+    <a href="/about">About</a>
+    <a href="/?connect=true">Connect</a>
+  </div>
+</nav>
+
 <!-- ABOUT HERO -->
 <section class="about-hero">
+  <div class="about-hero-bg"><img src="/images/img_8.webp" alt=""></div>
+  <div class="about-hero-overlay"></div>
   <div class="about-hero-content">
     <div class="about-hero-heading">
       <h1>MAX COYNE-GREEN</h1>
-      <div class="subtitle">Writer / Producer</div>
-      <div class="location">New York / İstanbul</div>
+      <p class="transition-subtitle" id="transSubtitle">Writer / Producer</p>
+      <p class="transition-subtitle transition-location" id="transLocation">New York / İstanbul</p>
     </div>
     <div class="about-hero-body">
-      <img src="/images/img_8.webp" alt="Max Coyne-Green" class="about-hero-photo" loading="lazy">
       <div class="about-hero-text">
-        <p class="bio-subtitle">Small Language Model &middot; 1990</p>
-        <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Shaping stories — both real and imagined — for the screen and for tech clients.</p>
+        <p class="bio-subtitle">Boutique Language Model &middot; 1990</p>
+        <p>Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Shaping stories — both real and imagined — for the screen and for tech clients. Currently splitting time between New York and Istanbul.</p>
         <p>His proof-of-concept short for <em>Human Resource</em> — starring Veanne Cox and directed by Henry Chaisson — is currently on the festival circuit. The feature is being budgeted for production.</p>
         <p>Research focused. Structure obsessed. Business inclined. Writing contained, elevated genre work designed for immediate production. Stuff people actually want to watch.</p>
       </div>
     </div>
-    <a href="#journey" class="about-hero-cta">Explore the Journey &rarr;</a>
+  </div>
+  <div class="journey-trigger" id="journeyTrigger">
+    <span class="journey-trigger-text">THE ROAD HERE</span>
+    <div class="journey-trigger-arrow">↓</div>
   </div>
 </section>
 
 <!-- CAROUSEL SECTION -->
-<section id="journey" class="about-carousel-section">
-
-<a href="/" class="back-link" id="backLink">&larr; HOME</a>
+<section id="carouselSection" class="about-carousel-section">
 
 <!-- BOTTOM BAR -->
 <div class="bottom-bar" id="bottomBar">
@@ -675,11 +829,30 @@ html, body {
       </div>
     </div>
 
-    <!-- NOW — poster hero ending -->
+    <!-- NOW -->
     <div class="panel" style="padding:0;">
-      <div class="pc" style="max-width:none; display:flex; flex-direction:column; width:100%; align-items:center; justify-content:center; gap:32px; padding:60px 24px 140px;">
-        <img src="/images/hr-poster-ehap.webp" alt="Human Resource — Everyone Has a Price" style="max-height:58vh; max-width:100%; display:block; box-shadow: 0 8px 40px rgba(0,0,0,0.6);">
-        <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(1.2rem, 4vw, 2rem); letter-spacing:4px; color:var(--text); margin:0;">Developing HUMAN RESOURCE as a feature film. Running Genesis, a narrative consulting practice. Based in New York.</p>
+      <div class="pc center wide" style="max-width:800px;">
+        <h2 style="font-family:'Bebas Neue',sans-serif; font-size:4rem; letter-spacing:8px; margin-bottom:48px; color:var(--green);">NOW</h2>
+        <div class="work-links">
+          <a href="/hr" class="work-link-item">
+            <span class="wl-title">HUMAN RESOURCE</span>
+            <span class="wl-meta">
+              <span class="wl-type">SHORT FILM (PRODUCED)</span>
+              <span class="wl-type">FEATURE (IN DEVELOPMENT)</span>
+            </span>
+          </a>
+          <a href="/topfloor" class="work-link-item">
+            <span class="wl-title">TOP FLOOR</span>
+            <span class="wl-type">FEATURE</span>
+          </a>
+          <a href="/kanvatan" class="work-link-item">
+            <span class="wl-title">KAN VATAN</span>
+            <span class="wl-type">TV PILOT</span>
+          </a>
+        </div>
+        <div class="end-ctas" style="margin-top:48px;">
+          <a href="/?connect=true" class="end-cta">GET IN TOUCH</a>
+        </div>
       </div>
     </div>
 
@@ -690,15 +863,13 @@ html, body {
 
 <script>
 // ============ CAROUSEL INIT ============
-const carouselSection = document.getElementById('journey');
-const backLink = document.getElementById('backLink');
+const carouselSection = document.getElementById('carouselSection');
 const navArrows = document.getElementById('navArrows');
 const bottomBarEl = document.getElementById('bottomBar');
 const counterEl = document.getElementById('counter');
 const chartContainer = document.getElementById('chartContainer');
 
 // Show carousel controls immediately
-backLink.classList.add('visible');
 navArrows.classList.add('visible');
 bottomBarEl.classList.add('visible');
 counterEl.classList.add('visible');
@@ -727,13 +898,10 @@ revealObserver.observe(carouselSection);
 
 // Handle #journey hash on page load — scroll to carousel
 if (window.location.hash === '#journey') {
-  // Disable smooth scroll temporarily for instant jump
   document.documentElement.style.scrollBehavior = 'auto';
-  // Multiple attempts to ensure scroll lands after layout
   carouselSection.scrollIntoView();
   window.addEventListener('load', () => {
     carouselSection.scrollIntoView();
-    // Restore smooth scroll after landing
     setTimeout(() => {
       document.documentElement.style.scrollBehavior = 'smooth';
     }, 100);
@@ -787,7 +955,7 @@ function goTo(index) {
     revealClimbNodes(current);
   }, 100);
   updateUI();
-  setTimeout(() => { isTransitioning = false; }, 650);
+  setTimeout(() => { isTransitioning = false; }, 400);
 }
 
 function next() { goTo(current + 1); }
@@ -797,18 +965,30 @@ nextBtn.addEventListener('click', next);
 
 document.addEventListener('keydown', (e) => {
   if (!carouselInView) return;
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); next(); }
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    if (current < NUM - 1) { e.preventDefault(); next(); }
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    if (current > 0) { e.preventDefault(); prev(); }
+  }
 });
 
 document.addEventListener('wheel', (e) => {
   if (!carouselInView) return;
-  e.preventDefault();
   if (scrollCooldown) return;
+
+  const down = e.deltaY > 0 || e.deltaX > 0;
+  const up = e.deltaY < 0 || e.deltaX < 0;
+
+  // Release scroll at edges — don't trap the user
+  if (up && current === 0) return;
+  if (down && current === NUM - 1) return;
+
+  e.preventDefault();
   scrollCooldown = true;
-  if (e.deltaY > 0 || e.deltaX > 0) next();
-  else if (e.deltaY < 0 || e.deltaX < 0) prev();
-  setTimeout(() => { scrollCooldown = false; }, 700);
+  if (down) next();
+  else if (up) prev();
+  setTimeout(() => { scrollCooldown = false; }, 400);
 }, { passive: false });
 
 let touchStartX = 0, touchStartY = 0;
@@ -960,5 +1140,131 @@ function updateUI() {
 
 updateUI();
 </script>
+
+<script>
+// Transition animation from homepage
+(function() {
+  var hasTransition = sessionStorage.getItem('about-transition');
+  if (!hasTransition) return;
+
+  sessionStorage.removeItem('about-transition');
+  var savedHash = sessionStorage.getItem('about-hash');
+  if (savedHash) sessionStorage.removeItem('about-hash');
+  var savedH1Top = sessionStorage.getItem('about-h1-top');
+  if (savedH1Top) sessionStorage.removeItem('about-h1-top');
+
+  var heroContent = document.querySelector('.about-hero-content');
+  var hero = document.querySelector('.about-hero');
+  var heading = document.querySelector('.about-hero-heading');
+  var carousel = document.getElementById('carouselSection');
+
+  if (!heroContent || !hero || !heading) return;
+
+  // Hide body + photo + overlay initially — just show name on black
+  var body = heroContent.querySelector('.about-hero-body');
+  var bg = document.querySelector('.about-hero-bg');
+  var overlay = document.querySelector('.about-hero-overlay');
+  var transSub = document.getElementById('transSubtitle');
+  var transLoc = document.getElementById('transLocation');
+  if (body) body.style.opacity = '0';
+  if (bg) bg.style.opacity = '0';
+  if (overlay) overlay.style.opacity = '0';
+
+  // Show transition subtitle/location (matching homepage appearance)
+  if (transSub) { transSub.style.display = 'block'; transSub.style.opacity = '1'; }
+  if (transLoc) { transLoc.style.display = 'block'; transLoc.style.opacity = '1'; }
+
+  // Calculate offset: where the heading IS vs where it SHOULD START (homepage position)
+  var h1 = heading.querySelector('h1');
+  var naturalTop = h1.getBoundingClientRect().top;
+  var homepageTop = savedH1Top ? parseInt(savedH1Top, 10) : naturalTop;
+  var offset = homepageTop - naturalTop;
+
+  // Apply transform to place heading at homepage position (no layout change needed)
+  heading.style.transform = 'translateY(' + offset + 'px)';
+  heading.style.transition = 'none';
+
+  // Phase 1 (200ms): Fade in photo + overlay behind the name
+  setTimeout(function() {
+    if (bg) { bg.style.transition = 'opacity 0.8s ease-out'; bg.style.opacity = '1'; }
+    if (overlay) { overlay.style.transition = 'opacity 0.8s ease-out'; overlay.style.opacity = '1'; }
+  }, 200);
+
+  // Phase 2 (800ms): Move heading up + fade out subtitle then location one by one
+  setTimeout(function() {
+    heading.style.transition = 'transform 0.6s ease-in-out';
+    heading.style.transform = '';
+    // Fade out "Writer / Producer" — slides up and fades
+    if (transSub) {
+      transSub.style.opacity = '0';
+      transSub.style.transform = 'translateY(-8px)';
+    }
+  }, 800);
+
+  // Fade out "New York / İstanbul" slightly after (staggered)
+  setTimeout(function() {
+    if (transLoc) {
+      transLoc.style.opacity = '0';
+      transLoc.style.transform = 'translateY(-8px)';
+    }
+  }, 1000);
+
+  // Reveal body text
+  setTimeout(function() {
+    if (body) { body.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out'; body.style.transform = 'translateY(16px)'; body.style.opacity = '0'; }
+    requestAnimationFrame(function() {
+      if (body) { body.style.opacity = '1'; body.style.transform = 'translateY(0)'; }
+    });
+  }, 1200);
+
+  // Phase 3 (2000ms): Clean up all inline styles
+  setTimeout(function() {
+    heading.style.transition = '';
+    heading.style.transform = '';
+    if (body) { body.style.transition = ''; body.style.transform = ''; body.style.opacity = ''; }
+    if (bg) { bg.style.transition = ''; bg.style.opacity = ''; }
+    if (overlay) { overlay.style.transition = ''; overlay.style.opacity = ''; }
+    if (transSub) { transSub.style.display = 'none'; transSub.style.opacity = ''; transSub.style.transform = ''; }
+    if (transLoc) { transLoc.style.display = 'none'; transLoc.style.opacity = ''; transLoc.style.transform = ''; }
+  }, 2000);
+
+  // Hide carousel section during hero transition
+  if (carousel) {
+    carousel.classList.add('transition-hidden');
+    setTimeout(function() {
+      carousel.classList.remove('transition-hidden');
+      carousel.classList.add('transition-visible');
+      if (savedHash === 'journey') {
+        setTimeout(function() {
+          carousel.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    }, 2000);
+  }
+
+  // During transition: hide journey trigger initially, show after body reveals
+  var trigger = document.getElementById('journeyTrigger');
+  if (trigger) {
+    trigger.style.opacity = '0';
+    setTimeout(function() {
+      trigger.style.opacity = '';
+    }, 1800);
+  }
+})();
+</script>
+
+<script>
+// Journey trigger: click to scroll, hide when carousel enters view
+(function() {
+  var trigger = document.getElementById('journeyTrigger');
+  var carouselEl = document.getElementById('carouselSection');
+  if (!trigger || !carouselEl) return;
+
+  trigger.addEventListener('click', function() {
+    carouselEl.scrollIntoView({ behavior: 'smooth' });
+  });
+})();
+</script>
+
 </body>
 </html>

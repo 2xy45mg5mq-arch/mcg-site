@@ -2531,7 +2531,7 @@
         <div class="treatment">
           <p><strong>MURRY</strong> opens the door. That's what he does. Six days a week in the green marble lobby of the storied uptown Pyramid House. But if you asked him, he wouldn't say he's a doorman. He'd say he's an entrepreneur <em>working as a doorman</em>. Waiting for the right door to open for him. He's dreaming of the top. But he's still living in his sister's basement.</p>
           <p><strong>SERA</strong> is happy he's down there. Their whole lives, he's been getting himself stuck in holes. Leaving her to dig him out. These days, she's trying to keep him grounded. She just wants him to be okay with <em>who he is</em>. But Murry's listened to enough podcasts to know he can be <em>anyone he wants to be</em>. And there is a man he always wanted to be...</p>
-          <p><strong>NIK</strong> lives at the top. But unlike the other tenants at the Pyramid, the suave investor in Penthouse B always looks Murry right in the face. And he sees himself. Not just because Murry helps Nik with his diabetic dog, SNACKS. But because, besides Murry's beard, <strong>the two look strikingly similar</strong>.</p>
+          <p><strong>NIK</strong> lives at the top. But unlike the other tenants at the Pyramid, the suave investor in Penthouse B always looks Murry right in the face. And he sees himself. Not just because Murry helps Nik with his diabetic dog, SNACKS. because besides Murry's beard, <strong>the two look strikingly similar</strong>.</p>
           <p>So when Nik needs to leave town for work, he turns to Murry with an offer: stay over in the penthouse with Snacks. But there's a catch. In such a strict co-op, Murry will get fired if anyone sees him in the unit unattended.</p>
           <p>He'll have to make sure everyone sees Nik.</p>
           <p>Life upstairs is a dream come true at first. But soon, Murry discovers the man he's pretending to be isn't who he thought he was. And when Murry goes missing, Sera starts investigating the last person Murry ever mentioned: the investor in the&nbsp;penthouse.</p>
@@ -2850,17 +2850,28 @@
     // Run routing on page load
     handleRoute();
 
-    // Auto-open connect modal if ?connect=script param is present (from deep dive pages)
+    // Auto-open connect modal if ?connect= param is present (from deep dive pages)
     (function() {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('connect') === 'script') {
-        const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
+      const connectVal = params.get('connect');
+      if (connectVal) {
         const presets = {
-          'topfloor': {heading:'REQUEST SCRIPT',subtitle:'Top Floor — Feature Film',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'},
-          'hr': {heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'}
+          'topfloor-script': {heading:'REQUEST SCRIPT',subtitle:'Top Floor — Feature Film',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'},
+          'hr-script': {heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'},
+          'script': null // legacy fallback — use path
         };
-        if (presets[path]) {
-          setTimeout(() => openConnectModal(presets[path]), 400);
+        let preset = presets[connectVal];
+        if (connectVal === 'script') {
+          // Legacy: ?connect=script with path-based lookup
+          const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
+          const legacyPresets = {
+            'topfloor': presets['topfloor-script'],
+            'hr': presets['hr-script']
+          };
+          preset = legacyPresets[path];
+        }
+        if (preset) {
+          setTimeout(() => openConnectModal(preset), 400);
         }
         // Clean URL
         window.history.replaceState({}, '', window.location.pathname);

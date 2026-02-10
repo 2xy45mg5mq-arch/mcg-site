@@ -48,6 +48,12 @@
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      opacity: 0;
+    }
+
+    #scroll-container.ready {
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
 
     #scroll-container::-webkit-scrollbar { display: none; }
@@ -75,16 +81,17 @@
 
     /* --- STORY BEAT (text block) --- */
     .beat {
-      min-height: 60vh;
+      min-height: 50vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       padding: 60px 40px 60px calc(40px + 56px);
     }
 
     .beat-text {
       max-width: 780px;
+      width: 100%;
     }
 
     .beat-text p {
@@ -126,7 +133,7 @@
 
     /* Big dramatic tagline beat */
     .beat-tagline {
-      min-height: 60vh;
+      min-height: 50vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -550,6 +557,31 @@
       color: var(--gold);
     }
 
+    .drop-prompt-nav {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drop-prompt-link {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.3s;
+    }
+
+    .drop-prompt-link:hover {
+      color: var(--text);
+    }
+
+    .drop-prompt-sep {
+      color: rgba(107, 122, 136, 0.4);
+      font-size: 0.8rem;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .shake { animation: none; }
       .ep-figure.falling { animation: none; opacity: 0; }
@@ -662,6 +694,11 @@
   <div class="drop-prompt" id="drop-prompt">
     <div class="drop-prompt-actions">
       <a href="/topfloor" class="drop-prompt-btn drop-prompt-yes" id="drop-yes">Request Script</a>
+    </div>
+    <div class="drop-prompt-nav">
+      <a href="#" class="drop-prompt-link" id="drop-back">Back to Story</a>
+      <span class="drop-prompt-sep">·</span>
+      <a href="/#work" class="drop-prompt-link">See Other Work</a>
     </div>
   </div>
 
@@ -923,10 +960,12 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       scrollToLobby();
+      container.classList.add('ready');
     });
 
     window.addEventListener('load', () => {
       scrollToLobby();
+      container.classList.add('ready');
       requestAnimationFrame(() => {
         scrollToLobby();
         updateUI();
@@ -1016,20 +1055,21 @@
     let dropTrigger = null;
 
     function armDropObserver() {
-      const act3Card = document.getElementById('floor-act3');
-      if (!act3Card) return;
+      const ending = document.getElementById('floor-ending');
+      if (!ending) return;
 
       dropTrigger = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting && !dropTriggered && initialized) {
             dropTriggered = true;
             dropTrigger.unobserve(e.target);
-            setTimeout(() => initiateTheDrop(), 1200);
+            // Wait for the reader to absorb the ending before the drop
+            setTimeout(() => initiateTheDrop(), 3000);
           }
         });
-      }, { threshold: 0.5, root: container });
+      }, { threshold: 0.3, root: container });
 
-      dropTrigger.observe(act3Card);
+      dropTrigger.observe(ending);
     }
 
     function initiateTheDrop() {
@@ -1119,8 +1159,18 @@
 
       // Navigate after overlay fade completes (matches 0.8s CSS transition)
       setTimeout(function() {
-        window.location.href = '/topfloor?connect=script';
+        window.location.href = '/?connect=topfloor-script';
       }, 850);
+    });
+
+    // --- "Back to Story" link: dismiss overlay, scroll back to lobby ---
+    document.getElementById('drop-back').addEventListener('click', (e) => {
+      e.preventDefault();
+      dropPrompt.classList.remove('visible');
+      scrollLocked = false;
+      unlockUserScroll();
+      scrollToLobby();
+      updateUI();
     });
 
     // ==========================================

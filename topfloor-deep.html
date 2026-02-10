@@ -486,7 +486,7 @@
       90%  { transform: translateY(-3px); }
       100% { transform: translateY(0); }
     }
-    .shake { animation: elevator-shake 0.5s ease-in-out; }
+    .shake { animation: elevator-shake 0.35s ease-in-out; }
 
     @keyframes figure-fall {
       0%   { transform: translateY(0); opacity: 1; }
@@ -921,7 +921,6 @@
 
     // State
     let activeFloor    = 'lobby';
-    let dropTriggered  = false;
     let isDropping     = false;
     let scrollLocked   = false;
     let initialized    = false;
@@ -1060,11 +1059,11 @@
 
       dropTrigger = new IntersectionObserver((entries) => {
         entries.forEach(e => {
-          if (e.isIntersecting && !dropTriggered && initialized) {
-            dropTriggered = true;
-            dropTrigger.unobserve(e.target);
+          if (e.isIntersecting && !isDropping && initialized) {
             // Wait for the reader to absorb the ending before the drop
-            setTimeout(() => initiateTheDrop(), 3000);
+            setTimeout(() => {
+              if (!isDropping) initiateTheDrop();
+            }, 2000);
           }
         });
       }, { threshold: 0.3, root: container });
@@ -1089,7 +1088,7 @@
         setTimeout(() => {
           dropScroll();
         }, 400);
-      }, 500);
+      }, 350);
     }
 
     function blockScroll(e) { e.preventDefault(); }
@@ -1163,12 +1162,15 @@
       }, 850);
     });
 
-    // --- "Back to Story" link: dismiss overlay, scroll back to lobby ---
+    // --- "Back to Story" link: dismiss overlay, reset drop, scroll back to lobby ---
     document.getElementById('drop-back').addEventListener('click', (e) => {
       e.preventDefault();
       dropPrompt.classList.remove('visible');
       scrollLocked = false;
+      isDropping = false;
       unlockUserScroll();
+      // Reset figure for next drop
+      epFigure.classList.remove('falling');
       scrollToLobby();
       updateUI();
     });

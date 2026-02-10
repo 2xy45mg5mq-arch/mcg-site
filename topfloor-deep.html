@@ -27,6 +27,8 @@
       --accent: #b8a472;
       --gold: #b8a472;
       --gold-dim: rgba(184, 164, 114, 0.15);
+      --card: #12171d;
+      --border: #1f2933;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -582,6 +584,129 @@
       font-size: 0.8rem;
     }
 
+    /* --- CONNECT MODAL --- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px;
+      max-width: 480px;
+      width: 90%;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+    .modal h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+    .modal-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+    .modal-section { margin-bottom: 24px; }
+    .modal-section-label {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+    .checkbox-item { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .checkbox-item input { display: none; }
+    .checkbox-box {
+      width: 20px; height: 20px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .checkbox-item input:checked + .checkbox-box {
+      background: var(--text);
+      border-color: var(--text);
+    }
+    .checkbox-box::after {
+      content: '\2713';
+      color: var(--bg);
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .checkbox-item input:checked + .checkbox-box::after { opacity: 1; }
+    .checkbox-label { font-size: 0.95rem; }
+    .modal-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .modal-input:focus { outline: none; border-color: var(--muted); }
+    .modal-input::placeholder { color: var(--muted); }
+    .modal-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      resize: vertical;
+      min-height: 80px;
+    }
+    .modal-textarea:focus { outline: none; border-color: var(--muted); }
+    .modal-textarea::placeholder { color: var(--muted); }
+    .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
+    .modal-btn {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-btn-primary { background: var(--text); color: var(--bg); }
+    .modal-btn-primary:hover { background: #fff; }
+    .modal-btn-secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
     @media (prefers-reduced-motion: reduce) {
       .shake { animation: none; }
       .ep-figure.falling { animation: none; opacity: 0; }
@@ -1063,7 +1188,7 @@
             // Wait for the reader to absorb the ending before the drop
             setTimeout(() => {
               if (!isDropping) initiateTheDrop();
-            }, 2000);
+            }, 1200);
           }
         });
       }, { threshold: 0.3, root: container });
@@ -1149,16 +1274,20 @@
       }, 600);
     }
 
-    // --- "Request Script" button: fade out overlay, then navigate to Top Floor connect modal ---
+    // --- "Request Script" button: dismiss drop overlay, open connect modal ---
     dropYes.addEventListener('click', (e) => {
       e.preventDefault();
       dropPrompt.classList.remove('visible');
       scrollLocked = false;
+      isDropping = false;
       unlockUserScroll();
+      epFigure.classList.remove('falling');
+      scrollToLobby();
+      updateUI();
 
-      // Navigate after overlay fade completes (matches 0.8s CSS transition)
+      // Open connect modal after drop overlay fades
       setTimeout(function() {
-        window.location.href = '/?connect=topfloor-script';
+        openConnectModal();
       }, 850);
     });
 
@@ -1217,6 +1346,153 @@
         figLabel.textContent = fadePct > 0.5 ? 'NIK' : 'MURRY';
       }
     }
+  </script>
+
+  <!-- Hidden Netlify form for build-time detection -->
+  <form name="connect" netlify netlify-honeypot="bot-field" hidden>
+    <input name="name">
+    <input name="email">
+    <input name="request">
+    <input name="interest" type="checkbox" value="Human Resource">
+    <input name="interest" type="checkbox" value="Top Floor">
+    <input name="interest" type="checkbox" value="Kan Vatan">
+    <input name="interest" type="checkbox" value="General Meeting">
+    <textarea name="message"></textarea>
+    <input name="bot-field">
+  </form>
+
+  <!-- CONNECT MODAL -->
+  <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
+    <div class="modal">
+      <div id="connectFormState">
+        <h2 id="connectHeading">REQUEST SCRIPT</h2>
+        <p class="modal-subtitle" id="connectSubtitle">Top Floor — Feature Film</p>
+
+        <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="connect">
+          <input type="hidden" name="request" id="connectRequest" value="Top Floor - Script">
+          <p style="display:none;"><input name="bot-field"></p>
+
+          <div class="modal-section">
+            <div class="modal-section-label">Your info</div>
+            <input type="text" name="name" class="modal-input" placeholder="Name" required>
+            <input type="email" name="email" class="modal-input" placeholder="Email" required>
+          </div>
+
+          <div class="modal-section">
+            <div class="modal-section-label">I'm interested in</div>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Human Resource">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Human Resource</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Top Floor" checked>
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Top Floor</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Kan Vatan">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Kan Vatan</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="General Meeting">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">General meeting with Max</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <div class="modal-section-label">Anything else? (optional)</div>
+            <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Introduce yourself briefly..."></textarea>
+          </div>
+
+          <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
+            <button type="submit" class="modal-btn modal-btn-primary">Send</button>
+          </div>
+        </form>
+        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
+      </div>
+
+      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
+        <h2>SENT</h2>
+        <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
+        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Connect modal functions
+    function openConnectModal() {
+      document.getElementById('connectForm').reset();
+      document.getElementById('connectRequest').value = 'Top Floor - Script';
+      // Re-check Top Floor after reset
+      var tfCheckbox = document.querySelector('#connectForm input[value="Top Floor"]');
+      if (tfCheckbox) tfCheckbox.checked = true;
+      document.getElementById('connectFormState').style.display = '';
+      document.getElementById('connectSuccessState').style.display = 'none';
+      document.getElementById('connectModal').classList.add('active');
+    }
+
+    function closeConnectModal() {
+      document.getElementById('connectModal').classList.remove('active');
+    }
+
+    // Escape key closes modal
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var modal = document.getElementById('connectModal');
+        if (modal && modal.classList.contains('active')) {
+          closeConnectModal();
+        }
+      }
+    });
+
+    // Form submission
+    (function() {
+      var form = document.getElementById('connectForm');
+      if (!form) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
+
+        if (!isNetlify) {
+          setTimeout(function() {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          }, 400);
+          return;
+        }
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        })
+        .then(function(res) {
+          if (res.ok) {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          } else {
+            throw new Error('fail');
+          }
+        })
+        .catch(function() {
+          btn.textContent = 'Send';
+          btn.disabled = false;
+          alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
+        });
+      });
+    })();
   </script>
 
 </body>

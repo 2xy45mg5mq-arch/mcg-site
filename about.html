@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4XQR4QCNZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V4XQR4QCNZ');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Max Coyne-Green</title>
@@ -36,6 +44,10 @@
   --red: #8b3a3a;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   font-family: 'EB Garamond', Georgia, serif;
   background: var(--bg);
@@ -44,52 +56,117 @@ html, body {
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
-  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============ ABOUT HERO ============ */
+.about-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  position: relative;
+  padding: 80px 24px 60px;
+}
+
+.about-hero-content {
+  max-width: 900px;
   width: 100%;
 }
 
-/* ============ HERO ============ */
-.hero-panel {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 300; background: var(--bg);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  cursor: pointer;
+.about-hero-heading {
+  text-align: center;
+  margin-bottom: 64px;
 }
-.hero-panel.dismissed { opacity: 0; transform: scale(1.02); pointer-events: none; }
-.hero-content { text-align: center; padding: 0 24px; }
-.hero-content h1 {
+
+.about-hero-heading h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2.2rem, 8vw, 7.5rem);
-  letter-spacing: 12px; line-height: 1;
-  margin-bottom: 20px; font-weight: 400;
-  white-space: nowrap; color: var(--text);
+  letter-spacing: 12px;
+  line-height: 1;
+  margin-bottom: 20px;
+  font-weight: 400;
+  white-space: nowrap;
+  color: var(--text);
 }
-.hero-content .subtitle {
-  font-size: 0.85rem; color: rgba(255,255,255,0.5);
-  letter-spacing: 4px; text-transform: uppercase;
+
+.about-hero-heading .subtitle {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 400;
 }
-.hero-content .location {
-  font-size: 0.7rem; color: rgba(255,255,255,0.35);
-  letter-spacing: 6px; text-transform: uppercase;
+
+.about-hero-heading .location {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  font-weight: 300;
   margin-top: 12px;
 }
-.hero-enter {
-  position: absolute; bottom: 60px; left: 50%;
-  transform: translateX(-50%); text-align: center;
-  animation: float 3s ease-in-out infinite;
+
+.about-hero-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 56px;
+  align-items: start;
+  margin-bottom: 48px;
 }
-.hero-enter-label {
+
+.about-hero-photo {
+  width: 100%;
+  border-radius: 4px;
+  filter: grayscale(100%);
+  transition: filter 0.4s;
+}
+
+.about-hero-photo:hover {
+  filter: grayscale(0%);
+}
+
+.about-hero-text .bio-subtitle {
+  color: var(--accent);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.about-hero-text p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  max-width: 520px;
+  margin-bottom: 14px;
+}
+
+.about-hero-cta {
+  display: block;
+  text-align: center;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.65rem; letter-spacing: 4px;
-  color: rgba(255,255,255,0.4); margin-bottom: 10px;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+  margin-top: 16px;
 }
-.hero-enter-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-  margin: 0 auto;
+
+.about-hero-cta:hover {
+  color: var(--text);
 }
+
+/* ============ CAROUSEL SECTION ============ */
+.about-carousel-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
 @keyframes float {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(6px); }
@@ -108,7 +185,7 @@ html, body {
 
 /* ============ CHART ============ */
 .chart-container {
-  position: fixed; bottom: 80px; left: 0; right: 0;
+  position: absolute; bottom: 80px; left: 0; right: 0;
   height: 40vh; pointer-events: none; z-index: 5;
   opacity: 0; transition: opacity 0.6s;
 }
@@ -129,7 +206,7 @@ html, body {
 
 /* ============ BOTTOM BAR ============ */
 .bottom-bar {
-  position: fixed; bottom: 0; left: 0; right: 0; height: 80px; z-index: 100;
+  position: absolute; bottom: 0; left: 0; right: 0; height: 80px; z-index: 100;
   background: linear-gradient(to top, rgba(10,13,16,0.97) 50%, transparent);
   padding: 0 80px; display: flex; flex-direction: column;
   justify-content: flex-end; padding-bottom: 16px;
@@ -144,11 +221,11 @@ html, body {
 .timeline-year { position: absolute; top: 50%; transform: translate(-50%, 10px); font-family: 'Bebas Neue', sans-serif; font-size: 0.45rem; letter-spacing: 2px; color: var(--border); transition: color 0.3s; }
 .timeline-year.active { color: var(--muted); }
 .timeline-tick { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
-.panel-counter { position: fixed; bottom: 52px; right: 80px; font-family: 'Bebas Neue', sans-serif; font-size: 0.55rem; letter-spacing: 3px; color: var(--muted); z-index: 100; opacity: 0; transition: opacity 0.6s; }
+.panel-counter { position: absolute; bottom: 52px; right: 80px; font-family: 'Bebas Neue', sans-serif; font-size: 0.55rem; letter-spacing: 3px; color: var(--muted); z-index: 100; opacity: 0; transition: opacity 0.6s; }
 .panel-counter.visible { opacity: 1; }
 
 /* ============ NAV ============ */
-.nav-arrows { position: fixed; bottom: 48px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 200; opacity: 0; transition: opacity 0.6s; }
+.nav-arrows { position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 200; opacity: 0; transition: opacity 0.6s; }
 .nav-arrows.visible { opacity: 1; }
 .nav-btn { width: 36px; height: 36px; border: 1px solid var(--border); background: rgba(10,13,16,0.8); color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; border-radius: 0; }
 .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
@@ -156,7 +233,7 @@ html, body {
 .nav-hint { font-family: 'Bebas Neue', sans-serif; font-size: 0.45rem; letter-spacing: 2px; color: var(--muted); opacity: 0.5; }
 
 /* ============ BACK LINK ============ */
-.back-link { position: fixed; top: 28px; left: 36px; z-index: 200; font-family: 'Bebas Neue', sans-serif; font-size: 0.6rem; letter-spacing: 3px; color: var(--muted); text-decoration: none; opacity: 0; transition: opacity 0.6s, color 0.2s; }
+.back-link { position: absolute; top: 28px; left: 36px; z-index: 200; font-family: 'Bebas Neue', sans-serif; font-size: 0.6rem; letter-spacing: 3px; color: var(--muted); text-decoration: none; opacity: 1; transition: color 0.2s; }
 .back-link.visible { opacity: 1; }
 .back-link:hover { color: var(--gold); }
 
@@ -322,13 +399,23 @@ html, body {
 
 /* ============ MOBILE ============ */
 @media (max-width: 768px) {
+  .about-hero { padding: 60px 20px 40px; }
+  .about-hero-heading { margin-bottom: 40px; }
+  .about-hero-heading h1 { letter-spacing: 6px; }
+  .about-hero-heading .subtitle { font-size: 0.7rem; letter-spacing: 3px; }
+  .about-hero-heading .location { font-size: 0.6rem; letter-spacing: 4px; }
+  .about-hero-body {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    justify-items: center;
+    text-align: center;
+  }
+  .about-hero-photo { max-width: 180px; }
+  .about-hero-text p { max-width: none; }
   .panel { padding: 40px 24px 120px; }
   .bottom-bar { padding: 0 16px; }
   .panel-counter { right: 16px; }
   .nav-btn { width: 44px; height: 44px; }
-  .hero-content h1 { letter-spacing: 6px; font-size: clamp(2rem, 8vw, 7.5rem); }
-  .hero-content .subtitle { font-size: 0.7rem; letter-spacing: 3px; }
-  .hero-content .location { font-size: 0.6rem; letter-spacing: 4px; }
   .pc h2 { font-size: 2rem; }
   .pc p { font-size: 0.95rem; }
   .climb-track { gap: 12px; }
@@ -341,8 +428,9 @@ html, body {
 }
 
 @media (max-width: 480px) {
+  .about-hero-heading h1 { font-size: clamp(1.8rem, 10vw, 3rem); letter-spacing: 4px; }
+  .about-hero-photo { max-width: 150px; }
   .panel { padding: 32px 16px 110px; }
-  .hero-content h1 { font-size: clamp(1.8rem, 10vw, 3rem); letter-spacing: 4px; }
   .pc.left { margin-left: 0; }
   .pc.right { margin-right: 0; }
 }
@@ -350,18 +438,29 @@ html, body {
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero-panel" id="heroPanel">
-  <div class="hero-content">
-    <h1>MAX COYNE-GREEN</h1>
-    <div class="subtitle">Screenwriter &amp; Producer</div>
-    <div class="location">New York</div>
+<!-- ABOUT HERO -->
+<section class="about-hero">
+  <div class="about-hero-content">
+    <div class="about-hero-heading">
+      <h1>MAX COYNE-GREEN</h1>
+      <div class="subtitle">Writer / Producer</div>
+      <div class="location">New York / İstanbul</div>
+    </div>
+    <div class="about-hero-body">
+      <img src="/images/img_8.webp" alt="Max Coyne-Green" class="about-hero-photo" loading="lazy">
+      <div class="about-hero-text">
+        <p class="bio-subtitle">Small Language Model &middot; 1990</p>
+        <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Shaping stories — both real and imagined — for the screen and for tech clients.</p>
+        <p>His proof-of-concept short for <em>Human Resource</em> — starring Veanne Cox and directed by Henry Chaisson — is currently on the festival circuit. The feature is being budgeted for production.</p>
+        <p>Research focused. Structure obsessed. Business inclined. Writing contained, elevated genre work designed for immediate production. Stuff people actually want to watch.</p>
+      </div>
+    </div>
+    <a href="#journey" class="about-hero-cta">Explore the Journey &rarr;</a>
   </div>
-  <div class="hero-enter">
-    <div class="hero-enter-label">CLICK TO ENTER</div>
-    <div class="hero-enter-line"></div>
-  </div>
-</div>
+</section>
+
+<!-- CAROUSEL SECTION -->
+<section id="journey" class="about-carousel-section">
 
 <a href="/" class="back-link" id="backLink">&larr; HOME</a>
 
@@ -587,32 +686,59 @@ html, body {
   </div>
 </div>
 
+</section><!-- end .about-carousel-section -->
+
 <script>
-// ============ HERO ============
-const heroPanel = document.getElementById('heroPanel');
+// ============ CAROUSEL INIT ============
+const carouselSection = document.getElementById('journey');
 const backLink = document.getElementById('backLink');
 const navArrows = document.getElementById('navArrows');
 const bottomBarEl = document.getElementById('bottomBar');
 const counterEl = document.getElementById('counter');
 const chartContainer = document.getElementById('chartContainer');
-let heroActive = true;
 
-function dismissHero() {
-  if (!heroActive) return;
-  heroActive = false;
-  heroPanel.classList.add('dismissed');
-  setTimeout(() => {
-    backLink.classList.add('visible');
-    navArrows.classList.add('visible');
-    bottomBarEl.classList.add('visible');
-    counterEl.classList.add('visible');
-    chartContainer.classList.add('visible');
-    heroPanel.style.display = 'none';
-    // Reveal climb nodes on first panel if it has them
-    revealClimbNodes(0);
-  }, 400);
+// Show carousel controls immediately
+backLink.classList.add('visible');
+navArrows.classList.add('visible');
+bottomBarEl.classList.add('visible');
+counterEl.classList.add('visible');
+chartContainer.classList.add('visible');
+
+// Track whether carousel section is in view for scroll locking
+let carouselInView = false;
+const carouselObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    carouselInView = e.isIntersecting && e.intersectionRatio > 0.5;
+  });
+}, { threshold: [0.5] });
+carouselObserver.observe(carouselSection);
+
+// Reveal first panel's climb nodes when carousel scrolls into view
+let firstRevealDone = false;
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !firstRevealDone) {
+      firstRevealDone = true;
+      revealClimbNodes(0);
+    }
+  });
+}, { threshold: [0.3] });
+revealObserver.observe(carouselSection);
+
+// Handle #journey hash on page load — scroll to carousel
+if (window.location.hash === '#journey') {
+  // Disable smooth scroll temporarily for instant jump
+  document.documentElement.style.scrollBehavior = 'auto';
+  // Multiple attempts to ensure scroll lands after layout
+  carouselSection.scrollIntoView();
+  window.addEventListener('load', () => {
+    carouselSection.scrollIntoView();
+    // Restore smooth scroll after landing
+    setTimeout(() => {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }, 100);
+  });
 }
-heroPanel.addEventListener('click', dismissHero);
 
 // ============ NAV ============
 const track = document.getElementById('track');
@@ -650,7 +776,6 @@ function resetClimbNodes(panelIdx) {
 
 function goTo(index) {
   if (index < 0 || index >= NUM || isTransitioning) return;
-  if (heroActive) { dismissHero(); return; }
   isTransitioning = true;
   // Reset old panel
   allPanels[current].classList.remove('active');
@@ -671,14 +796,14 @@ prevBtn.addEventListener('click', prev);
 nextBtn.addEventListener('click', next);
 
 document.addEventListener('keydown', (e) => {
-  if (heroActive && (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); dismissHero(); return; }
+  if (!carouselInView) return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); next(); }
   if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
 });
 
 document.addEventListener('wheel', (e) => {
+  if (!carouselInView) return;
   e.preventDefault();
-  if (heroActive) { dismissHero(); return; }
   if (scrollCooldown) return;
   scrollCooldown = true;
   if (e.deltaY > 0 || e.deltaX > 0) next();
@@ -689,7 +814,7 @@ document.addEventListener('wheel', (e) => {
 let touchStartX = 0, touchStartY = 0;
 document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; });
 document.addEventListener('touchend', (e) => {
-  if (heroActive) { dismissHero(); return; }
+  if (!carouselInView) return;
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
   if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }

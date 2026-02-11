@@ -4,6 +4,7 @@ sandbox-*.html
 # Backups and previews
 *-backup.html
 push-preview.html
+backups-*/
 
 # macOS
 .DS_Store

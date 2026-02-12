@@ -918,22 +918,23 @@ document.addEventListener('keyup', e => {
 // --- TAP-TO-JUMP MOBILE CONTROLS ---
 // Tap left third of screen = jump left, right third = jump right, center = jump straight up
 // --- TAP-TO-JUMP: listen on canvas directly ---
+let _touchDir = 0; // -1 left, 0 center, 1 right — persists through jump
 canvas.addEventListener('touchstart', e => {
   if (GAME.state !== 'playing') return;
   e.preventDefault();
   const rect = canvas.getBoundingClientRect();
   const tx = e.touches[0].clientX - rect.left;
   const third = rect.width / 3;
-  keys.jump = true; keys.jumpPressed = true;
-  if (tx < third) { keys.left = true; keys.right = false; }
-  else if (tx > third * 2) { keys.right = true; keys.left = false; }
-  else { keys.left = false; keys.right = false; }
+  keys.jumpPressed = true; keys.jump = true;
+  if (tx < third) { _touchDir = -1; keys.left = true; keys.right = false; }
+  else if (tx > third * 2) { _touchDir = 1; keys.right = true; keys.left = false; }
+  else { _touchDir = 0; keys.left = false; keys.right = false; }
 }, { passive: false });
 canvas.addEventListener('touchend', e => {
-  keys.left = false; keys.right = false; keys.jump = false;
+  keys.jump = false;
 }, { passive: true });
 canvas.addEventListener('touchcancel', () => {
-  keys.left = false; keys.right = false; keys.jump = false;
+  keys.jump = false;
 }, { passive: true });
 
 function sceneTimeout(fn, ms) {
@@ -2387,6 +2388,7 @@ function updatePhysics() {
         m.y = plat.y - PH_SIZE;
         m.vy = 0;
         m.onGround = true;
+        if (_touchDir !== 0) { keys.left = false; keys.right = false; _touchDir = 0; }
         if (floor.index > GAME.currentFloor) {
           GAME.currentFloor = floor.index;
           onFloorReached(floor);

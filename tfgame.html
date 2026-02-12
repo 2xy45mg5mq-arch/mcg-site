@@ -921,6 +921,10 @@ const gameWrap = document.getElementById('game-wrap');
 let _touchActive = false;
 gameWrap.addEventListener('touchstart', e => {
   if (GAME.state !== 'playing' || _touchActive) return;
+  const mc = document.getElementById('mission-card-overlay');
+  if (mc && mc.style.display !== 'none') return;
+  const co = document.getElementById('comic-overlay');
+  if (co && co.style.display !== 'none') return;
   e.preventDefault();
   _touchActive = true;
   const rect = gameWrap.getBoundingClientRect();

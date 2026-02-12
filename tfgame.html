@@ -1,0 +1,3537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>TOP FLOOR — The Game</title>
+<meta name="description" content="An ambitious Manhattan doorman moves into the penthouse of his dreams — only to be trapped in a dangerous new identity. Play the interactive narrative game.">
+<meta property="og:title" content="TOP FLOOR — The Game">
+<meta property="og:description" content="An ambitious Manhattan doorman moves into the penthouse of his dreams — only to be trapped in a dangerous new identity.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://coyne-green.com/tfgame">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TOP FLOOR — The Game">
+<meta name="twitter:description" content="Play the interactive narrative game.">
+<link rel="canonical" href="https://coyne-green.com/tfgame">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #08080c; }
+body { display: flex; align-items: center; justify-content: center; flex-direction: column; font-family: 'EB Garamond', Georgia, serif; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+
+#game-wrap {
+  position: relative;
+  width: min(100vw, 420px, calc(100vh * 420 / 720));
+  height: min(100vh, 720px, calc(100vw * 720 / 420));
+  max-width: 420px;
+  max-height: 720px;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+/* ============ TITLE SCREEN ============ */
+#overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  background: transparent;
+  z-index: 20; padding: 30px 20px; padding-top: 155px;
+  transition: opacity 0.8s ease;
+}
+#overlay.hidden { opacity: 0; pointer-events: none; }
+
+.title-main {
+  color: #c4a86b;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 84px;
+  letter-spacing: 5px;
+  line-height: 1;
+  text-shadow: 0 0 50px rgba(196,168,107,0.18);
+  margin-bottom: 5px;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.title-main.visible { opacity: 1; }
+
+.title-rule {
+  width: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(196,168,107,0.35), transparent);
+  margin-bottom: 14px;
+  transition: width 0.7s ease;
+}
+.title-rule.visible { width: 180px; }
+
+.title-by {
+  color: rgba(255,255,255,0.22);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 11px; letter-spacing: 2px;
+  margin-bottom: 1px; opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.title-by.visible { opacity: 1; }
+
+.title-author {
+  color: rgba(255,255,255,0.3);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 14px; letter-spacing: 1.5px;
+  margin-bottom: 26px; opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.title-author.visible { opacity: 1; }
+
+.pyramid-logline {
+  text-align: center; margin-bottom: 40px;
+  font-family: 'EB Garamond', Georgia, serif;
+  color: rgba(255,255,255,0.45); line-height: 1; max-width: 380px;
+}
+.pyramid-logline .line { display: block; opacity: 0; transition: opacity 0.5s ease; }
+.pyramid-logline .rule {
+  display: block; color: rgba(196,168,107,0.22);
+  font-family: 'Courier New', monospace; font-size: 10px;
+  letter-spacing: 3px; margin: 12px auto; line-height: 1;
+  opacity: 0; transition: opacity 0.4s ease;
+}
+.pyramid-logline .rule.visible { opacity: 1; }
+.pyramid-logline .l1 { font-size: 13px; letter-spacing: 0.2px; }
+.pyramid-logline .l1.visible { opacity: 0.5; }
+.pyramid-logline .l1 strong { color: #c4a86b; font-weight: 600; }
+.pyramid-logline .l2 { font-size: 14.5px; letter-spacing: 0.5px; word-spacing: 1px; }
+.pyramid-logline .l2.visible { opacity: 0.65; }
+.pyramid-logline .l2 strong { color: #c4a86b; font-weight: 600; }
+.pyramid-logline .l3 { font-size: 15.5px; letter-spacing: 0.5px; word-spacing: 1px; }
+.pyramid-logline .l3.visible { opacity: 0.85; }
+.pyramid-logline .l3 strong { color: rgba(255,255,255,0.95); font-weight: 700; }
+
+.ov-btn {
+  color: #c4a86b; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 6px;
+  cursor: pointer; padding: 12px 44px; border: 1px solid rgba(196,168,107,0.2);
+  background: transparent; text-transform: uppercase;
+  opacity: 0; transition: background 0.2s, border-color 0.2s, opacity 0.5s ease;
+}
+.ov-btn.visible { opacity: 1; }
+.ov-btn:hover { background: rgba(196,168,107,0.06); border-color: rgba(196,168,107,0.4); }
+
+/* ============ COMIC OVERLAY ============ */
+#comic-overlay {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: #08080c;
+  z-index: 18;
+  overflow: hidden;
+}
+
+#comic-canvas {
+  width: 100%; max-height: 60%;
+  image-rendering: pixelated;
+  display: block;
+}
+
+#comic-text-area {
+  position: absolute; left: 0; right: 0;
+  top: 50%; transform: translateY(-50%);
+  height: 60%;
+  display: flex; flex-direction: column;
+  pointer-events: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.comic-location {
+  font-family: 'Bebas Neue', sans-serif;
+  color: rgba(196,168,107,0.4);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 12px;
+}
+
+/* Narration: top/center, italic, no container */
+.comic-narration {
+  font-family: 'EB Garamond', Georgia, serif;
+  color: rgba(255,255,255,0.65);
+  font-size: clamp(14px, 3.5vw, 17px);
+  line-height: 1.65;
+  text-align: center;
+  padding: 10px 24px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.comic-narration.visible { opacity: 1; }
+
+/* Dialogue: comic speech bubble — absolutely positioned per-scene */
+.comic-bubble-wrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+.comic-bubble-wrap.visible { opacity: 1; }
+
+.comic-bubble {
+  position: relative;
+  background: #fff;
+  color: #111;
+  border-radius: 14px;
+  padding: 8px 14px;
+  max-width: 210px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Speech bubble tail — default points down-center */
+.comic-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 9px solid #fff;
+}
+
+/* Tail points down-left (speaker is below-left of bubble) */
+.comic-bubble.tail-down-left::after {
+  left: 22px;
+  transform: none;
+}
+
+/* Tail points down-right (speaker is below-right of bubble) */
+.comic-bubble.tail-down-right::after {
+  left: auto;
+  right: 22px;
+  transform: none;
+}
+
+/* Tail points down-center (default — no extra class needed) */
+
+.comic-bubble-speaker {
+  font-family: 'Bebas Neue', sans-serif;
+  color: #c4a86b;
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin-top: 6px;
+}
+
+/* Scene-aware narration: push below basement window (drawn at y=50-85) */
+.comic-narration.narration-below-window {
+  padding-top: 100px;
+}
+/* Position narration in lower half (below penthouse glow on building_ext) */
+.comic-narration.narration-lower {
+  margin-top: auto;
+  margin-bottom: 180px;
+}
+/* Position narration near top of panel (below penthouse glow) */
+.comic-narration.narration-upper {
+  padding-top: 50px;
+  margin-bottom: auto;
+}
+/* Text-only scene: center vertically, larger text, generous spacing */
+.comic-narration.narration-text-only {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: clamp(16px, 4vw, 20px);
+  line-height: 1.8;
+  padding: 30px 32px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* Legacy classes kept for mission card portraits */
+.comic-dialogue-box {
+  margin-top: auto;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(196,168,107,0.35);
+  margin: auto 12px 12px;
+  padding: 10px 14px;
+  display: flex; gap: 10px; align-items: flex-start;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.comic-dialogue-box.visible { opacity: 1; }
+
+.comic-dialogue-portrait {
+  width: 48px; height: 48px;
+  flex-shrink: 0;
+  border: 1px solid rgba(196,168,107,0.25);
+  border-radius: 2px;
+  image-rendering: pixelated;
+}
+
+.comic-dialogue-content {
+  flex: 1; min-width: 0;
+}
+
+.comic-speaker {
+  font-family: 'Bebas Neue', sans-serif;
+  color: #c4a86b;
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-bottom: 2px;
+}
+
+.comic-dialogue {
+  font-family: 'EB Garamond', Georgia, serif;
+  color: rgba(255,255,255,0.9);
+  font-size: clamp(14px, 3.5vw, 17px);
+  line-height: 1.5;
+}
+
+/* Navigation arrows — pulsing, on all beats/cards/scenes */
+.nav-arrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  color: rgba(196,168,107,0.25);
+  font-size: 28px;
+  pointer-events: none;
+  animation: mc-pulse 2s ease-in-out infinite;
+  z-index: 5;
+  user-select: none;
+}
+.nav-arrow.left { left: 10px; }
+.nav-arrow.right { right: 10px; }
+.nav-arrow.hidden { display: none; }
+
+.comic-advance {
+  position: absolute; bottom: 42%; right: 16px;
+  color: rgba(196,168,107,0.3);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  animation: mc-pulse 2s ease-in-out infinite;
+  display: none; /* replaced by nav arrows */
+}
+
+#comic-title-card {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  background: #08080c;
+  z-index: 19;
+}
+
+/* ============ MOBILE CONTROLS ============ */
+#mobile-controls {
+  position: absolute; bottom: 12px; left: 0; right: 0;
+  display: none; justify-content: space-between; align-items: flex-end;
+  padding: 0 14px; z-index: 15; pointer-events: none;
+}
+#mobile-controls button {
+  pointer-events: auto; border: 1px solid rgba(196,168,107,0.25); border-radius: 8px;
+  background: rgba(0,0,0,0.4); color: rgba(196,168,107,0.4); font-size: 24px;
+  width: 58px; height: 58px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+#mobile-controls button:active { background: rgba(196,168,107,0.15); }
+#mobile-controls .dpad { display: flex; gap: 8px; }
+#jump-btn { border-radius: 50% !important; width: 68px !important; height: 68px !important; font-size: 12px !important; letter-spacing: 2px; }
+
+/* ============ DROP OVERLAY ============ */
+#drop-overlay {
+  position: absolute; inset: 0; z-index: 25;
+  display: none; overflow: hidden; background: #000;
+}
+
+/* ============ MISSION CARDS ============ */
+#mission-card-overlay {
+  position: absolute; inset: 0;
+  z-index: 22;
+  display: none; flex-direction: column; justify-content: flex-end;
+  padding: 14px 16px 18px;
+  background: rgba(0,0,0,0.82);
+  pointer-events: auto; cursor: pointer;
+}
+#mission-card-overlay.has-choices { cursor: default; }
+
+#mission-card {
+  display: flex; gap: 12px; align-items: flex-start;
+}
+
+.mc-portrait-wrap {
+  flex-shrink: 0; width: 64px; height: 64px;
+  border: 2px solid rgba(196,168,107,0.35); border-radius: 4px;
+  overflow: hidden; background: rgba(0,0,0,0.4);
+}
+#mc-portrait { width: 100%; height: 100%; image-rendering: pixelated; }
+
+.mc-content { flex: 1; min-width: 0; }
+
+.mc-name {
+  font-family: 'Bebas Neue', sans-serif; color: #c4a86b;
+  font-size: 15px; letter-spacing: 3px; margin-bottom: 3px;
+}
+.mc-text {
+  font-family: 'EB Garamond', Georgia, serif;
+  color: rgba(255,255,255,0.88); font-size: clamp(15px, 3.5vw, 17px);
+  line-height: 1.55;
+}
+.mc-text.mission-style {
+  color: rgba(196,168,107,0.7); font-style: italic;
+}
+.mc-text.yelling-style {
+  font-size: clamp(22px, 6vw, 32px);
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #fff;
+}
+@keyframes mc-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-4px) rotate(-1deg); }
+  30% { transform: translateX(4px) rotate(1deg); }
+  45% { transform: translateX(-3px) rotate(-0.5deg); }
+  60% { transform: translateX(3px) rotate(0.5deg); }
+  75% { transform: translateX(-2px); }
+  90% { transform: translateX(2px); }
+}
+
+.mc-advance {
+  color: rgba(196,168,107,0.35); font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px; letter-spacing: 3px; margin-top: 10px;
+  animation: mc-pulse 2s ease-in-out infinite;
+}
+.mc-back {
+  position: absolute; left: 16px; bottom: 18px;
+  color: rgba(196,168,107,0.25);
+  font-size: 24px;
+  cursor: pointer;
+  animation: mc-pulse 2s ease-in-out infinite;
+  z-index: 23;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.mc-back.hidden { display: none; }
+@keyframes mc-pulse {
+  0%,100% { opacity: 0.25; }
+  50% { opacity: 0.7; }
+}
+
+#mc-choices {
+  display: none; gap: 10px; margin-top: 12px; justify-content: center;
+}
+#mc-choices.visible { display: flex; }
+
+.mc-choice {
+  font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 3px;
+  color: #c4a86b; background: transparent;
+  border: 1px solid rgba(196,168,107,0.35); padding: 10px 22px;
+  cursor: pointer; text-transform: uppercase; transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mc-choice:hover, .mc-choice:active { background: rgba(196,168,107,0.12); }
+
+/* ============ ENDING ============ */
+.end-text {
+  opacity: 0; transition: opacity 1s ease; text-align: center; margin-bottom: 16px;
+}
+.end-text.visible { opacity: 1; }
+.end-text.body { color: rgba(196,168,107,0.5); font-size: clamp(14px, 3.5vw, 18px); line-height: 1.8; }
+.end-text.quote { font-style: italic; color: rgba(196,168,107,0.6); font-size: clamp(16px, 4vw, 22px); }
+.end-text.gold-italic { font-style: italic; color: #c4a86b; font-size: clamp(16px, 4vw, 22px); }
+/* CTA Overlay */
+#cta-overlay {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.95);
+  z-index: 20; gap: 16px;
+  opacity: 0; transition: opacity 1.5s ease;
+}
+#cta-overlay.visible { opacity: 1; }
+.cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 10vw, 4rem); color: #c4a86b; letter-spacing: 4px; }
+.cta-tagline { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: rgba(196,168,107,0.5); font-size: clamp(14px, 3.5vw, 18px); margin-bottom: 16px; }
+.cta-link {
+  display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 4px; padding: 12px 36px; text-decoration: none;
+  border: 1px solid rgba(196,168,107,0.4);
+}
+.cta-link:hover { background: rgba(196,168,107,0.1); }
+.cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 4px; padding: 8px 24px; }
+.cta-replay { color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 12px; }
+
+.end-text.cta-section { margin-top: 20px; }
+.end-text.cta-section a.script-link {
+  display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 4px; padding: 12px 36px; text-decoration: none;
+  border: 1px solid rgba(196,168,107,0.4); margin-bottom: 12px;
+}
+.end-text.cta-section a.script-link:hover { background: rgba(196,168,107,0.1); }
+.end-text.cta-section a.replay { color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; text-decoration: none; }
+
+/* Vignette effect for phone calls */
+#game-wrap.vignette::after {
+  content: '';
+  position: absolute; inset: 0;
+  z-index: 14; pointer-events: none;
+  box-shadow: inset 0 0 80px 40px rgba(0,0,0,0.7);
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes shake {
+  0%,100% { transform: translate(0,0); }
+  10% { transform: translate(-4px,3px); }
+  20% { transform: translate(3px,-2px); }
+  30% { transform: translate(-3px,-4px); }
+  40% { transform: translate(4px,2px); }
+  50% { transform: translate(-2px,3px); }
+  60% { transform: translate(3px,-3px); }
+  70% { transform: translate(-4px,2px); }
+  80% { transform: translate(2px,-4px); }
+  90% { transform: translate(-3px,3px); }
+}
+@keyframes impact-bounce {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-8px); }
+  50% { transform: translateY(3px); }
+  75% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+/* ============ CONTROL HINT ============ */
+#control-hint {
+  position: absolute; bottom: 90px; left: 0; right: 0;
+  text-align: center; z-index: 16;
+  display: none;
+}
+.hint-text {
+  color: rgba(196,168,107,0.5);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  animation: mc-pulse 2s ease-in-out infinite;
+}
+</style>
+</head>
+<body>
+
+<div id="game-wrap">
+  <canvas id="canvas" width="420" height="720"></canvas>
+
+  <!-- TITLE SCREEN -->
+  <div id="overlay">
+    <div class="title-main" id="t-title">TOP FLOOR</div>
+    <div class="title-rule" id="t-rule"></div>
+    <div class="title-by" id="t-by">written by</div>
+    <div class="title-author" id="t-author">Max Coyne-Green</div>
+    <div class="pyramid-logline">
+      <span class="line l1" id="t-l1">an ambitious Manhattan <strong>doorman</strong></span>
+      <span class="rule" id="t-r1">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>
+      <span class="line l2" id="t-l2">moves into the <strong>penthouse</strong> of his dreams</span>
+      <span class="rule" id="t-r2">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>
+      <span class="line l3" id="t-l3">only to be <strong>trapped</strong> in a dangerous new identity</span>
+    </div>
+    <button class="ov-btn" id="start-btn">BEGIN</button>
+  </div>
+
+  <!-- COMIC SEQUENCE -->
+  <div id="comic-overlay">
+    <canvas id="comic-canvas" width="420" height="432"></canvas>
+    <div id="comic-text-area"></div>
+  </div>
+
+  <!-- MOBILE CONTROLS -->
+  <div id="mobile-controls">
+    <div class="dpad">
+      <button id="left-btn">&larr;</button>
+      <button id="right-btn">&rarr;</button>
+    </div>
+    <button id="jump-btn">JUMP</button>
+  </div>
+
+  <!-- CONTROL HINT -->
+  <div id="control-hint">
+    <div class="hint-text"></div>
+  </div>
+
+  <!-- DROP OVERLAY -->
+  <div id="drop-overlay"></div>
+
+  <!-- CTA OVERLAY -->
+  <div id="cta-overlay">
+    <div class="cta-title">TOP FLOOR</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,4vw,20px);color:rgba(196,168,107,0.5);letter-spacing:10px;margin-top:-8px;margin-bottom:24px">THE MOVIE</div>
+    <div class="cta-tagline">Who do you want to be?</div>
+    <a class="cta-link" href="mailto:mcoynegreen@gmail.com?subject=Top%20Floor%20Script%20Request">READ THE SCRIPT</a>
+    <a class="cta-link small" href="https://coyne-green.com" target="_blank">COYNE-GREEN.COM</a>
+    <a class="cta-replay" href="#" id="replay-btn">PLAY AGAIN</a>
+  </div>
+
+  <!-- MISSION CARDS -->
+  <div id="mission-card-overlay">
+    <div class="mc-back hidden" id="mc-back">◀</div>
+    <div id="mission-card">
+      <div class="mc-portrait-wrap">
+        <canvas id="mc-portrait" width="64" height="64"></canvas>
+      </div>
+      <div class="mc-content">
+        <div class="mc-name"></div>
+        <div class="mc-text"></div>
+      </div>
+    </div>
+    <div class="mc-advance">TAP ▸</div>
+    <div id="mc-choices">
+      <button class="mc-choice" data-choice="0"></button>
+      <button class="mc-choice" data-choice="1"></button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script>
+// Suppress non-fatal Tone.js scheduling errors
+window.addEventListener('error', function(e) {
+  if (e.message && e.message.includes('Start time must be strictly greater')) {
+    e.preventDefault(); return true;
+  }
+});
+
+// ============================================================
+// TOP FLOOR V9
+// ============================================================
+
+const W = 420, H = 720;
+const GRAV = 0.38, JUMP = -10.8, SPD = 4.5;
+const PW = 30, PH_SIZE = 30;
+const PLATH = 16;
+const FH = 110; // tighter floor spacing = easier jumps
+const TOTAL_FLOORS = 22;
+const GOLD = '#c4a86b';
+const COYOTE_FRAMES = 8; // coyote time for easier jumping
+
+const ZONES = [
+  { min: 0, max: 5, bg1: '#080a14', bg2: '#101420', accent: '#4466aa' },
+  { min: 6, max: 12, bg1: '#120a08', bg2: '#1a1210', accent: '#aa6644' },
+  { min: 13, max: 18, bg1: '#0a0814', bg2: '#161020', accent: '#8866aa' },
+  { min: 19, max: 22, bg1: '#100810', bg2: '#1a0808', accent: '#aa4466' },
+];
+
+const ITEMS = [
+  // Razor removed — shave happens during Nik dialogue on floor 2
+  { id: 'sweater', floor: 9, icon: '\uD83E\uDDE5', label: 'SWEATER', tLevel: 2 },
+  { id: 'cologne', floor: 14, icon: '\uD83C\uDF2C\uFE0F', label: 'COLOGNE', tLevel: 3 },
+  { id: 'insulin', floor: 18, icon: '\uD83D\uDC89', label: 'INSULIN', tLevel: 4 },
+];
+
+const SPEECH = {
+  board_hostile: 'This is a private building.',
+  board_friendly: 'Good evening, Mr. Lamb.',
+};
+
+const NAMED_NPC_FLOORS = {
+  3: { type: 'barry', name: 'BARRY' },
+  5: { type: 'barry', name: 'BARRY' },
+  8: { type: 'board', name: 'CO-OP BOARD' },
+  11: { type: 'board', name: 'CO-OP BOARD' },
+};
+
+// --- GAME STATE ---
+const GAME = {
+  state: 'title',
+  gen: 0, tick: 0,
+  murry: { x: 195, y: 610, vx: 0, vy: 0, onGround: false, facing: 1, transformLevel: 0, items: [], stunTimer: 0, coyoteTimer: 0 },
+  camera: { y: 0 },
+  currentFloor: 0,
+  floors: [], npcs: [], snacks: null,
+  speechBubbles: [], particles: [],
+  floorLabel: null, floorLabelTimer: 0,
+  zoneLabel: null, zoneLabelTimer: 0,
+  lastZone: -1,
+  dropPhase: 0,
+  audioStarted: false, instruments: null, activeNoises: [], activeLoops: [], lastAudioZone: -1,
+  stuckTimer: 0, lastProgressY: 0,
+  pickupFlash: null, pickupFlashTimer: 0,
+  shakeTimer: 0,
+  missionCards: { active: false, queue: [], currentIndex: 0, onComplete: null, safetyTimer: null },
+  storyFlags: {
+    nikEncounterDone: false,
+    seraChase1: false,
+    seraChase2: false,
+    cynthiaChaseDone: false,
+    boardCaptureDone: false,
+    rooftopDone: false,
+  },
+  controlHintShown: false,
+  hintTimer: 0,
+};
+
+window.GAME = GAME;
+
+// --- DOM REFS ---
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const overlay = document.getElementById('overlay');
+const dropOverlay = document.getElementById('drop-overlay');
+const mobileControls = document.getElementById('mobile-controls');
+const comicOverlay = document.getElementById('comic-overlay');
+const comicCanvas = document.getElementById('comic-canvas');
+const comicCtx = comicCanvas.getContext('2d');
+const comicTextArea = document.getElementById('comic-text-area');
+const controlHint = document.getElementById('control-hint');
+
+const mcOverlay = document.getElementById('mission-card-overlay');
+const mcPortraitCanvas = document.getElementById('mc-portrait');
+const mcPortraitCtx = mcPortraitCanvas.getContext('2d');
+const mcName = document.querySelector('.mc-name');
+const mcText = document.querySelector('.mc-text');
+const mcAdvance = document.querySelector('.mc-advance');
+const mcChoices = document.getElementById('mc-choices');
+const mcChoiceBtns = mcChoices.querySelectorAll('.mc-choice');
+
+// ============================================================
+// TITLE SCREEN BACKGROUND (animated canvas)
+// ============================================================
+let titleAnimId = null;
+(function initTitleBackground() {
+  let _tseed = 42;
+  function tsRand() { _tseed = (_tseed * 16807) % 2147483647; return (_tseed - 1) / 2147483646; }
+
+  const tPeakX = W / 2, tPeakY = 75, tBaseY = H - 35, tBaseHW = 135, tTopHW = 10;
+
+  // Stars
+  const tStars = [];
+  _tseed = 77;
+  for (let i = 0; i < 40; i++) {
+    tStars.push({ x: tsRand()*W, y: tsRand()*(tPeakY+60), r: 0.4+tsRand()*0.5,
+      bright: 0.06+tsRand()*0.12, spd: 0.002+tsRand()*0.004, off: tsRand()*Math.PI*2 });
+  }
+
+  // City skyline
+  const tCity = [];
+  _tseed = 99;
+  for (let i = 0; i < 18; i++) {
+    const bx = tsRand()*W, bw = 12+tsRand()*30, bh = 40+tsRand()*120, by = tBaseY - bh;
+    const dfc = Math.abs(bx - tPeakX);
+    const pw = tTopHW + ((by - tPeakY) / (tBaseY - tPeakY)) * (tBaseHW - tTopHW);
+    if (dfc < pw + 10) continue;
+    const wins = [];
+    for (let wy = by+8; wy < tBaseY-6; wy += 8+tsRand()*4) {
+      for (let wx = bx-bw/2+4; wx < bx+bw/2-3; wx += 6+tsRand()*3) {
+        if (tsRand() < 0.5) wins.push({ x: wx, y: wy, b: 0.03+tsRand()*0.08 });
+      }
+    }
+    tCity.push({ x: bx, y: by, w: bw, h: bh, wins });
+  }
+
+  // Pyramid windows
+  const tPWins = [];
+  _tseed = 42;
+  for (let row = 0; row < 36; row++) {
+    const t = row / 36;
+    const wy = tPeakY + 22 + t * (tBaseY - tPeakY - 30);
+    const hw = tTopHW + t * (tBaseHW - tTopHW);
+    const wc = Math.floor(1 + t * 9);
+    const rl = tPeakX - hw*0.8, rr = tPeakX + hw*0.8, sp = (rr-rl)/(wc+1);
+    for (let col = 1; col <= wc; col++) {
+      const wx = rl + col*sp, ww = 3+t*2.5, wh = 2+t*1;
+      const r = tsRand();
+      let br, warm = false;
+      if (r < 0.05) { br = 0.25; warm = true; } else if (r < 0.14) { br = 0.10; } else { br = 0.04; }
+      tPWins.push({ x: wx, y: wy, w: ww, h: wh, b: br, warm });
+    }
+  }
+
+  let phPulse = 0;
+  const tStart = performance.now();
+
+  function drawTitleBg(now) {
+    const el = (now - tStart) / 1000;
+    const sA = Math.min(Math.max((el-0.1)/1.4,0),1);
+    const cA = Math.min(Math.max((el-0.4)/1.5,0),1);
+    const bA = Math.min(Math.max((el-0.3)/1.2,0),1);
+    const wA = Math.min(Math.max((el-0.8)/1.2,0),1);
+    const pA = Math.min(Math.max((el-1.0)/0.8,0),1);
+
+    // Sky
+    const sky = ctx.createLinearGradient(0,0,0,H);
+    sky.addColorStop(0,'#04060e'); sky.addColorStop(0.3,'#070b16');
+    sky.addColorStop(0.6,'#080a12'); sky.addColorStop(1,'#08080c');
+    ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+
+    // Stars
+    if (sA > 0) tStars.forEach(s => {
+      const tw = 0.5+0.5*Math.sin(now*s.spd+s.off);
+      ctx.fillStyle = `rgba(255,255,255,${s.bright*tw*sA})`;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    });
+
+    // City
+    if (cA > 0) tCity.forEach(b => {
+      ctx.fillStyle = `rgba(10,12,18,${0.8*cA})`;
+      ctx.fillRect(b.x-b.w/2,b.y,b.w,b.h);
+      b.wins.forEach(w => {
+        ctx.fillStyle = `rgba(220,200,150,${w.b*cA})`;
+        ctx.fillRect(w.x,w.y,3,2);
+      });
+    });
+
+    // Pyramid
+    if (bA > 0) {
+      ctx.save(); ctx.globalAlpha = bA;
+      ctx.fillStyle = '#0f1120';
+      ctx.beginPath();
+      ctx.moveTo(tPeakX-tTopHW,tPeakY); ctx.lineTo(tPeakX+tTopHW,tPeakY);
+      ctx.lineTo(tPeakX+tBaseHW,tBaseY); ctx.lineTo(tPeakX-tBaseHW,tBaseY);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = 'rgba(196,168,107,0.07)'; ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(tPeakX-tTopHW,tPeakY); ctx.lineTo(tPeakX+tTopHW,tPeakY);
+      ctx.lineTo(tPeakX+tBaseHW,tBaseY); ctx.lineTo(tPeakX-tBaseHW,tBaseY);
+      ctx.closePath(); ctx.stroke();
+      ctx.strokeStyle = 'rgba(196,168,107,0.025)'; ctx.lineWidth = 3; ctx.stroke();
+      for (let i = 0; i < 20; i++) {
+        const t = i/20, ly = tPeakY+18+t*(tBaseY-tPeakY-20);
+        const lhw = tTopHW + ((ly-tPeakY)/(tBaseY-tPeakY))*(tBaseHW-tTopHW);
+        ctx.strokeStyle = `rgba(196,168,107,${0.015+t*0.01})`; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(tPeakX-lhw*0.95,ly); ctx.lineTo(tPeakX+lhw*0.95,ly); ctx.stroke();
+      }
+      ctx.restore();
+      if (wA > 0) tPWins.forEach(w => {
+        const a = w.b*wA;
+        ctx.fillStyle = w.warm ? `rgba(232,212,160,${a})` : `rgba(196,168,107,${a})`;
+        ctx.fillRect(w.x-w.w/2,w.y,w.w,w.h);
+      });
+    }
+
+    // Penthouse glow
+    if (pA > 0) {
+      phPulse += 0.012;
+      const pulse = 0.6+0.4*Math.sin(phPulse);
+      const phY = tPeakY+4, phW = 14, phH = 9;
+      const glow = ctx.createRadialGradient(tPeakX,phY+phH,2,tPeakX,phY+phH+80,220);
+      glow.addColorStop(0,`rgba(196,168,107,${0.06*pA*pulse})`);
+      glow.addColorStop(0.4,`rgba(196,168,107,${0.025*pA})`);
+      glow.addColorStop(1,'rgba(196,168,107,0)');
+      ctx.fillStyle = glow; ctx.fillRect(tPeakX-160,phY,320,420);
+      ctx.save(); ctx.shadowColor = '#c4a86b';
+      ctx.shadowBlur = (30+14*pulse)*pA;
+      ctx.fillStyle = `rgba(196,168,107,${(0.65+0.35*pulse)*pA})`;
+      ctx.fillRect(tPeakX-phW/2,phY,phW,phH);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = `rgba(237,220,176,${(0.75+0.25*pulse)*pA})`;
+      ctx.fillRect(tPeakX-phW/2+1,phY+1,phW-2,phH-2);
+      ctx.restore();
+    }
+
+    // Street
+    ctx.fillStyle = '#0c0d12'; ctx.fillRect(0,tBaseY,W,H-tBaseY);
+    if (bA > 0) { ctx.fillStyle = `rgba(196,168,107,${0.05*bA})`; ctx.fillRect(0,tBaseY,W,1); }
+
+    if (GAME.state === 'title') titleAnimId = requestAnimationFrame(drawTitleBg);
+  }
+
+  titleAnimId = requestAnimationFrame(drawTitleBg);
+
+  // Text crawl — brisk, confident reveal
+  [
+    ['t-title',1200],['t-rule',1600],['t-by',2000],['t-author',2300],
+    ['t-l1',2900],['t-r1',3200],['t-l2',3500],['t-r2',3800],
+    ['t-l3',4100],['start-btn',4800]
+  ].forEach(([id,delay]) => {
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, delay);
+  });
+})();
+
+// --- INPUT ---
+const keys = { left: false, right: false, jump: false, jumpPressed: false };
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
+  if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+  if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+    e.preventDefault();
+    if (!keys.jump) keys.jumpPressed = true;
+    keys.jump = true;
+  }
+  if ((e.key === 'Enter' || e.key === ' ') && GAME.state === 'title') startComic();
+  if (GAME.state === 'comic') {
+    if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') advanceComic();
+    if (e.key === 'ArrowLeft') retreatComic();
+  }
+  if (GAME.missionCards.active) {
+    const card = GAME.missionCards.queue[GAME.missionCards.currentIndex];
+    if ((e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') && (!card || !card.choice)) advanceCard();
+    if (e.key === 'ArrowLeft') goBackCard();
+  }
+});
+document.addEventListener('keyup', e => {
+  if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+  if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+  if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') keys.jump = false;
+});
+
+function setupTouch(id, key) {
+  const el = document.getElementById(id);
+  el.addEventListener('touchstart', e => { e.preventDefault(); keys[key] = true; if (key === 'jump') keys.jumpPressed = true; }, { passive: false });
+  el.addEventListener('touchend', e => { e.preventDefault(); keys[key] = false; }, { passive: false });
+  el.addEventListener('mousedown', () => { keys[key] = true; if (key === 'jump') keys.jumpPressed = true; });
+  el.addEventListener('mouseup', () => { keys[key] = false; });
+  el.addEventListener('mouseleave', () => { keys[key] = false; });
+}
+setupTouch('left-btn', 'left');
+setupTouch('right-btn', 'right');
+setupTouch('jump-btn', 'jump');
+
+function sceneTimeout(fn, ms) {
+  const gen = GAME.gen;
+  setTimeout(() => { if (GAME.gen === gen) fn(); }, ms);
+}
+
+let _seed = 42;
+function seededRandom() {
+  _seed = (_seed * 16807 + 0) % 2147483647;
+  return (_seed - 1) / 2147483646;
+}
+
+// ============================================================
+// COMIC SEQUENCE
+// ============================================================
+
+let comicBeatIndex = 0;
+
+const COMIC_BEATS = [
+  // Beat 0: LOBBY narration
+  { scene: 'lobby_ext',
+    narration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a doorman.' },
+
+  // Beat 1: LOBBY dialogue
+  { scene: 'lobby_ext', dialogue: true, speaker: 'MURRY', text: '\u201CI\u2019m an entrepreneur who opens doors.\u201D',
+    keepNarration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a doorman.',
+    bubblePos: { top: '48%', left: '28%', tail: 'down-left' } },
+
+  // Beat 2: Basement — nonfungible fragrances
+  { scene: 'basement', location: 'JERSEY \u2014 BASEMENT',
+    narration: 'Still, he\u2019s living in his sister\u2019s basement, where he\u2019s cooking up a new business he calls \u201Cnonfungible fragrances.\u201D' },
+
+  // Beat 3: Sera reacts with speech bubble. Same basement scene.
+  { scene: 'basement', location: 'JERSEY \u2014 BASEMENT',
+    dialogue: true, speaker: 'SERA', text: '\u201CIt smells like bullshit.\u201D',
+    keepNarration: 'Still, he\u2019s living in his sister\u2019s basement, where he\u2019s cooking up a new business he calls \u201Cnonfungible fragrances.\u201D',
+    bubblePos: { top: '30%', right: '8%', tail: 'down-right' } },
+
+  // Beat 4: Sera narration + Murry's YouTube line
+  { scene: 'basement_sera', location: 'JERSEY \u2014 BASEMENT',
+    narration: 'His sister Sera has seen it all before. The schemes. The pitch. She just wishes he could be happy with who he is.<br><br>But Murry\u2019s watched enough YouTube to know he can be <em>anyone he wants to be</em>.' },
+
+  // Beat 5: Over black. Text only, no scene.
+  { scene: 'text_only',
+    narration: '\u2026and there is someone he\u2019s always looked up to' },
+
+  // Beat 6: "Nik lives at the top" positioned near top of building
+  { scene: 'building_ext',
+    narration: '<b>NIK</b> lives at the top.',
+    textPosition: 'upper' },
+
+  // Beat 7: Nik intro — paragraph break after Snacks, characters drawn larger/closer
+  { scene: 'nik_intro',
+    narration: 'Unlike the other tenants, the suave investor always looks Murry right in the face. Not just because Murry helps Nik with his diabetic dog <b>Snacks</b>\u2026<br><br>\u2026but because the two look strikingly similar.',
+    sound: 'ding' },
+
+  // Beat 8: Title card — "PLAY THE GAME" animated text
+  { scene: 'title_card' },
+
+  // Beat 9: Basement pushups
+  { scene: 'basement_pushups', location: 'JERSEY \u2014 BASEMENT',
+    narration: null, dialogue: true, speaker: 'SERA', text: '\u201CMurry! Get up!\u201D',
+    bubblePos: { top: '25%', left: '52%', tail: 'down-right' } },
+];
+
+function startComic() {
+  // Stop title screen canvas animation
+  if (titleAnimId) { cancelAnimationFrame(titleAnimId); titleAnimId = null; }
+  initAudio();
+  GAME.state = 'comic';
+  GAME.gen++;
+  overlay.classList.add('hidden');
+  comicBeatIndex = 0;
+  comicOverlay.style.display = 'flex';
+  renderComicBeat(0);
+}
+
+function renderComicBeat(idx) {
+  if (idx >= COMIC_BEATS.length) {
+    endComic();
+    return;
+  }
+  if (idx < 0) idx = 0;
+
+  comicBeatIndex = idx;
+  const beat = COMIC_BEATS[idx];
+  const isFirst = idx === 0;
+  const isLast = idx === COMIC_BEATS.length - 1;
+
+  // Title card special case
+  if (beat.scene === 'title_card') {
+    comicOverlay.style.display = 'none';
+    const tc = document.createElement('div');
+    tc.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#08080c;z-index:19;cursor:pointer;';
+    tc.innerHTML = '<div style="color:#c4a86b;font-family:Bebas Neue,sans-serif;font-size:clamp(52px,14vw,72px);letter-spacing:6px;text-shadow:0 0 40px rgba(196,168,107,0.25)">TOP FLOOR</div>' +
+      '<div style="color:rgba(196,168,107,0.5);font-family:Bebas Neue,sans-serif;font-size:clamp(18px,5vw,24px);letter-spacing:16px;margin-left:16px;margin-top:4px">THE GAME</div>' +
+      '<div style="margin-top:40px;color:#c4a86b;font-family:Bebas Neue,sans-serif;font-size:clamp(16px,4vw,22px);letter-spacing:8px;animation:mc-pulse 2s ease-in-out infinite;cursor:pointer;text-shadow:0 0 20px rgba(196,168,107,0.3)">PLAY THE GAME</div>';
+    tc.id = 'temp-title-card';
+    document.getElementById('game-wrap').appendChild(tc);
+    // Left/right tap zones
+    tc.addEventListener('click', (e) => {
+      const rect = tc.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      if (x < rect.width * 0.3 && !isFirst) {
+        tc.remove();
+        comicOverlay.style.display = 'flex';
+        renderComicBeat(idx - 1);
+      } else {
+        tc.remove();
+        comicOverlay.style.display = 'flex';
+        renderComicBeat(idx + 1);
+      }
+    });
+    // Play DING
+    if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+    return;
+  }
+
+  // Draw scene
+  drawComicScene(beat.scene);
+
+  // Build text overlay
+  comicTextArea.innerHTML = '';
+  // Text-only scenes: expand text area to full height for vertical centering
+  comicTextArea.style.height = beat.scene === 'text_only' ? '100%' : '60%';
+
+  if (beat.dialogue) {
+    // Keep narration from previous beat if specified
+    if (beat.keepNarration) {
+      const nr = document.createElement('div');
+      nr.className = 'comic-narration visible';
+      nr.innerHTML = beat.keepNarration;
+      comicTextArea.appendChild(nr);
+    }
+    if (beat.location) {
+      const loc = document.createElement('div');
+      loc.className = 'comic-location';
+      loc.textContent = beat.location;
+      comicTextArea.appendChild(loc);
+    }
+    // Comic speech bubble — absolutely positioned per beat.bubblePos
+    const wrap = document.createElement('div');
+    wrap.className = 'comic-bubble-wrap';
+
+    // Apply scene-aware position from beat data
+    const pos = beat.bubblePos || { top: '40%', left: '30%', tail: 'down-center' };
+    wrap.style.top = pos.top;
+    wrap.style.left = pos.left;
+    if (pos.right) { wrap.style.left = 'auto'; wrap.style.right = pos.right; }
+
+    const bubble = document.createElement('div');
+    let bubbleClass = 'comic-bubble';
+    if (pos.tail === 'down-left') bubbleClass += ' tail-down-left';
+    else if (pos.tail === 'down-right') bubbleClass += ' tail-down-right';
+    // 'down-center' is the default — no extra class needed
+    bubble.className = bubbleClass;
+    bubble.innerHTML = beat.text;
+    wrap.appendChild(bubble);
+    // Speaker name now rendered on canvas under character sprite — not in bubble
+    comicTextArea.appendChild(wrap);
+    setTimeout(() => wrap.classList.add('visible'), 150);
+  } else if (beat.narration) {
+    if (beat.location) {
+      const loc = document.createElement('div');
+      loc.className = 'comic-location';
+      loc.textContent = beat.location;
+      comicTextArea.appendChild(loc);
+    }
+    const nr = document.createElement('div');
+    let nrClass = 'comic-narration';
+    // Push narration below window in basement scenes (window drawn at y=50-85)
+    const windowScenes = ['basement', 'basement_sera', 'basement_pushups'];
+    if (windowScenes.includes(beat.scene)) nrClass += ' narration-below-window';
+    // Position text lower (e.g. below penthouse light on building_ext)
+    if (beat.textPosition === 'lower') nrClass += ' narration-lower';
+    if (beat.textPosition === 'upper') nrClass += ' narration-upper';
+    // Text-only scene: center vertically with generous spacing
+    if (beat.scene === 'text_only') nrClass += ' narration-text-only';
+    nr.className = nrClass;
+    nr.innerHTML = beat.narration;
+    comicTextArea.appendChild(nr);
+    setTimeout(() => nr.classList.add('visible'), 150);
+  }
+
+  // Play beat sounds
+  if (beat.sound === 'ding' && GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+  if (beat.sound === 'bark' && GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+
+  // Nav arrows
+  const leftArrow = document.createElement('div');
+  leftArrow.className = 'nav-arrow left' + (isFirst ? ' hidden' : '');
+  leftArrow.textContent = '\u25C0';
+  comicTextArea.appendChild(leftArrow);
+
+  const rightArrow = document.createElement('div');
+  rightArrow.className = 'nav-arrow right';
+  rightArrow.textContent = '\u25B8';
+  comicTextArea.appendChild(rightArrow);
+
+  // NO auto-advance. Player taps to navigate.
+}
+
+function advanceComic() {
+  renderComicBeat(comicBeatIndex + 1);
+}
+
+function retreatComic() {
+  if (comicBeatIndex > 0) renderComicBeat(comicBeatIndex - 1);
+}
+
+// Click on comic overlay — left 30% = back, right 70% = forward
+comicOverlay.addEventListener('click', (e) => {
+  if (GAME.state !== 'comic') return;
+  const rect = comicOverlay.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (x < rect.width * 0.3) retreatComic();
+  else advanceComic();
+});
+
+function endComic() {
+  comicOverlay.style.display = 'none';
+  const tc = document.getElementById('temp-title-card');
+  if (tc) tc.remove();
+
+  // Start playable game
+  GAME.state = 'playing';
+  GAME.gen++;
+  GAME.floors = generateFloors();
+  GAME.npcs = generateNPCs(GAME.floors);
+  GAME.murry.x = 195;
+  GAME.murry.y = 640 - PH_SIZE;
+  GAME.murry.vy = 0;
+  GAME.murry.vx = 0;
+  GAME.murry.onGround = true;
+  GAME.camera.y = 0;
+  GAME.currentFloor = 0;
+
+  // Show controls
+  mobileControls.style.display = 'flex';
+  showControlHint('USE ARROWS TO MOVE \u2022 JUMP TO CLIMB');
+
+  GAME.zoneLabel = 'START IN THE BASEMENT';
+  GAME.zoneLabelTimer = 160;
+  GAME.lastZone = 0;
+
+  // Nik encounter triggers on floor 2
+}
+
+function showControlHint(text) {
+  controlHint.style.display = 'block';
+  controlHint.querySelector('.hint-text').textContent = text;
+  setTimeout(() => { controlHint.style.display = 'none'; }, 6000);
+}
+
+// --- COMIC SCENE RENDERING ---
+function drawCharLabel(pc, x, centerW, bottomY, name) {
+  pc.save();
+  pc.font = "8px 'Bebas Neue', sans-serif";
+  pc.fillStyle = 'rgba(196,168,107,0.4)';
+  pc.textAlign = 'center';
+  pc.fillText(name, x + centerW / 2, bottomY + 12);
+  pc.restore();
+}
+
+function drawComicScene(scene) {
+  const cw = 420, ch = 432;
+  comicCtx.clearRect(0, 0, cw, ch);
+
+  switch(scene) {
+    case 'lobby_ext': {
+      // EXTERIOR — Murry at building entrance, PYRAMID BUILDING visible behind him
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#0a0e1e'); g.addColorStop(0.5, '#101828'); g.addColorStop(1, '#1a1a1a');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Stars
+      comicCtx.fillStyle = 'rgba(255,255,255,0.2)';
+      [[35,18],[110,32],[185,12],[290,25],[360,15],[60,55],[250,45]].forEach(([sx,sy]) => {
+        comicCtx.fillRect(sx, sy, 1.2, 1.2);
+      });
+      // Pyramid building behind — trapezoidal, narrowing to top
+      const bPeakX = cw / 2, bPeakY = 30, bBaseY = ch - 50;
+      const bTopHW = 20, bBaseHW = 100;
+      comicCtx.fillStyle = '#0c0e18';
+      comicCtx.beginPath();
+      comicCtx.moveTo(bPeakX - bTopHW, bPeakY);
+      comicCtx.lineTo(bPeakX + bTopHW, bPeakY);
+      comicCtx.lineTo(bPeakX + bBaseHW, bBaseY);
+      comicCtx.lineTo(bPeakX - bBaseHW, bBaseY);
+      comicCtx.closePath();
+      comicCtx.fill();
+      // Building edge
+      comicCtx.strokeStyle = 'rgba(196,168,107,0.06)';
+      comicCtx.lineWidth = 1;
+      comicCtx.stroke();
+      // Windows on building
+      for (let row = 0; row < 16; row++) {
+        const t = row / 16;
+        const wy = bPeakY + 25 + t * (bBaseY - bPeakY - 60);
+        const hw = bTopHW + t * (bBaseHW - bTopHW);
+        const wc = Math.floor(2 + t * 5);
+        const rl = bPeakX - hw * 0.75;
+        const rr = bPeakX + hw * 0.75;
+        const sp = (rr - rl) / (wc + 1);
+        for (let c = 1; c <= wc; c++) {
+          const br = ((row * 7 + c * 13) % 17 < 2) ? 0.12 : 0.035;
+          comicCtx.fillStyle = `rgba(196,168,107,${br})`;
+          comicCtx.fillRect(rl + c * sp - 2, wy, 4 + t * 2, 3 + t);
+        }
+      }
+      // Penthouse glow at top
+      comicCtx.shadowColor = '#c4a86b'; comicCtx.shadowBlur = 20;
+      comicCtx.fillStyle = '#c4a86b';
+      comicCtx.fillRect(bPeakX - 5, bPeakY + 8, 10, 7);
+      comicCtx.shadowBlur = 0;
+      comicCtx.fillStyle = '#e8d4a0';
+      comicCtx.fillRect(bPeakX - 4, bPeakY + 9, 8, 5);
+      // Sidewalk + entrance
+      comicCtx.fillStyle = '#1a1a1a'; comicCtx.fillRect(0, ch - 50, cw, 50);
+      comicCtx.fillStyle = '#222'; comicCtx.fillRect(0, ch - 50, cw, 2);
+      // Entrance awning
+      comicCtx.fillStyle = '#1a1a2a'; comicCtx.fillRect(cw/2 - 55, ch - 110, 110, 12);
+      comicCtx.fillStyle = '#c4a86b'; comicCtx.fillRect(cw/2 - 55, ch - 110, 110, 2);
+      // Door frame
+      comicCtx.fillStyle = '#c4a86b'; comicCtx.fillRect(cw/2 - 40, ch - 100, 80, 55);
+      comicCtx.fillStyle = '#0a0a14'; comicCtx.fillRect(cw/2 - 36, ch - 96, 72, 48);
+      // Murry holding door open
+      drawComicMurry(comicCtx, cw/2 - 70, ch - 95, true, false);
+      break;
+    }
+    case 'lobby': {
+      // Interior lobby — fallback if needed
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#3a6a4a');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 60, cw, 60);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 60, cw, 4);
+      comicCtx.fillStyle = '#c4a86b'; comicCtx.fillRect(cw/2 - 50, ch - 220, 100, 165);
+      comicCtx.fillStyle = '#1a1a2a'; comicCtx.fillRect(cw/2 - 44, ch - 214, 88, 155);
+      drawComicMurry(comicCtx, cw/2 - 65, ch - 115, true, false);
+      break;
+    }
+    case 'basement': {
+      // Basement — cheap bottles, concrete, pullout bed
+      comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
+      // Concrete walls — visible texture
+      for (let i = 0; i < 40; i++) {
+        const bx = (i * 67 + 23) % cw;
+        const by = (i * 43 + 11) % (ch - 80);
+        comicCtx.fillStyle = `rgba(40,40,45,${0.2 + (i % 3) * 0.1})`;
+        comicCtx.fillRect(bx, by, 3, 2);
+      }
+      // Concrete floor
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
+      // Small high window (dim daylight)
+      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(60, 50, 80, 35);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(60, 50, 80, 35);
+      comicCtx.fillStyle = 'rgba(80,100,120,0.1)'; comicCtx.fillRect(62, 52, 76, 31);
+      // Pull-out bed
+      comicCtx.fillStyle = '#2a2a3a'; comicCtx.fillRect(30, ch - 115, 130, 35);
+      comicCtx.fillStyle = '#3a3a4a'; comicCtx.fillRect(30, ch - 120, 130, 8);
+      // Pillow
+      comicCtx.fillStyle = '#4a4a55'; comicCtx.fillRect(35, ch - 118, 35, 12);
+      // Cologne bottles on shelf
+      comicCtx.fillStyle = '#1a1a1a'; comicCtx.fillRect(260, ch - 160, 120, 6); // shelf
+      for (let i = 0; i < 6; i++) {
+        comicCtx.fillStyle = ['#4a3a2a','#3a4a5a','#5a3a4a','#3a5a3a','#4a4a2a','#3a3a5a'][i];
+        comicCtx.fillRect(268 + i * 18, ch - 190, 10, 28);
+        comicCtx.fillStyle = '#777'; comicCtx.fillRect(270 + i * 18, ch - 196, 6, 8);
+      }
+      // Staircase right side
+      comicCtx.fillStyle = '#1a1a1a';
+      for (let i = 0; i < 7; i++) {
+        comicCtx.fillRect(cw - 90 + i * 10, ch - 80 - i * 28, 60, 28);
+      }
+      // Sera on the stairs — arms crossed, watching
+      drawComicSeraBig(comicCtx, cw - 55, ch - 220);
+      drawCharLabel(comicCtx, cw - 55, 80, ch - 30, 'SERA');
+      // Murry working on cologne
+      drawComicMurry(comicCtx, 280, ch - 140, true, false);
+      drawCharLabel(comicCtx, 280, 30, ch - 95, 'MURRY');
+      break;
+    }
+    case 'sera_intro': {
+      // Sera on stairs, arms crossed, looking down at Murry
+      comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
+      // Concrete texture
+      for (let i = 0; i < 30; i++) {
+        const bx = (i * 67 + 23) % cw;
+        const by = (i * 43 + 11) % (ch - 80);
+        comicCtx.fillStyle = `rgba(40,40,45,${0.15 + (i % 3) * 0.08})`;
+        comicCtx.fillRect(bx, by, 3, 2);
+      }
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
+      // Staircase — larger, centered
+      comicCtx.fillStyle = '#1a1a1a';
+      for (let i = 0; i < 8; i++) {
+        comicCtx.fillRect(cw/2 - 20 + i * 12, ch - 80 - i * 32, 70, 32);
+      }
+      // Railing
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2;
+      comicCtx.beginPath();
+      comicCtx.moveTo(cw/2 - 20, ch - 80);
+      comicCtx.lineTo(cw/2 + 76, ch - 336);
+      comicCtx.stroke();
+      // Sera on stairs — arms crossed, looking down (higher up)
+      drawComicSeraBig(comicCtx, cw/2 + 20, ch - 280);
+      drawCharLabel(comicCtx, cw/2 + 20, 80, ch - 90, 'SERA');
+      // Murry below — smaller, looking up
+      drawComicMurry(comicCtx, cw/2 - 80, ch - 130, true, false);
+      drawCharLabel(comicCtx, cw/2 - 80, 30, ch - 85, 'MURRY');
+      break;
+    }
+    case 'basement_sera': {
+      // Basement with Sera on stairs and Murry
+      comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
+      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(60, 50, 80, 35);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(60, 50, 80, 35);
+      // Cologne bottles
+      for (let i = 0; i < 5; i++) {
+        comicCtx.fillStyle = i % 2 ? '#4a3a2a' : '#3a4a5a';
+        comicCtx.fillRect(240 + i * 22, ch - 120, 14, 30);
+      }
+      // Staircase
+      comicCtx.fillStyle = '#1a1a1a';
+      for (let i = 0; i < 6; i++) {
+        comicCtx.fillRect(cw - 80 + i * 8, ch - 80 - i * 30, 50, 30);
+      }
+      // Murry
+      drawComicMurry(comicCtx, 180, ch - 140, true, false);
+      drawCharLabel(comicCtx, 180, 30, ch - 95, 'MURRY');
+      // Sera on stairs
+      drawComicSera(comicCtx, cw - 60, ch - 200);
+      drawCharLabel(comicCtx, cw - 60, 28, ch - 160, 'SERA');
+      break;
+    }
+    case 'building_ext': {
+      // THE PYRAMID — trapezoidal building, street to penthouse, zoom-up feel
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#060810'); g.addColorStop(0.4, '#0a0e1e'); g.addColorStop(1, '#0a0a14');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Stars
+      comicCtx.fillStyle = 'rgba(255,255,255,0.25)';
+      [[28,15],[95,35],[175,8],[265,28],[340,12],[55,50],[310,40],[145,22],[385,30],[220,5]].forEach(([sx,sy]) => {
+        comicCtx.fillRect(sx, sy, 1.4, 1.4);
+      });
+      // PYRAMID building — tall, trapezoidal
+      const bPeakX = cw / 2, bPeakY = 20, bBaseY = ch - 30;
+      const bTopHW = 16, bBaseHW = 130;
+      comicCtx.fillStyle = '#0c0e16';
+      comicCtx.beginPath();
+      comicCtx.moveTo(bPeakX - bTopHW, bPeakY);
+      comicCtx.lineTo(bPeakX + bTopHW, bPeakY);
+      comicCtx.lineTo(bPeakX + bBaseHW, bBaseY);
+      comicCtx.lineTo(bPeakX - bBaseHW, bBaseY);
+      comicCtx.closePath();
+      comicCtx.fill();
+      // Edge
+      comicCtx.strokeStyle = 'rgba(196,168,107,0.08)';
+      comicCtx.lineWidth = 1;
+      comicCtx.stroke();
+      // Windows — denser, pyramid pattern
+      for (let row = 0; row < 22; row++) {
+        const t = row / 22;
+        const wy = bPeakY + 20 + t * (bBaseY - bPeakY - 30);
+        const hw = bTopHW + t * (bBaseHW - bTopHW);
+        const wc = Math.floor(2 + t * 7);
+        const rl = bPeakX - hw * 0.8;
+        const rr = bPeakX + hw * 0.8;
+        const sp = (rr - rl) / (wc + 1);
+        for (let c = 1; c <= wc; c++) {
+          const br = ((row * 7 + c * 13) % 17 < 2) ? 0.15 : 0.04;
+          comicCtx.fillStyle = `rgba(196,168,107,${br})`;
+          comicCtx.fillRect(rl + c * sp - 2, wy, 4 + t * 2, 3 + t);
+        }
+      }
+      // Penthouse glow — warm, prominent
+      comicCtx.shadowColor = '#c4a86b'; comicCtx.shadowBlur = 35;
+      comicCtx.fillStyle = '#c4a86b';
+      comicCtx.fillRect(bPeakX - 7, bPeakY + 6, 14, 10);
+      comicCtx.shadowBlur = 0;
+      comicCtx.fillStyle = '#e8d4a0';
+      comicCtx.fillRect(bPeakX - 6, bPeakY + 7, 12, 8);
+      // Light spill
+      const glow = comicCtx.createRadialGradient(bPeakX, bPeakY + 16, 3, bPeakX, bPeakY + 16, 100);
+      glow.addColorStop(0, 'rgba(196,168,107,0.08)'); glow.addColorStop(1, 'rgba(196,168,107,0)');
+      comicCtx.fillStyle = glow; comicCtx.fillRect(bPeakX - 80, bPeakY, 160, 200);
+      // Street
+      comicCtx.fillStyle = '#1a1a1a'; comicCtx.fillRect(0, bBaseY, cw, ch - bBaseY);
+      comicCtx.fillStyle = '#222'; comicCtx.fillRect(0, bBaseY, cw, 2);
+      break;
+    }
+    case 'nik_intro': {
+      // Tight face composition — Murry and Nik side by side, LARGE, showing resemblance
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#3a6a4a');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Green marble floor
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 60, cw, 60);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 60, cw, 4);
+      // Elevator doors (open, behind characters)
+      comicCtx.fillStyle = '#888'; comicCtx.fillRect(cw/2 - 60, ch - 280, 120, 225);
+      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(cw/2 - 55, ch - 275, 110, 218);
+      // Gold indicator above elevator
+      comicCtx.fillStyle = '#c4a86b';
+      comicCtx.font = '11px "Bebas Neue", sans-serif';
+      comicCtx.textAlign = 'center';
+      comicCtx.fillText('PH', cw/2, ch - 286);
+      comicCtx.textAlign = 'left';
+      // Draw characters LARGE and CLOSE — tight composition for resemblance
+      drawComicMurryLarge(comicCtx, cw/2 - 110, ch - 200, true);
+      drawCharLabel(comicCtx, cw/2 - 110, 80, ch - 64, 'MURRY');
+      drawComicNikLarge(comicCtx, cw/2 + 30, ch - 200);
+      drawCharLabel(comicCtx, cw/2 + 30, 80, ch - 64, 'NIK');
+      // Snacks at their feet
+      drawComicSnacks(comicCtx, cw/2 - 10, ch - 70);
+      drawCharLabel(comicCtx, cw/2 - 10, 24, ch - 54, 'SNACKS');
+      break;
+    }
+    case 'nik_snacks': {
+      // Nik with Snacks — dog wagging tail
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#3a6a4a');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Green marble floor
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 60, cw, 60);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 60, cw, 4);
+      // Nik crouching with Snacks
+      drawComicNik(comicCtx, cw/2 - 40, ch - 105);
+      drawCharLabel(comicCtx, cw/2 - 40, 30, ch - 59, 'NIK');
+      // Snacks with wagging tail — slightly bigger
+      drawComicSnacksBig(comicCtx, cw/2 + 20, ch - 80);
+      drawCharLabel(comicCtx, cw/2 + 20, 40, ch - 53, 'SNACKS');
+      // Murry nearby petting Snacks
+      drawComicMurry(comicCtx, cw/2 + 70, ch - 110, true, false);
+      drawCharLabel(comicCtx, cw/2 + 70, 30, ch - 64, 'MURRY');
+      break;
+    }
+    case 'similarity': {
+      // Nik and Murry — show the resemblance. Use silhouettes/back view.
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.6, '#0e1220'); g.addColorStop(1, '#08080c');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Elevator doors as backdrop
+      comicCtx.fillStyle = '#1a1a22'; comicCtx.fillRect(cw/2 - 80, ch - 280, 160, 230);
+      comicCtx.fillStyle = '#888'; comicCtx.fillRect(cw/2 - 80, ch - 280, 160, 4);
+      // Warm interior light from elevator
+      const eGlow = comicCtx.createRadialGradient(cw/2, ch - 180, 10, cw/2, ch - 180, 120);
+      eGlow.addColorStop(0, 'rgba(196,168,107,0.06)'); eGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      comicCtx.fillStyle = eGlow; comicCtx.fillRect(cw/2 - 120, ch - 300, 240, 260);
+      // TWO SILHOUETTES — from behind, same build, same posture
+      // Left: Murry (with beard shadow)
+      drawSilhouette(comicCtx, cw/2 - 60, ch - 200, true);  // with beard
+      drawCharLabel(comicCtx, cw/2 - 60, 30, ch - 55, 'MURRY');
+      // Right: Nik (no beard)
+      drawSilhouette(comicCtx, cw/2 + 20, ch - 200, false); // no beard
+      drawCharLabel(comicCtx, cw/2 + 20, 30, ch - 55, 'NIK');
+      // Floor
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 50, cw, 50);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 50, cw, 3);
+      break;
+    }
+    case 'basement_pushups': {
+      // Murry doing pushups in basement
+      comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
+      // Dim light from window
+      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(60, 50, 80, 35);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(60, 50, 80, 35);
+      // Murry on ground (pushup pose)
+      comicCtx.fillStyle = '#d4a574';
+      comicCtx.fillRect(cw/2 - 20, ch - 115, 40, 12);
+      comicCtx.fillStyle = '#1a2744';
+      comicCtx.fillRect(cw/2 - 25, ch - 105, 50, 16);
+      comicCtx.fillStyle = '#d4a574';
+      comicCtx.beginPath(); comicCtx.arc(cw/2 - 28, ch - 108, 10, 0, Math.PI * 2); comicCtx.fill();
+      // Beard
+      comicCtx.fillStyle = 'rgba(50,35,25,0.5)';
+      comicCtx.beginPath(); comicCtx.ellipse(cw/2 - 28, ch - 102, 7, 4, 0, 0, Math.PI); comicCtx.fill();
+      // Arms
+      comicCtx.fillStyle = '#d4a574';
+      comicCtx.fillRect(cw/2 - 30, ch - 92, 6, 14);
+      comicCtx.fillRect(cw/2 + 24, ch - 92, 6, 14);
+      // Staircase
+      comicCtx.fillStyle = '#1a1a1a';
+      for (let i = 0; i < 6; i++) {
+        comicCtx.fillRect(cw - 80 + i * 8, ch - 80 - i * 30, 50, 30);
+      }
+      break;
+    }
+    case 'text_only': {
+      // Clean dark gradient — no pixel art, text only
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#060810'); g.addColorStop(0.5, '#0a0e18'); g.addColorStop(1, '#060810');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      break;
+    }
+  }
+}
+
+// Bigger Sera — arms crossed, looking down
+function drawComicSeraBig(pc, x, y) {
+  // Body — arms crossed
+  pc.fillStyle = '#3a3a4a'; pc.fillRect(x - 2, y + 24, 34, 28);
+  // Crossed arms
+  pc.fillStyle = '#c9a882';
+  pc.fillRect(x + 2, y + 30, 26, 6);
+  // Head
+  pc.fillStyle = '#c9a882';
+  pc.beginPath(); pc.arc(x + 15, y + 12, 14, 0, Math.PI * 2); pc.fill();
+  // Hair
+  pc.fillStyle = '#1a0a0a';
+  pc.beginPath(); pc.ellipse(x + 15, y + 4, 15, 10, 0, Math.PI, 0); pc.fill();
+  // Hair sides
+  pc.fillRect(x - 1, y + 4, 4, 20);
+  pc.fillRect(x + 27, y + 4, 4, 20);
+  // Eyes — looking downward
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(x + 10, y + 14, 2.5, 0, Math.PI * 2); pc.arc(x + 20, y + 14, 2.5, 0, Math.PI * 2); pc.fill();
+  // Slight frown
+  pc.strokeStyle = '#8a6a5a'; pc.lineWidth = 1;
+  pc.beginPath(); pc.moveTo(x + 9, y + 20); pc.lineTo(x + 21, y + 20); pc.stroke();
+}
+
+// Bigger Snacks — with wagging tail
+function drawComicSnacksBig(pc, x, y) {
+  // Body
+  pc.fillStyle = '#f5f5f5'; pc.fillRect(x, y + 4, 24, 14);
+  // Spots
+  pc.fillStyle = '#ddd'; pc.fillRect(x + 4, y + 6, 6, 6);
+  pc.fillRect(x + 14, y + 8, 5, 5);
+  // Head
+  pc.fillStyle = '#f5f5f5';
+  pc.beginPath(); pc.arc(x + 28, y + 6, 8, 0, Math.PI * 2); pc.fill();
+  // Ear
+  pc.fillStyle = '#e0e0e0';
+  pc.beginPath(); pc.ellipse(x + 32, y, 4, 6, 0.3, 0, Math.PI * 2); pc.fill();
+  // Eye
+  pc.fillStyle = '#1a1a1a';
+  pc.beginPath(); pc.arc(x + 30, y + 5, 2, 0, Math.PI * 2); pc.fill();
+  // Nose
+  pc.fillStyle = '#333';
+  pc.beginPath(); pc.arc(x + 35, y + 8, 2, 0, Math.PI * 2); pc.fill();
+  // Collar
+  pc.fillStyle = '#ffd700';
+  pc.fillRect(x + 22, y + 12, 10, 3);
+  // Legs
+  pc.fillStyle = '#f5f5f5';
+  pc.fillRect(x + 2, y + 18, 4, 8);
+  pc.fillRect(x + 10, y + 18, 4, 8);
+  pc.fillRect(x + 16, y + 18, 4, 8);
+  // Tail — wagging
+  pc.strokeStyle = '#f5f5f5'; pc.lineWidth = 2;
+  pc.beginPath(); pc.moveTo(x, y + 6); pc.quadraticCurveTo(x - 8, y - 4, x - 5, y - 10); pc.stroke();
+}
+
+// Silhouette — from behind (similarity scene)
+function drawSilhouette(pc, x, y, hasBeard) {
+  // Dark figure from behind — same build
+  pc.fillStyle = '#0a0a14';
+  // Body
+  pc.fillRect(x, y + 28, 32, 40);
+  // Shoulders
+  pc.fillRect(x - 4, y + 28, 40, 8);
+  // Head
+  pc.beginPath(); pc.arc(x + 16, y + 14, 14, 0, Math.PI * 2); pc.fill();
+  // Hair outline (slight)
+  pc.fillStyle = '#0c0c16';
+  pc.beginPath(); pc.ellipse(x + 16, y + 6, 14, 10, 0, Math.PI, 0); pc.fill();
+  // Beard shadow (Murry only)
+  if (hasBeard) {
+    pc.fillStyle = 'rgba(30,20,15,0.6)';
+    pc.beginPath(); pc.ellipse(x + 16, y + 22, 9, 5, 0, 0, Math.PI); pc.fill();
+  }
+  // Legs
+  pc.fillStyle = '#0a0a14';
+  pc.fillRect(x + 4, y + 68, 10, 30);
+  pc.fillRect(x + 18, y + 68, 10, 30);
+  // Subtle outline to distinguish from bg
+  pc.strokeStyle = 'rgba(196,168,107,0.06)'; pc.lineWidth = 1;
+  pc.beginPath();
+  pc.arc(x + 16, y + 14, 14, 0, Math.PI * 2);
+  pc.stroke();
+  pc.strokeRect(x - 4, y + 28, 40, 40);
+}
+
+function drawComicMurry(pc, x, y, hasBeard, hasShaved) {
+  // Doorman uniform, larger scale
+  pc.fillStyle = '#1a2744'; pc.fillRect(x, y + 20, 30, 22);
+  pc.fillStyle = '#d4b87a'; pc.fillRect(x + 13, y + 24, 4, 4); pc.fillRect(x + 13, y + 30, 4, 4);
+  pc.fillStyle = '#d4a574';
+  pc.beginPath(); pc.arc(x + 15, y + 10, 12, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a2744'; pc.fillRect(x + 2, y - 4, 26, 8);
+  pc.fillStyle = '#d4b87a'; pc.fillRect(x + 2, y + 3, 26, 3);
+  if (hasBeard) {
+    pc.fillStyle = 'rgba(50,35,25,0.5)';
+    pc.beginPath(); pc.ellipse(x + 15, y + 18, 8, 5, 0, 0, Math.PI); pc.fill();
+  }
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(x + 10, y + 8, 2.5, 0, Math.PI * 2); pc.arc(x + 20, y + 8, 2.5, 0, Math.PI * 2); pc.fill();
+}
+
+function drawComicSera(pc, x, y) {
+  pc.fillStyle = '#3a3a4a'; pc.fillRect(x, y + 20, 28, 20);
+  pc.fillStyle = '#c9a882';
+  pc.beginPath(); pc.arc(x + 14, y + 10, 11, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a0a0a';
+  pc.beginPath(); pc.ellipse(x + 14, y + 2, 12, 8, 0, Math.PI, 0); pc.fill();
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(x + 10, y + 8, 2, 0, Math.PI * 2); pc.arc(x + 18, y + 8, 2, 0, Math.PI * 2); pc.fill();
+}
+
+function drawComicNik(pc, x, y) {
+  pc.fillStyle = '#0a1a3a'; pc.fillRect(x, y + 22, 30, 22);
+  pc.fillStyle = '#d4a574';
+  pc.beginPath(); pc.arc(x + 15, y + 12, 12, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a1a1a';
+  pc.beginPath(); pc.ellipse(x + 15, y + 4, 13, 7, 0, Math.PI, 0); pc.fill();
+  // Glasses
+  pc.strokeStyle = '#aaa'; pc.lineWidth = 1.5;
+  pc.strokeRect(x + 5, y + 8, 9, 7); pc.strokeRect(x + 18, y + 8, 9, 7);
+  pc.beginPath(); pc.moveTo(x + 14, y + 12); pc.lineTo(x + 18, y + 12); pc.stroke();
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(x + 10, y + 11, 2, 0, Math.PI * 2); pc.arc(x + 22, y + 11, 2, 0, Math.PI * 2); pc.fill();
+}
+
+function drawComicSnacks(pc, x, y) {
+  // Body — elongated white
+  pc.fillStyle = '#f0f0f0'; pc.fillRect(x + 4, y + 6, 20, 10);
+  // Legs (4)
+  pc.fillRect(x + 6, y + 14, 3, 7); pc.fillRect(x + 13, y + 14, 3, 7);
+  pc.fillRect(x + 18, y + 14, 3, 7); pc.fillRect(x + 22, y + 14, 3, 7);
+  // Head — circle, slightly ahead of body
+  pc.beginPath(); pc.arc(x + 28, y + 6, 7, 0, Math.PI * 2); pc.fill();
+  // Ears (floppy)
+  pc.fillRect(x + 23, y - 1, 4, 5); pc.fillRect(x + 30, y - 1, 4, 5);
+  // Eye
+  pc.fillStyle = '#1a1a1a';
+  pc.beginPath(); pc.arc(x + 30, y + 5, 1.5, 0, Math.PI * 2); pc.fill();
+  // Nose
+  pc.fillRect(x + 33, y + 7, 2, 2);
+  // Tail — curled up
+  pc.fillStyle = '#f0f0f0';
+  pc.fillRect(x, y + 4, 3, 6);
+  pc.fillRect(x - 1, y + 2, 3, 4);
+  // Gold collar
+  pc.fillStyle = '#ffd700'; pc.fillRect(x + 23, y + 10, 8, 2);
+}
+
+function drawComicMurryLarge(pc, x, y, withBeard) {
+  // Larger portrait for side-by-side
+  pc.fillStyle = '#1a2744'; pc.fillRect(x + 10, y + 50, 60, 80);
+  pc.fillStyle = '#d4b87a'; pc.fillRect(x + 35, y + 60, 8, 6); pc.fillRect(x + 35, y + 72, 8, 6);
+  pc.fillStyle = '#d4a574';
+  pc.beginPath(); pc.arc(x + 40, y + 25, 25, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a2744'; pc.fillRect(x + 12, y - 2, 56, 16);
+  pc.fillStyle = '#d4b87a'; pc.fillRect(x + 12, y + 12, 56, 5);
+  if (withBeard) {
+    pc.fillStyle = 'rgba(50,35,25,0.5)';
+    pc.beginPath(); pc.ellipse(x + 40, y + 40, 16, 10, 0, 0, Math.PI); pc.fill();
+  }
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(x + 32, y + 22, 4, 0, Math.PI * 2); pc.arc(x + 48, y + 22, 4, 0, Math.PI * 2); pc.fill();
+}
+
+function drawComicNikLarge(pc, x, y) {
+  pc.fillStyle = '#0a1a3a'; pc.fillRect(x + 10, y + 50, 60, 80);
+  pc.fillStyle = '#d4a574';
+  pc.beginPath(); pc.arc(x + 40, y + 25, 25, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a1a1a';
+  pc.beginPath(); pc.ellipse(x + 40, y + 10, 26, 14, 0, Math.PI, 0); pc.fill();
+  pc.strokeStyle = '#aaa'; pc.lineWidth = 2;
+  pc.strokeRect(x + 24, y + 18, 14, 10); pc.strokeRect(x + 44, y + 18, 14, 10);
+  pc.beginPath(); pc.moveTo(x + 38, y + 23); pc.lineTo(x + 44, y + 23); pc.stroke();
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(x + 31, y + 23, 3, 0, Math.PI * 2); pc.arc(x + 51, y + 23, 3, 0, Math.PI * 2); pc.fill();
+}
+
+// ============================================================
+// MISSION CARD SYSTEM
+// ============================================================
+
+function showMissionCards(cards, onComplete) {
+  GAME.missionCards.active = true;
+  GAME.missionCards.queue = cards.slice();
+  GAME.missionCards.currentIndex = 0;
+  GAME.missionCards.onComplete = onComplete || null;
+  mcOverlay.style.display = 'flex';
+  // Soften music during dialogue — duck to ~20% (audible but receded)
+  if (GAME.instruments) {
+    try { GAME.instruments.drone.volume.rampTo(-36, 0.5); } catch(e) {}
+    try { GAME.instruments.pad.volume.rampTo(-26, 0.5); } catch(e) {}
+  }
+  renderMissionCard(0);
+  // Safety timer only — no auto-advance
+  if (GAME.missionCards.safetyTimer) clearTimeout(GAME.missionCards.safetyTimer);
+  GAME.missionCards.safetyTimer = setTimeout(() => {
+    if (GAME.missionCards.active) dismissMissionCards();
+  }, 120000); // 2 min safety (player-paced, generous timeout)
+}
+
+function renderMissionCard(index) {
+  const card = GAME.missionCards.queue[index];
+  if (!card) { dismissMissionCards(); return; }
+  GAME.missionCards.currentIndex = index;
+
+  // Back button visibility
+  const mcBack = document.getElementById('mc-back');
+  if (index > 0 && !card.choice) {
+    mcBack.classList.remove('hidden');
+  } else {
+    mcBack.classList.add('hidden');
+  }
+
+  if (card.choice) {
+    mcOverlay.classList.add('has-choices');
+    document.getElementById('mission-card').style.display = 'none';
+    mcAdvance.style.display = 'none';
+    mcChoices.classList.add('visible');
+    mcChoiceBtns[0].textContent = card.options[0];
+    mcChoiceBtns[1].textContent = card.options[1];
+    const handleChoice = (idx) => {
+      mcChoiceBtns[0].onclick = null;
+      mcChoiceBtns[1].onclick = null;
+      const queueBefore = GAME.missionCards.queue;
+      if (card.onChoice) card.onChoice(idx);
+      mcChoices.classList.remove('visible');
+      mcOverlay.classList.remove('has-choices');
+      document.getElementById('mission-card').style.display = 'flex';
+      if (GAME.missionCards.queue === queueBefore) advanceCard();
+    };
+    mcChoiceBtns[0].onclick = () => handleChoice(0);
+    mcChoiceBtns[1].onclick = () => handleChoice(1);
+    // NO auto-advance on choices — player must tap
+  } else {
+    mcOverlay.classList.remove('has-choices');
+    const mcCard = document.getElementById('mission-card');
+    mcCard.style.display = 'flex';
+    mcChoices.classList.remove('visible');
+    mcAdvance.style.display = 'block';
+    const portraitWrap = document.querySelector('.mc-portrait-wrap');
+    if (card.portrait) {
+      portraitWrap.style.display = 'block';
+      drawPortrait(card.portrait);
+    } else {
+      portraitWrap.style.display = 'none';
+    }
+    // Alternating sides: if this speaker is different from the first speaker in the queue, flip to right
+    const firstSpeaker = GAME.missionCards.queue.find(c => c.portrait && !c.choice);
+    const isSecondSpeaker = firstSpeaker && card.portrait && card.portrait !== firstSpeaker.portrait;
+    if (isSecondSpeaker) {
+      mcCard.style.flexDirection = 'row-reverse';
+      mcCard.querySelector('.mc-content').style.textAlign = 'right';
+    } else {
+      mcCard.style.flexDirection = 'row';
+      mcCard.querySelector('.mc-content').style.textAlign = 'left';
+    }
+    // Phone icon for phone calls
+    const phoneLabel = card.phone ? '\u260E ' : '';
+    mcName.textContent = phoneLabel + (card.speaker || '');
+    mcText.textContent = card.text || '';
+    mcText.className = 'mc-text' + (card.style === 'mission' ? ' mission-style' : '') + (card.style === 'yelling' ? ' yelling-style' : '');
+    if (card.style === 'yelling') {
+      mcCard.style.background = 'rgba(120,20,20,0.85)';
+      mcCard.style.animation = 'mc-shake 0.4s ease-in-out 3';
+    } else {
+      mcCard.style.background = '';
+      mcCard.style.animation = '';
+    }
+    if (card.onShow) card.onShow();
+    // NO auto-advance — player taps to continue
+  }
+}
+
+function advanceCard() {
+  const next = GAME.missionCards.currentIndex + 1;
+  if (next < GAME.missionCards.queue.length) renderMissionCard(next);
+  else dismissMissionCards();
+}
+
+function goBackCard() {
+  const prev = GAME.missionCards.currentIndex - 1;
+  if (prev >= 0) renderMissionCard(prev);
+}
+
+function dismissMissionCards() {
+  if (GAME.missionCards.safetyTimer) { clearTimeout(GAME.missionCards.safetyTimer); GAME.missionCards.safetyTimer = null; }
+  GAME.missionCards.active = false;
+  GAME.missionCards.queue = [];
+  GAME.missionCards.currentIndex = 0;
+  mcOverlay.style.display = 'none';
+  mcChoices.classList.remove('visible');
+  mcOverlay.classList.remove('has-choices');
+  document.getElementById('mission-card').style.display = 'flex';
+  // Restore music volume after dialogue — gentle rise
+  if (GAME.instruments) {
+    try { GAME.instruments.drone.volume.rampTo(-28, 1.0); } catch(e) {}
+    try { GAME.instruments.pad.volume.rampTo(-20, 1.0); } catch(e) {}
+  }
+  if (GAME.missionCards.onComplete) {
+    const cb = GAME.missionCards.onComplete;
+    GAME.missionCards.onComplete = null;
+    cb();
+  }
+}
+
+mcOverlay.addEventListener('click', (e) => {
+  if (e.target.classList.contains('mc-choice')) return;
+  if (e.target.id === 'mc-back') return;
+  if (mcChoices.classList.contains('visible')) return;
+  // Left 30% = back, right 70% = forward (matches comic behavior)
+  const rect = mcOverlay.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (x < rect.width * 0.3 && GAME.missionCards.currentIndex > 0) {
+    goBackCard();
+  } else {
+    advanceCard();
+  }
+});
+
+document.getElementById('mc-back').addEventListener('click', (e) => {
+  e.stopPropagation();
+  goBackCard();
+});
+
+// --- PORTRAITS ---
+function drawPortrait(characterId) {
+  mcPortraitCtx.clearRect(0, 0, 64, 64);
+  mcPortraitCtx.save();
+  switch (characterId) {
+    case 'murry': drawMurryPortrait(mcPortraitCtx, GAME.murry ? GAME.murry.transformLevel : 0); break;
+    case 'nik': drawNikPortrait(mcPortraitCtx); break;
+    case 'nik_doorman': drawNikDoormanPortrait(mcPortraitCtx); break;
+    case 'sera': drawSeraPortrait(mcPortraitCtx); break;
+    case 'board': drawBoardPortrait(mcPortraitCtx); break;
+    case 'cynthia': drawCynthiaPortrait(mcPortraitCtx); break;
+  }
+  mcPortraitCtx.restore();
+}
+
+function drawMurryPortrait(pc, tLevel) {
+  const hasShaved = tLevel >= 1;
+  const hasSweater = tLevel >= 2;
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  pc.fillStyle = hasSweater ? '#1a1a3a' : '#1a2744';
+  pc.fillRect(14, 36, 36, 28);
+  if (!hasSweater) { pc.fillStyle = '#d4b87a'; pc.fillRect(30, 40, 4, 4); pc.fillRect(30, 48, 4, 4); }
+  pc.fillStyle = '#d4a574';
+  pc.beginPath(); pc.arc(32, 22, 14, 0, Math.PI * 2); pc.fill();
+  if (hasSweater) {
+    pc.fillStyle = '#1a0a0a'; pc.beginPath(); pc.ellipse(32, 12, 15, 8, 0, Math.PI, 0); pc.fill();
+  } else {
+    pc.fillStyle = '#1a2744'; pc.fillRect(16, 6, 32, 10);
+    pc.fillStyle = '#d4b87a'; pc.fillRect(16, 14, 32, 3);
+  }
+  if (!hasShaved) {
+    pc.fillStyle = 'rgba(50,35,25,0.5)';
+    pc.beginPath(); pc.ellipse(32, 30, 10, 7, 0, 0, Math.PI); pc.fill();
+  }
+  pc.fillStyle = '#222';
+  pc.beginPath(); pc.arc(26, 20, 3, 0, Math.PI * 2); pc.arc(38, 20, 3, 0, Math.PI * 2); pc.fill();
+}
+function drawNikPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  pc.fillStyle = '#2a2a3a'; pc.fillRect(14, 36, 36, 28);
+  pc.fillStyle = '#d4a574'; pc.beginPath(); pc.arc(32, 22, 14, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a0a0a'; pc.beginPath(); pc.ellipse(32, 12, 15, 8, 0, Math.PI, 0); pc.fill();
+  pc.strokeStyle = '#aaa'; pc.lineWidth = 1.5;
+  pc.strokeRect(20, 16, 10, 8); pc.strokeRect(34, 16, 10, 8);
+  pc.beginPath(); pc.moveTo(30, 20); pc.lineTo(34, 20); pc.stroke();
+  pc.fillStyle = '#222'; pc.beginPath(); pc.arc(25, 20, 2.5, 0, Math.PI * 2); pc.arc(39, 20, 2.5, 0, Math.PI * 2); pc.fill();
+}
+function drawNikDoormanPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  pc.fillStyle = '#1a2744'; pc.fillRect(14, 36, 36, 28);
+  pc.fillStyle = '#d4b87a'; pc.fillRect(30, 40, 4, 4); pc.fillRect(30, 48, 4, 4);
+  pc.fillStyle = '#d4a574'; pc.beginPath(); pc.arc(32, 22, 14, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a2744'; pc.fillRect(16, 6, 32, 10);
+  pc.fillStyle = 'rgba(50,35,25,0.5)';
+  pc.beginPath(); pc.ellipse(32, 30, 10, 7, 0, 0, Math.PI); pc.fill();
+  pc.fillStyle = '#3a6aaa';
+  pc.beginPath(); pc.arc(26, 20, 3, 0, Math.PI * 2); pc.arc(38, 20, 3, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = 'rgba(180,30,30,0.6)'; pc.fillRect(18, 58, 10, 4); pc.fillRect(36, 58, 10, 4);
+}
+function drawSeraPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  pc.fillStyle = '#3a3a4a'; pc.fillRect(14, 36, 36, 28);
+  pc.fillStyle = '#c9a882'; pc.beginPath(); pc.arc(32, 22, 13, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#1a0a0a'; pc.beginPath(); pc.ellipse(32, 14, 14, 10, 0, Math.PI, 0); pc.fill();
+  pc.fillStyle = '#333'; pc.fillRect(42, 10, 6, 4);
+  pc.fillStyle = '#222'; pc.beginPath(); pc.arc(27, 20, 2.5, 0, Math.PI * 2); pc.arc(37, 20, 2.5, 0, Math.PI * 2); pc.fill();
+  pc.strokeStyle = '#8a6a5a'; pc.lineWidth = 1.5;
+  pc.beginPath(); pc.arc(32, 30, 6, 0.1, Math.PI - 0.1); pc.stroke();
+}
+function drawBoardPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  pc.fillStyle = '#3a3530'; pc.fillRect(14, 36, 36, 28);
+  pc.fillStyle = '#c9a882'; pc.beginPath(); pc.arc(32, 22, 12, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#888'; pc.beginPath(); pc.ellipse(32, 14, 13, 8, 0, Math.PI, 0); pc.fill();
+  pc.fillStyle = '#222'; pc.beginPath(); pc.arc(27, 20, 2, 0, Math.PI * 2); pc.arc(37, 20, 2, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#888'; pc.fillRect(44, 42, 12, 16); pc.fillStyle = '#aaa'; pc.fillRect(46, 44, 8, 12);
+}
+function drawCynthiaPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  pc.fillStyle = '#3a1a2a'; pc.fillRect(14, 36, 36, 28);
+  pc.fillStyle = '#c9a882'; pc.beginPath(); pc.arc(32, 22, 13, 0, Math.PI * 2); pc.fill();
+  pc.fillStyle = '#ccc'; pc.beginPath(); pc.ellipse(32, 14, 14, 9, 0, Math.PI, 0); pc.fill();
+  pc.strokeStyle = '#888'; pc.lineWidth = 1.5;
+  pc.strokeRect(21, 17, 9, 7); pc.strokeRect(34, 17, 9, 7);
+  pc.beginPath(); pc.moveTo(30, 20); pc.lineTo(34, 20); pc.stroke();
+  pc.fillStyle = '#222'; pc.beginPath(); pc.arc(25, 20, 2, 0, Math.PI * 2); pc.arc(39, 20, 2, 0, Math.PI * 2); pc.fill();
+  pc.strokeStyle = '#8b7355'; pc.lineWidth = 3;
+  pc.beginPath(); pc.moveTo(52, 40); pc.lineTo(56, 62); pc.stroke();
+}
+
+// ============================================================
+// FLOOR + NPC GENERATION
+// ============================================================
+
+function generateFloors() {
+  _seed = 42;
+  const floors = [];
+
+  // Lobby
+  floors.push({ index: 0, y: 640, platforms: [{ x: 0, y: 640, w: W }], items: [] });
+
+  // Floors 1-21 - MUCH wider platforms for easier play
+  const safeFloors = new Set([3, 6, 9, 14, 18]);
+  for (let i = 1; i <= 21; i++) {
+    const y = 640 - i * FH;
+    const safe = safeFloors.has(i);
+    const plats = [];
+
+    if (safe || i <= 4) {
+      // Safe/early floors: very wide
+      const w = 180 + seededRandom() * 80;
+      plats.push({ x: W / 2 - w / 2, y, w });
+    } else {
+      // Regular floors: 3 platforms, min 130px, spread across thirds
+      const third = W / 3; // 140px per third
+      const minW = 130;
+      const w1 = minW + seededRandom() * 10;
+      const x1 = 2 + seededRandom() * Math.max(0, third - w1 - 2);
+      plats.push({ x: x1, y, w: w1 });
+      const w2 = minW + seededRandom() * 10;
+      const x2 = third + 2 + seededRandom() * Math.max(0, third - w2 - 2);
+      plats.push({ x: x2, y, w: w2 });
+      const w3 = minW + seededRandom() * 10;
+      const x3 = 2 * third + 2 + seededRandom() * Math.max(0, third - w3 - 2);
+      plats.push({ x: Math.min(x3, W - w3 - 2), y, w: w3 });
+    }
+
+    const floorItems = ITEMS.filter(it => it.floor === i).map(it => ({
+      ...it, x: plats[0].x + plats[0].w / 2, y: y - 34,
+    }));
+
+    floors.push({ index: i, y, platforms: plats, items: floorItems });
+  }
+
+  // Penthouse
+  floors.push({ index: 22, y: 640 - 22 * FH, platforms: [{ x: 20, y: 640 - 22 * FH, w: 380 }], items: [], door: true });
+
+  return floors;
+}
+
+function generateNPCs(floors) {
+  const npcs = [];
+  for (const [floorStr, info] of Object.entries(NAMED_NPC_FLOORS)) {
+    const floorIdx = parseInt(floorStr);
+    const floor = floors.find(f => f.index === floorIdx);
+    if (!floor) continue;
+    const plat = floor.platforms[0];
+    npcs.push({
+      type: info.type, name: info.name, floor: floorIdx,
+      x: plat.x + 20 + seededRandom() * Math.max(10, plat.w - 50),
+      y: plat.y - 22,
+      dir: seededRandom() > 0.5 ? 1 : -1,
+      platX: plat.x, platW: plat.w,
+      speechShown: false,
+      hostile: true,
+    });
+  }
+  return npcs;
+}
+
+// ============================================================
+// SPRITE DRAWING
+// ============================================================
+
+function drawMurry(x, y, facing, tLevel) {
+  const hasShaved = tLevel >= 1;
+  const hasSweater = tLevel >= 2;
+  const hasGleam = tLevel >= 3;
+  ctx.save();
+  if (GAME.murry.stunTimer > 0 && GAME.tick % 6 < 3) ctx.globalAlpha = 0.4;
+
+  ctx.fillStyle = hasSweater ? '#1a1a3a' : '#1a2744';
+  ctx.fillRect(x + 5, y + 12, 20, 14);
+  if (!hasSweater) {
+    ctx.fillStyle = '#d4b87a'; ctx.fillRect(x + 14, y + 15, 2, 2); ctx.fillRect(x + 14, y + 19, 2, 2);
+  }
+  ctx.fillStyle = '#d4a574';
+  ctx.beginPath(); ctx.arc(x + 15, y + 7, 8, 0, Math.PI * 2); ctx.fill();
+  if (hasSweater) {
+    ctx.fillStyle = '#1a0a0a'; ctx.beginPath(); ctx.ellipse(x + 15, y + 2, 9, 5, 0, Math.PI, 0); ctx.fill();
+  } else {
+    ctx.fillStyle = '#1a2744'; ctx.fillRect(x + 5, y - 2, 20, 6);
+    ctx.fillStyle = '#d4b87a'; ctx.fillRect(x + 5, y + 3, 20, 2);
+  }
+  if (!hasShaved) {
+    ctx.fillStyle = 'rgba(50,35,25,0.5)';
+    ctx.beginPath(); ctx.ellipse(x + 15, y + 12, 6, 4, 0, 0, Math.PI); ctx.fill();
+  }
+  ctx.fillStyle = '#222';
+  ctx.beginPath();
+  ctx.arc(x + 12 + (facing > 0 ? 2 : 0), y + 6, 1.8, 0, Math.PI * 2);
+  ctx.arc(x + 18 + (facing > 0 ? 2 : 0), y + 6, 1.8, 0, Math.PI * 2);
+  ctx.fill();
+  if (hasGleam) {
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.beginPath(); ctx.arc(x + 10, y + 3, 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowColor = '#ffd700'; ctx.shadowBlur = 8;
+    ctx.fillStyle = 'rgba(255,215,0,0.15)';
+    ctx.beginPath(); ctx.arc(x + 15, y + 15, 18, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  ctx.fillStyle = hasSweater ? '#1a1a2a' : '#111';
+  ctx.fillRect(x + 7, y + 26, 6, 4); ctx.fillRect(x + 17, y + 26, 6, 4);
+  ctx.restore();
+}
+
+function drawNPC(npc, screenY) {
+  const x = npc.x, y = screenY;
+  if (npc.type === 'barry') {
+    ctx.fillStyle = '#2a2a2a'; ctx.fillRect(x + 3, y, 18, 20);
+    ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 4, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#222'; ctx.fillRect(x + 4, y - 11, 16, 6);
+    ctx.fillStyle = '#d4b87a'; ctx.fillRect(x + 4, y - 6, 16, 2);
+    ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(x + 10, y - 5, 1.5, 0, Math.PI * 2); ctx.arc(x + 14, y - 5, 1.5, 0, Math.PI * 2); ctx.fill();
+  } else if (npc.type === 'board') {
+    ctx.fillStyle = '#3a3530'; ctx.fillRect(x + 3, y + 2, 18, 18);
+    ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 2, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#555'; ctx.beginPath(); ctx.ellipse(x + 12, y - 6, 6, 3, 0, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = '#888'; ctx.fillRect(x + 19, y + 4, 6, 9);
+  } else if (npc.type === 'cynthia') {
+    ctx.fillStyle = '#3a1a2a'; ctx.fillRect(x + 3, y, 18, 20);
+    ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 4, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ccc'; ctx.beginPath(); ctx.ellipse(x + 12, y - 9, 8, 4, 0, Math.PI, 0); ctx.fill();
+    ctx.strokeStyle = '#8b7355'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x + 22, y + 6); ctx.lineTo(x + 28, y + 24); ctx.stroke();
+    const flash = Math.sin(Date.now() * 0.006) > 0;
+    if (flash) {
+      ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+      ctx.fillText('CYNTHIA', x + 12, y - 16); ctx.textAlign = 'left';
+    }
+  } else if (npc.type === 'nik_temp') {
+    // Nik — suave investor, glasses, dark suit
+    ctx.fillStyle = '#0a1a3a'; ctx.fillRect(x + 3, y + 2, 18, 18);
+    ctx.fillStyle = '#d4a574'; ctx.beginPath(); ctx.arc(x + 12, y - 2, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#1a1a1a'; ctx.beginPath(); ctx.ellipse(x + 12, y - 6, 8, 5, 0, Math.PI, 0); ctx.fill();
+    // Glasses
+    ctx.strokeStyle = '#aaa'; ctx.lineWidth = 1.2;
+    ctx.strokeRect(x + 5, y - 4, 6, 5); ctx.strokeRect(x + 14, y - 4, 6, 5);
+    ctx.beginPath(); ctx.moveTo(x + 11, y - 1); ctx.lineTo(x + 14, y - 1); ctx.stroke();
+    ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 8, y - 2, 1.5, 0, Math.PI * 2); ctx.arc(x + 17, y - 2, 1.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('NIK', x + 12, y - 14); ctx.textAlign = 'left';
+  }
+}
+
+function drawSnacks(x, y) {
+  ctx.fillStyle = '#f5f5f5'; ctx.fillRect(x + 2, y + 3, 12, 7);
+  ctx.fillStyle = '#1a1a1a'; ctx.fillRect(x + 3, y + 4, 5, 5); ctx.fillRect(x + 10, y + 3, 3, 4);
+  ctx.fillStyle = '#f5f5f5'; ctx.beginPath(); ctx.arc(x + 16, y + 4, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#1a1a1a'; ctx.beginPath(); ctx.arc(x + 17, y + 2, 4, -0.5, 1.5); ctx.fill();
+  ctx.fillRect(x + 12, y - 2, 3, 4); ctx.fillRect(x + 17, y - 2, 3, 4);
+  ctx.fillStyle = '#333'; ctx.beginPath(); ctx.arc(x + 17, y + 3, 1.5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#aaa'; ctx.beginPath(); ctx.arc(x + 20, y + 5, 1, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#ddd'; ctx.fillRect(x + 4, y + 10, 3, 4); ctx.fillRect(x + 10, y + 10, 3, 4);
+  const wag = Math.sin(Date.now() * 0.012) * 5;
+  ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.moveTo(x + 2, y + 4); ctx.lineTo(x - 3, y - 1 + wag); ctx.stroke();
+  ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.arc(x + 14, y + 8, 2, 0, Math.PI * 2); ctx.fill();
+}
+
+function drawItem(item, screenY) {
+  const x = item.x, y = screenY;
+  const bob = Math.sin(Date.now() * 0.003 + item.floor) * 4;
+  ctx.shadowColor = '#ffd700'; ctx.shadowBlur = 18;
+  ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.arc(x, y + bob, 14, 0, Math.PI * 2); ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#1a1a0a'; ctx.font = "17px 'EB Garamond', Georgia, serif"; ctx.textAlign = 'center';
+  ctx.fillText(item.icon, x, y + bob + 5);
+  ctx.fillStyle = '#ffd700'; ctx.font = "bold 12px 'Bebas Neue', sans-serif";
+  ctx.fillText(item.label, x, y - 20 + bob);
+  ctx.textAlign = 'left';
+}
+
+function drawPlatform(plat, screenY, floorIdx) {
+  const pg = ctx.createLinearGradient(plat.x, screenY, plat.x, screenY + PLATH);
+  pg.addColorStop(0, '#3a3530'); pg.addColorStop(1, '#1a1510');
+  ctx.fillStyle = pg;
+  ctx.beginPath(); ctx.roundRect(plat.x, screenY, plat.w, PLATH, 4); ctx.fill();
+  ctx.fillStyle = GOLD; ctx.fillRect(plat.x + 2, screenY, plat.w - 4, 2);
+}
+
+function drawLobby(plat, screenY) {
+  const gg = ctx.createLinearGradient(0, screenY, 0, screenY + 30);
+  gg.addColorStop(0, '#5a8a6a'); gg.addColorStop(0.3, '#3a6a4a'); gg.addColorStop(1, '#2a4a3a');
+  ctx.fillStyle = gg; ctx.fillRect(plat.x, screenY, plat.w, 80);
+  ctx.fillStyle = '#6a9a7a'; ctx.fillRect(plat.x, screenY, plat.w, 3);
+  ctx.fillStyle = 'rgba(196,168,107,0.4)'; ctx.font = "bold 14px 'Bebas Neue', sans-serif";
+  ctx.textAlign = 'center'; ctx.fillText('THE PYRAMID \u25B3', W / 2, screenY + 26); ctx.textAlign = 'left';
+}
+
+function drawPenthouseDoor(screenY) {
+  ctx.fillStyle = '#2a2218'; ctx.fillRect(W / 2 - 18, screenY - 46, 36, 46);
+  ctx.fillStyle = GOLD; ctx.fillRect(W / 2 - 20, screenY - 48, 40, 3);
+  ctx.fillStyle = '#ffd700';
+  ctx.beginPath(); ctx.arc(W / 2 + 12, screenY - 24, 3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 13px 'Bebas Neue', sans-serif";
+  ctx.textAlign = 'center'; ctx.fillText('PENTHOUSE', W / 2, screenY - 54); ctx.textAlign = 'left';
+}
+
+// ============================================================
+// AUDIO
+// ============================================================
+
+function initAudio() {
+  if (GAME.audioStarted) return;
+  Tone.start().then(() => {
+    GAME.audioStarted = true;
+    const reverb = new Tone.Reverb({ decay: 5, wet: 0.4 }).toDestination();
+    const bigReverb = new Tone.Reverb({ decay: 8, wet: 0.6 }).toDestination();
+    GAME.instruments = {
+      // Lighter ambient drone — A2, gentle FM, moderate reverb
+      drone: new Tone.FMSynth({ harmonicity: 0.25, modulationIndex: 0.3, envelope: { attack: 5, decay: 3, sustain: 0.5, release: 6 }, oscillator: { type: 'sine' }, volume: -28 }).connect(reverb),
+      // Pad — sine cluster, long attack
+      pad: new Tone.PolySynth(Tone.Synth, { maxPolyphony: 6, options: { envelope: { attack: 3, decay: 0.5, sustain: 0.6, release: 3 }, oscillator: { type: 'sine' }, volume: -20 } }).connect(reverb),
+      // Heartbeat — soft, deep
+      heartbeat: new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.35, sustain: 0, release: 0.5 }, volume: -12 }).connect(new Tone.Reverb(2).toDestination()),
+      // Impact — for body drop
+      impact: new Tone.MembraneSynth({ pitchDecay: 0.05, octaves: 4, envelope: { attack: 0.01, sustain: 0, release: 1.5 }, volume: -3 }).toDestination(),
+      // Ding — softer, less metallic
+      ding: new Tone.MetalSynth({ frequency: 600, envelope: { attack: 0.001, decay: 1.0, release: 0.3 }, harmonicity: 5.1, modulationIndex: 10, resonance: 2000, octaves: 1.5, volume: -20 }).connect(reverb),
+      // Basement ambience — pink noise, higher filter, airy not oppressive
+      basementNoise: new Tone.Noise('pink').connect(new Tone.Filter(300, 'lowpass').connect(new Tone.Volume(-32).toDestination())),
+      // Wind — higher floors
+      windNoise: new Tone.Noise('pink').connect(new Tone.Filter(500, 'bandpass').connect(new Tone.Volume(-28).toDestination())),
+    };
+  });
+}
+
+function stopAllAudio() {
+  if (!GAME.instruments) return;
+  try { GAME.instruments.drone.triggerRelease(); } catch(e) {}
+  try { GAME.instruments.pad.releaseAll(); } catch(e) {}
+  try { GAME.instruments.heartbeat.triggerRelease(); } catch(e) {}
+  GAME.activeNoises.forEach(n => { try { n.stop(); } catch(e) {} });
+  GAME.activeNoises = [];
+  GAME.activeLoops.forEach(l => { try { clearInterval(l); } catch(e) {} });
+  GAME.activeLoops = [];
+  GAME.lastAudioZone = -1;
+}
+
+function updateAudio() {
+  if (!GAME.instruments) return;
+  const floor = GAME.currentFloor;
+  let zone = 0;
+  if (floor >= 6 && floor < 13) zone = 1;
+  else if (floor >= 13 && floor < 19) zone = 2;
+  else if (floor >= 19) zone = 3;
+  if (zone === GAME.lastAudioZone) return;
+  GAME.lastAudioZone = zone;
+  stopAllAudio();
+  // Small delay avoids Tone.js "start time" scheduling errors
+  const t = Tone.now() + 0.05;
+  try {
+    switch(zone) {
+      case 0: // Basement — gentle drone + airy noise
+        GAME.instruments.drone.triggerAttack('A2', t);
+        GAME.instruments.basementNoise.start(t); GAME.activeNoises.push(GAME.instruments.basementNoise);
+        break;
+      case 1: // Mid floors — open fifth pad
+        GAME.instruments.drone.triggerAttack('D2', t);
+        GAME.instruments.pad.triggerAttack(['D3', 'A3'], t);
+        break;
+      case 2: // Upper floors — open voicing + wind
+        GAME.instruments.pad.triggerAttack(['D3', 'A3', 'D4'], t);
+        GAME.instruments.windNoise.start(t); GAME.activeNoises.push(GAME.instruments.windNoise);
+        break;
+      case 3: // Penthouse — tension, heartbeat
+        GAME.instruments.pad.triggerAttack(['D3', 'A3', 'D4'], t);
+        GAME.instruments.windNoise.start(t); GAME.activeNoises.push(GAME.instruments.windNoise);
+        const hbLoop = setInterval(() => { if (GAME.instruments) { try { GAME.instruments.heartbeat.triggerAttackRelease('C2', '16n'); } catch(e) {} } }, 800);
+        GAME.activeLoops.push(hbLoop);
+        break;
+    }
+  } catch(e) {}
+}
+
+// ============================================================
+// PHYSICS
+// ============================================================
+
+function updatePhysics() {
+  const m = GAME.murry;
+  if (m.stunTimer > 0) { m.stunTimer--; return; }
+
+  if (keys.left) { m.vx = -SPD; m.facing = -1; }
+  else if (keys.right) { m.vx = SPD; m.facing = 1; }
+  else { m.vx = 0; }
+  m.x += m.vx;
+
+  // Screen wrap
+  if (m.x < -PW) m.x = W;
+  if (m.x > W) m.x = -PW;
+
+  // Coyote time: allow jump briefly after leaving platform
+  if (m.onGround) m.coyoteTimer = COYOTE_FRAMES;
+  else if (m.coyoteTimer > 0) m.coyoteTimer--;
+
+  // Jump (with coyote time)
+  if (keys.jumpPressed && (m.onGround || m.coyoteTimer > 0)) {
+    m.vy = JUMP;
+    m.onGround = false;
+    m.coyoteTimer = 0;
+  }
+  keys.jumpPressed = false;
+
+  // Gravity
+  m.vy += GRAV;
+  m.y += m.vy;
+  m.onGround = false;
+
+  // Platform collision
+  for (const floor of GAME.floors) {
+    for (const plat of floor.platforms) {
+      if (m.vy >= 0 &&
+          m.x + PW > plat.x && m.x < plat.x + plat.w &&
+          m.y + PH_SIZE >= plat.y && m.y + PH_SIZE <= plat.y + PLATH + m.vy + 5) {
+        m.y = plat.y - PH_SIZE;
+        m.vy = 0;
+        m.onGround = true;
+        if (floor.index > GAME.currentFloor) {
+          GAME.currentFloor = floor.index;
+          onFloorReached(floor);
+        }
+        break;
+      }
+    }
+    if (m.onGround) break;
+  }
+
+  // Fall off bottom: reset to current floor (not below!)
+  if (m.y + GAME.camera.y > H + 60) {
+    const safePlat = findSafePlatform(GAME.currentFloor);
+    if (safePlat) {
+      m.x = safePlat.x + safePlat.w / 2 - PW / 2;
+      m.y = safePlat.y - PH_SIZE;
+      m.vy = 0;
+      m.onGround = true;
+      // Snap camera so player is visible after fall reset
+      GAME.camera.y = Math.max(0, -(m.y - 300));
+    }
+  }
+}
+
+function findSafePlatform(aroundFloor) {
+  for (let i = aroundFloor; i >= 0; i--) {
+    const f = GAME.floors.find(fl => fl.index === i);
+    if (f && f.platforms.length > 0) return f.platforms[0];
+  }
+  return GAME.floors[0].platforms[0];
+}
+
+function updateSnacks() {
+  if (!GAME.snacks) return;
+  const s = GAME.snacks, m = GAME.murry;
+  const targetX = m.x + (m.facing > 0 ? -20 : PW + 5);
+  s.x += (targetX - s.x) * 0.08;
+  s.vy += GRAV; s.y += s.vy;
+  for (const floor of GAME.floors) {
+    for (const plat of floor.platforms) {
+      if (s.vy >= 0 && s.x + 14 > plat.x && s.x < plat.x + plat.w &&
+          s.y + 14 >= plat.y && s.y + 14 <= plat.y + PLATH + s.vy + 5) {
+        s.y = plat.y - 14; s.vy = 0;
+        if (m.vy < -3) s.vy = JUMP * 0.88;
+        break;
+      }
+    }
+  }
+}
+
+// ============================================================
+// NPC SYSTEM
+// ============================================================
+
+function updateNPCs() {
+  for (const npc of GAME.npcs) {
+    if (npc.walking) continue; // skip patrol for NPCs actively walking on/off
+    if (npc.type === 'barry' || npc.type === 'board' || (npc.type === 'cynthia' && npc.hostile)) {
+      const spd = npc.type === 'barry' ? 0.8 : 0.6;
+      npc.x += npc.dir * spd;
+      if (npc.x <= npc.platX + 5 || npc.x >= npc.platX + npc.platW - 28) npc.dir *= -1;
+    }
+    const m = GAME.murry;
+    const myFloor = GAME.floors.find(f => f.index === npc.floor);
+    if (!myFloor) continue;
+    const screenDist = Math.abs(m.y - (myFloor.y - PH_SIZE));
+    if (screenDist > FH) continue;
+    const dist = Math.abs((m.x + PW / 2) - (npc.x + 12));
+    if (dist < 60 && !npc.speechShown) {
+      npc.speechShown = true;
+      triggerSpeech(npc);
+    }
+    if (dist < 24 && screenDist < 40 && npc.hostile && m.stunTimer <= 0) {
+      const immune = (npc.type === 'barry' && m.transformLevel >= 2) ||
+                     (npc.type === 'board' && m.transformLevel >= 3);
+      if (!immune) { loseAFloor(); return; }
+    }
+  }
+}
+
+function triggerSpeech(npc) {
+  const tl = GAME.murry.transformLevel;
+  let text = '';
+  // Barry: no speech (cut per spec — "That's 16 minutes" has no context for player)
+  if (npc.type === 'board') text = tl >= 3 ? SPEECH.board_friendly : SPEECH.board_hostile;
+  if (text) {
+    GAME.speechBubbles.push({ x: npc.x + 12, y: npc.y - 10, text, life: 120 });
+    if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n');
+  }
+}
+
+function loseAFloor() {
+  const m = GAME.murry;
+  const prevFloor = Math.max(0, GAME.currentFloor - 1);
+  const target = GAME.floors.find(f => f.index === prevFloor);
+  if (target) {
+    m.x = target.platforms[0].x + target.platforms[0].w / 2 - PW / 2;
+    m.y = target.platforms[0].y - PH_SIZE;
+    m.vy = 0; m.stunTimer = 30;
+    GAME.currentFloor = prevFloor;
+  }
+  GAME.shakeTimer = 10;
+}
+
+// ============================================================
+// NPC WALK-ON / WALK-OFF SYSTEM
+// ============================================================
+
+// Spawn an NPC off-screen on a floor's platform, animate walking to center,
+// then call onReady. After dialogue, call walkOffNPC to animate exit + remove.
+function walkOnNPC(type, name, floorIdx, onReady) {
+  const floor = GAME.floors.find(f => f.index === floorIdx);
+  if (!floor) { if (onReady) onReady(null); return; }
+  const plat = floor.platforms[0];
+  const targetX = plat.x + plat.w / 2 + 15;
+  const startX = plat.x + plat.w + 30; // start off-screen right
+  const npc = {
+    type, name, floor: floorIdx,
+    x: startX, y: plat.y - 22,
+    dir: -1, platX: plat.x, platW: plat.w,
+    speechShown: true, hostile: false,
+    walkTarget: targetX, walking: true,
+  };
+  GAME.npcs.push(npc);
+
+  // Animate walk-on
+  const walkInterval = setInterval(() => {
+    if (GAME.gen !== npc._gen && npc._gen !== undefined) { clearInterval(walkInterval); return; }
+    npc.x -= 1.2;
+    if (npc.x <= targetX) {
+      npc.x = targetX;
+      npc.walking = false;
+      clearInterval(walkInterval);
+      if (onReady) onReady(npc);
+    }
+  }, 16);
+  npc._gen = GAME.gen;
+}
+
+function walkOffNPC(npc, onDone) {
+  if (!npc) { if (onDone) onDone(); return; }
+  const plat = GAME.floors.find(f => f.index === npc.floor);
+  const exitX = plat ? plat.platforms[0].x + plat.platforms[0].w + 40 : 500;
+  npc.dir = 1;
+  npc.walking = true;
+
+  const walkInterval = setInterval(() => {
+    npc.x += 1.2;
+    if (npc.x >= exitX) {
+      clearInterval(walkInterval);
+      GAME.npcs = GAME.npcs.filter(n => n !== npc);
+      if (onDone) onDone();
+    }
+  }, 16);
+}
+
+// ============================================================
+// STORY TRIGGERS
+// ============================================================
+
+function checkStoryTriggers() {
+  const floor = GAME.currentFloor;
+  const flags = GAME.storyFlags;
+
+  // Nik encounter at floor 4 (was floor 2 — give Murry more jumps first)
+  if (floor >= 4 && !flags.nikEncounterDone) {
+    flags.nikEncounterDone = true;
+    triggerNikEncounter();
+  }
+  // Sera at floor 7 — phone ring + question
+  else if (floor >= 7 && !flags.seraChase1) {
+    flags.seraChase1 = true;
+    if (GAME.instruments) {
+      GAME.instruments.ding.triggerAttackRelease('16n');
+      setTimeout(() => { if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n'); }, 200);
+    }
+    showMissionCards([
+      { speaker: 'SERA', text: 'Where are you? Pick up the phone.', portrait: 'sera', phone: true },
+    ]);
+  }
+  // Sera phone call at floor 13
+  else if (floor >= 13 && !flags.seraChase2) {
+    flags.seraChase2 = true;
+    triggerSeraPhoneCall();
+  }
+  // Cynthia + Board COMBINED at floor 16
+  else if (floor >= 16 && !flags.cynthiaChaseDone) {
+    flags.cynthiaChaseDone = true;
+    flags.boardCaptureDone = true;
+    triggerCynthiaAndBoard();
+  }
+  // Floors 17-21: NOTHING. Clean platforming to the top.
+  // Penthouse
+  else if (floor >= TOTAL_FLOORS && !flags.rooftopDone) {
+    flags.rooftopDone = true;
+    triggerRooftop();
+  }
+}
+
+function triggerNikEncounter() {
+  if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+
+  // Nik walks onto floor 2 platform, then dialogue begins
+  walkOnNPC('nik_temp', 'NIK', 2, (nikNpc) => {
+    GAME._nikNpc = nikNpc; // store ref for walk-off later
+  });
+
+  // Start dialogue immediately (Nik walks on during first card)
+  showMissionCards([
+    { speaker: 'NIK', text: 'Murry. Just the man I need. Listen, I need a favor. My investors are losing their minds. I need to go to Boca immediately.', portrait: 'nik' },
+    { speaker: 'NIK', text: 'I don\'t trust the sitters in my place. And those kennels and \u201Cdog hotels\u201D won\'t even do the shots.', portrait: 'nik' },
+    { speaker: 'MURRY', text: 'The penthouse? Won\u2019t someone see me?', portrait: 'murry' },
+    { speaker: 'NIK', text: 'Not if they see me.', portrait: 'nik',
+      onShow: () => {
+        // Razor flash: shave Murry after a beat so player reads the line first
+        setTimeout(() => {
+          GAME.murry.transformLevel = 1;
+          GAME.shakeTimer = 12;
+          const flash = document.createElement('div');
+          flash.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,0.6);z-index:30;pointer-events:none;';
+          document.getElementById('game-wrap').appendChild(flash);
+          setTimeout(() => flash.remove(), 150);
+        }, 600);
+      }
+    },
+    {
+      choice: true,
+      options: ['GO TO THE TOP', 'STAY AT THE BOTTOM'],
+      onChoice: (idx) => {
+        if (idx === 1) {
+          showMissionCards([
+            { speaker: 'NIK', text: 'Come on. You know you want this.', portrait: 'nik' },
+            {
+              choice: true,
+              options: ['GO TO THE TOP', 'STAY AT THE BOTTOM'],
+              onChoice: (idx2) => {
+                finishNikEncounter();
+              },
+            },
+          ]);
+        } else { finishNikEncounter(); }
+      },
+    },
+  ]);
+}
+
+function finishNikEncounter() {
+  // Mission card — straight to gameplay
+  showMissionCards([
+    { speaker: 'MISSION', text: 'Get Snacks to the penthouse. Don\'t let the residents or other doormen see. Or worse, the Co-Op Board!', portrait: null, style: 'mission' },
+  ], () => {
+    // Walk Nik off
+    if (GAME._nikNpc) walkOffNPC(GAME._nikNpc);
+    else GAME.npcs = GAME.npcs.filter(n => n.type !== 'nik_temp');
+    // Spawn Snacks on floor 4 (Nik hands him off)
+    const f2 = GAME.floors.find(f => f.index === 4);
+    if (f2 && !GAME.snacks) {
+      GAME.snacks = { x: GAME.murry.x + 20, y: f2.platforms[0].y - 14, vy: 0 };
+    }
+    showControlHint('KEEP CLIMBING \u2191');
+  });
+}
+
+function triggerSeraPhoneCall() {
+  // Phone RING sound — double ding
+  if (GAME.instruments) {
+    GAME.instruments.ding.triggerAttackRelease('16n');
+    setTimeout(() => {
+      if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n');
+    }, 200);
+  }
+  // Vignette effect
+  document.getElementById('game-wrap').classList.add('vignette');
+
+  showMissionCards([
+    { speaker: 'SERA', text: 'Where are you?', portrait: 'sera', phone: true },
+    { speaker: 'MURRY', text: 'I\u2019m working on my business.', portrait: 'murry', phone: true },
+    { speaker: 'SERA', text: 'With what money?', portrait: 'sera', phone: true },
+    { speaker: 'MURRY', text: 'I actually have an investor.', portrait: 'murry', phone: true },
+    { speaker: 'SERA', text: 'In the body spray?', portrait: 'sera', phone: true },
+    { speaker: 'MURRY', text: 'ITS CUSTOM COLOGNE!', portrait: 'murry', phone: true, style: 'yelling' },
+  ], () => {
+    document.getElementById('game-wrap').classList.remove('vignette');
+  });
+}
+
+function triggerCynthiaAndBoard() {
+  // Cynthia walks onto floor 16 platform
+  walkOnNPC('cynthia', 'CYNTHIA', 16, (cynthiaNpc) => {
+    GAME._cynthiaNpc = cynthiaNpc;
+  });
+
+  showMissionCards([
+    { speaker: 'CYNTHIA', text: 'No need for so much cologne, Nikos. We can all smell the desperation.', portrait: 'cynthia' },
+    { speaker: 'MURRY', text: 'We?', portrait: 'murry' },
+  ], () => {
+    // After Murry says "We?" — Board swoops in on SAME floor (16)
+    const boardNpcs = [];
+    walkOnNPC('board', 'RHONDA', 16, (npc) => { if (npc) boardNpcs.push(npc); });
+    setTimeout(() => walkOnNPC('board', 'LARRY', 16, (npc) => { if (npc) boardNpcs.push(npc); }), 400);
+
+    // Start board dialogue after walk-on
+    setTimeout(() => {
+      showMissionCards([
+        { speaker: '', text: 'OH NO! The Co-Op Board!', portrait: null, style: 'mission' },
+        { speaker: 'CO-OP BOARD', text: 'We know you\'re running some sort of scheme!', portrait: 'board' },
+      ], () => {
+        // Board members + Cynthia become hostile — escape the board
+        const cynthia = GAME.npcs.find(n => n.type === 'cynthia');
+        if (cynthia) { cynthia.hostile = true; cynthia.walking = false; }
+        for (const npc of boardNpcs) {
+          npc.hostile = true;
+          npc.walking = false;
+        }
+      });
+    }, 1200);
+  });
+}
+
+// --- Rooftop helpers ---
+
+function drawNikDoorman(x, y) {
+  ctx.save();
+  // Doorman uniform body — brighter navy so it reads against dark rooftop
+  ctx.fillStyle = '#1c2040';
+  ctx.fillRect(x + 2, y + 12, 26, 18);
+  // Uniform trim — subtle piping along edges
+  ctx.fillStyle = '#2a2d50';
+  ctx.fillRect(x + 2, y + 12, 1, 18); ctx.fillRect(x + 27, y + 12, 1, 18);
+  // Epaulettes (gold shoulder pads) — MORE PROMINENT
+  ctx.fillStyle = '#d4b87a';
+  ctx.fillRect(x, y + 11, 7, 4);
+  ctx.fillRect(x + 23, y + 11, 7, 4);
+  // Gold fringe on epaulettes
+  ctx.fillStyle = '#c4a86b';
+  ctx.fillRect(x, y + 15, 2, 2); ctx.fillRect(x + 3, y + 15, 2, 2);
+  ctx.fillRect(x + 25, y + 15, 2, 2); ctx.fillRect(x + 28, y + 15, 2, 2);
+  // Gold buttons down front — BIGGER
+  ctx.fillStyle = '#e0c888';
+  ctx.beginPath(); ctx.arc(x + 15, y + 17, 2, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 15, y + 22, 2, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 15, y + 27, 2, 0, Math.PI * 2); ctx.fill();
+  // Head
+  ctx.fillStyle = '#d4a574';
+  ctx.beginPath(); ctx.arc(x + 15, y + 5, 8, 0, Math.PI * 2); ctx.fill();
+  // Doorman cap — brighter navy with gold band, TALLER
+  ctx.fillStyle = '#1c2040';
+  ctx.fillRect(x + 4, y - 8, 22, 10);
+  // Gold band on cap — THICKER
+  ctx.fillStyle = '#d4b87a';
+  ctx.fillRect(x + 4, y + 0, 22, 3);
+  // Cap badge — small gold circle
+  ctx.fillStyle = '#e0c888';
+  ctx.beginPath(); ctx.arc(x + 15, y - 3, 2.5, 0, Math.PI * 2); ctx.fill();
+  // Brim — wider, more visible
+  ctx.fillStyle = '#0e1020';
+  ctx.fillRect(x + 2, y + 1, 26, 3);
+  // Hair (dark, barely visible under cap)
+  ctx.fillStyle = '#1a0a0a';
+  ctx.beginPath(); ctx.ellipse(x + 15, y, 8, 4, 0, 0.3, Math.PI - 0.3); ctx.fill();
+  // Eyes
+  ctx.fillStyle = '#222';
+  ctx.beginPath(); ctx.arc(x + 12, y + 4, 1.8, 0, Math.PI * 2); ctx.arc(x + 18, y + 4, 1.8, 0, Math.PI * 2); ctx.fill();
+  // MURRY nametag — LARGER, white background, clearly readable
+  ctx.fillStyle = '#f0f0f0';
+  ctx.fillRect(x + 4, y + 13, 22, 10);
+  ctx.strokeStyle = '#888'; ctx.lineWidth = 0.5;
+  ctx.strokeRect(x + 4, y + 13, 22, 10);
+  ctx.fillStyle = '#111';
+  ctx.font = "bold 9px 'Bebas Neue', sans-serif";
+  ctx.textAlign = 'center';
+  ctx.fillText('MURRY', x + 15, y + 22);
+  ctx.textAlign = 'left';
+  // BLOOD — large, obvious red patches
+  // Hands dripping
+  ctx.fillStyle = '#aa2222';
+  ctx.fillRect(x, y + 24, 6, 5);
+  ctx.fillRect(x + 24, y + 24, 6, 5);
+  // Blood drips from hands
+  ctx.fillStyle = '#882020';
+  ctx.fillRect(x + 1, y + 29, 2, 4);
+  ctx.fillRect(x + 26, y + 29, 2, 4);
+  // Blood on shoes
+  ctx.fillStyle = '#aa2222';
+  ctx.fillRect(x + 4, y + 30, 10, 4);
+  ctx.fillRect(x + 16, y + 30, 10, 4);
+  // Blood smear on uniform
+  ctx.fillStyle = 'rgba(170,34,34,0.5)';
+  ctx.fillRect(x + 7, y + 22, 16, 3);
+  // Blood trail behind (left side)
+  ctx.fillStyle = 'rgba(140,25,25,0.4)';
+  ctx.fillRect(x - 6, y + 32, 4, 2);
+  ctx.fillRect(x - 14, y + 33, 3, 2);
+  ctx.fillRect(x - 20, y + 32, 3, 2);
+  ctx.restore();
+}
+
+function drawCanvasBubble(x, y, text, opacity) {
+  if (opacity <= 0) return;
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.font = "italic 14px 'EB Garamond', Georgia, serif";
+  ctx.textAlign = 'center';
+  const tw = ctx.measureText(text).width + 20;
+  const th = 28;
+  const bx = x - tw / 2, by = y - th;
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.beginPath(); ctx.roundRect(bx, by, tw, th, 6); ctx.fill();
+  ctx.strokeStyle = 'rgba(196,168,107,0.3)'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.beginPath(); ctx.moveTo(x - 4, by + th); ctx.lineTo(x, by + th + 6); ctx.lineTo(x + 4, by + th); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.fillText(text, x, by + 19); ctx.textAlign = 'left';
+  ctx.restore();
+}
+
+function triggerRooftop() {
+  GAME.state = 'rooftop';
+  GAME.gen++;
+  const gen = GAME.gen;
+  mobileControls.style.display = 'none';
+  controlHint.style.display = 'none';
+  stopAllAudio();
+
+  // Remove any straggler NPCs
+  GAME.npcs = GAME.npcs.filter(n => n.type !== 'cynthia' && n.type !== 'board');
+
+  // Audio: pad + heartbeat
+  if (GAME.instruments) {
+    GAME.instruments.pad.triggerAttack(['D3', 'Gb3', 'A3', 'D4']);
+    let hbDelay = 800;
+    function heartbeatPulse() {
+      if (GAME.gen !== gen || GAME.state !== 'rooftop') return;
+      GAME.instruments.heartbeat.triggerAttackRelease('C2', '16n');
+      hbDelay = Math.max(hbDelay - 30, 250);
+      const tid = setTimeout(heartbeatPulse, hbDelay);
+      GAME.activeLoops.push(tid);
+    }
+    setTimeout(heartbeatPulse, 500);
+  }
+
+  // Go straight to rooftop scene — NO Valerie warning
+  executeRooftopScene(gen);
+}
+
+function executeRooftopScene(gen) {
+  const murryX = 260, nikX = 140;
+  const floorY = 460, spriteY = floorY - 30;
+  let rtStep = 0;
+  let bubbleText = '', bubbleWho = '', bubbleOpacity = 0;
+  let fadeToBlack = 0;
+  let animating = false;
+  let struggleFrame = 0;
+
+  function drawRooftopBg() {
+    ctx.fillStyle = '#0a0808'; ctx.fillRect(0, 0, W, H);
+    // Stars
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    [[30,30],[95,55],[180,20],[310,40],[370,18],[250,65],[140,45],[60,12],[350,42],[200,8]].forEach(([sx,sy]) => {
+      ctx.beginPath(); ctx.arc(sx, sy, 0.7, 0, Math.PI * 2); ctx.fill();
+    });
+    // City skyline silhouettes — make it OBVIOUS this is a rooftop
+    ctx.fillStyle = '#0e0c0c';
+    ctx.fillRect(10, 340, 35, 120); ctx.fillRect(55, 320, 25, 140);
+    ctx.fillRect(90, 350, 40, 110); ctx.fillRect(330, 330, 30, 130);
+    ctx.fillRect(370, 310, 40, 150); ctx.fillRect(280, 360, 25, 100);
+    // More buildings for depth
+    ctx.fillStyle = '#0c0a0a';
+    ctx.fillRect(150, 370, 20, 90); ctx.fillRect(200, 380, 30, 80);
+    // Window lights on buildings
+    ctx.fillStyle = 'rgba(196,168,107,0.08)';
+    ctx.fillRect(20, 355, 4, 3); ctx.fillRect(65, 335, 3, 3);
+    ctx.fillRect(345, 345, 4, 3); ctx.fillRect(385, 325, 3, 3);
+    ctx.fillRect(160, 385, 3, 3); ctx.fillRect(210, 395, 3, 3);
+    // City glow on horizon
+    const horizonGlow = ctx.createLinearGradient(0, 380, 0, 460);
+    horizonGlow.addColorStop(0, 'rgba(196,168,107,0.03)');
+    horizonGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = horizonGlow; ctx.fillRect(0, 380, W, 80);
+    // Rooftop surface — visually different from interior floors
+    const roofGrad = ctx.createLinearGradient(0, floorY, 0, floorY + 30);
+    roofGrad.addColorStop(0, '#2a2018'); roofGrad.addColorStop(1, '#1a1210');
+    ctx.fillStyle = roofGrad; ctx.fillRect(0, floorY, W, H - floorY);
+    ctx.fillStyle = GOLD; ctx.fillRect(0, floorY, W, 2);
+    // Rooftop railing at right edge
+    ctx.fillStyle = '#3a3028';
+    ctx.fillRect(W - 8, floorY - 40, 4, 40); // post
+    ctx.fillRect(W - 12, floorY - 40, 12, 3); // top rail
+    ctx.fillRect(W - 12, floorY - 22, 12, 2); // mid rail
+    // Moon/ambient glow
+    ctx.fillStyle = 'rgba(196,168,107,0.03)'; ctx.fillRect(0, 0, W, 100);
+  }
+
+  function drawRooftopScene() {
+    drawRooftopBg();
+    drawSnacks(murryX + 40, spriteY + 2);
+    drawMurry(murryX, spriteY, 1, GAME.murry.transformLevel);
+    drawNikDoorman(nikX, spriteY);
+    if (bubbleOpacity > 0) {
+      const bx = (bubbleWho === 'murry' ? murryX : nikX) + 15;
+      drawCanvasBubble(bx, spriteY - 10, bubbleText, bubbleOpacity);
+    }
+    if (!animating && fadeToBlack <= 0 && rtStep > 0) {
+      ctx.fillStyle = 'rgba(196,168,107,0.2)'; ctx.font = "28px 'Bebas Neue', sans-serif";
+      const pulse = 0.15 + Math.sin(Date.now() * 0.003) * 0.1;
+      ctx.globalAlpha = pulse;
+      if (rtStep > 1) { ctx.textAlign = 'left'; ctx.fillText('\u25C0', 12, H / 2); }
+      ctx.textAlign = 'right'; ctx.fillText('\u25B8', W - 12, H / 2);
+      ctx.textAlign = 'left'; ctx.globalAlpha = 1;
+    }
+    if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
+  }
+
+  function showBubble(who, text, cb) {
+    bubbleText = text; bubbleWho = who; bubbleOpacity = 0; animating = true;
+    let t = 0;
+    function fade() {
+      if (GAME.gen !== gen) return;
+      t += 0.06; bubbleOpacity = Math.min(t, 1);
+      drawRooftopScene();
+      if (t < 1) requestAnimationFrame(fade);
+      else { animating = false; if (cb) cb(); }
+    }
+    fade();
+  }
+
+  function onTap(e) {
+    if (GAME.gen !== gen || animating) return;
+    // Step 0 auto-plays — no tap interaction until step 1+
+    if (rtStep < 1) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const isLeft = x < rect.width * 0.3;
+    if (isLeft && rtStep > 1) {
+      rtStep = Math.max(1, rtStep - 1);
+      bubbleOpacity = 0; bubbleText = '';
+      runStep();
+    } else if (!isLeft) {
+      rtStep++;
+      runStep();
+    }
+  }
+  canvas.addEventListener('click', onTap);
+
+  function runStep() {
+    if (GAME.gen !== gen) { canvas.removeEventListener('click', onTap); return; }
+    bubbleOpacity = 0; bubbleText = '';
+    switch (rtStep) {
+      case 0: // Scene loads. Nik in doorman uniform. DING. First line AUTO-APPEARS.
+        drawRooftopScene();
+        if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+        // Auto-show Nik's first line after brief pause — NO TOUCH REQUIRED
+        animating = true;
+        setTimeout(() => {
+          if (GAME.gen !== gen) return;
+          showBubble('nik', '\u201CWelcome home, Nik.\u201D', () => {
+            drawRooftopScene();
+            // Now allow taps for remaining dialogue
+            rtStep = 1;
+          });
+        }, 800);
+        break;
+      case 1: // NIK: "Welcome home, Nik." — already shown from step 0 auto-play
+        // If navigated back here, re-show the bubble
+        showBubble('nik', '\u201CWelcome home, Nik.\u201D', () => { drawRooftopScene(); });
+        break;
+      case 2: // MURRY: "Is that blood? What did you do?"
+        showBubble('murry', '\u201CIs that blood? What did you do?\u201D', () => { drawRooftopScene(); });
+        break;
+      case 3: // MURRY: (beat) "What did I do?"
+        showBubble('murry', '\u201CWhat did I do?\u201D', () => { drawRooftopScene(); });
+        break;
+      case 4: // NIK: "It's nothing personal, Nikki."
+        showBubble('nik', '\u201CIt\u2019s nothing personal, Nikki.\u201D', () => { drawRooftopScene(); });
+        break;
+      case 5: // NIK: (beat) "It's just Manhattan." — auto-advance to struggle
+        showBubble('nik', '\u201CIt\u2019s just Manhattan.\u201D', () => {
+          drawRooftopScene();
+          animating = true;
+          setTimeout(() => {
+            if (GAME.gen !== gen) return;
+            rtStep = 6;
+            runStep();
+          }, 1500);
+        });
+        break;
+      case 6: // Struggle — Nik attacks, they grapple (auto-animated)
+        canvas.removeEventListener('click', onTap);
+        animating = true;
+        let sNikX = nikX, sMurryX = murryX;
+        struggleFrame = 0;
+        function animStruggle() {
+          if (GAME.gen !== gen) return;
+          struggleFrame++;
+          if (struggleFrame < 30) {
+            sNikX += 3;
+          } else if (struggleFrame < 80) {
+            const osc = Math.sin(struggleFrame * 0.3) * 3;
+            sNikX = murryX - 30 + osc;
+            sMurryX = murryX + osc;
+            if (struggleFrame % 8 === 0) GAME.shakeTimer = 4;
+          } else if (struggleFrame < 110) {
+            sNikX += 2; sMurryX += 2;
+          } else {
+            fadeToBlack = Math.min(fadeToBlack + 0.05, 1);
+          }
+          drawRooftopBg();
+          drawSnacks(murryX + 40, spriteY + 2);
+          drawMurry(sMurryX, spriteY, -1, GAME.murry.transformLevel);
+          drawNikDoorman(sNikX, spriteY);
+          if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
+          if (fadeToBlack >= 1) {
+            ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+            stopAllAudio();
+            sceneTimeout(() => {
+              if (GAME.gen !== gen) return;
+              GAME.state = 'ending';
+              GAME.gen++;
+              showEnding();
+            }, 800);
+            return;
+          }
+          requestAnimationFrame(animStruggle);
+        }
+        animStruggle();
+        break;
+    }
+  }
+
+  runStep();
+}
+
+function renderRooftop() {
+  // No-op — canvas scene manages its own rendering
+}
+
+// ============================================================
+// DROP + ENDING (Sera POV)
+// ============================================================
+
+function showEnding() {
+  const gen = GAME.gen;
+  if (titleAnimId) { cancelAnimationFrame(titleAnimId); titleAnimId = null; }
+  document.getElementById('mobile-controls').style.display = 'none';
+  document.getElementById('control-hint').style.display = 'none';
+
+  let bodyY = -50;
+  let bodyFalling = false;
+  let bodyLanded = false;
+  let fadeOpacity = 0;
+
+  // Building geometry
+  const peakX = W / 2, peakY = 60, baseY = 540;
+  const topHalfW = 20, baseHalfW = 80;
+  const carX = 250;
+
+  function drawEndingNightScene() {
+    // Sky
+    const sky = ctx.createLinearGradient(0, 0, 0, H * 0.7);
+    sky.addColorStop(0, '#060812'); sky.addColorStop(1, '#0a0e1a');
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+    // Stars
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    [[30,40],[90,25],[180,55],[310,30],[370,60],[250,15],[140,70],[60,12],[350,42]].forEach(([sx, sy]) => {
+      ctx.beginPath(); ctx.arc(sx, sy, 0.8, 0, Math.PI * 2); ctx.fill();
+    });
+    // Pyramid silhouette
+    ctx.fillStyle = '#0c0e14';
+    ctx.beginPath();
+    ctx.moveTo(peakX - topHalfW, peakY); ctx.lineTo(peakX + topHalfW, peakY);
+    ctx.lineTo(peakX + baseHalfW, baseY); ctx.lineTo(peakX - baseHalfW, baseY);
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = 'rgba(196,168,107,0.06)'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(peakX - topHalfW, peakY); ctx.lineTo(peakX + topHalfW, peakY);
+    ctx.lineTo(peakX + baseHalfW, baseY); ctx.lineTo(peakX - baseHalfW, baseY);
+    ctx.closePath(); ctx.stroke();
+    // Windows
+    for (let row = 0; row < 20; row++) {
+      const t = row / 20;
+      const wy = peakY + 30 + t * (baseY - peakY - 40);
+      const halfW = topHalfW + t * (baseHalfW - topHalfW);
+      const winCount = Math.floor(2 + t * 4);
+      const rowLeft = peakX - halfW * 0.7, rowRight = peakX + halfW * 0.7;
+      const spacing = (rowRight - rowLeft) / (winCount + 1);
+      for (let col = 1; col <= winCount; col++) {
+        const wx = rowLeft + col * spacing;
+        ctx.fillStyle = `rgba(196,168,107,${(row*7+col*13)%11<2?0.08:0.02})`;
+        ctx.fillRect(wx-2, wy, 4+t*1.5, 3);
+      }
+    }
+    // Penthouse glow
+    const winX = peakX-6, winY = peakY+10, winW = 12, winH = 8;
+    ctx.shadowColor = '#c4a86b'; ctx.shadowBlur = 20;
+    ctx.fillStyle = '#c4a86b'; ctx.fillRect(winX, winY, winW, winH);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#e8d4a0'; ctx.fillRect(winX+1, winY+1, winW-2, winH-2);
+    // Street
+    const streetY = baseY;
+    ctx.fillStyle = '#111114'; ctx.fillRect(0, streetY, W, H-streetY);
+    ctx.fillStyle = '#1e1e22'; ctx.fillRect(0, streetY, W, 8);
+    ctx.fillStyle = '#2a2a2e'; ctx.fillRect(0, streetY, W, 2);
+    // Faint yellow lane marking
+    ctx.fillStyle = 'rgba(180,160,60,0.08)'; ctx.fillRect(20, streetY+50, 40, 2); ctx.fillRect(100, streetY+50, 40, 2); ctx.fillRect(340, streetY+50, 40, 2);
+    // Streetlamp pool of light
+    const lampGlow = ctx.createRadialGradient(carX+55, streetY+10, 5, carX+55, streetY+10, 100);
+    lampGlow.addColorStop(0, 'rgba(255,240,200,0.04)');
+    lampGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = lampGlow; ctx.fillRect(carX-50, streetY-20, 210, 120);
+    // Car
+    const carY = streetY + 18;
+    ctx.fillStyle = '#2e2e38';
+    ctx.fillRect(carX, carY+10, 110, 22);
+    ctx.fillRect(carX+14, carY-2, 74, 16);
+    ctx.strokeStyle = 'rgba(120,120,140,0.2)'; ctx.lineWidth = 0.5;
+    ctx.strokeRect(carX, carY+10, 110, 22);
+    ctx.fillStyle = '#3a3a48';
+    ctx.fillRect(carX+18, carY, 26, 9);
+    ctx.fillRect(carX+48, carY, 32, 9);
+    ctx.fillStyle = 'rgba(200,180,140,0.1)';
+    ctx.fillRect(carX+20, carY+1, 22, 7);
+    ctx.fillStyle = '#0a0a0a';
+    ctx.beginPath(); ctx.arc(carX+24, carY+32, 7, 0, Math.PI*2); ctx.arc(carX+86, carY+32, 7, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#1a1a1a';
+    ctx.beginPath(); ctx.arc(carX+24, carY+32, 4, 0, Math.PI*2); ctx.arc(carX+86, carY+32, 4, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(200,40,40,0.3)'; ctx.fillRect(carX, carY+14, 3, 6);
+    ctx.fillStyle = 'rgba(255,255,200,0.2)'; ctx.fillRect(carX+108, carY+14, 4, 7);
+    ctx.fillStyle = 'rgba(255,255,200,0.03)';
+    ctx.beginPath(); ctx.moveTo(carX+112, carY+14); ctx.lineTo(carX+170, carY+5); ctx.lineTo(carX+170, carY+30); ctx.lineTo(carX+112, carY+22); ctx.closePath(); ctx.fill();
+    // Sera silhouette in car
+    const sx = carX+30, sy = carY - 1;
+    ctx.fillStyle = '#1a1a26';
+    ctx.beginPath(); ctx.arc(sx, sy, 5, 0, Math.PI*2); ctx.fill();
+    ctx.fillRect(sx-5, sy+4, 10, 6);
+
+    // Falling body
+    if (bodyFalling && bodyY >= 0) {
+      const dropX = carX + 20;
+      ctx.fillStyle = 'rgba(70,65,80,0.9)';
+      ctx.beginPath(); ctx.arc(dropX, bodyY-2, 3, 0, Math.PI*2); ctx.fill();
+      ctx.fillRect(dropX-2, bodyY+1, 4, 10);
+      ctx.fillRect(dropX-4, bodyY+4, 3, 6); ctx.fillRect(dropX+1, bodyY+4, 3, 6);
+      ctx.fillRect(dropX-3, bodyY+11, 3, 7); ctx.fillRect(dropX, bodyY+11, 3, 7);
+    }
+
+    // Landed body
+    if (bodyLanded) {
+      const dropX = carX + 20;
+      ctx.fillStyle = 'rgba(50,45,55,0.9)';
+      ctx.fillRect(dropX-7, streetY+2, 14, 5);
+      ctx.beginPath(); ctx.arc(dropX-5, streetY+2, 3, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Fade
+    if (fadeOpacity > 0) {
+      ctx.fillStyle = `rgba(0,0,0,${fadeOpacity})`; ctx.fillRect(0,0,W,H);
+    }
+
+    return { streetY, winY: winY + winH };
+  }
+
+  // AUTOMATIC SEQUENCE — no touch required
+  // Step 1: Show the night scene briefly
+  drawEndingNightScene();
+
+  // Step 2: Body drops AUTOMATICALLY after brief pause
+  setTimeout(() => {
+    if (GAME.gen !== gen) return;
+    bodyFalling = true;
+    const scene = drawEndingNightScene();
+    const startDropY = scene.winY;
+    const endDropY = scene.streetY;
+    bodyY = startDropY;
+    const dropStart = performance.now();
+
+    function dropAnim(now) {
+      if (GAME.gen !== gen) return;
+      const elapsed = now - dropStart;
+      const progress = Math.min(elapsed / 700, 1);
+      bodyY = startDropY + (endDropY - startDropY) * progress * progress;
+      drawEndingNightScene();
+      if (progress < 1) requestAnimationFrame(dropAnim);
+      else {
+        bodyLanded = true; bodyFalling = false;
+        // Impact shake
+        document.getElementById('game-wrap').style.animation = 'shake 0.35s ease-out';
+        if (GAME.instruments) GAME.instruments.impact.triggerAttackRelease('C1', '2n');
+        setTimeout(() => { document.getElementById('game-wrap').style.animation = ''; }, 400);
+
+        // Brief pause after impact, then fade to black
+        setTimeout(() => {
+          if (GAME.gen !== gen) return;
+          // Fade to black
+          let fadeStart2 = performance.now();
+          function fadeAnim(now2) {
+            if (GAME.gen !== gen) return;
+            const p = Math.min((now2 - fadeStart2) / 1500, 1);
+            fadeOpacity = p;
+            drawEndingNightScene();
+            if (p < 1) requestAnimationFrame(fadeAnim);
+            else {
+              // Show title card + CTA
+              showEndingTitleAndCTA(gen);
+            }
+          }
+          requestAnimationFrame(fadeAnim);
+        }, 1000);
+      }
+    }
+    requestAnimationFrame(dropAnim);
+  }, 800);
+}
+
+function showEndingTitleAndCTA(gen) {
+  if (GAME.gen !== gen) return;
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+
+  // Title card fades in: "TOP FLOOR" in gold Bebas Neue, centered
+  let titleOpacity = 0;
+  const titleStart = performance.now();
+
+  function titleFadeIn(now) {
+    if (GAME.gen !== gen) return;
+    const p = Math.min((now - titleStart) / 1200, 1);
+    titleOpacity = p;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.globalAlpha = titleOpacity;
+    ctx.font = "bold 56px 'Bebas Neue', sans-serif";
+    ctx.fillStyle = GOLD;
+    ctx.textAlign = 'center';
+    ctx.fillText('TOP FLOOR', W / 2, H / 2 - 20);
+    ctx.restore();
+    ctx.textAlign = 'left';
+
+    if (p < 1) requestAnimationFrame(titleFadeIn);
+    else {
+      // After title is fully visible, fade in CTA overlay with staggered timing
+      setTimeout(() => {
+        if (GAME.gen !== gen) return;
+        const cta = document.getElementById('cta-overlay');
+        cta.style.display = 'flex';
+        setTimeout(() => cta.classList.add('visible'), 100);
+        const replayBtn = document.getElementById('replay-btn');
+        if (replayBtn) replayBtn.addEventListener('click', e => { e.preventDefault(); restartGame(); });
+      }, 800);
+    }
+  }
+  requestAnimationFrame(titleFadeIn);
+}
+
+// ============================================================
+// FLOOR EVENTS
+// ============================================================
+
+function onFloorReached(floor) {
+  const i = floor.index;
+
+  // Zone labels
+  const zone = ZONES.findIndex(z => i >= z.min && i <= z.max);
+  if (zone !== GAME.lastZone && zone >= 0) {
+    GAME.lastZone = zone;
+    const labels = ['THE LOBBY', 'THE CLIMB', 'THE UPPER FLOORS', 'THE TOP'];
+    GAME.zoneLabel = labels[zone];
+    GAME.zoneLabelTimer = 140;
+  }
+
+  // Snacks pickup on floor 6
+  if (i === 6 && GAME.snacks) {
+    GAME.speechBubbles.push({ x: floor.platforms[0].x + floor.platforms[0].w / 2, y: floor.platforms[0].y - 30, text: 'BARK BARK!', life: 120 });
+    if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+  }
+
+  // Ding every 5 floors
+  if (i % 5 === 0 && i > 0 && GAME.instruments) {
+    GAME.instruments.ding.triggerAttackRelease('16n');
+  }
+}
+
+function checkItemPickup() {
+  const m = GAME.murry;
+  for (const floor of GAME.floors) {
+    for (const item of floor.items) {
+      if (m.items.includes(item.id)) continue;
+      const dist = Math.sqrt((m.x + PW / 2 - item.x) ** 2 + (m.y + PH_SIZE / 2 - item.y) ** 2);
+      if (dist < 30) {
+        m.items.push(item.id);
+        m.transformLevel = item.tLevel;
+        GAME.pickupFlash = item.label;
+        GAME.pickupFlashTimer = 90;
+        GAME.particles.push({ x: item.x, y: item.y, text: item.label, life: 60, vy: -1.5 });
+        if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
+        if (item.id === 'sweater') { GAME.floorLabel = 'LOOKING MORE LIKE HIM'; GAME.floorLabelTimer = 120; }
+        if (item.id === 'cologne') { GAME.floorLabel = 'THE SCENT OF SOMEONE ELSE'; GAME.floorLabelTimer = 100; }
+        if (item.id === 'insulin') { GAME.floorLabel = 'SNACKS\' INSULIN'; GAME.floorLabelTimer = 100; }
+      }
+    }
+  }
+}
+
+// ============================================================
+// RENDERING
+// ============================================================
+
+function updateSpeechBubbles() {
+  GAME.speechBubbles = GAME.speechBubbles.filter(b => { b.life--; return b.life > 0; });
+}
+
+function drawSpeechBubbles(cam) {
+  for (const b of GAME.speechBubbles) {
+    const sx = b.x, sy = b.y + cam;
+    if (sy < -40 || sy > H + 40) continue;
+    const alpha = Math.min(1, b.life / 30);
+    ctx.font = "bold 10px 'Bebas Neue', sans-serif";
+    const tw = ctx.measureText(b.text).width;
+    const bw = Math.min(tw + 20, 200);
+    ctx.fillStyle = `rgba(0,0,0,${alpha * 0.85})`;
+    ctx.fillRect(sx - bw / 2, sy - 16, bw, 28);
+    ctx.strokeStyle = `rgba(196,168,107,${alpha * 0.5})`;
+    ctx.lineWidth = 1; ctx.strokeRect(sx - bw / 2, sy - 16, bw, 28);
+    ctx.fillStyle = `rgba(255,255,255,${alpha * 0.9})`;
+    ctx.textAlign = 'center'; ctx.fillText(b.text, sx, sy + 2); ctx.textAlign = 'left';
+  }
+}
+
+function updateCamera() {
+  const sY = GAME.murry.y + GAME.camera.y;
+  if (sY < 300) GAME.camera.y += (300 - sY) * 0.15;
+  if (sY > 500) GAME.camera.y -= (sY - 500) * 0.1; // track downward too
+  GAME.camera.y = Math.max(0, GAME.camera.y);
+}
+
+function updateParticles() {
+  GAME.particles = GAME.particles.filter(p => { p.y += p.vy; p.life--; return p.life > 0; });
+}
+
+function drawParticles(cam) {
+  for (const p of GAME.particles) {
+    const alpha = Math.min(1, p.life / 30);
+    ctx.fillStyle = `rgba(255,215,0,${alpha})`;
+    ctx.font = "bold 14px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText(p.text, p.x, p.y + cam); ctx.textAlign = 'left';
+  }
+}
+
+function checkStuck() {
+  const m = GAME.murry;
+  if (Math.abs(m.y - GAME.lastProgressY) < 10) {
+    GAME.stuckTimer++;
+  } else {
+    GAME.stuckTimer = 0; GAME.lastProgressY = m.y;
+  }
+}
+
+function drawHUD() {
+  const floorText = GAME.currentFloor >= TOTAL_FLOORS ? 'PH' : GAME.currentFloor === 0 ? 'LOBBY' : 'FL ' + GAME.currentFloor;
+  ctx.fillStyle = 'rgba(196,168,107,0.6)';
+  ctx.font = '18px "Bebas Neue", sans-serif';
+  ctx.textAlign = 'right'; ctx.fillText(floorText, W - 14, 26); ctx.textAlign = 'left';
+
+  // Items collected
+  const icons = ['\uD83E\uDDE5', '\uD83C\uDF2C\uFE0F', '\uD83D\uDC89'];
+  const ids = ['sweater', 'cologne', 'insulin'];
+  for (let i = 0; i < 3; i++) {
+    ctx.globalAlpha = GAME.murry.items.includes(ids[i]) ? 1.0 : 0.2;
+    ctx.font = "16px 'EB Garamond', Georgia, serif"; ctx.fillText(icons[i], 14 + i * 28, H - 18);
+  }
+  ctx.globalAlpha = 1.0;
+
+  if (GAME.snacks) {
+    ctx.fillStyle = 'rgba(196,168,107,0.4)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif";
+    ctx.fillText('SNACKS \u2665', 130, H - 14);
+  }
+
+  // Stuck hint
+  if (GAME.stuckTimer > 600) {
+    const pulse = 0.3 + Math.sin(Date.now() * 0.005) * 0.2;
+    ctx.fillStyle = `rgba(196,168,107,${pulse})`;
+    ctx.font = "bold 24px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('\u2191', W / 2, 80);
+    ctx.font = "12px 'Bebas Neue', sans-serif"; ctx.fillText('KEEP CLIMBING', W / 2, 100);
+    ctx.textAlign = 'left';
+  }
+}
+
+function renderPlaying() {
+  const cam = GAME.camera.y;
+  const floor = GAME.currentFloor;
+  const shake = (GAME.shakeTimer > 0) ? { x: (Math.random() - 0.5) * GAME.shakeTimer, y: (Math.random() - 0.5) * GAME.shakeTimer } : { x: 0, y: 0 };
+  if (GAME.shakeTimer > 0) GAME.shakeTimer--;
+
+  ctx.save();
+  ctx.translate(shake.x, shake.y);
+
+  const zone = ZONES.find(z => floor >= z.min && floor <= z.max) || ZONES[0];
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, zone.bg1); grad.addColorStop(1, zone.bg2);
+  ctx.fillStyle = grad; ctx.fillRect(-10, -10, W + 20, H + 20);
+
+  // Floor markers
+  ctx.font = "10px 'Bebas Neue', sans-serif"; ctx.fillStyle = 'rgba(180,160,120,0.18)';
+  for (let i = 0; i <= TOTAL_FLOORS; i++) {
+    const fy = (640 - i * FH) + cam;
+    if (fy > -20 && fy < H + 20) {
+      ctx.fillText(i === 0 ? 'L' : i === TOTAL_FLOORS ? 'PH' : '' + i, W - 24, fy + 4);
+    }
+  }
+
+  // Platforms
+  for (const f of GAME.floors) {
+    for (const plat of f.platforms) {
+      const py = plat.y + cam;
+      if (py < -50 || py > H + 50) continue;
+      if (f.index === 0) drawLobby(plat, py);
+      else drawPlatform(plat, py, f.index);
+    }
+    if (f.door) {
+      const py = f.platforms[0].y + cam;
+      if (py > -100 && py < H + 50) drawPenthouseDoor(py);
+    }
+    for (const item of f.items) {
+      if (GAME.murry.items.includes(item.id)) continue;
+      const iy = item.y + cam;
+      if (iy > -50 && iy < H + 50) drawItem(item, iy);
+    }
+  }
+
+  // NPCs
+  for (const npc of GAME.npcs) {
+    const ny = npc.y + cam;
+    if (ny > -50 && ny < H + 50) drawNPC(npc, ny);
+  }
+
+  // Snacks waiting
+  if (!GAME.storyFlags.nikEncounterDone) {
+    // Don't show snacks yet
+  } else if (GAME.snacks) {
+    drawSnacks(GAME.snacks.x, GAME.snacks.y + cam);
+  } else {
+    const f6 = GAME.floors.find(f => f.index === 6);
+    if (f6) {
+      const py = f6.platforms[0].y + cam;
+      if (py > -50 && py < H + 50) {
+        const bob = Math.sin(Date.now() * 0.003) * 2;
+        drawSnacks(f6.platforms[0].x + f6.platforms[0].w / 2 - 10, py - 16 + bob);
+        ctx.fillStyle = 'rgba(255,215,0,0.6)'; ctx.font = "bold 12px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+        ctx.fillText('SNACKS \u2665', f6.platforms[0].x + f6.platforms[0].w / 2, py - 34 + bob);
+        ctx.textAlign = 'left';
+      }
+    }
+  }
+
+  // Murry
+  drawMurry(GAME.murry.x, GAME.murry.y + cam, GAME.murry.facing, GAME.murry.transformLevel);
+
+  if (GAME.currentFloor < 3) {
+    ctx.fillStyle = 'rgba(196,168,107,0.5)'; ctx.font = "bold 12px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('MURRY', GAME.murry.x + 15, GAME.murry.y + cam - 8);
+    ctx.textAlign = 'left';
+  }
+
+  drawSpeechBubbles(cam);
+  drawParticles(cam);
+  ctx.restore();
+  drawHUD();
+
+  // Zone label
+  if (GAME.zoneLabelTimer > 0) {
+    GAME.zoneLabelTimer--;
+    const a = Math.min(1, GAME.zoneLabelTimer / 30);
+    ctx.fillStyle = `rgba(196,168,107,${a * 0.8})`;
+    ctx.font = '28px "Bebas Neue", sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(GAME.zoneLabel, W / 2, 70); ctx.textAlign = 'left';
+  }
+  if (GAME.floorLabelTimer > 0) {
+    GAME.floorLabelTimer--;
+    const a = Math.min(1, GAME.floorLabelTimer / 30);
+    ctx.fillStyle = `rgba(196,168,107,${a * 0.7})`;
+    ctx.font = '20px "Bebas Neue", sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(GAME.floorLabel, W / 2, 110); ctx.textAlign = 'left';
+  }
+  if (GAME.pickupFlashTimer > 0) {
+    GAME.pickupFlashTimer--;
+    const a = Math.min(1, GAME.pickupFlashTimer / 20);
+    ctx.fillStyle = `rgba(255,215,0,${a * 0.15})`; ctx.fillRect(0, 0, W, H);
+  }
+}
+
+// ============================================================
+// RESTART
+// ============================================================
+
+function restartGame() {
+  GAME.gen++;
+  stopAllAudio();
+  GAME.state = 'title';
+  GAME.murry = { x: 195, y: 610, vx: 0, vy: 0, onGround: false, facing: 1, transformLevel: 0, items: [], stunTimer: 0, coyoteTimer: 0 };
+  GAME.camera = { y: 0 }; GAME.currentFloor = 0;
+  GAME.snacks = null; GAME.speechBubbles = []; GAME.particles = [];
+  GAME.floorLabel = null; GAME.floorLabelTimer = 0;
+  GAME.zoneLabel = null; GAME.zoneLabelTimer = 0; GAME.lastZone = -1;
+  GAME.dropPhase = 0; GAME.lastAudioZone = -1;
+  GAME.stuckTimer = 0; GAME.lastProgressY = 0;
+  GAME.pickupFlash = null; GAME.pickupFlashTimer = 0; GAME.shakeTimer = 0;
+  if (GAME.missionCards.active) dismissMissionCards();
+  GAME.missionCards = { active: false, queue: [], currentIndex: 0, onComplete: null, safetyTimer: null };
+  GAME.storyFlags = { nikEncounterDone: false, seraChase1: false, seraChase2: false, cynthiaChaseDone: false, boardCaptureDone: false, rooftopDone: false };
+  GAME.floors = []; GAME.npcs = [];
+
+  // Rebuild overlay with SAME HTML structure and CSS classes as initial load
+  overlay.innerHTML =
+    '<div class="title-main" id="t-title">TOP FLOOR</div>' +
+    '<div class="title-rule" id="t-rule"></div>' +
+    '<div class="title-by" id="t-by">written by</div>' +
+    '<div class="title-author" id="t-author">Max Coyne-Green</div>' +
+    '<div class="pyramid-logline">' +
+      '<span class="line l1" id="t-l1">an ambitious Manhattan <strong>doorman</strong></span>' +
+      '<span class="rule" id="t-r1">\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014</span>' +
+      '<span class="line l2" id="t-l2">moves into the <strong>penthouse</strong> of his dreams</span>' +
+      '<span class="rule" id="t-r2">\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014</span>' +
+      '<span class="line l3" id="t-l3">only to be <strong>trapped</strong> in a dangerous new identity</span>' +
+    '</div>' +
+    '<button class="ov-btn" id="start-btn">BEGIN</button>';
+  overlay.style.background = '';
+  overlay.classList.remove('hidden');
+  document.getElementById('start-btn').addEventListener('click', startComic);
+  mobileControls.style.display = 'none';
+  controlHint.style.display = 'none';
+  // Hide CTA overlay
+  const ctaOv = document.getElementById('cta-overlay');
+  ctaOv.style.display = 'none';
+  ctaOv.classList.remove('visible');
+
+  // Restart the title background canvas animation (same as initial load)
+  (function restartTitleAnimation() {
+    let _tseed2 = 42;
+    function tsRand2() { _tseed2 = (_tseed2 * 16807) % 2147483647; return (_tseed2 - 1) / 2147483646; }
+    const tPeakX2 = W / 2, tPeakY2 = 75, tBaseY2 = H - 35, tBaseHW2 = 135, tTopHW2 = 10;
+    const tStars2 = [];
+    _tseed2 = 77;
+    for (let i = 0; i < 40; i++) {
+      tStars2.push({ x: tsRand2()*W, y: tsRand2()*(tPeakY2+60), r: 0.4+tsRand2()*0.5,
+        bright: 0.06+tsRand2()*0.12, spd: 0.002+tsRand2()*0.004, off: tsRand2()*Math.PI*2 });
+    }
+    const tCity2 = [];
+    _tseed2 = 99;
+    for (let i = 0; i < 18; i++) {
+      const bx = tsRand2()*W, bw = 12+tsRand2()*30, bh = 40+tsRand2()*120, by = tBaseY2 - bh;
+      const dfc = Math.abs(bx - tPeakX2);
+      const pw = tTopHW2 + ((by - tPeakY2) / (tBaseY2 - tPeakY2)) * (tBaseHW2 - tTopHW2);
+      if (dfc < pw + 10) continue;
+      const wins = [];
+      for (let wy = by+8; wy < tBaseY2-6; wy += 8+tsRand2()*4) {
+        for (let wx = bx-bw/2+4; wx < bx+bw/2-3; wx += 6+tsRand2()*3) {
+          if (tsRand2() < 0.5) wins.push({ x: wx, y: wy, b: 0.03+tsRand2()*0.08 });
+        }
+      }
+      tCity2.push({ x: bx, y: by, w: bw, h: bh, wins });
+    }
+    const tPWins2 = [];
+    _tseed2 = 42;
+    for (let row = 0; row < 36; row++) {
+      const t = row / 36;
+      const wy = tPeakY2 + 22 + t * (tBaseY2 - tPeakY2 - 30);
+      const hw = tTopHW2 + t * (tBaseHW2 - tTopHW2);
+      const wc = Math.floor(1 + t * 9);
+      const rl = tPeakX2 - hw*0.8, rr = tPeakX2 + hw*0.8, sp = (rr-rl)/(wc+1);
+      for (let col = 1; col <= wc; col++) {
+        const wx = rl + col*sp, ww = 3+t*2.5, wh = 2+t*1;
+        const r = tsRand2();
+        let br, warm = false;
+        if (r < 0.05) { br = 0.25; warm = true; } else if (r < 0.14) { br = 0.10; } else { br = 0.04; }
+        tPWins2.push({ x: wx, y: wy, w: ww, h: wh, b: br, warm });
+      }
+    }
+    let phPulse2 = 0;
+    const tStart2 = performance.now();
+    function drawTitleBg2(now) {
+      const el = (now - tStart2) / 1000;
+      const sA = Math.min(Math.max((el-0.1)/1.4,0),1);
+      const cA = Math.min(Math.max((el-0.4)/1.5,0),1);
+      const bA = Math.min(Math.max((el-0.3)/1.2,0),1);
+      const wA = Math.min(Math.max((el-0.8)/1.2,0),1);
+      const pA = Math.min(Math.max((el-1.0)/0.8,0),1);
+      const sky = ctx.createLinearGradient(0,0,0,H);
+      sky.addColorStop(0,'#04060e'); sky.addColorStop(0.3,'#070b16');
+      sky.addColorStop(0.6,'#080a12'); sky.addColorStop(1,'#08080c');
+      ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+      if (sA > 0) tStars2.forEach(s => {
+        const tw = 0.5+0.5*Math.sin(now*s.spd+s.off);
+        ctx.fillStyle = `rgba(255,255,255,${s.bright*tw*sA})`;
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+      });
+      if (cA > 0) tCity2.forEach(b => {
+        ctx.fillStyle = `rgba(10,12,18,${0.8*cA})`;
+        ctx.fillRect(b.x-b.w/2,b.y,b.w,b.h);
+        b.wins.forEach(w => {
+          ctx.fillStyle = `rgba(220,200,150,${w.b*cA})`;
+          ctx.fillRect(w.x,w.y,3,2);
+        });
+      });
+      if (bA > 0) {
+        ctx.save(); ctx.globalAlpha = bA;
+        ctx.fillStyle = '#0f1120';
+        ctx.beginPath();
+        ctx.moveTo(tPeakX2-tTopHW2,tPeakY2); ctx.lineTo(tPeakX2+tTopHW2,tPeakY2);
+        ctx.lineTo(tPeakX2+tBaseHW2,tBaseY2); ctx.lineTo(tPeakX2-tBaseHW2,tBaseY2);
+        ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = 'rgba(196,168,107,0.07)'; ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(tPeakX2-tTopHW2,tPeakY2); ctx.lineTo(tPeakX2+tTopHW2,tPeakY2);
+        ctx.lineTo(tPeakX2+tBaseHW2,tBaseY2); ctx.lineTo(tPeakX2-tBaseHW2,tBaseY2);
+        ctx.closePath(); ctx.stroke();
+        ctx.strokeStyle = 'rgba(196,168,107,0.025)'; ctx.lineWidth = 3; ctx.stroke();
+        for (let i = 0; i < 20; i++) {
+          const t = i/20, ly = tPeakY2+18+t*(tBaseY2-tPeakY2-20);
+          const lhw = tTopHW2 + ((ly-tPeakY2)/(tBaseY2-tPeakY2))*(tBaseHW2-tTopHW2);
+          ctx.strokeStyle = `rgba(196,168,107,${0.015+t*0.01})`; ctx.lineWidth = 0.5;
+          ctx.beginPath(); ctx.moveTo(tPeakX2-lhw*0.95,ly); ctx.lineTo(tPeakX2+lhw*0.95,ly); ctx.stroke();
+        }
+        ctx.restore();
+        if (wA > 0) tPWins2.forEach(w => {
+          const a = w.b*wA;
+          ctx.fillStyle = w.warm ? `rgba(232,212,160,${a})` : `rgba(196,168,107,${a})`;
+          ctx.fillRect(w.x-w.w/2,w.y,w.w,w.h);
+        });
+      }
+      if (pA > 0) {
+        phPulse2 += 0.012;
+        const pulse = 0.6+0.4*Math.sin(phPulse2);
+        const phY = tPeakY2+4, phW = 14, phH = 9;
+        const glow = ctx.createRadialGradient(tPeakX2,phY+phH,2,tPeakX2,phY+phH+80,220);
+        glow.addColorStop(0,`rgba(196,168,107,${0.06*pA*pulse})`);
+        glow.addColorStop(0.4,`rgba(196,168,107,${0.025*pA})`);
+        glow.addColorStop(1,'rgba(196,168,107,0)');
+        ctx.fillStyle = glow; ctx.fillRect(tPeakX2-160,phY,320,420);
+        ctx.save(); ctx.shadowColor = '#c4a86b';
+        ctx.shadowBlur = (30+14*pulse)*pA;
+        ctx.fillStyle = `rgba(196,168,107,${(0.65+0.35*pulse)*pA})`;
+        ctx.fillRect(tPeakX2-phW/2,phY,phW,phH);
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = `rgba(237,220,176,${(0.75+0.25*pulse)*pA})`;
+        ctx.fillRect(tPeakX2-phW/2+1,phY+1,phW-2,phH-2);
+        ctx.restore();
+      }
+      ctx.fillStyle = '#0c0d12'; ctx.fillRect(0,tBaseY2,W,H-tBaseY2);
+      if (bA > 0) { ctx.fillStyle = `rgba(196,168,107,${0.05*bA})`; ctx.fillRect(0,tBaseY2,W,1); }
+      if (GAME.state === 'title') titleAnimId = requestAnimationFrame(drawTitleBg2);
+    }
+    titleAnimId = requestAnimationFrame(drawTitleBg2);
+  })();
+
+  // Text crawl — same timing as initial load
+  [
+    ['t-title',1200],['t-rule',1600],['t-by',2000],['t-author',2300],
+    ['t-l1',2900],['t-r1',3200],['t-l2',3500],['t-r2',3800],
+    ['t-l3',4100],['start-btn',4800]
+  ].forEach(([id,delay]) => {
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, delay);
+  });
+}
+
+// ============================================================
+// MAIN LOOP
+// ============================================================
+
+function gameLoop() {
+  GAME.tick++;
+  switch (GAME.state) {
+    case 'title': break;
+    case 'comic': break;
+    case 'playing':
+      if (GAME.missionCards.active) {
+        renderPlaying();
+      } else {
+        updatePhysics();
+        updateSnacks();
+        updateNPCs();
+        updateCamera();
+        updateSpeechBubbles();
+        updateParticles();
+        checkItemPickup();
+        checkStoryTriggers();
+        checkStuck();
+        updateAudio();
+        renderPlaying();
+      }
+      break;
+    case 'rooftop': renderRooftop(); break;
+    case 'drop': break;
+    case 'ending': break;
+  }
+  requestAnimationFrame(gameLoop);
+}
+
+function init() {
+  document.getElementById('start-btn').addEventListener('click', startComic);
+  requestAnimationFrame(gameLoop);
+}
+
+init();
+</script>
+</body>
+</html>

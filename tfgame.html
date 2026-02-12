@@ -151,7 +151,7 @@ canvas {
   width: 100%;
   display: flex; flex-direction: column;
   align-items: flex-start; justify-content: flex-start;
-  padding: 14px 28px 12px;
+  padding: 14px 48px 12px;
   overflow: hidden;
   position: relative;
 }
@@ -273,6 +273,7 @@ canvas {
   line-height: 1.85;
   color: rgba(255,255,255,0.8);
   text-align: center;
+  padding: 0 10px;
 }
 
 /* Legacy classes kept for mission card portraits */
@@ -319,7 +320,7 @@ canvas {
 .nav-arrow {
   position: absolute;
   top: 50%; transform: translateY(-50%);
-  color: rgba(196,168,107,0.25);
+  color: rgba(196,168,107,0.45);
   font-size: 28px;
   pointer-events: none;
   animation: mc-pulse 2s ease-in-out infinite;
@@ -329,6 +330,15 @@ canvas {
 .nav-arrow.left { left: 10px; }
 .nav-arrow.right { right: 10px; }
 .nav-arrow.hidden { display: none; }
+
+.swipe-hint {
+  position: absolute; bottom: 18px; left: 0; right: 0;
+  text-align: center; color: rgba(196,168,107,0.5);
+  font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+  letter-spacing: 3px; pointer-events: none;
+  transition: opacity 1s ease;
+}
+.swipe-hint.fade-out { opacity: 0; }
 
 .comic-advance {
   position: absolute; bottom: 42%; right: 16px;
@@ -556,7 +566,7 @@ canvas {
       <span class="rule" id="t-r2">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>
       <span class="line l3" id="t-l3">only to be <strong>trapped</strong> in a dangerous new identity</span>
     </div>
-    <button class="ov-btn" id="start-btn">BEGIN</button>
+    <button class="ov-btn" id="start-btn">ENTER</button>
   </div>
 
   <!-- COMIC SEQUENCE — External Narration Layout -->
@@ -974,7 +984,7 @@ const COMIC_BEATS = [
 
   // Beat 7: Nik intro — paragraph break after Snacks, characters drawn larger/closer
   { scene: 'nik_intro',
-    narration: 'Unlike the other tenants, the suave investor looks Murry right in the face. Not just because Murry walks his dog <b>Snacks</b>\u00a0\u2014 the shots, the walks, the 3&nbsp;a.m.&nbsp;emergencies.<br><br>But because the two look strikingly&nbsp;similar.',
+    narration: 'But unlike the other tenants, the suave investor in the penthouse doesn\u2019t look down on Murry. He looks him right in the\u00a0face.<br><br>Not just because Murry helps him with his diabetic dog <b>Snacks</b>\u2026<br><br><b>\u2026but because the two look strikingly\u00a0similar.</b>',
     sound: 'ding' },
 
   // Beat 8: Title card — "PLAY THE GAME" animated text
@@ -1041,6 +1051,9 @@ function renderComicBeat(idx) {
 
   // EXPERIMENTAL: External narration layout
   // Scene canvas stays clean; narration goes in panel below
+
+  // Remove any existing swipe hints
+  document.querySelectorAll('.swipe-hint').forEach(el => el.remove());
 
   // Toggle text-only mode (hides canvas)
   if (beat.scene === 'text_only') {
@@ -1112,7 +1125,7 @@ function renderComicBeat(idx) {
 
     const rightArrow = document.createElement('div');
     rightArrow.className = 'nav-arrow right';
-    rightArrow.textContent = '\u25B8';
+    rightArrow.textContent = '\u25B6';
     rightArrow.style.cssText = 'position:absolute;bottom:20px;right:10px;top:auto;transform:none;z-index:4;';
     document.getElementById('comic-canvas-wrap').appendChild(rightArrow);
   } else {
@@ -1124,8 +1137,19 @@ function renderComicBeat(idx) {
 
     const rightArrow = document.createElement('div');
     rightArrow.className = 'nav-arrow right';
-    rightArrow.textContent = '\u25B8';
+    rightArrow.textContent = '\u25B6';
     comicNarrationPanel.appendChild(rightArrow);
+  }
+
+  // Swipe hint on first beat for touch devices
+  if (isFirst && 'ontouchstart' in window) {
+    const hintParent = beat.scene === 'text_only' ? comicNarrationPanel : document.getElementById('comic-canvas-wrap');
+    const hint = document.createElement('div');
+    hint.className = 'swipe-hint';
+    hint.textContent = 'SWIPE TO CONTINUE \u2192';
+    hintParent.appendChild(hint);
+    setTimeout(() => hint.classList.add('fade-out'), 3000);
+    setTimeout(() => { if (hint.parentNode) hint.remove(); }, 4200);
   }
 
   // Auto-advance: if beat has autoAdvance, advance after delay (but allow back nav)
@@ -1152,6 +1176,24 @@ comicOverlay.addEventListener('click', (e) => {
   if (x < rect.width * 0.3) retreatComic();
   else advanceComic();
 });
+
+// Swipe on comic overlay
+(function() {
+  let sx = 0, sy = 0;
+  comicOverlay.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  comicOverlay.addEventListener('touchend', e => {
+    if (GAME.state !== 'comic') return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) advanceComic(); else retreatComic();
+  }, { passive: true });
+  comicOverlay.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - sx);
+    const dy = Math.abs(e.touches[0].clientY - sy);
+    if (dx > dy && dx > 10) e.preventDefault();
+  }, { passive: false });
+})();
 
 function endComic() {
   comicOverlay.style.display = 'none';
@@ -1862,6 +1904,25 @@ document.getElementById('mc-back').addEventListener('click', (e) => {
   e.stopPropagation();
   goBackCard();
 });
+
+// Swipe on mission card overlay
+(function() {
+  let sx = 0, sy = 0;
+  mcOverlay.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  mcOverlay.addEventListener('touchend', e => {
+    if (!GAME.missionCards.active) return;
+    if (mcChoices.classList.contains('visible')) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) advanceCard(); else goBackCard();
+  }, { passive: true });
+  mcOverlay.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - sx);
+    const dy = Math.abs(e.touches[0].clientY - sy);
+    if (dx > dy && dx > 10) e.preventDefault();
+  }, { passive: false });
+})();
 
 // --- PORTRAITS ---
 function drawPortrait(characterId) {
@@ -2841,7 +2902,7 @@ function executeRooftopScene(gen) {
       const pulse = 0.15 + Math.sin(Date.now() * 0.003) * 0.1;
       ctx.globalAlpha = pulse;
       if (rtStep > 1) { ctx.textAlign = 'left'; ctx.fillText('\u25C0', 12, H / 2); }
-      ctx.textAlign = 'right'; ctx.fillText('\u25B8', W - 12, H / 2);
+      ctx.textAlign = 'right'; ctx.fillText('\u25B6', W - 12, H / 2);
       ctx.textAlign = 'left'; ctx.globalAlpha = 1;
     }
     if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
@@ -2891,6 +2952,24 @@ function executeRooftopScene(gen) {
     }
   }
   document.addEventListener('keydown', onRooftopKey);
+
+  // Swipe on rooftop canvas
+  let rsx = 0, rsy = 0;
+  canvas.addEventListener('touchstart', e => { rsx = e.touches[0].clientX; rsy = e.touches[0].clientY; }, { passive: true });
+  canvas.addEventListener('touchend', e => {
+    if (GAME.gen !== gen || animating) return;
+    if (rtStep < 1) return;
+    const dx = e.changedTouches[0].clientX - rsx;
+    const dy = e.changedTouches[0].clientY - rsy;
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) { rtStep++; runStep(); }
+    else if (rtStep > 1) { rtStep = Math.max(1, rtStep - 1); bubbleOpacity = 0; bubbleText = ''; runStep(); }
+  }, { passive: true });
+  canvas.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - rsx);
+    const dy = Math.abs(e.touches[0].clientY - rsy);
+    if (dx > dy && dx > 10) e.preventDefault();
+  }, { passive: false });
 
   function runStep() {
     if (GAME.gen !== gen) { canvas.removeEventListener('click', onTap); document.removeEventListener('keydown', onRooftopKey); return; }
@@ -3182,13 +3261,20 @@ function showEndingTitleAndCTA(gen) {
     }
   } catch(e) {}
 
-  // Brief pause then show final card
+  // Brief pause then show final card with sequential reveals
   setTimeout(() => {
     if (GAME.gen !== gen) return;
     try { if (GAME.instruments && GAME.instruments.pad) GAME.instruments.pad.triggerRelease(); } catch(e) {}
     const cta = document.getElementById('cta-overlay');
+    const children = Array.from(cta.children);
+    // Hide all children initially
+    children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'opacity 1s ease'; });
     cta.style.display = 'flex';
-    setTimeout(() => { if (GAME.gen === gen) cta.classList.add('visible'); }, 100);
+    cta.classList.add('visible');
+    // Reveal each child sequentially
+    children.forEach((ch, i) => {
+      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 3500);
+    });
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) replayBtn.addEventListener('click', e => { e.preventDefault(); restartGame(); });
   }, 1500);
@@ -3465,16 +3551,17 @@ function restartGame() {
       '<span class="rule" id="t-r2">\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014</span>' +
       '<span class="line l3" id="t-l3">only to be <strong>trapped</strong> in a dangerous new identity</span>' +
     '</div>' +
-    '<button class="ov-btn" id="start-btn">BEGIN</button>';
+    '<button class="ov-btn" id="start-btn">ENTER</button>';
   overlay.style.background = '';
   overlay.classList.remove('hidden');
   document.getElementById('start-btn').addEventListener('click', startComic);
   mobileControls.style.display = 'none';
   controlHint.style.display = 'none';
-  // Hide CTA overlay
+  // Hide CTA overlay and reset child opacity for sequential reveal
   const ctaOv = document.getElementById('cta-overlay');
   ctaOv.style.display = 'none';
   ctaOv.classList.remove('visible');
+  Array.from(ctaOv.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
 
   // Restart the title background canvas animation (same as initial load)
   (function restartTitleAnimation() {

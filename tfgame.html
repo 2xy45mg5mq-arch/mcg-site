@@ -69,7 +69,7 @@ canvas {
   color: rgba(255,255,255,0.22);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 11px; letter-spacing: 2px;
-  margin-bottom: 1px; opacity: 0;
+  margin-bottom: 3px; opacity: 0;
   transition: opacity 0.5s ease;
 }
 .title-by.visible { opacity: 1; }
@@ -92,7 +92,7 @@ canvas {
 .pyramid-logline .rule {
   display: block; color: rgba(196,168,107,0.22);
   font-family: 'Courier New', monospace; font-size: 10px;
-  letter-spacing: 3px; margin: 12px auto; line-height: 1;
+  letter-spacing: 3px; margin: 8px auto; line-height: 1;
   opacity: 0; transition: opacity 0.4s ease;
 }
 .pyramid-logline .rule.visible { opacity: 1; }
@@ -151,7 +151,7 @@ canvas {
   width: 100%;
   display: flex; flex-direction: column;
   align-items: flex-start; justify-content: flex-start;
-  padding: 14px 48px 12px;
+  padding: 14px 48px 16px;
   overflow: hidden;
   position: relative;
 }
@@ -190,7 +190,7 @@ canvas {
   font-family: 'EB Garamond', Georgia, serif;
   color: rgba(255,255,255,0.75);
   font-size: clamp(15px, 3.8vw, 18px);
-  line-height: 1.7;
+  line-height: 1.75;
   text-align: left;
   padding: 0;
   opacity: 0;
@@ -357,21 +357,17 @@ canvas {
   z-index: 19;
 }
 
-/* ============ MOBILE CONTROLS ============ */
+/* ============ MOBILE TAP ZONES ============ */
 #mobile-controls {
-  position: absolute; bottom: 12px; left: 0; right: 0;
-  display: none; justify-content: space-between; align-items: flex-end;
-  padding: 0 14px; z-index: 15; pointer-events: none;
+  position: absolute; bottom: 18px; left: 0; right: 0;
+  display: none; justify-content: space-between; align-items: center;
+  padding: 0 20px; z-index: 15; pointer-events: none;
 }
-#mobile-controls button {
-  pointer-events: auto; border: 1px solid rgba(196,168,107,0.25); border-radius: 8px;
-  background: rgba(0,0,0,0.4); color: rgba(196,168,107,0.4); font-size: 24px;
-  width: 58px; height: 58px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
+.tap-zone-label {
+  font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+  color: rgba(196,168,107,0.2); letter-spacing: 2px;
 }
-#mobile-controls button:active { background: rgba(196,168,107,0.15); }
-#mobile-controls .dpad { display: flex; gap: 8px; }
-#jump-btn { border-radius: 50% !important; width: 68px !important; height: 68px !important; font-size: 12px !important; letter-spacing: 2px; }
+.tap-zone-label.center { font-size: 22px; }
 
 /* ============ DROP OVERLAY ============ */
 #drop-overlay {
@@ -410,7 +406,7 @@ canvas {
 .mc-text {
   font-family: 'EB Garamond', Georgia, serif;
   color: rgba(255,255,255,0.88); font-size: clamp(15px, 3.5vw, 17px);
-  line-height: 1.55;
+  line-height: 1.65;
 }
 .mc-text.mission-style {
   color: rgba(196,168,107,0.7); font-style: italic;
@@ -480,20 +476,20 @@ canvas {
   display: none; flex-direction: column;
   align-items: center; justify-content: center;
   background: rgba(0,0,0,0.95);
-  z-index: 20; gap: 16px;
+  z-index: 20; gap: 0;
   opacity: 0; transition: opacity 1.5s ease;
 }
 #cta-overlay.visible { opacity: 1; }
-.cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 10vw, 4rem); color: #c4a86b; letter-spacing: 4px; }
+.cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 12vw, 5rem); color: #c4a86b; letter-spacing: 4px; margin-bottom: 0; }
 .cta-tagline { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: rgba(196,168,107,0.5); font-size: clamp(14px, 3.5vw, 18px); margin-bottom: 16px; }
 .cta-link {
   display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
   font-size: 16px; letter-spacing: 4px; padding: 12px 36px; text-decoration: none;
-  border: 1px solid rgba(196,168,107,0.4);
+  border: 1px solid rgba(196,168,107,0.4); margin-top: 8px;
 }
 .cta-link:hover { background: rgba(196,168,107,0.1); }
-.cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 4px; padding: 8px 24px; }
-.cta-replay { color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 12px; }
+.cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 8px; padding: 8px 24px; }
+.cta-replay { color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 20px; }
 
 .end-text.cta-section { margin-top: 20px; }
 .end-text.cta-section a.script-link {
@@ -579,13 +575,11 @@ canvas {
     <div id="comic-text-area"></div>
   </div>
 
-  <!-- MOBILE CONTROLS -->
+  <!-- MOBILE TAP ZONES (visual indicators) -->
   <div id="mobile-controls">
-    <div class="dpad">
-      <button id="left-btn">&larr;</button>
-      <button id="right-btn">&rarr;</button>
-    </div>
-    <button id="jump-btn">JUMP</button>
+    <div class="tap-zone-label left">&larr;</div>
+    <div class="tap-zone-label center">&uarr;</div>
+    <div class="tap-zone-label right">&rarr;</div>
   </div>
 
   <!-- CONTROL HINT -->
@@ -599,6 +593,7 @@ canvas {
   <!-- CTA OVERLAY -->
   <div id="cta-overlay">
     <div class="cta-title">TOP FLOOR</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,3vw,14px);color:rgba(196,168,107,0.5);letter-spacing:6px;margin-top:4px">THE MOVIE</div>
     <div style="font-family:'EB Garamond',Georgia,serif;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:24px">Find out what happens next</div>
     <a class="cta-link" href="mailto:mcoynegreen@gmail.com?subject=Top%20Floor%20Screenplay%20Request">REQUEST THE SCREENPLAY</a>
     <a class="cta-link small" href="https://coyne-green.com" target="_blank">EXPLORE MORE STORIES</a>
@@ -618,7 +613,7 @@ canvas {
         <div class="mc-text"></div>
       </div>
     </div>
-    <div class="mc-advance">TAP ▸</div>
+    <div class="mc-advance">TAP ▶</div>
     <div id="mc-choices">
       <button class="mc-choice" data-choice="0"></button>
       <button class="mc-choice" data-choice="1"></button>
@@ -644,10 +639,10 @@ const W = 420, H = 720;
 const GRAV = 0.42, JUMP = -10.8, SPD = 4.2;
 const PW = 30, PH_SIZE = 30;
 const PLATH = 16;
-const FH = 110; // tighter floor spacing = easier jumps
+const FH = 118; // slightly taller floors = tighter jumps
 const TOTAL_FLOORS = 22;
 const GOLD = '#c4a86b';
-const COYOTE_FRAMES = 8; // coyote time for easier jumping
+const COYOTE_FRAMES = 6; // tighter coyote time
 
 const ZONES = [
   { min: 0, max: 5, bg1: '#080a14', bg2: '#101420', accent: '#4466aa' },
@@ -672,9 +667,9 @@ const SPEECH = {
 const NAMED_NPC_FLOORS = {
   3: { type: 'barry', name: 'BARRY' },
   5: { type: 'barry', name: 'BARRY' },
-  8: { type: 'board', name: 'CO-OP BOARD' },
-  11: { type: 'board', name: 'CO-OP BOARD' },
-  20: { type: 'valerie', name: 'VALERIE' },
+  8: { type: 'board', name: 'RESIDENT' },
+  11: { type: 'board', name: 'RESIDENT' },
+  20: { type: 'valerie', name: 'RESIDENT' },
 };
 
 // --- GAME STATE ---
@@ -761,7 +756,7 @@ let titleAnimId = null;
     const wins = [];
     for (let wy = by+8; wy < tBaseY-6; wy += 8+tsRand()*4) {
       for (let wx = bx-bw/2+4; wx < bx+bw/2-3; wx += 6+tsRand()*3) {
-        if (tsRand() < 0.5) wins.push({ x: wx, y: wy, b: 0.03+tsRand()*0.08 });
+        if (tsRand() < 0.5) wins.push({ x: wx, y: wy, b: 0.06+tsRand()*0.12 });
       }
     }
     tCity.push({ x: bx, y: by, w: bw, h: bh, wins });
@@ -811,11 +806,11 @@ let titleAnimId = null;
 
     // City
     if (cA > 0) tCity.forEach(b => {
-      ctx.fillStyle = `rgba(10,12,18,${0.8*cA})`;
+      ctx.fillStyle = `rgba(14,16,24,${0.9*cA})`;
       ctx.fillRect(b.x-b.w/2,b.y,b.w,b.h);
       b.wins.forEach(w => {
         ctx.fillStyle = `rgba(220,200,150,${w.b*cA})`;
-        ctx.fillRect(w.x,w.y,3,2);
+        ctx.fillRect(w.x,w.y,3,3);
       });
     });
 
@@ -827,12 +822,12 @@ let titleAnimId = null;
       ctx.moveTo(tPeakX-tTopHW,tPeakY); ctx.lineTo(tPeakX+tTopHW,tPeakY);
       ctx.lineTo(tPeakX+tBaseHW,tBaseY); ctx.lineTo(tPeakX-tBaseHW,tBaseY);
       ctx.closePath(); ctx.fill();
-      ctx.strokeStyle = 'rgba(196,168,107,0.07)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(196,168,107,0.12)'; ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(tPeakX-tTopHW,tPeakY); ctx.lineTo(tPeakX+tTopHW,tPeakY);
       ctx.lineTo(tPeakX+tBaseHW,tBaseY); ctx.lineTo(tPeakX-tBaseHW,tBaseY);
       ctx.closePath(); ctx.stroke();
-      ctx.strokeStyle = 'rgba(196,168,107,0.025)'; ctx.lineWidth = 3; ctx.stroke();
+      ctx.strokeStyle = 'rgba(196,168,107,0.04)'; ctx.lineWidth = 3; ctx.stroke();
       for (let i = 0; i < 20; i++) {
         const t = i/20, ly = tPeakY+18+t*(tBaseY-tPeakY-20);
         const lhw = tTopHW + ((ly-tPeakY)/(tBaseY-tPeakY))*(tBaseHW-tTopHW);
@@ -920,18 +915,31 @@ document.addEventListener('keyup', e => {
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') keys.jump = false;
 });
 
-function setupTouch(id, key) {
-  const el = document.getElementById(id);
-  el.addEventListener('touchstart', e => { e.preventDefault(); keys[key] = true; if (key === 'jump') keys.jumpPressed = true; }, { passive: false });
-  el.addEventListener('touchend', e => { e.preventDefault(); keys[key] = false; }, { passive: false });
-  el.addEventListener('mousedown', () => { keys[key] = true; if (key === 'jump') keys.jumpPressed = true; });
-  el.addEventListener('mouseup', () => { keys[key] = false; });
-  el.addEventListener('mouseleave', () => { keys[key] = false; });
-  el.addEventListener('touchcancel', e => { e.preventDefault(); keys[key] = false; }, { passive: false });
-}
-setupTouch('left-btn', 'left');
-setupTouch('right-btn', 'right');
-setupTouch('jump-btn', 'jump');
+// --- TAP-TO-JUMP MOBILE CONTROLS ---
+// Tap left third of screen = jump left, right third = jump right, center = jump straight up
+const gameWrap = document.getElementById('game-wrap');
+let _touchActive = false;
+gameWrap.addEventListener('touchstart', e => {
+  if (GAME.state !== 'playing' || _touchActive) return;
+  e.preventDefault();
+  _touchActive = true;
+  const rect = gameWrap.getBoundingClientRect();
+  const tx = e.touches[0].clientX - rect.left;
+  const third = rect.width / 3;
+  keys.jump = true; keys.jumpPressed = true;
+  if (tx < third) { keys.left = true; keys.right = false; }
+  else if (tx > third * 2) { keys.right = true; keys.left = false; }
+  else { keys.left = false; keys.right = false; }
+}, { passive: false });
+gameWrap.addEventListener('touchend', e => {
+  if (!_touchActive) return;
+  _touchActive = false;
+  keys.left = false; keys.right = false; keys.jump = false;
+}, { passive: true });
+gameWrap.addEventListener('touchcancel', () => {
+  _touchActive = false;
+  keys.left = false; keys.right = false; keys.jump = false;
+}, { passive: true });
 
 function sceneTimeout(fn, ms) {
   const gen = GAME.gen;
@@ -1212,7 +1220,7 @@ function endComic() {
 
   // Show controls
   mobileControls.style.display = 'flex';
-  showControlHint('USE ARROWS TO MOVE \u2022 JUMP TO CLIMB');
+  showControlHint('TAP TO JUMP \u2022 LEFT / RIGHT TO DIRECT');
 
   GAME.zoneLabel = 'START IN THE BASEMENT';
   GAME.zoneLabelTimer = 160;
@@ -2019,7 +2027,7 @@ function generateFloors() {
   floors.push({ index: 0, y: 640, platforms: [{ x: 0, y: 640, w: W }], items: [] });
 
   // Floors 1-21 - MUCH wider platforms for easier play
-  const safeFloors = new Set([3, 6, 9, 14, 18]);
+  const safeFloors = new Set([3, 6, 8, 9, 11, 14, 18, 20]);
   for (let i = 1; i <= 21; i++) {
     const y = 640 - i * FH;
     const safe = safeFloors.has(i);
@@ -2033,7 +2041,7 @@ function generateFloors() {
       // Regular floors: 3 platforms, spread across thirds
       // Upper floors (15+) get slightly narrower platforms
       const third = W / 3; // 140px per third
-      const minW = i >= 15 ? 110 : 130;
+      const minW = i >= 15 ? 90 : 110;
       const w1 = minW + seededRandom() * 10;
       const x1 = 2 + seededRandom() * Math.max(0, third - w1 - 2);
       plats.push({ x: x1, y, w: w1 });
@@ -2138,7 +2146,6 @@ function drawNPC(npc, screenY) {
     ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 2, 6, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#555'; ctx.beginPath(); ctx.ellipse(x + 12, y - 6, 6, 3, 0, Math.PI, 0); ctx.fill();
     ctx.fillStyle = '#888'; ctx.fillRect(x + 19, y + 4, 6, 9); // clipboard
-    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText(npc.name || 'BOARD', x + 12, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'board_larry') {
     // Larry — brown suit, bald, stout
     ctx.fillStyle = '#4a3a28'; ctx.fillRect(x + 2, y + 2, 20, 18);
@@ -2148,7 +2155,6 @@ function drawNPC(npc, screenY) {
     // Glasses
     ctx.strokeStyle = '#666'; ctx.lineWidth = 1; ctx.strokeRect(x + 7, y - 3, 5, 4); ctx.strokeRect(x + 14, y - 3, 5, 4);
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 9, y - 1, 1.2, 0, Math.PI * 2); ctx.arc(x + 17, y - 1, 1.2, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('LARRY', x + 12, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'board_gerald') {
     // Gerald — tall, dark suit, thin
     ctx.fillStyle = '#1a1a2a'; ctx.fillRect(x + 5, y - 2, 14, 24);
@@ -2157,7 +2163,6 @@ function drawNPC(npc, screenY) {
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 10, y - 9, 1.3, 0, Math.PI * 2); ctx.arc(x + 14, y - 9, 1.3, 0, Math.PI * 2); ctx.fill();
     // Tie
     ctx.fillStyle = '#8a2020'; ctx.fillRect(x + 11, y + 0, 2, 10);
-    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('GERALD', x + 12, y - 20); ctx.textAlign = 'left';
   } else if (npc.type === 'board_helen') {
     // Helen — wheelchair
     // Wheelchair frame
@@ -2173,7 +2178,6 @@ function drawNPC(npc, screenY) {
     // White hair
     ctx.fillStyle = '#ddd'; ctx.beginPath(); ctx.ellipse(x + 13, y - 8, 6, 4, 0, Math.PI, 0); ctx.fill();
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 11, y - 5, 1.2, 0, Math.PI * 2); ctx.arc(x + 15, y - 5, 1.2, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('HELEN', x + 13, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'cynthia') {
     ctx.fillStyle = '#3a1a2a'; ctx.fillRect(x + 3, y, 18, 20);
     ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 4, 7, 0, Math.PI * 2); ctx.fill();
@@ -2194,9 +2198,6 @@ function drawNPC(npc, screenY) {
     ctx.strokeStyle = '#8b4a2a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x + 12, y - 1, 3, 0.1, Math.PI - 0.1); ctx.stroke();
     // Legs
     ctx.fillStyle = '#3a3a3a'; ctx.fillRect(x + 6, y + 20, 5, 6); ctx.fillRect(x + 14, y + 20, 5, 6);
-    // Name label
-    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
-    ctx.fillText('VALERIE', x + 12, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'nik_temp') {
     // Nik — suave investor, glasses, dark suit
     ctx.fillStyle = '#0a1a3a'; ctx.fillRect(x + 3, y + 2, 18, 18);
@@ -2396,14 +2397,17 @@ function updatePhysics() {
     if (m.onGround) break;
   }
 
-  // Fall off bottom: reset to current floor (not below!)
+  // Fall off bottom: lose a floor as penalty
   if (m.y + GAME.camera.y > H + 60) {
-    const safePlat = findSafePlatform(GAME.currentFloor);
+    const prevFloor = Math.max(0, GAME.currentFloor - 1);
+    const safePlat = findSafePlatform(prevFloor);
     if (safePlat) {
       m.x = safePlat.x + safePlat.w / 2 - PW / 2;
       m.y = safePlat.y - PH_SIZE;
       m.vy = 0;
       m.onGround = true;
+      GAME.currentFloor = prevFloor;
+      m.stunTimer = 20;
       // Snap camera so player is visible after fall reset
       GAME.camera.y = Math.max(0, -(m.y - 300));
     }
@@ -2443,9 +2447,9 @@ function updateSnacks() {
 function updateNPCs() {
   for (const npc of GAME.npcs) {
     if (npc.walking) continue; // skip patrol for NPCs actively walking on/off
-    const isBoard = npc.type === 'board' || npc.type.startsWith('board_');
+    const isBoard = npc.type === 'board' || npc.type.startsWith('board_') || npc.type === 'valerie';
     if (npc.type === 'barry' || isBoard || (npc.type === 'cynthia' && npc.hostile)) {
-      const spd = npc.type === 'barry' ? 0.8 : 0.6;
+      const spd = npc.type === 'barry' ? 1.0 : 0.8;
       npc.x += npc.dir * spd;
       if (npc.x <= npc.platX + 5 || npc.x >= npc.platX + npc.platW - 28) npc.dir *= -1;
     }
@@ -2459,7 +2463,7 @@ function updateNPCs() {
       npc.speechShown = true;
       triggerSpeech(npc);
     }
-    if (dist < 24 && screenDist < 40 && npc.hostile && m.stunTimer <= 0) {
+    if (dist < 32 && screenDist < 50 && npc.hostile && m.stunTimer <= 0) {
       const immune = (npc.type === 'barry' && m.transformLevel >= 2) ||
                      (isBoard && m.transformLevel >= 3);
       if (!immune) { loseAFloor(); return; }
@@ -2472,7 +2476,7 @@ function triggerSpeech(npc) {
   let text = '';
   // Barry: no speech (cut per spec — "That's 16 minutes" has no context for player)
   if (npc.type === 'board' || npc.type.startsWith('board_')) text = tl >= 3 ? SPEECH.board_friendly : SPEECH.board_hostile;
-  if (npc.type === 'valerie') text = SPEECH.valerie_greeting;
+  if (npc.type === 'valerie') text = tl >= 3 ? SPEECH.board_friendly : SPEECH.board_hostile;
   if (text) {
     GAME.speechBubbles.push({ x: npc.x + 12, y: npc.y - 10, text, life: 120 });
     if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n');
@@ -2790,18 +2794,21 @@ function drawCanvasBubble(x, y, text, opacity) {
   if (opacity <= 0) return;
   ctx.save();
   ctx.globalAlpha = opacity;
-  ctx.font = "italic 14px 'EB Garamond', Georgia, serif";
+  ctx.font = "italic 18px 'EB Garamond', Georgia, serif";
   ctx.textAlign = 'center';
-  const tw = ctx.measureText(text).width + 20;
-  const th = 28;
-  const bx = x - tw / 2, by = y - th;
-  ctx.fillStyle = 'rgba(0,0,0,0.7)';
-  ctx.beginPath(); ctx.roundRect(bx, by, tw, th, 6); ctx.fill();
-  ctx.strokeStyle = 'rgba(196,168,107,0.3)'; ctx.lineWidth = 1; ctx.stroke();
-  ctx.fillStyle = 'rgba(0,0,0,0.7)';
-  ctx.beginPath(); ctx.moveTo(x - 4, by + th); ctx.lineTo(x, by + th + 6); ctx.lineTo(x + 4, by + th); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.9)';
-  ctx.fillText(text, x, by + 19); ctx.textAlign = 'left';
+  const tw = ctx.measureText(text).width + 28;
+  const th = 36;
+  let bx = x - tw / 2, by = y - th;
+  bx = Math.max(4, Math.min(bx, W - tw - 4));
+  const centerX = bx + tw / 2;
+  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.beginPath(); ctx.roundRect(bx, by, tw, th, 8); ctx.fill();
+  ctx.strokeStyle = 'rgba(196,168,107,0.35)'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  const tipX = Math.max(bx + 10, Math.min(x, bx + tw - 10));
+  ctx.beginPath(); ctx.moveTo(tipX - 5, by + th); ctx.lineTo(tipX, by + th + 7); ctx.lineTo(tipX + 5, by + th); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.fillText(text, centerX, by + 24); ctx.textAlign = 'left';
   ctx.restore();
 }
 
@@ -2890,14 +2897,7 @@ function executeRooftopScene(gen) {
       const bx = (bubbleWho === 'murry' ? murryX : nikX) + 15;
       drawCanvasBubble(bx, spriteY - 10, bubbleText, bubbleOpacity);
     }
-    if (!animating && fadeToBlack <= 0 && rtStep > 0) {
-      ctx.fillStyle = 'rgba(196,168,107,0.2)'; ctx.font = "28px 'Bebas Neue', sans-serif";
-      const pulse = 0.15 + Math.sin(Date.now() * 0.003) * 0.1;
-      ctx.globalAlpha = pulse;
-      if (rtStep > 1) { ctx.textAlign = 'left'; ctx.fillText('\u25C0', 12, H / 2); }
-      ctx.textAlign = 'right'; ctx.fillText('\u25B6', W - 12, H / 2);
-      ctx.textAlign = 'left'; ctx.globalAlpha = 1;
-    }
+    // No navigation arrows — rooftop is fully automatic
     if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
   }
 
@@ -2929,50 +2929,21 @@ function executeRooftopScene(gen) {
       runStep();
     }
   }
-  canvas.addEventListener('click', onTap);
-
-  // Keyboard support for rooftop scene
-  function onRooftopKey(e) {
-    if (GAME.gen !== gen || animating) return;
-    if (rtStep < 1) return;
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') {
-      rtStep++;
-      runStep();
-    } else if (e.key === 'ArrowLeft' && rtStep > 1) {
-      rtStep = Math.max(1, rtStep - 1);
-      bubbleOpacity = 0; bubbleText = '';
-      runStep();
-    }
-  }
-  document.addEventListener('keydown', onRooftopKey);
-
-  // Swipe on rooftop canvas
-  let rsx = 0, rsy = 0;
-  canvas.addEventListener('touchstart', e => { rsx = e.touches[0].clientX; rsy = e.touches[0].clientY; }, { passive: true });
-  canvas.addEventListener('touchend', e => {
-    if (GAME.gen !== gen || animating) return;
-    if (rtStep < 1) return;
-    const dx = e.changedTouches[0].clientX - rsx;
-    const dy = e.changedTouches[0].clientY - rsy;
-    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
-    if (dx < 0) { rtStep++; runStep(); }
-    else if (rtStep > 1) { rtStep = Math.max(1, rtStep - 1); bubbleOpacity = 0; bubbleText = ''; runStep(); }
-  }, { passive: true });
-  canvas.addEventListener('touchmove', e => {}, { passive: true });
+  // Rooftop is fully automatic — no click/key/swipe listeners
 
   function runStep() {
-    if (GAME.gen !== gen) { canvas.removeEventListener('click', onTap); document.removeEventListener('keydown', onRooftopKey); return; }
+    if (GAME.gen !== gen) return;
     bubbleOpacity = 0; bubbleText = '';
     switch (rtStep) {
-      case 0: // Scene loads. Nik in doorman uniform. DING. Murry's first line AUTO-APPEARS.
+      case 0: // Scene loads. Nik in doorman uniform. Murry's first line AUTO-APPEARS.
         drawRooftopScene();
-        if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
         animating = true;
         setTimeout(() => {
           if (GAME.gen !== gen) return;
           showBubble('murry', '\u201CNik?\u201D', () => {
             drawRooftopScene();
             rtStep = 1;
+            runStep();
           });
         }, 800);
         break;
@@ -3012,8 +2983,6 @@ function executeRooftopScene(gen) {
         });
         break;
       case 4: // Struggle — Nik attacks, they grapple (auto-animated)
-        canvas.removeEventListener('click', onTap);
-        document.removeEventListener('keydown', onRooftopKey);
         animating = true;
         let sNikX = nikX, sMurryX = murryX;
         struggleFrame = 0;
@@ -3262,7 +3231,7 @@ function showEndingTitleAndCTA(gen) {
     cta.classList.add('visible');
     // Reveal each child sequentially
     children.forEach((ch, i) => {
-      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 3500);
+      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 1200);
     });
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) replayBtn.addEventListener('click', e => { e.preventDefault(); restartGame(); });
@@ -3418,7 +3387,7 @@ function renderPlaying() {
   ctx.fillStyle = grad; ctx.fillRect(-10, -10, W + 20, H + 20);
 
   // Floor markers
-  ctx.font = "10px 'Bebas Neue', sans-serif"; ctx.fillStyle = 'rgba(180,160,120,0.18)';
+  ctx.font = "10px 'Bebas Neue', sans-serif"; ctx.fillStyle = 'rgba(180,160,120,0.22)';
   for (let i = 0; i <= TOTAL_FLOORS; i++) {
     const fy = (640 - i * FH) + cam;
     if (fy > -20 && fy < H + 20) {
@@ -3573,7 +3542,7 @@ function restartGame() {
       const wins = [];
       for (let wy = by+8; wy < tBaseY2-6; wy += 8+tsRand2()*4) {
         for (let wx = bx-bw/2+4; wx < bx+bw/2-3; wx += 6+tsRand2()*3) {
-          if (tsRand2() < 0.5) wins.push({ x: wx, y: wy, b: 0.03+tsRand2()*0.08 });
+          if (tsRand2() < 0.5) wins.push({ x: wx, y: wy, b: 0.06+tsRand2()*0.12 });
         }
       }
       tCity2.push({ x: bx, y: by, w: bw, h: bh, wins });
@@ -3613,11 +3582,11 @@ function restartGame() {
         ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
       });
       if (cA > 0) tCity2.forEach(b => {
-        ctx.fillStyle = `rgba(10,12,18,${0.8*cA})`;
+        ctx.fillStyle = `rgba(14,16,24,${0.9*cA})`;
         ctx.fillRect(b.x-b.w/2,b.y,b.w,b.h);
         b.wins.forEach(w => {
           ctx.fillStyle = `rgba(220,200,150,${w.b*cA})`;
-          ctx.fillRect(w.x,w.y,3,2);
+          ctx.fillRect(w.x,w.y,3,3);
         });
       });
       if (bA > 0) {
@@ -3627,12 +3596,12 @@ function restartGame() {
         ctx.moveTo(tPeakX2-tTopHW2,tPeakY2); ctx.lineTo(tPeakX2+tTopHW2,tPeakY2);
         ctx.lineTo(tPeakX2+tBaseHW2,tBaseY2); ctx.lineTo(tPeakX2-tBaseHW2,tBaseY2);
         ctx.closePath(); ctx.fill();
-        ctx.strokeStyle = 'rgba(196,168,107,0.07)'; ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(196,168,107,0.12)'; ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(tPeakX2-tTopHW2,tPeakY2); ctx.lineTo(tPeakX2+tTopHW2,tPeakY2);
         ctx.lineTo(tPeakX2+tBaseHW2,tBaseY2); ctx.lineTo(tPeakX2-tBaseHW2,tBaseY2);
         ctx.closePath(); ctx.stroke();
-        ctx.strokeStyle = 'rgba(196,168,107,0.025)'; ctx.lineWidth = 3; ctx.stroke();
+        ctx.strokeStyle = 'rgba(196,168,107,0.04)'; ctx.lineWidth = 3; ctx.stroke();
         for (let i = 0; i < 20; i++) {
           const t = i/20, ly = tPeakY2+18+t*(tBaseY2-tPeakY2-20);
           const lhw = tTopHW2 + ((ly-tPeakY2)/(tBaseY2-tPeakY2))*(tBaseHW2-tTopHW2);

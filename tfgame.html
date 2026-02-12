@@ -927,6 +927,7 @@ function setupTouch(id, key) {
   el.addEventListener('mousedown', () => { keys[key] = true; if (key === 'jump') keys.jumpPressed = true; });
   el.addEventListener('mouseup', () => { keys[key] = false; });
   el.addEventListener('mouseleave', () => { keys[key] = false; });
+  el.addEventListener('touchcancel', e => { e.preventDefault(); keys[key] = false; }, { passive: false });
 }
 setupTouch('left-btn', 'left');
 setupTouch('right-btn', 'right');
@@ -1188,11 +1189,7 @@ comicOverlay.addEventListener('click', (e) => {
     if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
     if (dx < 0) advanceComic(); else retreatComic();
   }, { passive: true });
-  comicOverlay.addEventListener('touchmove', e => {
-    const dx = Math.abs(e.touches[0].clientX - sx);
-    const dy = Math.abs(e.touches[0].clientY - sy);
-    if (dx > dy && dx > 10) e.preventDefault();
-  }, { passive: false });
+  comicOverlay.addEventListener('touchmove', e => {}, { passive: true });
 })();
 
 function endComic() {
@@ -1917,11 +1914,7 @@ document.getElementById('mc-back').addEventListener('click', (e) => {
     if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
     if (dx < 0) advanceCard(); else goBackCard();
   }, { passive: true });
-  mcOverlay.addEventListener('touchmove', e => {
-    const dx = Math.abs(e.touches[0].clientX - sx);
-    const dy = Math.abs(e.touches[0].clientY - sy);
-    if (dx > dy && dx > 10) e.preventDefault();
-  }, { passive: false });
+  mcOverlay.addEventListener('touchmove', e => {}, { passive: true });
 })();
 
 // --- PORTRAITS ---
@@ -2965,11 +2958,7 @@ function executeRooftopScene(gen) {
     if (dx < 0) { rtStep++; runStep(); }
     else if (rtStep > 1) { rtStep = Math.max(1, rtStep - 1); bubbleOpacity = 0; bubbleText = ''; runStep(); }
   }, { passive: true });
-  canvas.addEventListener('touchmove', e => {
-    const dx = Math.abs(e.touches[0].clientX - rsx);
-    const dy = Math.abs(e.touches[0].clientY - rsy);
-    if (dx > dy && dx > 10) e.preventDefault();
-  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {}, { passive: true });
 
   function runStep() {
     if (GAME.gen !== gen) { canvas.removeEventListener('click', onTap); document.removeEventListener('keydown', onRooftopKey); return; }

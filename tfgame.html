@@ -1223,8 +1223,13 @@ function endComic() {
   GAME.currentFloor = 0;
 
   // Show controls
-  mobileControls.style.display = 'flex';
-  showControlHint('TAP TO JUMP \u2022 LEFT / RIGHT TO DIRECT');
+  const isTouchDevice = 'ontouchstart' in window;
+  if (isTouchDevice) {
+    mobileControls.style.display = 'flex';
+    showControlHint('TAP TO JUMP \u2022 LEFT / RIGHT TO DIRECT');
+  } else {
+    showControlHint('ARROWS TO MOVE \u2022 SPACE TO JUMP');
+  }
 
   GAME.zoneLabel = 'START IN THE BASEMENT';
   GAME.zoneLabelTimer = 160;

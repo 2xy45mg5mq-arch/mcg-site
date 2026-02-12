@@ -357,17 +357,21 @@ canvas {
   z-index: 19;
 }
 
-/* ============ MOBILE TAP ZONES ============ */
+/* ============ MOBILE CONTROLS ============ */
 #mobile-controls {
-  position: absolute; bottom: 18px; left: 0; right: 0;
-  display: none; justify-content: space-between; align-items: center;
-  padding: 0 20px; z-index: 15; pointer-events: none;
+  position: absolute; bottom: 12px; left: 0; right: 0;
+  display: none; justify-content: space-between; align-items: flex-end;
+  padding: 0 14px; z-index: 15; pointer-events: none;
 }
-.tap-zone-label {
-  font-family: 'Bebas Neue', sans-serif; font-size: 18px;
-  color: rgba(196,168,107,0.2); letter-spacing: 2px;
+#mobile-controls button {
+  pointer-events: auto; border: 1px solid rgba(196,168,107,0.25); border-radius: 8px;
+  background: rgba(0,0,0,0.4); color: rgba(196,168,107,0.4); font-size: 24px;
+  width: 58px; height: 58px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
-.tap-zone-label.center { font-size: 22px; }
+#mobile-controls button:active { background: rgba(196,168,107,0.15); }
+#mobile-controls .dpad { display: flex; gap: 8px; }
+#jump-btn { border-radius: 50% !important; width: 68px !important; height: 68px !important; font-size: 12px !important; letter-spacing: 2px; }
 
 /* ============ DROP OVERLAY ============ */
 #drop-overlay {
@@ -575,11 +579,13 @@ canvas {
     <div id="comic-text-area"></div>
   </div>
 
-  <!-- MOBILE TAP ZONES (visual indicators) -->
+  <!-- MOBILE CONTROLS -->
   <div id="mobile-controls">
-    <div class="tap-zone-label left">&larr;</div>
-    <div class="tap-zone-label center">&uarr;</div>
-    <div class="tap-zone-label right">&rarr;</div>
+    <div class="dpad">
+      <button id="left-btn">&larr;</button>
+      <button id="right-btn">&rarr;</button>
+    </div>
+    <button id="jump-btn">JUMP</button>
   </div>
 
   <!-- CONTROL HINT -->
@@ -917,23 +923,27 @@ document.addEventListener('keyup', e => {
 
 // --- TAP-TO-JUMP MOBILE CONTROLS ---
 // Tap left third of screen = jump left, right third = jump right, center = jump straight up
-// --- TAP-TO-JUMP: listen on canvas directly ---
-let _touchDir = 0; // -1 left, 0 center, 1 right — persists through jump
+// --- MOBILE CONTROLS: d-pad buttons + tap canvas to jump ---
+function setupTouch(id, key) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('touchstart', e => { e.stopPropagation(); e.preventDefault(); keys[key] = true; if (key === 'jump') keys.jumpPressed = true; }, { passive: false });
+  el.addEventListener('touchend', e => { e.stopPropagation(); e.preventDefault(); keys[key] = false; }, { passive: false });
+  el.addEventListener('touchcancel', e => { keys[key] = false; }, { passive: true });
+  el.addEventListener('mousedown', () => { keys[key] = true; if (key === 'jump') keys.jumpPressed = true; });
+  el.addEventListener('mouseup', () => { keys[key] = false; });
+  el.addEventListener('mouseleave', () => { keys[key] = false; });
+}
+setupTouch('left-btn', 'left');
+setupTouch('right-btn', 'right');
+setupTouch('jump-btn', 'jump');
+// Tap canvas = jump (in addition to jump button)
 canvas.addEventListener('touchstart', e => {
   if (GAME.state !== 'playing') return;
   e.preventDefault();
-  const rect = canvas.getBoundingClientRect();
-  const tx = e.touches[0].clientX - rect.left;
-  const third = rect.width / 3;
-  keys.jumpPressed = true; keys.jump = true;
-  if (tx < third) { _touchDir = -1; keys.left = true; keys.right = false; }
-  else if (tx > third * 2) { _touchDir = 1; keys.right = true; keys.left = false; }
-  else { _touchDir = 0; keys.left = false; keys.right = false; }
+  keys.jump = true; keys.jumpPressed = true;
 }, { passive: false });
 canvas.addEventListener('touchend', e => {
-  keys.jump = false;
-}, { passive: true });
-canvas.addEventListener('touchcancel', () => {
   keys.jump = false;
 }, { passive: true });
 
@@ -1218,7 +1228,7 @@ function endComic() {
   const isTouchDevice = 'ontouchstart' in window;
   if (isTouchDevice) {
     mobileControls.style.display = 'flex';
-    showControlHint('TAP TO JUMP \u2022 LEFT / RIGHT TO DIRECT');
+    showControlHint('TAP SCREEN OR \u26A1 TO JUMP \u2022 ARROWS TO MOVE');
   } else {
     showControlHint('ARROWS TO MOVE \u2022 SPACE TO JUMP');
   }
@@ -2388,7 +2398,6 @@ function updatePhysics() {
         m.y = plat.y - PH_SIZE;
         m.vy = 0;
         m.onGround = true;
-        if (_touchDir !== 0) { keys.left = false; keys.right = false; _touchDir = 0; }
         if (floor.index > GAME.currentFloor) {
           GAME.currentFloor = floor.index;
           onFloorReached(floor);

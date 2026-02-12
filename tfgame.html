@@ -917,13 +917,11 @@ document.addEventListener('keyup', e => {
 
 // --- TAP-TO-JUMP MOBILE CONTROLS ---
 // Tap left third of screen = jump left, right third = jump right, center = jump straight up
-const gameWrap = document.getElementById('game-wrap');
-gameWrap.addEventListener('touchstart', e => {
+// --- TAP-TO-JUMP: listen on canvas directly ---
+canvas.addEventListener('touchstart', e => {
   if (GAME.state !== 'playing') return;
-  if (document.getElementById('mission-card-overlay').style.display !== 'none') return;
-  if (document.getElementById('comic-overlay').style.display !== 'none') return;
   e.preventDefault();
-  const rect = gameWrap.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
   const tx = e.touches[0].clientX - rect.left;
   const third = rect.width / 3;
   keys.jump = true; keys.jumpPressed = true;
@@ -931,10 +929,10 @@ gameWrap.addEventListener('touchstart', e => {
   else if (tx > third * 2) { keys.right = true; keys.left = false; }
   else { keys.left = false; keys.right = false; }
 }, { passive: false });
-gameWrap.addEventListener('touchend', e => {
+canvas.addEventListener('touchend', e => {
   keys.left = false; keys.right = false; keys.jump = false;
 }, { passive: true });
-gameWrap.addEventListener('touchcancel', () => {
+canvas.addEventListener('touchcancel', () => {
   keys.left = false; keys.right = false; keys.jump = false;
 }, { passive: true });
 

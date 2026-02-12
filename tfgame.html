@@ -111,18 +111,51 @@ canvas {
 #comic-overlay {
   position: absolute; inset: 0;
   display: none; flex-direction: column;
-  align-items: center; justify-content: center;
+  align-items: center; justify-content: flex-start;
   background: #08080c;
   z-index: 18;
   overflow: hidden;
 }
 
+/* Scene canvas sits in upper portion with nav arrows */
+#comic-canvas-wrap {
+  position: relative;
+  width: 100%;
+  flex: 0 0 auto;
+  max-height: 58%;
+  overflow: hidden;
+}
 #comic-canvas {
-  width: 100%; max-height: 60%;
+  width: 100%;
   image-rendering: pixelated;
   display: block;
 }
+/* Bubble overlay floats on top of canvas */
+#comic-bubble-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
 
+/* Narration panel sits RIGHT BELOW the scene — no gap */
+#comic-narration-panel {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: flex-start;
+  padding: 14px 28px 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Text-only: hide canvas, expand panel, center text */
+#comic-overlay.text-only-mode #comic-canvas-wrap { display: none; }
+#comic-overlay.text-only-mode #comic-narration-panel {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Legacy text area kept for compatibility but hidden */
 #comic-text-area {
   position: absolute; left: 0; right: 0;
   top: 50%; transform: translateY(-50%);
@@ -131,6 +164,7 @@ canvas {
   pointer-events: none;
   padding: 0;
   overflow: hidden;
+  display: none;
 }
 
 .comic-location {
@@ -143,16 +177,17 @@ canvas {
   padding-top: 12px;
 }
 
-/* Narration: top/center, italic, no container */
+/* Narration: clean text below scene, left-aligned */
 .comic-narration {
   font-family: 'EB Garamond', Georgia, serif;
-  color: rgba(255,255,255,0.65);
-  font-size: clamp(14px, 3.5vw, 17px);
-  line-height: 1.65;
-  text-align: center;
-  padding: 10px 24px;
+  color: rgba(255,255,255,0.75);
+  font-size: clamp(15px, 3.8vw, 18px);
+  line-height: 1.7;
+  text-align: left;
+  padding: 0;
   opacity: 0;
   transition: opacity 0.6s ease;
+  width: 100%;
 }
 .comic-narration.visible { opacity: 1; }
 
@@ -218,28 +253,18 @@ canvas {
   margin-top: 6px;
 }
 
-/* Scene-aware narration: push below basement window (drawn at y=50-85) */
-.comic-narration.narration-below-window {
-  padding-top: 100px;
-}
-/* Position narration in lower half (below penthouse glow on building_ext) */
-.comic-narration.narration-lower {
-  margin-top: auto;
-  margin-bottom: 80px;
-}
-/* Position narration near top of panel (below penthouse glow) */
+/* Position classes are no-ops in external narration mode — text is always below scene */
+.comic-narration.narration-below-window,
+.comic-narration.narration-lower,
 .comic-narration.narration-upper {
-  padding-top: 50px;
-  margin-bottom: auto;
+  /* no special positioning needed */
 }
-/* Text-only scene: center vertically, larger text, generous spacing */
+/* Text-only scene: larger text, centered */
 .comic-narration.narration-text-only {
-  margin-top: auto;
-  margin-bottom: auto;
-  font-size: clamp(16px, 4vw, 20px);
-  line-height: 1.8;
-  padding: 30px 32px;
-  color: rgba(255,255,255,0.75);
+  font-size: clamp(17px, 4.2vw, 21px);
+  line-height: 1.85;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
 }
 
 /* Legacy classes kept for mission card portraits */
@@ -526,9 +551,13 @@ canvas {
     <button class="ov-btn" id="start-btn">BEGIN</button>
   </div>
 
-  <!-- COMIC SEQUENCE -->
+  <!-- COMIC SEQUENCE — External Narration Layout -->
   <div id="comic-overlay">
-    <canvas id="comic-canvas" width="420" height="432"></canvas>
+    <div id="comic-canvas-wrap">
+      <canvas id="comic-canvas" width="420" height="432"></canvas>
+      <div id="comic-bubble-layer"></div>
+    </div>
+    <div id="comic-narration-panel"></div>
     <div id="comic-text-area"></div>
   </div>
 
@@ -590,7 +619,7 @@ window.addEventListener('error', function(e) {
 });
 
 // ============================================================
-// TOP FLOOR V10
+// TOP FLOOR V10 — EXPERIMENTAL: External Narration Layout
 // ============================================================
 
 const W = 420, H = 720;
@@ -670,6 +699,8 @@ const comicOverlay = document.getElementById('comic-overlay');
 const comicCanvas = document.getElementById('comic-canvas');
 const comicCtx = comicCanvas.getContext('2d');
 const comicTextArea = document.getElementById('comic-text-area');
+const comicNarrationPanel = document.getElementById('comic-narration-panel');
+const comicBubbleLayer = document.getElementById('comic-bubble-layer');
 const controlHint = document.getElementById('control-hint');
 
 const mcOverlay = document.getElementById('mission-card-overlay');
@@ -901,12 +932,12 @@ let comicBeatIndex = 0;
 const COMIC_BEATS = [
   // Beat 0: LOBBY narration
   { scene: 'lobby_ext',
-    narration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a doorman.',
+    narration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a&nbsp;doorman.',
     textPosition: 'lower' },
 
   // Beat 1: LOBBY dialogue
-  { scene: 'lobby_ext', dialogue: true, speaker: 'MURRY', text: '\u201CI\u2019m an entrepreneur who opens doors.\u201D',
-    keepNarration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a doorman.',
+  { scene: 'lobby_ext', dialogue: true, speaker: 'MURRY', text: '\u201CI\u2019m an entrepreneur who opens&nbsp;doors.\u201D',
+    keepNarration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a&nbsp;doorman.',
     bubblePos: { top: '48%', left: '28%', tail: 'down-left' } },
 
   // Beat 2: Basement — nonfungible fragrances
@@ -939,10 +970,11 @@ const COMIC_BEATS = [
   // Beat 8: Title card — "PLAY THE GAME" animated text
   { scene: 'title_card' },
 
-  // Beat 9: Basement pushups
+  // Beat 9: Basement pushups — auto-advance to gameplay
   { scene: 'basement_pushups', location: 'JERSEY \u2014 BASEMENT',
     narration: null, dialogue: true, speaker: 'SERA', text: '\u201CMurry! Get up!\u201D',
-    bubblePos: { top: '25%', left: '52%', tail: 'down-right' } },
+    bubblePos: { top: '25%', left: '52%', tail: 'down-right' },
+    autoAdvance: 2500 },
 ];
 
 function startComic() {
@@ -998,33 +1030,37 @@ function renderComicBeat(idx) {
     return;
   }
 
-  // Draw scene
-  drawComicScene(beat.scene);
+  // EXPERIMENTAL: External narration layout
+  // Scene canvas stays clean; narration goes in panel below
 
-  // Build text overlay
-  comicTextArea.innerHTML = '';
-  // Text-only scenes: expand text area to full height for vertical centering
-  comicTextArea.style.height = beat.scene === 'text_only' ? '100%' : '60%';
+  // Toggle text-only mode (hides canvas)
+  if (beat.scene === 'text_only') {
+    comicOverlay.classList.add('text-only-mode');
+  } else {
+    comicOverlay.classList.remove('text-only-mode');
+    drawComicScene(beat.scene);
+  }
+
+  // Clear layers
+  comicNarrationPanel.innerHTML = '';
+  comicBubbleLayer.innerHTML = '';
+
+  // Location label — rendered ON the scene (top of canvas wrap), not in narration
+  // Remove any existing location label first
+  const oldLoc = document.querySelector('#comic-canvas-wrap .comic-location');
+  if (oldLoc) oldLoc.remove();
+  if (beat.location) {
+    const loc = document.createElement('div');
+    loc.className = 'comic-location';
+    loc.style.cssText = 'position:absolute;top:0;left:0;right:0;z-index:3;padding-top:10px;';
+    loc.textContent = beat.location;
+    document.getElementById('comic-canvas-wrap').appendChild(loc);
+  }
 
   if (beat.dialogue) {
-    // Keep narration from previous beat if specified
-    if (beat.keepNarration) {
-      const nr = document.createElement('div');
-      nr.className = 'comic-narration visible';
-      nr.innerHTML = beat.keepNarration;
-      comicTextArea.appendChild(nr);
-    }
-    if (beat.location) {
-      const loc = document.createElement('div');
-      loc.className = 'comic-location';
-      loc.textContent = beat.location;
-      comicTextArea.appendChild(loc);
-    }
-    // Comic speech bubble — absolutely positioned per beat.bubblePos
+    // Speech bubble — floats on the bubble layer (over canvas)
     const wrap = document.createElement('div');
     wrap.className = 'comic-bubble-wrap';
-
-    // Apply scene-aware position from beat data
     const pos = beat.bubblePos || { top: '40%', left: '30%', tail: 'down-center' };
     wrap.style.top = pos.top;
     wrap.style.left = pos.left;
@@ -1034,33 +1070,20 @@ function renderComicBeat(idx) {
     let bubbleClass = 'comic-bubble';
     if (pos.tail === 'down-left') bubbleClass += ' tail-down-left';
     else if (pos.tail === 'down-right') bubbleClass += ' tail-down-right';
-    // 'down-center' is the default — no extra class needed
     bubble.className = bubbleClass;
     bubble.innerHTML = beat.text;
     wrap.appendChild(bubble);
-    // Speaker name now rendered on canvas under character sprite — not in bubble
-    comicTextArea.appendChild(wrap);
+    comicBubbleLayer.appendChild(wrap);
     setTimeout(() => wrap.classList.add('visible'), 150);
+    // No speaker attribution below — bubble speaks for itself
   } else if (beat.narration) {
-    if (beat.location) {
-      const loc = document.createElement('div');
-      loc.className = 'comic-location';
-      loc.textContent = beat.location;
-      comicTextArea.appendChild(loc);
-    }
+    // Narration text — goes in the panel below the scene
     const nr = document.createElement('div');
     let nrClass = 'comic-narration';
-    // Push narration below window in basement scenes (window drawn at y=50-85)
-    const windowScenes = ['basement', 'basement_sera', 'basement_pushups'];
-    if (windowScenes.includes(beat.scene)) nrClass += ' narration-below-window';
-    // Position text lower (e.g. below penthouse light on building_ext)
-    if (beat.textPosition === 'lower') nrClass += ' narration-lower';
-    if (beat.textPosition === 'upper') nrClass += ' narration-upper';
-    // Text-only scene: center vertically with generous spacing
     if (beat.scene === 'text_only') nrClass += ' narration-text-only';
     nr.className = nrClass;
     nr.innerHTML = beat.narration;
-    comicTextArea.appendChild(nr);
+    comicNarrationPanel.appendChild(nr);
     setTimeout(() => nr.classList.add('visible'), 150);
   }
 
@@ -1068,18 +1091,40 @@ function renderComicBeat(idx) {
   if (beat.sound === 'ding' && GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
   if (beat.sound === 'bark' && GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
 
-  // Nav arrows
-  const leftArrow = document.createElement('div');
-  leftArrow.className = 'nav-arrow left' + (isFirst ? ' hidden' : '');
-  leftArrow.textContent = '\u25C0';
-  comicTextArea.appendChild(leftArrow);
+  // Nav arrows — in the canvas wrap area (bottom of scene), not in narration panel
+  // Remove old arrows first
+  document.querySelectorAll('#comic-canvas-wrap .nav-arrow').forEach(el => el.remove());
+  if (beat.scene !== 'text_only') {
+    const leftArrow = document.createElement('div');
+    leftArrow.className = 'nav-arrow left' + (isFirst ? ' hidden' : '');
+    leftArrow.textContent = '\u25C0';
+    leftArrow.style.cssText = 'position:absolute;bottom:20px;left:10px;top:auto;transform:none;z-index:4;';
+    document.getElementById('comic-canvas-wrap').appendChild(leftArrow);
 
-  const rightArrow = document.createElement('div');
-  rightArrow.className = 'nav-arrow right';
-  rightArrow.textContent = '\u25B8';
-  comicTextArea.appendChild(rightArrow);
+    const rightArrow = document.createElement('div');
+    rightArrow.className = 'nav-arrow right';
+    rightArrow.textContent = '\u25B8';
+    rightArrow.style.cssText = 'position:absolute;bottom:20px;right:10px;top:auto;transform:none;z-index:4;';
+    document.getElementById('comic-canvas-wrap').appendChild(rightArrow);
+  } else {
+    // Text-only: arrows at sides of text
+    const leftArrow = document.createElement('div');
+    leftArrow.className = 'nav-arrow left' + (isFirst ? ' hidden' : '');
+    leftArrow.textContent = '\u25C0';
+    comicNarrationPanel.appendChild(leftArrow);
 
-  // NO auto-advance. Player taps to navigate.
+    const rightArrow = document.createElement('div');
+    rightArrow.className = 'nav-arrow right';
+    rightArrow.textContent = '\u25B8';
+    comicNarrationPanel.appendChild(rightArrow);
+  }
+
+  // Auto-advance: if beat has autoAdvance, advance after delay (but allow back nav)
+  if (beat.autoAdvance) {
+    sceneTimeout(() => {
+      if (comicBeatIndex === idx) advanceComic();
+    }, beat.autoAdvance);
+  }
 }
 
 function advanceComic() {

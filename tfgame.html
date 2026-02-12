@@ -648,7 +648,7 @@ const PLATH = 16;
 const FH = 118; // slightly taller floors = tighter jumps
 const TOTAL_FLOORS = 22;
 const GOLD = '#c4a86b';
-const COYOTE_FRAMES = 6; // tighter coyote time
+const COYOTE_FRAMES = 5; // tighter coyote time
 
 const ZONES = [
   { min: 0, max: 5, bg1: '#080a14', bg2: '#101420', accent: '#4466aa' },
@@ -675,6 +675,8 @@ const NAMED_NPC_FLOORS = {
   5: { type: 'barry', name: 'BARRY' },
   8: { type: 'board', name: 'RESIDENT' },
   11: { type: 'board', name: 'RESIDENT' },
+  13: { type: 'barry', name: 'BARRY' },
+  17: { type: 'board_gerald', name: 'RESIDENT' },
   20: { type: 'valerie', name: 'RESIDENT' },
 };
 
@@ -1456,20 +1458,28 @@ function drawComicScene(scene) {
       comicCtx.strokeStyle = 'rgba(196,168,107,0.08)';
       comicCtx.lineWidth = 1;
       comicCtx.stroke();
-      // Windows — denser, pyramid pattern
-      for (let row = 0; row < 22; row++) {
-        const t = row / 22;
-        const wy = bPeakY + 20 + t * (bBaseY - bPeakY - 30);
+      // Windows — dense, warm, alive
+      for (let row = 0; row < 28; row++) {
+        const t = row / 28;
+        const wy = bPeakY + 15 + t * (bBaseY - bPeakY - 25);
         const hw = bTopHW + t * (bBaseHW - bTopHW);
-        const wc = Math.floor(2 + t * 7);
+        const wc = Math.floor(3 + t * 8);
         const rl = bPeakX - hw * 0.8;
         const rr = bPeakX + hw * 0.8;
         const sp = (rr - rl) / (wc + 1);
         for (let c = 1; c <= wc; c++) {
-          const br = ((row * 7 + c * 13) % 17 < 2) ? 0.15 : 0.04;
-          comicCtx.fillStyle = `rgba(196,168,107,${br})`;
+          const isLit = (row * 7 + c * 13) % 17 < 3;
+          const isBright = (row * 3 + c * 7) % 19 < 2 && row < 8;
+          if (isBright) {
+            comicCtx.shadowColor = '#c4a86b'; comicCtx.shadowBlur = 6;
+            comicCtx.fillStyle = 'rgba(196,168,107,0.22)';
+          } else {
+            comicCtx.shadowBlur = 0;
+            comicCtx.fillStyle = `rgba(196,168,107,${isLit ? 0.15 : 0.05})`;
+          }
           comicCtx.fillRect(rl + c * sp - 2, wy, 4 + t * 2, 3 + t);
         }
+        comicCtx.shadowBlur = 0;
       }
       // Penthouse glow — warm, prominent
       comicCtx.shadowColor = '#c4a86b'; comicCtx.shadowBlur = 35;
@@ -2052,7 +2062,7 @@ function generateFloors() {
       // Regular floors: 3 platforms, spread across thirds
       // Upper floors (15+) get slightly narrower platforms
       const third = W / 3; // 140px per third
-      const minW = i >= 15 ? 90 : 110;
+      const minW = i >= 15 ? 80 : 100;
       const w1 = minW + seededRandom() * 10;
       const x1 = 2 + seededRandom() * Math.max(0, third - w1 - 2);
       plats.push({ x: x1, y, w: w1 });
@@ -2083,7 +2093,7 @@ function generateNPCs(floors) {
     const floorIdx = parseInt(floorStr);
     const floor = floors.find(f => f.index === floorIdx);
     if (!floor) continue;
-    const plat = floor.platforms[0];
+    const plat = floor.platforms.reduce((a, b) => a.w > b.w ? a : b);
     npcs.push({
       type: info.type, name: info.name, floor: floorIdx,
       x: plat.x + 20 + seededRandom() * Math.max(10, plat.w - 50),
@@ -2460,9 +2470,9 @@ function updateNPCs() {
     if (npc.walking) continue; // skip patrol for NPCs actively walking on/off
     const isBoard = npc.type === 'board' || npc.type.startsWith('board_') || npc.type === 'valerie';
     if (npc.type === 'barry' || isBoard || (npc.type === 'cynthia' && npc.hostile)) {
-      const spd = npc.type === 'barry' ? 1.0 : 0.8;
+      const spd = npc.type === 'barry' ? 1.3 : 1.1;
       npc.x += npc.dir * spd;
-      if (npc.x <= npc.platX + 5 || npc.x >= npc.platX + npc.platW - 28) npc.dir *= -1;
+      if (npc.x <= npc.platX + 3 || npc.x >= npc.platX + npc.platW - 22) npc.dir *= -1;
     }
     const m = GAME.murry;
     const myFloor = GAME.floors.find(f => f.index === npc.floor);
@@ -2501,7 +2511,7 @@ function loseAFloor() {
   if (target) {
     m.x = target.platforms[0].x + target.platforms[0].w / 2 - PW / 2;
     m.y = target.platforms[0].y - PH_SIZE;
-    m.vy = 0; m.stunTimer = 30;
+    m.vy = 0; m.stunTimer = 20;
     GAME.currentFloor = prevFloor;
   }
   GAME.shakeTimer = 10;
@@ -2807,8 +2817,24 @@ function drawCanvasBubble(x, y, text, opacity) {
   ctx.globalAlpha = opacity;
   ctx.font = "italic 18px 'EB Garamond', Georgia, serif";
   ctx.textAlign = 'center';
-  const tw = ctx.measureText(text).width + 28;
-  const th = 36;
+  // Word wrap if text is too wide
+  const maxBubbleW = W - 24;
+  const fullW = ctx.measureText(text).width;
+  let lines = [text];
+  if (fullW > maxBubbleW - 28) {
+    const words = text.split(' ');
+    lines = []; let cur = '';
+    for (const w of words) {
+      const test = cur ? cur + ' ' + w : w;
+      if (ctx.measureText(test).width > maxBubbleW - 40 && cur) {
+        lines.push(cur); cur = w;
+      } else { cur = test; }
+    }
+    if (cur) lines.push(cur);
+  }
+  const lineH = 22;
+  const tw = Math.min(maxBubbleW, Math.max(...lines.map(l => ctx.measureText(l).width)) + 28);
+  const th = 14 + lines.length * lineH;
   let bx = x - tw / 2, by = y - th;
   bx = Math.max(4, Math.min(bx, W - tw - 4));
   const centerX = bx + tw / 2;
@@ -2819,7 +2845,10 @@ function drawCanvasBubble(x, y, text, opacity) {
   const tipX = Math.max(bx + 10, Math.min(x, bx + tw - 10));
   ctx.beginPath(); ctx.moveTo(tipX - 5, by + th); ctx.lineTo(tipX, by + th + 7); ctx.lineTo(tipX + 5, by + th); ctx.fill();
   ctx.fillStyle = 'rgba(255,255,255,0.92)';
-  ctx.fillText(text, centerX, by + 24); ctx.textAlign = 'left';
+  lines.forEach((line, i) => {
+    ctx.fillText(line, centerX, by + 18 + i * lineH);
+  });
+  ctx.textAlign = 'left';
   ctx.restore();
 }
 
@@ -2852,13 +2881,25 @@ function triggerRooftop() {
 }
 
 function executeRooftopScene(gen) {
-  const murryX = 260, nikX = 140;
+  const RTSCALE = 1.8;
   const floorY = 460, spriteY = floorY - 30;
+  // Positions adjusted for scaled sprites — characters anchor at foot level
+  const murryX = 220, nikX = 100, snacksX = 170;
   let rtStep = 0;
   let bubbleText = '', bubbleWho = '', bubbleOpacity = 0;
   let fadeToBlack = 0;
   let animating = false;
   let struggleFrame = 0;
+
+  // Scale sprites around their foot position so feet stay on the floor
+  function drawScaled(fn, footX, footY) {
+    ctx.save();
+    ctx.translate(footX, footY);
+    ctx.scale(RTSCALE, RTSCALE);
+    ctx.translate(-footX, -footY);
+    fn();
+    ctx.restore();
+  }
 
   function drawRooftopBg() {
     ctx.fillStyle = '#0a0808'; ctx.fillRect(0, 0, W, H);
@@ -2901,12 +2942,14 @@ function executeRooftopScene(gen) {
 
   function drawRooftopScene() {
     drawRooftopBg();
-    drawSnacks(murryX + 40, spriteY + 2);
-    drawMurry(murryX, spriteY, 1, GAME.murry.transformLevel);
-    drawNikDoorman(nikX, spriteY);
+    drawScaled(() => drawSnacks(snacksX, spriteY + 2), snacksX + 8, floorY);
+    drawScaled(() => drawMurry(murryX, spriteY, 1, GAME.murry.transformLevel), murryX + 15, floorY);
+    drawScaled(() => drawNikDoorman(nikX, spriteY), nikX + 15, floorY);
     if (bubbleOpacity > 0) {
-      const bx = (bubbleWho === 'murry' ? murryX : nikX) + 15;
-      drawCanvasBubble(bx, spriteY - 10, bubbleText, bubbleOpacity);
+      // Bubble above scaled sprites — visual top is spriteY - (spriteY to floorY) * (RTSCALE-1)
+      const charX = bubbleWho === 'murry' ? murryX : nikX;
+      const visualTopY = floorY - (floorY - spriteY) * RTSCALE;
+      drawCanvasBubble(charX + 15, visualTopY - 10, bubbleText, bubbleOpacity);
     }
     // No navigation arrows — rooftop is fully automatic
     if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
@@ -3013,9 +3056,9 @@ function executeRooftopScene(gen) {
             fadeToBlack = Math.min(fadeToBlack + 0.05, 1);
           }
           drawRooftopBg();
-          drawSnacks(murryX + 40, spriteY + 2);
-          drawMurry(sMurryX, spriteY, -1, GAME.murry.transformLevel);
-          drawNikDoorman(sNikX, spriteY);
+          drawScaled(() => drawSnacks(snacksX, spriteY + 2), snacksX + 8, floorY);
+          drawScaled(() => drawMurry(sMurryX, spriteY, -1, GAME.murry.transformLevel), sMurryX + 15, floorY);
+          drawScaled(() => drawNikDoorman(sNikX, spriteY), sNikX + 15, floorY);
           if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
           if (fadeToBlack >= 1) {
             ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
@@ -3083,19 +3126,28 @@ function showEnding() {
     ctx.moveTo(peakX - topHalfW, peakY); ctx.lineTo(peakX + topHalfW, peakY);
     ctx.lineTo(peakX + baseHalfW, baseY); ctx.lineTo(peakX - baseHalfW, baseY);
     ctx.closePath(); ctx.stroke();
-    // Windows
-    for (let row = 0; row < 20; row++) {
-      const t = row / 20;
-      const wy = peakY + 30 + t * (baseY - peakY - 40);
+    // Windows — dense, warm, alive
+    for (let row = 0; row < 28; row++) {
+      const t = row / 28;
+      const wy = peakY + 20 + t * (baseY - peakY - 30);
       const halfW = topHalfW + t * (baseHalfW - topHalfW);
-      const winCount = Math.floor(2 + t * 4);
-      const rowLeft = peakX - halfW * 0.7, rowRight = peakX + halfW * 0.7;
+      const winCount = Math.floor(3 + t * 7);
+      const rowLeft = peakX - halfW * 0.8, rowRight = peakX + halfW * 0.8;
       const spacing = (rowRight - rowLeft) / (winCount + 1);
       for (let col = 1; col <= winCount; col++) {
         const wx = rowLeft + col * spacing;
-        ctx.fillStyle = `rgba(196,168,107,${(row*7+col*13)%11<2?0.08:0.02})`;
-        ctx.fillRect(wx-2, wy, 4+t*1.5, 3);
+        const isLit = (row * 7 + col * 13) % 11 < 3;
+        const isBright = (row * 3 + col * 7) % 19 < 2 && row < 8;
+        if (isBright) {
+          ctx.shadowColor = '#c4a86b'; ctx.shadowBlur = 6;
+          ctx.fillStyle = 'rgba(196,168,107,0.2)';
+        } else {
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = `rgba(196,168,107,${isLit ? 0.12 : 0.04})`;
+        }
+        ctx.fillRect(wx - 2, wy, 5 + t * 2, 4);
       }
+      ctx.shadowBlur = 0;
     }
     // Penthouse glow
     const winX = peakX-6, winY = peakY+10, winW = 12, winH = 8;
@@ -3373,7 +3425,7 @@ function drawHUD() {
   }
 
   // Stuck hint
-  if (GAME.stuckTimer > 600) {
+  if (GAME.stuckTimer > 900) {
     const pulse = 0.3 + Math.sin(Date.now() * 0.005) * 0.2;
     ctx.fillStyle = `rgba(196,168,107,${pulse})`;
     ctx.font = "bold 24px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';

@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-<title>TOP FLOOR</title>
+<title>Top Floor — The Game</title>
+<meta property="og:title" content="Top Floor — The Game">
+<meta property="og:description" content="An ambitious Manhattan doorman moves into the penthouse of his dreams — only to be trapped in a dangerous new identity.">
+<meta property="og:type" content="website">
+<meta name="description" content="An ambitious Manhattan doorman moves into the penthouse of his dreams — only to be trapped in a dangerous new identity.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -582,7 +586,7 @@ canvas {
   <div id="cta-overlay">
     <div class="cta-title">TOP FLOOR</div>
     <div style="font-family:'EB Garamond',Georgia,serif;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:24px">Find out what happens next</div>
-    <a class="cta-link" href="mailto:mcoynegreen@gmail.com?subject=Top%20Floor%20Screenplay%20Request">READ THE SCREENPLAY</a>
+    <a class="cta-link" href="mailto:mcoynegreen@gmail.com?subject=Top%20Floor%20Screenplay%20Request">REQUEST THE SCREENPLAY</a>
     <a class="cta-link small" href="https://coyne-green.com" target="_blank">EXPLORE MORE STORIES</a>
     <div style="font-family:'EB Garamond',Georgia,serif;font-style:italic;color:rgba(196,168,107,0.4);font-size:clamp(13px,3vw,16px);margin-top:24px;letter-spacing:1px">Who do you want to be?</div>
     <a class="cta-replay" href="#" id="replay-btn">PLAY AGAIN</a>
@@ -648,6 +652,7 @@ const ITEMS = [
 const SPEECH = {
   board_hostile: 'This is a private building.',
   board_friendly: 'Good evening, Mr. Lamb.',
+  valerie_greeting: 'Look at my arm! Goosebumps.',
 };
 
 const NAMED_NPC_FLOORS = {
@@ -655,6 +660,7 @@ const NAMED_NPC_FLOORS = {
   5: { type: 'barry', name: 'BARRY' },
   8: { type: 'board', name: 'CO-OP BOARD' },
   11: { type: 'board', name: 'CO-OP BOARD' },
+  20: { type: 'valerie', name: 'VALERIE' },
 };
 
 // --- GAME STATE ---
@@ -932,12 +938,12 @@ let comicBeatIndex = 0;
 const COMIC_BEATS = [
   // Beat 0: LOBBY narration
   { scene: 'lobby_ext',
-    narration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a&nbsp;doorman.',
+    narration: 'Murry opens the door. Six days a week, sometimes nights, at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t call himself a&nbsp;doorman.',
     textPosition: 'lower' },
 
   // Beat 1: LOBBY dialogue
   { scene: 'lobby_ext', dialogue: true, speaker: 'MURRY', text: '\u201CI\u2019m an entrepreneur who opens&nbsp;doors.\u201D',
-    keepNarration: 'Murry opens the door. Six days a week and sometimes nights at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t say he\u2019s a&nbsp;doorman.',
+    keepNarration: 'Murry opens the door. Six days a week, sometimes nights, at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t call himself a&nbsp;doorman.',
     bubblePos: { top: '48%', left: '28%', tail: 'down-left' } },
 
   // Beat 2: Basement — nonfungible fragrances
@@ -951,7 +957,7 @@ const COMIC_BEATS = [
 
   // Beat 4: Sera narration + Murry's YouTube line
   { scene: 'basement_sera', location: 'JERSEY \u2014 BASEMENT',
-    narration: 'His sister Sera has seen it all before. The schemes. The pitch. She just wishes he could be happy with who he is.<br><br>But Murry\u2019s watched enough YouTube to know he can be <em>anyone he wants to be</em>.' },
+    narration: 'His sister Sera has seen it all before. The schemes. The pitches. The cologne. She wishes he could be happy with who he&nbsp;is.<br><br>But Murry\u2019s watched enough YouTube to believe he can be <em>anyone he wants to&nbsp;be</em>.' },
 
   // Beat 5: Over black. Text only, no scene.
   { scene: 'text_only',
@@ -964,7 +970,7 @@ const COMIC_BEATS = [
 
   // Beat 7: Nik intro — paragraph break after Snacks, characters drawn larger/closer
   { scene: 'nik_intro',
-    narration: 'Unlike the other tenants, the suave investor always looks Murry right in the face. Not just because Murry helps Nik with his diabetic dog <b>Snacks</b>\u2026<br><br>\u2026but because the two look strikingly similar.',
+    narration: 'Unlike the other tenants, the suave investor looks Murry right in the face. Not just because Murry walks his dog <b>Snacks</b>\u00a0\u2014 the shots, the walks, the 3&nbsp;a.m.&nbsp;emergencies.<br><br>But because the two look strikingly&nbsp;similar.',
     sound: 'ding' },
 
   // Beat 8: Title card — "PLAY THE GAME" animated text
@@ -1007,8 +1013,7 @@ function renderComicBeat(idx) {
     const tc = document.createElement('div');
     tc.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#08080c;z-index:19;cursor:pointer;';
     tc.innerHTML = '<div style="color:#c4a86b;font-family:Bebas Neue,sans-serif;font-size:clamp(52px,14vw,72px);letter-spacing:6px;text-shadow:0 0 40px rgba(196,168,107,0.25)">TOP FLOOR</div>' +
-      '<div style="color:rgba(196,168,107,0.5);font-family:Bebas Neue,sans-serif;font-size:clamp(18px,5vw,24px);letter-spacing:16px;margin-left:16px;margin-top:4px">THE GAME</div>' +
-      '<div style="margin-top:40px;color:#c4a86b;font-family:Bebas Neue,sans-serif;font-size:clamp(16px,4vw,22px);letter-spacing:8px;animation:mc-pulse 2s ease-in-out infinite;cursor:pointer;text-shadow:0 0 15px rgba(196,168,107,0.4);border:2px solid rgba(196,168,107,0.5);padding:14px 48px;box-shadow:0 0 20px rgba(196,168,107,0.1),inset 0 0 20px rgba(196,168,107,0.05)">PLAY</div>';
+      '<div style="margin-top:48px;color:#c4a86b;font-family:Bebas Neue,sans-serif;font-size:clamp(16px,4vw,22px);letter-spacing:8px;animation:mc-pulse 2s ease-in-out infinite;cursor:pointer;text-shadow:0 0 15px rgba(196,168,107,0.4);border:2px solid rgba(196,168,107,0.5);padding:14px 48px;box-shadow:0 0 20px rgba(196,168,107,0.1),inset 0 0 20px rgba(196,168,107,0.05)">PLAY</div>';
     tc.id = 'temp-title-card';
     document.getElementById('game-wrap').appendChild(tc);
     // Left/right tap zones
@@ -2075,8 +2080,7 @@ function drawNPC(npc, screenY) {
     ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 2, 6, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#555'; ctx.beginPath(); ctx.ellipse(x + 12, y - 6, 6, 3, 0, Math.PI, 0); ctx.fill();
     ctx.fillStyle = '#888'; ctx.fillRect(x + 19, y + 4, 6, 9); // clipboard
-    const flash = Math.sin(Date.now() * 0.006) > 0;
-    if (flash) { ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText(npc.name || 'BOARD', x + 12, y - 16); ctx.textAlign = 'left'; }
+    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText(npc.name || 'BOARD', x + 12, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'board_larry') {
     // Larry — brown suit, bald, stout
     ctx.fillStyle = '#4a3a28'; ctx.fillRect(x + 2, y + 2, 20, 18);
@@ -2086,8 +2090,7 @@ function drawNPC(npc, screenY) {
     // Glasses
     ctx.strokeStyle = '#666'; ctx.lineWidth = 1; ctx.strokeRect(x + 7, y - 3, 5, 4); ctx.strokeRect(x + 14, y - 3, 5, 4);
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 9, y - 1, 1.2, 0, Math.PI * 2); ctx.arc(x + 17, y - 1, 1.2, 0, Math.PI * 2); ctx.fill();
-    const flash = Math.sin(Date.now() * 0.006) > 0;
-    if (flash) { ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('LARRY', x + 12, y - 16); ctx.textAlign = 'left'; }
+    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('LARRY', x + 12, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'board_gerald') {
     // Gerald — tall, dark suit, thin
     ctx.fillStyle = '#1a1a2a'; ctx.fillRect(x + 5, y - 2, 14, 24);
@@ -2096,8 +2099,7 @@ function drawNPC(npc, screenY) {
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 10, y - 9, 1.3, 0, Math.PI * 2); ctx.arc(x + 14, y - 9, 1.3, 0, Math.PI * 2); ctx.fill();
     // Tie
     ctx.fillStyle = '#8a2020'; ctx.fillRect(x + 11, y + 0, 2, 10);
-    const flash = Math.sin(Date.now() * 0.006) > 0;
-    if (flash) { ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('GERALD', x + 12, y - 20); ctx.textAlign = 'left'; }
+    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('GERALD', x + 12, y - 20); ctx.textAlign = 'left';
   } else if (npc.type === 'board_helen') {
     // Helen — wheelchair
     // Wheelchair frame
@@ -2113,19 +2115,30 @@ function drawNPC(npc, screenY) {
     // White hair
     ctx.fillStyle = '#ddd'; ctx.beginPath(); ctx.ellipse(x + 13, y - 8, 6, 4, 0, Math.PI, 0); ctx.fill();
     ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 11, y - 5, 1.2, 0, Math.PI * 2); ctx.arc(x + 15, y - 5, 1.2, 0, Math.PI * 2); ctx.fill();
-    const flash = Math.sin(Date.now() * 0.006) > 0;
-    if (flash) { ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('HELEN', x + 13, y - 16); ctx.textAlign = 'left'; }
+    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center'; ctx.fillText('HELEN', x + 13, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'cynthia') {
     ctx.fillStyle = '#3a1a2a'; ctx.fillRect(x + 3, y, 18, 20);
     ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 4, 7, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#ccc'; ctx.beginPath(); ctx.ellipse(x + 12, y - 9, 8, 4, 0, Math.PI, 0); ctx.fill();
     ctx.strokeStyle = '#8b7355'; ctx.lineWidth = 3;
     ctx.beginPath(); ctx.moveTo(x + 22, y + 6); ctx.lineTo(x + 28, y + 24); ctx.stroke();
-    const flash = Math.sin(Date.now() * 0.006) > 0;
-    if (flash) {
-      ctx.fillStyle = 'rgba(196,168,107,0.7)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
-      ctx.fillText('CYNTHIA', x + 12, y - 16); ctx.textAlign = 'left';
-    }
+    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('CYNTHIA', x + 12, y - 16); ctx.textAlign = 'left';
+  } else if (npc.type === 'valerie') {
+    // Valerie — warm cream sweater, kind face, slightly younger than Cynthia
+    ctx.fillStyle = '#d4c5a0'; ctx.fillRect(x + 3, y, 18, 20); // cream sweater
+    ctx.fillStyle = '#c9a882'; ctx.beginPath(); ctx.arc(x + 12, y - 4, 7, 0, Math.PI * 2); ctx.fill(); // face
+    // Warm brown hair, shoulder length
+    ctx.fillStyle = '#8b6b4a'; ctx.beginPath(); ctx.ellipse(x + 12, y - 8, 8, 5, 0, Math.PI, 0); ctx.fill();
+    ctx.fillRect(x + 4, y - 6, 4, 10); ctx.fillRect(x + 16, y - 6, 4, 10); // side hair
+    // Eyes + warm smile
+    ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(x + 10, y - 5, 1.5, 0, Math.PI * 2); ctx.arc(x + 14, y - 5, 1.5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#8b4a2a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x + 12, y - 1, 3, 0.1, Math.PI - 0.1); ctx.stroke();
+    // Legs
+    ctx.fillStyle = '#3a3a3a'; ctx.fillRect(x + 6, y + 20, 5, 6); ctx.fillRect(x + 14, y + 20, 5, 6);
+    // Name label
+    ctx.fillStyle = 'rgba(196,168,107,0.35)'; ctx.font = "bold 10px 'Bebas Neue', sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('VALERIE', x + 12, y - 16); ctx.textAlign = 'left';
   } else if (npc.type === 'nik_temp') {
     // Nik — suave investor, glasses, dark suit
     ctx.fillStyle = '#0a1a3a'; ctx.fillRect(x + 3, y + 2, 18, 18);
@@ -2259,11 +2272,11 @@ function updateAudio() {
         GAME.instruments.pad.triggerAttack(['D3', 'A3'], t);
         break;
       case 2: // Upper floors — open voicing + wind
-        GAME.instruments.pad.triggerAttack(['D3', 'A3', 'D4'], t);
+        GAME.instruments.pad.triggerAttack(['D3', 'Gb3', 'A3', 'D4'], t);
         GAME.instruments.windNoise.start(t); GAME.activeNoises.push(GAME.instruments.windNoise);
         break;
       case 3: // Penthouse — tension, heartbeat
-        GAME.instruments.pad.triggerAttack(['D3', 'A3', 'D4'], t);
+        GAME.instruments.pad.triggerAttack(['D3', 'Gb3', 'A3', 'D4'], t);
         GAME.instruments.windNoise.start(t); GAME.activeNoises.push(GAME.instruments.windNoise);
         const hbLoop = setInterval(() => { if (GAME.instruments) { try { GAME.instruments.heartbeat.triggerAttackRelease('C2', '16n'); } catch(e) {} } }, 800);
         GAME.activeLoops.push(hbLoop);
@@ -2401,6 +2414,7 @@ function triggerSpeech(npc) {
   let text = '';
   // Barry: no speech (cut per spec — "That's 16 minutes" has no context for player)
   if (npc.type === 'board' || npc.type.startsWith('board_')) text = tl >= 3 ? SPEECH.board_friendly : SPEECH.board_hostile;
+  if (npc.type === 'valerie') text = SPEECH.valerie_greeting;
   if (text) {
     GAME.speechBubbles.push({ x: npc.x + 12, y: npc.y - 10, text, life: 120 });
     if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n');
@@ -2627,8 +2641,6 @@ function triggerCynthiaAndBoard() {
         { speaker: 'CO-OP BOARD', text: 'We know you\'re running some sort of scheme!', portrait: 'board' },
       ], () => {
         // Board members + Cynthia become hostile — escape the board
-        const cynthia = GAME.npcs.find(n => n.type === 'cynthia');
-        if (cynthia) { cynthia.hostile = true; cynthia.walking = false; }
         for (const npc of boardNpcs) {
           npc.hostile = true;
           npc.walking = false;
@@ -2892,11 +2904,29 @@ function executeRooftopScene(gen) {
           });
         }, 800);
         break;
-      case 1: // MURRY: "Nik?" — re-show if navigated back
-        showBubble('murry', '\u201CNik?\u201D', () => { drawRooftopScene(); });
+      case 1: // MURRY: "Nik?" — auto-advance after hold
+        showBubble('murry', '\u201CNik?\u201D', () => {
+          drawRooftopScene();
+          animating = true;
+          setTimeout(() => {
+            if (GAME.gen !== gen || rtStep !== 1) return;
+            animating = false;
+            rtStep = 2;
+            runStep();
+          }, 2500);
+        });
         break;
       case 2: // MURRY: "Is that my uniform? Why is it covered in blood?"
-        showBubble('murry', '\u201CIs that my uniform? Why is it covered in blood?\u201D', () => { drawRooftopScene(); });
+        showBubble('murry', '\u201CIs that my uniform? Why is it covered in blood?\u201D', () => {
+          drawRooftopScene();
+          animating = true;
+          setTimeout(() => {
+            if (GAME.gen !== gen || rtStep !== 2) return;
+            animating = false;
+            rtStep = 3;
+            runStep();
+          }, 3000);
+        });
         break;
       case 3: // NIK: "It's nothing personal, it's just Manhattan." — auto-advance to struggle
         showBubble('nik', '\u201CIt\u2019s nothing personal, it\u2019s just Manhattan.\u201D', () => {
@@ -2906,7 +2936,7 @@ function executeRooftopScene(gen) {
             if (GAME.gen !== gen) return;
             rtStep = 4;
             runStep();
-          }, 1500);
+          }, 2000);
         });
         break;
       case 4: // Struggle — Nik attacks, they grapple (auto-animated)
@@ -3141,15 +3171,23 @@ function showEndingTitleAndCTA(gen) {
   if (GAME.gen !== gen) return;
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
 
-  // Skip canvas title — go straight to HTML CTA overlay after a brief pause
+  // Play minor pad for ending
+  try {
+    if (GAME.instruments && GAME.instruments.pad) {
+      GAME.instruments.pad.triggerAttack(['A2', 'C3', 'E3']);
+    }
+  } catch(e) {}
+
+  // Brief pause then show final card
   setTimeout(() => {
     if (GAME.gen !== gen) return;
+    try { if (GAME.instruments && GAME.instruments.pad) GAME.instruments.pad.triggerRelease(); } catch(e) {}
     const cta = document.getElementById('cta-overlay');
     cta.style.display = 'flex';
-    setTimeout(() => cta.classList.add('visible'), 100);
+    setTimeout(() => { if (GAME.gen === gen) cta.classList.add('visible'); }, 100);
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) replayBtn.addEventListener('click', e => { e.preventDefault(); restartGame(); });
-  }, 800);
+  }, 1500);
 }
 
 // ============================================================

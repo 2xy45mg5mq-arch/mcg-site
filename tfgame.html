@@ -3404,6 +3404,9 @@ function showEndingTitleAndCTA(gen) {
         claimBtn.textContent = 'SENDING...';
         formError.style.display = 'none';
 
+        // Open window NOW (user gesture context) — mobile blocks window.open inside async callbacks
+        const pdfWin = window.open('about:blank', '_blank');
+
         const formData = new FormData(screenplayForm);
 
         fetch('/', {
@@ -3413,11 +3416,13 @@ function showEndingTitleAndCTA(gen) {
         })
         .then(response => {
           if (!response.ok) throw new Error('Submit failed');
-          // Success — open screenplay in new tab, return to Screen 1
-          window.open('/topfloor/screenplay', '_blank');
+          // Success — navigate the already-opened tab to screenplay
+          if (pdfWin) pdfWin.location.href = '/topfloor/screenplay';
+          else window.location.href = '/topfloor/screenplay';
           transitionToScreen1(gen);
         })
         .catch(err => {
+          if (pdfWin) try { pdfWin.close(); } catch(e2) {}
           claimBtn.disabled = false;
           claimBtn.textContent = 'READ THE SCREENPLAY';
           formError.innerHTML = 'Something went wrong. Email <a href="#" id="fallback-mailto" style="color:#c4a86b;text-decoration:underline;">mcoynegreen' + '@gmail.com</a> directly.';

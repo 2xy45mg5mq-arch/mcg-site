@@ -687,7 +687,6 @@ canvas {
     <!-- SCREEN 2: Lead capture form -->
     <div id="cta-screen-2" class="cta-screen">
       <div class="cta-title">TOP FLOOR</div>
-      <div class="cta-subtitle">THE SCREENPLAY</div>
       <a href="#" id="back-btn" class="back-link">&larr; Back</a>
       <form id="screenplay-form" name="screenplay-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="screenplay-request">
@@ -698,17 +697,6 @@ canvas {
         <button type="submit" id="claim-btn">READ THE SCREENPLAY</button>
         <div class="form-error" id="form-error"></div>
       </form>
-    </div>
-
-    <!-- SCREEN 3: Post-submit — the reward -->
-    <div id="cta-screen-3" class="cta-screen">
-      <div class="cta-title">TOP FLOOR</div>
-      <div class="cta-subtitle">THE SCREENPLAY</div>
-      <div class="yours-text">It's yours.</div>
-      <a class="cta-link" href="/topfloor/screenplay" target="_blank" id="download-btn">DOWNLOAD SCREENPLAY</a>
-      <a class="cta-link small" href="#" id="explore-btn">EXPLORE MORE STORIES</a>
-      <a class="cta-link small" href="#" id="share-btn-3">SHARE THIS GAME</a>
-      <a class="cta-replay" href="#" id="replay-btn-3">PLAY AGAIN</a>
     </div>
   </div>
 
@@ -3437,32 +3425,6 @@ function showEndingTitleAndCTA(gen) {
     const backBtn = document.getElementById('back-btn');
     if (backBtn) backBtn.addEventListener('click', e => { e.preventDefault(); transitionToScreen1(gen); });
 
-    // Screen 3 buttons
-    const exploreBtn = document.getElementById('explore-btn');
-    if (exploreBtn) exploreBtn.addEventListener('click', function(e) {
-      e.preventDefault(); stopAllAudio();
-      try { Tone.context.close(); } catch(e2) {}
-      window.location.href = 'https://coyne-green.com';
-    });
-
-    const replayBtn3 = document.getElementById('replay-btn-3');
-    if (replayBtn3) replayBtn3.addEventListener('click', e => { e.preventDefault(); restartGame(); });
-
-    const shareBtn3 = document.getElementById('share-btn-3');
-    if (shareBtn3) shareBtn3.addEventListener('click', function(e) {
-      e.preventDefault();
-      const url = window.location.href;
-      const text = 'Play Top Floor — an interactive narrative game';
-      if (navigator.share) {
-        navigator.share({ title: 'Top Floor', text: text, url: url }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(url).then(() => {
-          shareBtn3.textContent = 'LINK COPIED';
-          setTimeout(() => { shareBtn3.textContent = 'SHARE THIS GAME'; }, 2000);
-        }).catch(() => {});
-      }
-    });
-
     // Screenplay form submission
     const screenplayForm = document.getElementById('screenplay-form');
     const formError = document.getElementById('form-error');
@@ -3484,8 +3446,9 @@ function showEndingTitleAndCTA(gen) {
         })
         .then(response => {
           if (!response.ok) throw new Error('Submit failed');
-          // Success — transition to Screen 3
-          transitionToScreen3(gen);
+          // Success — open screenplay in new tab, return to Screen 1
+          window.open('/topfloor/screenplay', '_blank');
+          transitionToScreen1(gen);
         })
         .catch(err => {
           claimBtn.disabled = false;
@@ -3555,20 +3518,6 @@ function transitionToScreen1(gen) {
     screen1.classList.add('active');
     screen1.offsetHeight;
     screen1.classList.add('visible');
-  }, 600);
-}
-
-function transitionToScreen3(gen) {
-  if (GAME.gen !== gen) return;
-  const screen2 = document.getElementById('cta-screen-2');
-  const screen3 = document.getElementById('cta-screen-3');
-
-  screen2.classList.remove('visible');
-  setTimeout(() => {
-    if (GAME.gen !== gen) return;
-    screen2.classList.remove('active');
-    clearScreenStyles(screen2);
-    revealScreenChildren(screen3, gen, 500);
   }, 600);
 }
 
@@ -3853,7 +3802,7 @@ function restartGame() {
   const ctaOv = document.getElementById('cta-overlay');
   ctaOv.style.display = 'none';
   ctaOv.classList.remove('visible');
-  ['cta-screen-1', 'cta-screen-2', 'cta-screen-3'].forEach(id => {
+  ['cta-screen-1', 'cta-screen-2'].forEach(id => {
     const s = document.getElementById(id);
     if (!s) return;
     s.classList.remove('active', 'visible');

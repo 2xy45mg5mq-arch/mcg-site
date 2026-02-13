@@ -4,6 +4,7 @@
 /about            /about.html          200
 /topfloor         /topfloor-deep.html  200
 /top-floor        /topfloor-deep.html  200
+/topfloor/screenplay /files/TOP%20FLOOR.pdf 200
 
 # Hidden game page
 /tfgame           /tfgame.html         200

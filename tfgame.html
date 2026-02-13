@@ -494,6 +494,64 @@ canvas {
 .cta-link:hover { background: rgba(196,168,107,0.1); }
 .cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 8px; padding: 8px 24px; }
 .cta-replay { color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 20px; }
+/* Screenplay gate form */
+#screenplay-form {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; width: 100%; max-width: 300px; margin-top: 12px;
+}
+#screenplay-form input {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1px solid rgba(196,168,107,0.3);
+  color: rgba(255,255,255,0.85); font-family: 'EB Garamond', Georgia, serif;
+  font-size: 15px; padding: 8px 4px; outline: none;
+  transition: border-color 0.3s;
+}
+#screenplay-form input:focus {
+  border-bottom-color: rgba(196,168,107,0.6);
+}
+#screenplay-form input::placeholder {
+  color: rgba(196,168,107,0.25); font-style: italic; font-size: 13px;
+}
+#screenplay-form .form-label {
+  font-family: 'Bebas Neue', sans-serif; color: rgba(196,168,107,0.35);
+  font-size: 10px; letter-spacing: 3px; align-self: flex-start; margin-top: 4px;
+}
+#claim-btn {
+  display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px; letter-spacing: 4px; padding: 12px 36px; margin-top: 14px;
+  background: transparent; border: 1px solid rgba(196,168,107,0.4);
+  cursor: pointer; text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+#claim-btn:hover { background: rgba(196,168,107,0.1); }
+#claim-btn:disabled { opacity: 0.3; cursor: default; }
+#screenplay-form .form-error {
+  color: rgba(255,100,100,0.7); font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px; font-style: italic; margin-top: 4px; display: none;
+}
+#post-submit {
+  display: none; flex-direction: column; align-items: center; gap: 0;
+}
+#post-submit .yours-text {
+  font-family: 'EB Garamond', Georgia, serif; font-style: italic;
+  color: #c4a86b; font-size: clamp(16px, 4vw, 22px); margin-bottom: 16px;
+}
+/* Two-screen CTA layout */
+.cta-screen {
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  width: 100%; opacity: 0; transition: opacity 0.4s ease;
+}
+.cta-screen.active { display: flex; }
+.cta-screen.visible { opacity: 1; }
+.back-link {
+  font-family: 'EB Garamond', Georgia, serif; font-style: italic;
+  color: rgba(196,168,107,0.5); font-size: 14px;
+  text-decoration: none; margin-top: 12px; margin-bottom: 8px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: #c4a86b; }
 
 .end-text.cta-section { margin-top: 20px; }
 .end-text.cta-section a.script-link {
@@ -552,7 +610,6 @@ canvas {
 
 <div id="game-wrap">
   <canvas id="canvas" width="420" height="720"></canvas>
-  <button id="mute-btn" style="position:absolute;top:10px;left:10px;z-index:30;width:36px;height:36px;background:transparent;border:1px solid rgba(196,168,107,0.2);border-radius:6px;color:rgba(196,168,107,0.4);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;padding:0;">🔇</button>
 
   <!-- TITLE SCREEN -->
   <div id="overlay">
@@ -583,8 +640,8 @@ canvas {
   <!-- MOBILE CONTROLS -->
   <div id="mobile-controls">
     <div class="dpad">
-      <button id="left-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(196,168,107,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13,4 7,10 13,16"/></svg></button>
-      <button id="right-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(196,168,107,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,4 13,10 7,16"/></svg></button>
+      <button id="left-btn">&larr;</button>
+      <button id="right-btn">&rarr;</button>
     </div>
     <button id="jump-btn">JUMP</button>
   </div>
@@ -599,14 +656,40 @@ canvas {
 
   <!-- CTA OVERLAY -->
   <div id="cta-overlay">
-    <div class="cta-title">TOP FLOOR</div>
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,3vw,14px);color:rgba(196,168,107,0.5);letter-spacing:6px;margin-top:4px">THE MOVIE</div>
-    <div style="font-family:'EB Garamond',Georgia,serif;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:24px">You made it to the top. The screenplay is yours.</div>
-    <a class="cta-link" href="#" id="screenplay-btn">REQUEST THE SCREENPLAY</a>
-    <a class="cta-link small" href="#" id="explore-btn">EXPLORE MORE STORIES</a>
-    <a class="cta-link small" href="#" id="share-btn" style="border-style:dashed;">SHARE THIS GAME</a>
-    <div style="font-family:'EB Garamond',Georgia,serif;font-style:italic;color:rgba(196,168,107,0.4);font-size:clamp(13px,3vw,16px);margin-top:24px;letter-spacing:1px">Who do you want to be?</div>
-    <a class="cta-replay" href="#" id="replay-btn">PLAY AGAIN</a>
+    <!-- SCREEN 1: Victory CTA -->
+    <div id="cta-screen-1" class="cta-screen">
+      <div class="cta-title">TOP FLOOR</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,3vw,14px);color:rgba(196,168,107,0.5);letter-spacing:6px;margin-top:4px">THE MOVIE</div>
+      <div style="font-family:'EB Garamond',Georgia,serif;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:16px">Discover the whole story.</div>
+      <a class="cta-link" href="#" id="read-screenplay-btn">READ THE SCREENPLAY</a>
+      <a class="cta-link small" href="#" id="explore-btn-1">EXPLORE MORE STORIES</a>
+      <div style="font-family:'EB Garamond',Georgia,serif;font-style:italic;color:rgba(196,168,107,0.4);font-size:clamp(13px,3vw,16px);margin-top:24px;letter-spacing:1px">Who do you want to be?</div>
+      <a class="cta-replay" href="#" id="replay-btn-1">PLAY AGAIN</a>
+    </div>
+
+    <!-- SCREEN 2: Lead capture form -->
+    <div id="cta-screen-2" class="cta-screen">
+      <div class="cta-title">TOP FLOOR</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,3vw,14px);color:rgba(196,168,107,0.5);letter-spacing:6px;margin-top:4px">THE MOVIE</div>
+      <a href="#" id="back-btn" class="back-link">&larr; Back</a>
+      <form id="screenplay-form" name="screenplay-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="screenplay-request">
+        <p style="display:none"><input name="bot-field"></p>
+        <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+        <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+        <input type="text" name="title-role" placeholder="e.g. Manager, Producer, Development Exec">
+        <input type="text" name="company" placeholder="e.g. Agency, Production Co.">
+        <input type="text" name="referral" placeholder="e.g. festival, friend, social media">
+        <button type="submit" id="claim-btn">CLAIM YOUR COPY</button>
+        <div class="form-error" id="form-error"></div>
+      </form>
+      <div id="post-submit">
+        <div class="yours-text">It's yours.</div>
+        <a class="cta-link" href="/files/top-floor-screenplay.pdf" download id="download-btn">DOWNLOAD SCREENPLAY (PDF)</a>
+      </div>
+      <a class="cta-link small" href="#" id="explore-btn-2">EXPLORE MORE STORIES</a>
+      <a class="cta-replay" href="#" id="replay-btn-2">PLAY AGAIN</a>
+    </div>
   </div>
 
   <!-- MISSION CARDS -->
@@ -2298,7 +2381,6 @@ function initAudio() {
   if (GAME.audioStarted) return;
   Tone.start().then(() => {
     GAME.audioStarted = true;
-    Tone.Destination.mute = true;
     const reverb = new Tone.Reverb({ decay: 5, wet: 0.4 }).toDestination();
     const bigReverb = new Tone.Reverb({ decay: 8, wet: 0.6 }).toDestination();
     GAME.instruments = {
@@ -2317,17 +2399,6 @@ function initAudio() {
       // Wind — higher floors
       windNoise: new Tone.Noise('pink').connect(new Tone.Filter(500, 'bandpass').connect(new Tone.Volume(-28).toDestination())),
     };
-  });
-}
-
-// Mute toggle — default muted, persists across restarts
-let isMuted = true;
-const muteBtn = document.getElementById('mute-btn');
-if (muteBtn) {
-  muteBtn.addEventListener('click', () => {
-    isMuted = !isMuted;
-    if (GAME.audioStarted) Tone.Destination.mute = isMuted;
-    muteBtn.textContent = isMuted ? '🔇' : '🔊';
   });
 }
 
@@ -3296,60 +3367,148 @@ function showEndingTitleAndCTA(gen) {
     }
   } catch(e) {}
 
-  // Brief pause then show final card with sequential reveals
+  // Brief pause then show Screen 1 with sequential reveals
   setTimeout(() => {
     if (GAME.gen !== gen) return;
     try { if (GAME.instruments && GAME.instruments.pad) GAME.instruments.pad.triggerRelease(); } catch(e) {}
     const cta = document.getElementById('cta-overlay');
-    const children = Array.from(cta.children);
-    // Hide all children initially
+    const screen1 = document.getElementById('cta-screen-1');
+    const children = Array.from(screen1.children);
+
+    // Hide all screen 1 children initially
     children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'opacity 1s ease'; });
+
     cta.style.display = 'flex';
     cta.classList.add('visible');
+    screen1.classList.add('active');
+
     // Reveal each child sequentially
     children.forEach((ch, i) => {
-      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 1200);
-    });
-    const replayBtn = document.getElementById('replay-btn');
-    if (replayBtn) replayBtn.addEventListener('click', e => { e.preventDefault(); restartGame(); });
-
-    // Screenplay button — anti-Cloudflare email obfuscation
-    const screenplayBtn = document.getElementById('screenplay-btn');
-    if (screenplayBtn) screenplayBtn.addEventListener('click', e => {
-      e.preventDefault();
-      stopAllAudio();
-      try { Tone.context.close(); } catch(e2) {}
-      window.location.href = 'mai' + 'lto:mcoynegreen' + '@gmail.com?subject=Top%20Floor%20-%20Screenplay%20Request';
+      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 800);
     });
 
-    // Explore button — same-tab navigation with audio cleanup
-    const exploreBtn = document.getElementById('explore-btn');
-    if (exploreBtn) exploreBtn.addEventListener('click', e => {
-      e.preventDefault();
-      stopAllAudio();
+    // After reveal, make screen visible for transitions
+    setTimeout(() => { screen1.classList.add('visible'); }, children.length * 800);
+
+    // Screen 1 buttons
+    const readBtn = document.getElementById('read-screenplay-btn');
+    if (readBtn) readBtn.addEventListener('click', e => { e.preventDefault(); transitionToScreen2(gen); });
+
+    const replayBtn1 = document.getElementById('replay-btn-1');
+    if (replayBtn1) replayBtn1.addEventListener('click', e => { e.preventDefault(); restartGame(); });
+
+    const exploreBtn1 = document.getElementById('explore-btn-1');
+    if (exploreBtn1) exploreBtn1.addEventListener('click', function(e) {
+      e.preventDefault(); stopAllAudio();
       try { Tone.context.close(); } catch(e2) {}
       window.location.href = 'https://coyne-green.com';
     });
 
-    // Share button — Web Share API with clipboard fallback
-    const shareBtn = document.getElementById('share-btn');
-    if (shareBtn) shareBtn.addEventListener('click', e => {
-      e.preventDefault();
-      const shareData = {
-        title: 'Top Floor \u2014 The Game',
-        text: 'An ambitious doorman. A stolen identity. A 22-story fall. Play the game.',
-        url: 'https://coyne-green.com/tfgame'
-      };
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(shareData.url).then(() => {
-          shareBtn.textContent = 'LINK COPIED';
-          setTimeout(() => { shareBtn.textContent = 'SHARE THIS GAME'; }, 2000);
-        }).catch(() => {});
-      }
+    // Screen 2 buttons
+    const backBtn = document.getElementById('back-btn');
+    if (backBtn) backBtn.addEventListener('click', e => { e.preventDefault(); transitionToScreen1(gen); });
+
+    const replayBtn2 = document.getElementById('replay-btn-2');
+    if (replayBtn2) replayBtn2.addEventListener('click', e => { e.preventDefault(); restartGame(); });
+
+    const exploreBtn2 = document.getElementById('explore-btn-2');
+    if (exploreBtn2) exploreBtn2.addEventListener('click', function(e) {
+      e.preventDefault(); stopAllAudio();
+      try { Tone.context.close(); } catch(e2) {}
+      window.location.href = 'https://coyne-green.com';
     });
+
+    // Screenplay form submission
+    const screenplayForm = document.getElementById('screenplay-form');
+    const postSubmit = document.getElementById('post-submit');
+    const formError = document.getElementById('form-error');
+
+    if (screenplayForm) {
+      screenplayForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const claimBtn = document.getElementById('claim-btn');
+        claimBtn.disabled = true;
+        claimBtn.textContent = 'SENDING...';
+        formError.style.display = 'none';
+
+        const formData = new FormData(screenplayForm);
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Submit failed');
+          screenplayForm.style.display = 'none';
+          postSubmit.style.display = 'flex';
+          postSubmit.style.opacity = '0';
+          postSubmit.style.transition = 'opacity 1s ease';
+          setTimeout(() => { postSubmit.style.opacity = '1'; }, 50);
+        })
+        .catch(err => {
+          claimBtn.disabled = false;
+          claimBtn.textContent = 'CLAIM YOUR COPY';
+          formError.innerHTML = 'Something went wrong. Email <a href="#" id="fallback-mailto" style="color:#c4a86b;text-decoration:underline;">mcoynegreen@gmail.com</a> directly.';
+          formError.style.display = 'block';
+          const fb = document.getElementById('fallback-mailto');
+          if (fb) fb.addEventListener('click', function(ev) {
+            ev.preventDefault(); stopAllAudio();
+            try { Tone.context.close(); } catch(e2) {}
+            window.location.href = 'mai' + 'lto:mcoynegreen' + '@gmail.com?subject=Top%20Floor%20-%20Screenplay%20Request';
+          });
+        });
+      });
+    }
   }, 1500);
+}
+
+// ============================================================
+// CTA SCREEN TRANSITIONS
+// ============================================================
+
+function transitionToScreen2(gen) {
+  if (GAME.gen !== gen) return;
+  const screen1 = document.getElementById('cta-screen-1');
+  const screen2 = document.getElementById('cta-screen-2');
+
+  // Fade out screen 1
+  screen1.classList.remove('visible');
+  setTimeout(() => {
+    if (GAME.gen !== gen) return;
+    screen1.classList.remove('active');
+    screen2.classList.add('active');
+    // Force reflow
+    screen2.offsetHeight;
+    // Reveal screen 2 children sequentially
+    const children = Array.from(screen2.children);
+    children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'opacity 0.8s ease'; });
+    // Skip post-submit from animation
+    const ps = document.getElementById('post-submit');
+    if (ps) { ps.style.opacity = ''; ps.style.transition = ''; }
+    screen2.classList.add('visible');
+    children.forEach((ch, i) => {
+      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 600);
+    });
+  }, 400);
+}
+
+function transitionToScreen1(gen) {
+  if (GAME.gen !== gen) return;
+  const screen1 = document.getElementById('cta-screen-1');
+  const screen2 = document.getElementById('cta-screen-2');
+
+  // Fade out screen 2
+  screen2.classList.remove('visible');
+  setTimeout(() => {
+    if (GAME.gen !== gen) return;
+    screen2.classList.remove('active');
+    // Clear screen 2 child styles
+    Array.from(screen2.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+    screen1.classList.add('active');
+    screen1.offsetHeight;
+    screen1.classList.add('visible');
+  }, 400);
 }
 
 // ============================================================
@@ -3629,11 +3788,25 @@ function restartGame() {
   document.getElementById('start-btn').addEventListener('click', startComic);
   mobileControls.style.display = 'none';
   controlHint.style.display = 'none';
-  // Hide CTA overlay and reset child opacity for sequential reveal
+  // Hide CTA overlay and reset both screens
   const ctaOv = document.getElementById('cta-overlay');
   ctaOv.style.display = 'none';
   ctaOv.classList.remove('visible');
-  Array.from(ctaOv.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+  const s1 = document.getElementById('cta-screen-1');
+  const s2 = document.getElementById('cta-screen-2');
+  s1.classList.remove('active', 'visible');
+  s2.classList.remove('active', 'visible');
+  Array.from(s1.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+  Array.from(s2.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+  // Reset form state on replay
+  const sf = document.getElementById('screenplay-form');
+  const psub = document.getElementById('post-submit');
+  if (sf) { sf.style.display = ''; sf.reset(); }
+  if (psub) { psub.style.display = 'none'; psub.style.opacity = ''; }
+  const cb = document.getElementById('claim-btn');
+  if (cb) { cb.disabled = false; cb.textContent = 'CLAIM YOUR COPY'; }
+  const fe = document.getElementById('form-error');
+  if (fe) { fe.style.display = 'none'; }
 
   // Restart the title background canvas animation (same as initial load)
   (function restartTitleAnimation() {
@@ -3806,3 +3979,12 @@ init();
 </script>
 </body>
 </html>
+<!--
+  DEPLOY STEPS (when approved):
+  1. mkdir -p Website/Live/files/
+  2. cp "Projects/Latest Drafts/TOP FLOOR.pdf" Website/Live/files/top-floor-screenplay.pdf
+  3. cp Projects/Top\ Floor/Game/tfgame-screenplay-gate-sandbox.html Website/Live/tfgame.html
+  4. cd Website/Live && git add tfgame.html files/top-floor-screenplay.pdf && git commit -m "V15: two-screen CTA — screenplay lead gate with form" && git push
+  5. cp Website/Live/tfgame.html Projects/Top\ Floor/Game/topfloor-platformer-v15.html
+  6. rm Projects/Top\ Floor/Game/tfgame-screenplay-gate-sandbox.html
+-->

@@ -2,5 +2,9 @@ User-agent: *
 Allow: /
 Disallow: /files/
 Disallow: /topfloor/screenplay
+Disallow: /hr/screenplay
+Disallow: /kanvatan/
+Disallow: /memorydocs/
+Disallow: /chosen/
 
 Sitemap: https://coyne-green.com/sitemap.xml

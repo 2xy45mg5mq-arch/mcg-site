@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4XQR4QCNZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V4XQR4QCNZ');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MEATSPACE — A Movie About a Guy Locked Out of Paradise</title>
+<meta name="description" content="Meatspace is a satirical sci-fi feature about a young man locked out of VR paradise who must navigate real life for the first time. Written by Max Coyne-Green.">
+<meta property="og:title" content="MEATSPACE">
+<meta property="og:description" content="A movie about a guy locked out of paradise. Written by Max Coyne-Green.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://coyne-green.com/meatspace">
+<meta property="og:image" content="https://coyne-green.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MEATSPACE">
+<meta name="twitter:description" content="A movie about a guy locked out of paradise.">
+<meta name="twitter:image" content="https://coyne-green.com/og-image.jpg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://coyne-green.com/meatspace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d10;
+    --text: #c8c8c8;
+    --muted: #6b7a88;
+    --red: #c0392b;
+    --card: #131921;
+    --border: rgba(255,255,255,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .back-link {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    z-index: 100;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--text); }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+  }
+
+  /* Body paragraphs */
+  .body-text {
+    margin-bottom: 24px;
+  }
+
+  .body-text .bold {
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* Title card — centered in middle of page */
+  .title-card {
+    text-align: center;
+    padding: 48px 0 40px;
+    margin: 32px 0;
+  }
+
+  .title-card h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 14vw, 7.5rem);
+    letter-spacing: 18px;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .title-card .rule {
+    width: 60px;
+    height: 3px;
+    background: var(--red);
+    margin: 0 auto 20px;
+  }
+
+  .title-card .subtitle {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .title-card .subtitle .accent {
+    color: var(--red);
+  }
+
+  .title-card .byline-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .title-card .byline-name {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--text);
+  }
+
+  /* Horizontal rule separator */
+  .separator {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    margin: 36px 0;
+  }
+
+  /* Bottom tagline */
+  .tagline {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-top: 36px;
+    margin-bottom: 48px;
+  }
+
+  /* CTA — centered */
+  .cta-wrap {
+    text-align: center;
+    margin-top: 0;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: #fff;
+    padding: 14px 40px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-btn:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    z-index: 200; display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+  }
+  .modal-overlay.active { opacity: 1; visibility: visible; }
+  .modal {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 40px; max-width: 480px; width: 90%;
+    transform: translateY(20px); transition: transform 0.3s;
+  }
+  .modal-overlay.active .modal { transform: translateY(0); }
+  .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 8px; color: var(--text); }
+  .modal-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .modal-section { margin-bottom: 24px; }
+  .modal-section-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .modal-input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 12px; color: var(--text); font-family: inherit; font-size: 0.95rem; margin-bottom: 10px;
+  }
+  .modal-input:focus { outline: none; border-color: var(--muted); }
+  .modal-input::placeholder { color: var(--muted); }
+  .modal-textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 12px; color: var(--text); font-family: inherit; font-size: 0.95rem;
+    resize: vertical; min-height: 80px;
+  }
+  .modal-textarea:focus { outline: none; border-color: var(--muted); }
+  .modal-textarea::placeholder { color: var(--muted); }
+  .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
+  .modal-btn {
+    flex: 1; padding: 14px 24px; border: none; border-radius: 4px;
+    font-family: inherit; font-size: 0.8rem; letter-spacing: 1px;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .modal-btn-primary { background: var(--text); color: var(--bg); }
+  .modal-btn-primary:hover { background: #fff; }
+  .modal-btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+  .checkbox-item { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .checkbox-item input { display: none; }
+  .checkbox-box {
+    width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .checkbox-item input:checked + .checkbox-box { background: var(--text); border-color: var(--text); }
+  .checkbox-box::after { content: '\2713'; color: var(--bg); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
+  .checkbox-item input:checked + .checkbox-box::after { opacity: 1; }
+  .checkbox-label { font-size: 0.95rem; }
+
+  @media (max-width: 600px) {
+    .container { padding: 80px 20px 60px; }
+    .title-card h1 { letter-spacing: 8px; }
+    .back-link { top: 16px; left: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="https://coyne-green.com" class="back-link">&larr; coyne-green.com</a>
+
+<div class="container">
+
+  <p class="body-text">It's like 2060. And things are pretty good.</p>
+
+  <p class="body-text">Dystopia never arrived. Instead, AI is aligned. Food is plentiful. Hardship is a memory.</p>
+
+  <p class="body-text">Even the violent problem of male boredom has been solved. At Activity, Purpose, &amp; Education centers across the country, young APEs like <span class="bold">COBY</span> hang from ceilings in fully immersive Sensory Simulation Sacks. Indulging any VR fantasy or adventure they can imagine. Hunting lions on the moon and racing pirate ships with his bros.</p>
+
+  <p class="body-text">But one day, Coby's sack malfunctions.</p>
+
+  <p class="body-text">And he gets stuck in a world he never wanted to explore:</p>
+
+  <div class="title-card">
+    <h1>MEATSPACE</h1>
+    <div class="rule"></div>
+    <p class="subtitle"><span class="accent">a movie</span> about a guy locked out of paradise</p>
+    <p class="byline-label">Written by</p>
+    <p class="byline-name">Max Coyne-Green</p>
+  </div>
+
+  <hr class="separator">
+
+  <p class="body-text">Trapped in actual reality, Coby will do anything to get back in the sack.</p>
+
+  <p class="body-text">But the AI assistants can't fix the glitch. So he seeks out the only human tuner working on campus, <span class="bold">MIRA</span>. But she has bad news: Coby's account is locked&mdash;he needs a DNA match from a family member to create a new one.</p>
+
+  <p class="body-text">Which means finding his brother, <span class="bold">ELI</span>. And that's a big problem. Because Eli lives on a technophobic compound in the woods holding onto an older way of living.</p>
+
+  <p class="body-text">Mira agrees to take him. And along the way, Coby learns how useless he is in &ldquo;the real world.&rdquo; But he also starts to understand what it means to be human.</p>
+
+  <p class="body-text">When they reach the compound, Eli teaches his brother the meaning of struggle. Still, he agrees to take Coby back to his virtual heaven&hellip;</p>
+
+  <p class="body-text">&hellip;with a secret plan to burn the sacks and free the APEs from their prison of endless comfort and stimulation.</p>
+
+  <p class="tagline">It's like The Matrix. But backwards.</p>
+
+  <div class="cta-wrap">
+    <a href="#" class="cta-btn" onclick="openConnectModal(); return false;">Get More Info</a>
+  </div>
+
+</div>
+
+<!-- Contact Modal — matches homepage modal exactly -->
+<div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
+  <div class="modal">
+    <div id="connectFormState">
+      <h2 id="connectHeading">GET MORE INFO</h2>
+      <p class="modal-subtitle" id="connectSubtitle">Meatspace — Satirical Sci-Fi Feature</p>
+      <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="connect">
+        <input type="hidden" name="request" id="connectRequest" value="Meatspace - Info">
+        <p style="display:none;"><input name="bot-field"></p>
+        <div class="modal-section">
+          <div class="modal-section-label">Your info</div>
+          <input type="text" name="name" class="modal-input" placeholder="Name" required>
+          <input type="email" name="email" class="modal-input" placeholder="Email" required>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-label">I'm interested in</div>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="interest" value="Human Resource">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">Human Resource</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="interest" value="Top Floor">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">Top Floor</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="interest" value="Kan Vatan">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">Kan Vatan</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="interest" value="Meatspace" checked>
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">Meatspace</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="interest" value="General Meeting">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">General meeting with Max</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-label">Anything else? (optional)</div>
+          <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Introduce yourself briefly..."></textarea>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
+          <button type="submit" class="modal-btn modal-btn-primary">Send</button>
+        </div>
+      </form>
+      <p style="text-align:center; margin-top:16px; font-size:0.85rem; color:var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color:var(--text); text-decoration:underline;">mcoynegreen@gmail.com</a></p>
+    </div>
+    <div id="connectSuccessState" style="display:none; text-align:center; padding:20px 0;">
+      <h2>SENT</h2>
+      <p class="modal-subtitle" style="margin-bottom:32px;">Thanks for reaching out. I'll get back to you soon.</p>
+      <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width:100%;">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openConnectModal() {
+  document.getElementById('connectModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeConnectModal() {
+  document.getElementById('connectModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+(function() {
+  var form = document.getElementById('connectForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
+    if (!isNetlify) {
+      setTimeout(function() {
+        document.getElementById('connectFormState').style.display = 'none';
+        document.getElementById('connectSuccessState').style.display = '';
+      }, 400);
+      return;
+    }
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(function(res) {
+      if (res.ok) {
+        document.getElementById('connectFormState').style.display = 'none';
+        document.getElementById('connectSuccessState').style.display = '';
+      } else { throw new Error('fail'); }
+    })
+    .catch(function() {
+      btn.textContent = 'Send';
+      btn.disabled = false;
+      alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
+    });
+  });
+})();
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeConnectModal();
+});
+</script>
+
+</body>
+</html>

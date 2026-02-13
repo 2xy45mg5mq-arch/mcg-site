@@ -279,6 +279,11 @@ canvas {
   text-wrap: balance;
 }
 
+@media (max-width: 420px) {
+  .comic-narration { font-size: clamp(14px, 3.6vw, 17px); }
+  .comic-narration.narration-text-only { font-size: clamp(16px, 4vw, 20px); }
+}
+
 /* Legacy classes kept for mission card portraits */
 .comic-dialogue-box {
   margin-top: auto;
@@ -333,9 +338,14 @@ canvas {
 .nav-arrow.left { left: 10px; }
 .nav-arrow.right { right: 10px; }
 .nav-arrow.hidden { display: none; }
+@media (max-width: 420px) {
+  .nav-arrow { font-size: 22px; }
+  .nav-arrow.left { left: 6px; }
+  .nav-arrow.right { right: 6px; }
+}
 
 .swipe-hint {
-  position: absolute; bottom: 18px; left: 0; right: 0;
+  position: absolute; bottom: 6px; left: 0; right: 0;
   text-align: center; color: rgba(196,168,107,0.5);
   font-family: 'Bebas Neue', sans-serif; font-size: 12px;
   letter-spacing: 3px; pointer-events: none;
@@ -765,11 +775,13 @@ const SPEECH = {
 
 const NAMED_NPC_FLOORS = {
   3: { type: 'barry', name: 'BARRY' },
-  5: { type: 'barry', name: 'BARRY' },
+  6: { type: 'barry', name: 'BARRY' },
   8: { type: 'board', name: 'RESIDENT' },
   11: { type: 'board', name: 'RESIDENT' },
   13: { type: 'barry', name: 'BARRY' },
   15: { type: 'board_gerald', name: 'RESIDENT' },
+  18: { type: 'board', name: 'RESIDENT' },
+  19: { type: 'board', name: 'RESIDENT' },
   20: { type: 'valerie', name: 'RESIDENT' },
 };
 
@@ -793,8 +805,6 @@ const GAME = {
   missionCards: { active: false, queue: [], currentIndex: 0, onComplete: null, safetyTimer: null },
   storyFlags: {
     nikEncounterDone: false,
-    seraChase1: false,
-    seraChase2: false,
     cynthiaChaseDone: false,
     boardCaptureDone: false,
     rooftopDone: false,
@@ -986,6 +996,7 @@ let titleAnimId = null;
 const keys = { left: false, right: false, jump: false, jumpPressed: false };
 
 document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
   if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
@@ -1011,6 +1022,7 @@ document.addEventListener('keydown', e => {
   }
 });
 document.addEventListener('keyup', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
   if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') keys.jump = false;
@@ -2194,7 +2206,7 @@ function generateNPCs(floors) {
       dir: seededRandom() > 0.5 ? 1 : -1,
       platX: plat.x, platW: plat.w,
       speechShown: false,
-      hostile: true,
+      hostile: info.type !== 'valerie',
     });
   }
   return npcs;
@@ -2670,26 +2682,10 @@ function checkStoryTriggers() {
   const floor = GAME.currentFloor;
   const flags = GAME.storyFlags;
 
-  // Nik encounter at floor 4 (was floor 2 — give Murry more jumps first)
-  if (floor >= 4 && !flags.nikEncounterDone) {
+  // Nik encounter at floor 5 (buffer floor between Barry on 3 and Barry on 6)
+  if (floor >= 5 && !flags.nikEncounterDone) {
     flags.nikEncounterDone = true;
     triggerNikEncounter();
-  }
-  // Sera at floor 7 — phone ring + question
-  else if (floor >= 7 && !flags.seraChase1) {
-    flags.seraChase1 = true;
-    if (GAME.instruments) {
-      GAME.instruments.ding.triggerAttackRelease('16n');
-      setTimeout(() => { if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n'); }, 200);
-    }
-    showMissionCards([
-      { speaker: 'SERA', text: 'Where are you? Pick up the phone.', portrait: 'sera', phone: true },
-    ]);
-  }
-  // Sera phone call at floor 13
-  else if (floor >= 13 && !flags.seraChase2) {
-    flags.seraChase2 = true;
-    triggerSeraPhoneCall();
   }
   // Cynthia + Board COMBINED at floor 12
   else if (floor >= 12 && !flags.cynthiaChaseDone) {
@@ -2731,53 +2727,20 @@ function triggerNikEncounter() {
         }, 600);
       }
     },
-    {
-      speaker: 'MISSION',
-      text: 'Get to the top.',
-      portrait: null,
-      style: 'mission',
-    },
   ], () => { finishNikEncounter(); });
 }
 
 function finishNikEncounter() {
-  // Mission card — straight to gameplay
-  showMissionCards([
-    { speaker: 'MISSION', text: 'Get Snacks to the penthouse. Don\'t let the residents or other doormen see. Or worse, the Co-Op Board!', portrait: null, style: 'mission' },
-  ], () => {
-    // Walk Nik off
-    if (GAME._nikNpc) walkOffNPC(GAME._nikNpc);
-    else GAME.npcs = GAME.npcs.filter(n => n.type !== 'nik_temp');
-    // Spawn Snacks on floor 4 (Nik hands him off)
-    const f2 = GAME.floors.find(f => f.index === 4);
-    if (f2 && !GAME.snacks) {
-      GAME.snacks = { x: GAME.murry.x + 20, y: f2.platforms[0].y - 14, vy: 0 };
-    }
-    showControlHint('KEEP CLIMBING \u2191');
-  });
-}
-
-function triggerSeraPhoneCall() {
-  // Phone RING sound — double ding
-  if (GAME.instruments) {
-    GAME.instruments.ding.triggerAttackRelease('16n');
-    setTimeout(() => {
-      if (GAME.instruments) GAME.instruments.ding.triggerAttackRelease('16n');
-    }, 200);
+  // Walk Nik off
+  if (GAME._nikNpc) walkOffNPC(GAME._nikNpc);
+  else GAME.npcs = GAME.npcs.filter(n => n.type !== 'nik_temp');
+  // Spawn Snacks on floor 5 (Nik hands him off)
+  const f = GAME.floors.find(f => f.index === 5);
+  if (f && !GAME.snacks) {
+    GAME.snacks = { x: GAME.murry.x + 20, y: f.platforms[0].y - 14, vy: 0 };
   }
-  // Vignette effect
-  document.getElementById('game-wrap').classList.add('vignette');
-
-  showMissionCards([
-    { speaker: 'SERA', text: 'Where are you?', portrait: 'sera', phone: true },
-    { speaker: 'MURRY', text: 'I\u2019m working on my business.', portrait: 'murry', phone: true },
-    { speaker: 'SERA', text: 'With what money?', portrait: 'sera', phone: true },
-    { speaker: 'MURRY', text: 'I actually have an investor.', portrait: 'murry', phone: true },
-    { speaker: 'SERA', text: 'In the body spray?', portrait: 'sera', phone: true },
-    { speaker: 'MURRY', text: 'ITS CUSTOM COLOGNE!', portrait: 'murry', phone: true, style: 'yelling' },
-  ], () => {
-    document.getElementById('game-wrap').classList.remove('vignette');
-  });
+  showControlHint('Get to the top.');
+  setTimeout(() => { showControlHint('KEEP CLIMBING \u2191'); }, 3500);
 }
 
 function triggerCynthiaAndBoard() {
@@ -2790,18 +2753,18 @@ function triggerCynthiaAndBoard() {
     { speaker: 'CYNTHIA', text: 'No need for so much cologne, Nikos. We can all smell the desperation.', portrait: 'cynthia' },
     { speaker: 'MURRY', text: 'We?', portrait: 'murry' },
   ], () => {
-    // After Murry says "We?" — Board members spawn ABOVE Murry, staggered across floors
+    // After Murry says "We?" — Board members spawn AHEAD of Murry (between him and penthouse)
     const boardNpcs = [];
-    const baseFloor = Math.min(GAME.currentFloor + 1, TOTAL_FLOORS - 1);
+    const baseFloor = Math.min(GAME.currentFloor + 2, TOTAL_FLOORS - 2);
     walkOnNPC('board_rhonda', 'RHONDA', baseFloor, (npc) => { if (npc) boardNpcs.push(npc); });
     setTimeout(() => walkOnNPC('board_larry', 'LARRY', Math.min(baseFloor + 1, TOTAL_FLOORS - 1), (npc) => { if (npc) boardNpcs.push(npc); }), 400);
     setTimeout(() => walkOnNPC('board_gerald', 'GERALD', Math.min(baseFloor + 2, TOTAL_FLOORS - 1), (npc) => { if (npc) boardNpcs.push(npc); }), 800);
-    setTimeout(() => walkOnNPC('board_helen', 'HELEN', Math.min(baseFloor + 1, TOTAL_FLOORS - 1), (npc) => { if (npc) boardNpcs.push(npc); }), 1100);
+    setTimeout(() => walkOnNPC('board_helen', 'HELEN', Math.min(baseFloor + 2, TOTAL_FLOORS - 1), (npc) => { if (npc) boardNpcs.push(npc); }), 1100);
 
-    // Start board dialogue after walk-on
+    // Non-blocking "OH NO!" hint, then board dialogue after walk-on
+    showControlHint('OH NO! The Co-Op Board!');
     setTimeout(() => {
       showMissionCards([
-        { speaker: '', text: 'OH NO! The Co-Op Board!', portrait: null, style: 'mission' },
         { speaker: 'CO-OP BOARD', text: 'We know you\'re running some sort of scheme!', portrait: 'board' },
       ], () => {
         // Board members + Cynthia become hostile — escape the board
@@ -2809,6 +2772,10 @@ function triggerCynthiaAndBoard() {
           npc.hostile = true;
           npc.walking = false;
         }
+        // Make Valerie hostile now that board encounter is done
+        const val = GAME.npcs.find(n => n.type === 'valerie');
+        if (val) val.hostile = true;
+        showControlHint('GET TO THE PENTHOUSE!');
       });
     }, 1600);
   });
@@ -3330,7 +3297,7 @@ function showEnding() {
           let fadeStart2 = performance.now();
           function fadeAnim(now2) {
             if (GAME.gen !== gen) return;
-            const p = Math.min((now2 - fadeStart2) / 1500, 1);
+            const p = Math.min((now2 - fadeStart2) / 800, 1);
             fadeOpacity = p;
             drawEndingNightScene();
             if (p < 1) requestAnimationFrame(fadeAnim);
@@ -3340,7 +3307,7 @@ function showEnding() {
             }
           }
           requestAnimationFrame(fadeAnim);
-        }, 1000);
+        }, 400);
       }
     }
     requestAnimationFrame(dropAnim);
@@ -3776,7 +3743,7 @@ function restartGame() {
   GAME.pickupFlash = null; GAME.pickupFlashTimer = 0; GAME.shakeTimer = 0;
   if (GAME.missionCards.active) dismissMissionCards();
   GAME.missionCards = { active: false, queue: [], currentIndex: 0, onComplete: null, safetyTimer: null };
-  GAME.storyFlags = { nikEncounterDone: false, seraChase1: false, seraChase2: false, cynthiaChaseDone: false, boardCaptureDone: false, rooftopDone: false };
+  GAME.storyFlags = { nikEncounterDone: false, cynthiaChaseDone: false, boardCaptureDone: false, rooftopDone: false };
   GAME.floors = []; GAME.npcs = [];
 
   // Rebuild overlay with SAME HTML structure and CSS classes as initial load

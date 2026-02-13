@@ -189,9 +189,10 @@ canvas {
 .comic-narration {
   font-family: 'EB Garamond', Georgia, serif;
   color: rgba(255,255,255,0.75);
-  font-size: clamp(15px, 3.8vw, 18px);
+  font-size: clamp(17px, 4.2vw, 21px);
   line-height: 1.75;
   text-align: left;
+  text-wrap: pretty;
   padding: 0;
   opacity: 0;
   transition: opacity 0.6s ease;
@@ -217,11 +218,12 @@ canvas {
   color: #111;
   border-radius: 14px;
   padding: 8px 14px;
-  max-width: 210px;
+  max-width: 240px;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.4;
   text-align: center;
+  text-wrap: pretty;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
@@ -269,11 +271,12 @@ canvas {
 }
 /* Text-only scene: larger text, centered */
 .comic-narration.narration-text-only {
-  font-size: clamp(17px, 4.2vw, 21px);
+  font-size: clamp(19px, 4.8vw, 24px);
   line-height: 1.85;
   color: rgba(255,255,255,0.8);
   text-align: center;
   padding: 0 10px;
+  text-wrap: balance;
 }
 
 /* Legacy classes kept for mission card portraits */
@@ -393,6 +396,11 @@ canvas {
 #mission-card {
   display: flex; gap: 12px; align-items: flex-start;
 }
+@media (max-width: 420px) {
+  #mission-card { flex-wrap: nowrap !important; }
+  .mc-portrait-wrap { width: 48px; height: 48px; }
+  .mc-content { min-width: 0; }
+}
 
 .mc-portrait-wrap {
   flex-shrink: 0; width: 64px; height: 64px;
@@ -479,31 +487,46 @@ canvas {
   position: absolute; inset: 0;
   display: none; flex-direction: column;
   align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0,0,0,0.97);
   z-index: 20; gap: 0;
   opacity: 0; transition: opacity 1.5s ease;
 }
 #cta-overlay.visible { opacity: 1; }
-.cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 12vw, 5rem); color: #c4a86b; letter-spacing: 4px; margin-bottom: 0; }
-.cta-tagline { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: rgba(196,168,107,0.5); font-size: clamp(14px, 3.5vw, 18px); margin-bottom: 16px; }
+.cta-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 12vw, 5rem);
+  color: #c4a86b; letter-spacing: 4px; margin-bottom: 0;
+}
+.cta-subtitle {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(11px, 3vw, 14px);
+  color: rgba(196,168,107,0.5); letter-spacing: 6px; margin-top: 4px;
+}
+.cta-tagline {
+  font-family: 'EB Garamond', Georgia, serif; font-style: italic;
+  color: rgba(255,255,255,0.65); font-size: clamp(16px, 4.5vw, 22px);
+  margin-top: 20px; margin-bottom: 28px; white-space: nowrap;
+}
 .cta-link {
   display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
   font-size: 16px; letter-spacing: 4px; padding: 12px 36px; text-decoration: none;
-  border: 1px solid rgba(196,168,107,0.4); margin-top: 8px;
+  border: 1px solid rgba(196,168,107,0.4); margin-top: 10px;
+  transition: background 0.2s;
 }
 .cta-link:hover { background: rgba(196,168,107,0.1); }
-.cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 8px; padding: 8px 24px; }
-.cta-replay { color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 20px; }
+.cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 10px; padding: 8px 24px; }
+.cta-replay {
+  color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 24px;
+}
 /* Screenplay gate form */
 #screenplay-form {
   display: flex; flex-direction: column; align-items: center;
-  gap: 10px; width: 100%; max-width: 300px; margin-top: 12px;
+  gap: 12px; width: 100%; max-width: 300px; margin-top: 16px;
 }
 #screenplay-form input {
   width: 100%; background: transparent; border: none;
   border-bottom: 1px solid rgba(196,168,107,0.3);
   color: rgba(255,255,255,0.85); font-family: 'EB Garamond', Georgia, serif;
-  font-size: 15px; padding: 8px 4px; outline: none;
+  font-size: 15px; padding: 10px 4px; outline: none;
   transition: border-color 0.3s;
 }
 #screenplay-form input:focus {
@@ -514,7 +537,7 @@ canvas {
 }
 #claim-btn {
   display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px; letter-spacing: 4px; padding: 12px 36px; margin-top: 14px;
+  font-size: 14px; letter-spacing: 4px; padding: 12px 36px; margin-top: 18px;
   background: transparent; border: 1px solid rgba(196,168,107,0.4);
   cursor: pointer; text-transform: uppercase;
   transition: background 0.2s, border-color 0.2s;
@@ -524,17 +547,18 @@ canvas {
 #claim-btn:disabled { opacity: 0.3; cursor: default; }
 #form-error {
   color: rgba(255,100,100,0.7); font-family: 'EB Garamond', Georgia, serif;
-  font-size: 13px; font-style: italic; margin-top: 4px; display: none;
+  font-size: 13px; font-style: italic; margin-top: 6px; display: none;
 }
 .yours-text {
   font-family: 'EB Garamond', Georgia, serif; font-style: italic;
-  color: #c4a86b; font-size: clamp(16px, 4vw, 22px); margin-bottom: 16px;
+  color: #c4a86b; font-size: clamp(20px, 5vw, 28px); margin-bottom: 24px;
 }
-/* Two-screen CTA layout */
+/* CTA screen layout */
 .cta-screen {
   display: none; flex-direction: column;
   align-items: center; justify-content: center;
-  width: 100%; opacity: 0; transition: opacity 0.4s ease;
+  width: 100%; padding: 0 24px; box-sizing: border-box;
+  opacity: 0; transition: opacity 0.6s ease;
 }
 .cta-screen.active { display: flex; }
 .cta-screen.visible { opacity: 1; }
@@ -652,8 +676,8 @@ canvas {
     <!-- SCREEN 1: Post-drop CTA -->
     <div id="cta-screen-1" class="cta-screen">
       <div class="cta-title">TOP FLOOR</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,3vw,14px);color:rgba(196,168,107,0.5);letter-spacing:6px;margin-top:4px">THE MOVIE</div>
-      <div style="font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:16px">There's only one way to go from here.</div>
+      <div class="cta-subtitle">THE MOVIE</div>
+      <div class="cta-tagline">There's only one way to go from here.</div>
       <a class="cta-link" href="#" id="read-screenplay-btn">DISCOVER THE FULL STORY</a>
       <a class="cta-link small" href="https://coyne-green.com" id="explore-btn-1">EXPLORE MORE STORIES</a>
       <a class="cta-link small" href="#" id="share-btn">SHARE THIS GAME</a>
@@ -662,6 +686,8 @@ canvas {
 
     <!-- SCREEN 2: Lead capture form -->
     <div id="cta-screen-2" class="cta-screen">
+      <div class="cta-title">TOP FLOOR</div>
+      <div class="cta-subtitle">THE SCREENPLAY</div>
       <a href="#" id="back-btn" class="back-link">&larr; Back</a>
       <form id="screenplay-form" name="screenplay-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="screenplay-request">
@@ -674,8 +700,10 @@ canvas {
       </form>
     </div>
 
-    <!-- SCREEN 3: Post-submit -->
+    <!-- SCREEN 3: Post-submit — the reward -->
     <div id="cta-screen-3" class="cta-screen">
+      <div class="cta-title">TOP FLOOR</div>
+      <div class="cta-subtitle">THE SCREENPLAY</div>
       <div class="yours-text">It's yours.</div>
       <a class="cta-link" href="/topfloor/screenplay" target="_blank" id="download-btn">DOWNLOAD SCREENPLAY</a>
       <a class="cta-link small" href="#" id="explore-btn">EXPLORE MORE STORIES</a>
@@ -753,7 +781,7 @@ const NAMED_NPC_FLOORS = {
   8: { type: 'board', name: 'RESIDENT' },
   11: { type: 'board', name: 'RESIDENT' },
   13: { type: 'barry', name: 'BARRY' },
-  17: { type: 'board_gerald', name: 'RESIDENT' },
+  15: { type: 'board_gerald', name: 'RESIDENT' },
   20: { type: 'valerie', name: 'RESIDENT' },
 };
 
@@ -2675,8 +2703,8 @@ function checkStoryTriggers() {
     flags.seraChase2 = true;
     triggerSeraPhoneCall();
   }
-  // Cynthia + Board COMBINED at floor 16
-  else if (floor >= 16 && !flags.cynthiaChaseDone) {
+  // Cynthia + Board COMBINED at floor 12
+  else if (floor >= 12 && !flags.cynthiaChaseDone) {
     flags.cynthiaChaseDone = true;
     flags.boardCaptureDone = true;
     triggerCynthiaAndBoard();
@@ -2716,24 +2744,12 @@ function triggerNikEncounter() {
       }
     },
     {
-      choice: true,
-      options: ['GO TO THE TOP', 'STAY AT THE BOTTOM'],
-      onChoice: (idx) => {
-        if (idx === 1) {
-          showMissionCards([
-            { speaker: 'NIK', text: 'Come on. You know you want this.', portrait: 'nik' },
-            {
-              choice: true,
-              options: ['GO TO THE TOP', 'STAY AT THE BOTTOM'],
-              onChoice: (idx2) => {
-                finishNikEncounter();
-              },
-            },
-          ]);
-        } else { finishNikEncounter(); }
-      },
+      speaker: 'MISSION',
+      text: 'Get to the top.',
+      portrait: null,
+      style: 'mission',
     },
-  ]);
+  ], () => { finishNikEncounter(); });
 }
 
 function finishNikEncounter() {
@@ -2777,8 +2793,8 @@ function triggerSeraPhoneCall() {
 }
 
 function triggerCynthiaAndBoard() {
-  // Cynthia walks onto floor 16 platform
-  walkOnNPC('cynthia', 'CYNTHIA', 16, (cynthiaNpc) => {
+  // Cynthia walks onto floor 12 platform
+  walkOnNPC('cynthia', 'CYNTHIA', 12, (cynthiaNpc) => {
     GAME._cynthiaNpc = cynthiaNpc;
   });
 
@@ -2892,7 +2908,8 @@ function drawCanvasBubble(x, y, text, opacity) {
   if (opacity <= 0) return;
   ctx.save();
   ctx.globalAlpha = opacity;
-  ctx.font = "italic 18px 'EB Garamond', Georgia, serif";
+  const fontSize = Math.max(18, Math.round(W * 0.048));
+  ctx.font = `italic ${fontSize}px 'EB Garamond', Georgia, serif`;
   ctx.textAlign = 'center';
   // Word wrap if text is too wide
   const maxBubbleW = W - 24;
@@ -2909,16 +2926,17 @@ function drawCanvasBubble(x, y, text, opacity) {
     }
     if (cur) lines.push(cur);
   }
-  const lineH = 22;
-  const tw = Math.min(maxBubbleW, Math.max(...lines.map(l => ctx.measureText(l).width)) + 28);
+  const lineH = fontSize + 4;
+  const bubblePad = Math.max(28, Math.round(fontSize * 1.5));
+  const tw = Math.min(maxBubbleW, Math.max(...lines.map(l => ctx.measureText(l).width)) + bubblePad);
   const th = 14 + lines.length * lineH;
   let bx = x - tw / 2, by = y - th;
   bx = Math.max(4, Math.min(bx, W - tw - 4));
   const centerX = bx + tw / 2;
-  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillStyle = 'rgba(0,0,0,0.88)';
   ctx.beginPath(); ctx.roundRect(bx, by, tw, th, 8); ctx.fill();
   ctx.strokeStyle = 'rgba(196,168,107,0.35)'; ctx.lineWidth = 1; ctx.stroke();
-  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillStyle = 'rgba(0,0,0,0.88)';
   const tipX = Math.max(bx + 10, Math.min(x, bx + tw - 10));
   ctx.beginPath(); ctx.moveTo(tipX - 5, by + th); ctx.lineTo(tipX, by + th + 7); ctx.lineTo(tipX + 5, by + th); ctx.fill();
   ctx.fillStyle = 'rgba(255,255,255,0.92)';
@@ -3037,7 +3055,7 @@ function executeRooftopScene(gen) {
     let t = 0;
     function fade() {
       if (GAME.gen !== gen) return;
-      t += 0.06; bubbleOpacity = Math.min(t, 1);
+      t += 0.12; bubbleOpacity = Math.min(t, 1);
       drawRooftopScene();
       if (t < 1) requestAnimationFrame(fade);
       else { animating = false; if (cb) cb(); }
@@ -3066,20 +3084,25 @@ function executeRooftopScene(gen) {
     if (GAME.gen !== gen) return;
     bubbleOpacity = 0; bubbleText = '';
     switch (rtStep) {
-      case 0: // Scene loads. Nik in doorman uniform. Murry's first line AUTO-APPEARS.
+      case 0: // Pause, then show "Nik?", hold, advance
         drawRooftopScene();
         animating = true;
         setTimeout(() => {
           if (GAME.gen !== gen) return;
           showBubble('murry', '\u201CNik?\u201D', () => {
             drawRooftopScene();
-            rtStep = 1;
-            runStep();
+            animating = true;
+            setTimeout(() => {
+              if (GAME.gen !== gen || rtStep !== 0) return;
+              animating = false;
+              rtStep = 1;
+              runStep();
+            }, 1200);
           });
-        }, 800);
+        }, 500);
         break;
-      case 1: // MURRY: "Nik?" — auto-advance after hold
-        showBubble('murry', '\u201CNik?\u201D', () => {
+      case 1: // "Is that my uniform? Why is it covered in blood?"
+        showBubble('murry', '\u201CIs that my uniform? Why is it covered in blood?\u201D', () => {
           drawRooftopScene();
           animating = true;
           setTimeout(() => {
@@ -3087,33 +3110,21 @@ function executeRooftopScene(gen) {
             animating = false;
             rtStep = 2;
             runStep();
-          }, 2500);
+          }, 1800);
         });
         break;
-      case 2: // MURRY: "Is that my uniform? Why is it covered in blood?"
-        showBubble('murry', '\u201CIs that my uniform? Why is it covered in blood?\u201D', () => {
-          drawRooftopScene();
-          animating = true;
-          setTimeout(() => {
-            if (GAME.gen !== gen || rtStep !== 2) return;
-            animating = false;
-            rtStep = 3;
-            runStep();
-          }, 3000);
-        });
-        break;
-      case 3: // NIK: "It's nothing personal, it's just Manhattan." — auto-advance to struggle
+      case 2: // "It's nothing personal, it's just Manhattan."
         showBubble('nik', '\u201CIt\u2019s nothing personal, it\u2019s just Manhattan.\u201D', () => {
           drawRooftopScene();
           animating = true;
           setTimeout(() => {
             if (GAME.gen !== gen) return;
-            rtStep = 4;
+            rtStep = 3;
             runStep();
-          }, 2000);
+          }, 1200);
         });
         break;
-      case 4: // Struggle — Nik attacks, they grapple (auto-animated)
+      case 3: // Struggle — Nik attacks (auto-animated)
         animating = true;
         let sNikX = nikX, sMurryX = murryX;
         struggleFrame = 0;
@@ -3497,26 +3508,36 @@ function showEndingTitleAndCTA(gen) {
 // CTA SCREEN TRANSITIONS
 // ============================================================
 
+function revealScreenChildren(screen, gen, delay) {
+  const children = Array.from(screen.children);
+  // Pre-hide all children before screen becomes visible
+  children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'none'; });
+  screen.classList.add('active');
+  screen.offsetHeight; // force layout
+  // Now set transition and fade screen in
+  children.forEach(ch => { ch.style.transition = 'opacity 0.8s ease'; });
+  screen.classList.add('visible');
+  children.forEach((ch, i) => {
+    setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * (delay || 500));
+  });
+}
+
+function clearScreenStyles(screen) {
+  Array.from(screen.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+}
+
 function transitionToScreen2(gen) {
   if (GAME.gen !== gen) return;
   const screen1 = document.getElementById('cta-screen-1');
   const screen2 = document.getElementById('cta-screen-2');
 
-  // Fade out screen 1
   screen1.classList.remove('visible');
   setTimeout(() => {
     if (GAME.gen !== gen) return;
     screen1.classList.remove('active');
-    screen2.classList.add('active');
-    screen2.offsetHeight;
-    // Reveal screen 2 children sequentially
-    const children = Array.from(screen2.children);
-    children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'opacity 0.8s ease'; });
-    screen2.classList.add('visible');
-    children.forEach((ch, i) => {
-      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 600);
-    });
-  }, 400);
+    clearScreenStyles(screen1);
+    revealScreenChildren(screen2, gen, 400);
+  }, 600);
 }
 
 function transitionToScreen1(gen) {
@@ -3524,16 +3545,17 @@ function transitionToScreen1(gen) {
   const screen1 = document.getElementById('cta-screen-1');
   const screen2 = document.getElementById('cta-screen-2');
 
-  // Fade out screen 2
   screen2.classList.remove('visible');
   setTimeout(() => {
     if (GAME.gen !== gen) return;
     screen2.classList.remove('active');
-    Array.from(screen2.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+    clearScreenStyles(screen2);
+    // Screen 1 comes back whole — no stagger, just a smooth fade
+    Array.from(screen1.children).forEach(ch => { ch.style.opacity = '1'; ch.style.transition = 'none'; });
     screen1.classList.add('active');
     screen1.offsetHeight;
     screen1.classList.add('visible');
-  }, 400);
+  }, 600);
 }
 
 function transitionToScreen3(gen) {
@@ -3541,22 +3563,13 @@ function transitionToScreen3(gen) {
   const screen2 = document.getElementById('cta-screen-2');
   const screen3 = document.getElementById('cta-screen-3');
 
-  // Fade out screen 2
   screen2.classList.remove('visible');
   setTimeout(() => {
     if (GAME.gen !== gen) return;
     screen2.classList.remove('active');
-    Array.from(screen2.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
-    screen3.classList.add('active');
-    screen3.offsetHeight;
-    // Reveal screen 3 children sequentially
-    const children = Array.from(screen3.children);
-    children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'opacity 0.8s ease'; });
-    screen3.classList.add('visible');
-    children.forEach((ch, i) => {
-      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 600);
-    });
-  }, 400);
+    clearScreenStyles(screen2);
+    revealScreenChildren(screen3, gen, 500);
+  }, 600);
 }
 
 // ============================================================
@@ -3593,7 +3606,7 @@ function checkItemPickup() {
     for (const item of floor.items) {
       if (m.items.includes(item.id)) continue;
       const dist = Math.sqrt((m.x + PW / 2 - item.x) ** 2 + (m.y + PH_SIZE / 2 - item.y) ** 2);
-      if (dist < 30) {
+      if (dist < 40) {
         m.items.push(item.id);
         m.transformLevel = item.tLevel;
         GAME.pickupFlash = item.label;
@@ -3840,15 +3853,12 @@ function restartGame() {
   const ctaOv = document.getElementById('cta-overlay');
   ctaOv.style.display = 'none';
   ctaOv.classList.remove('visible');
-  const s1 = document.getElementById('cta-screen-1');
-  const s2 = document.getElementById('cta-screen-2');
-  const s3 = document.getElementById('cta-screen-3');
-  s1.classList.remove('active', 'visible');
-  s2.classList.remove('active', 'visible');
-  s3.classList.remove('active', 'visible');
-  Array.from(s1.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
-  Array.from(s2.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
-  Array.from(s3.children).forEach(ch => { ch.style.opacity = ''; ch.style.transition = ''; });
+  ['cta-screen-1', 'cta-screen-2', 'cta-screen-3'].forEach(id => {
+    const s = document.getElementById(id);
+    if (!s) return;
+    s.classList.remove('active', 'visible');
+    clearScreenStyles(s);
+  });
   // Reset form state on replay
   const sf = document.getElementById('screenplay-form');
   if (sf) { sf.style.display = ''; sf.reset(); }
@@ -4028,10 +4038,4 @@ init();
 </script>
 </body>
 </html>
-<!--
-  DEPLOY STEPS (when approved):
-  1. cp Projects/Top\ Floor/Game/tfgame-screenplay-gate-sandbox.html Website/Live/tfgame.html
-  2. cd Website/Live && git add tfgame.html && git commit -m "V16: three-screen CTA — simplified form, separate post-submit screen" && git push
-  3. cp Website/Live/tfgame.html Projects/Top\ Floor/Game/topfloor-platformer-v16.html
-  4. rm Projects/Top\ Floor/Game/tfgame-screenplay-gate-sandbox.html
--->
+<!-- V16.1: visual polish — spacing, tagline, flicker-free transitions, reward screen -->

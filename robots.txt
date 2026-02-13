@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /files/
+Disallow: /topfloor/screenplay
 
 Sitemap: https://coyne-green.com/sitemap.xml

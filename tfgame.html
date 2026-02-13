@@ -552,6 +552,7 @@ canvas {
 
 <div id="game-wrap">
   <canvas id="canvas" width="420" height="720"></canvas>
+  <button id="mute-btn" style="position:absolute;top:10px;left:10px;z-index:30;width:36px;height:36px;background:transparent;border:1px solid rgba(196,168,107,0.2);border-radius:6px;color:rgba(196,168,107,0.4);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;padding:0;">🔇</button>
 
   <!-- TITLE SCREEN -->
   <div id="overlay">
@@ -582,8 +583,8 @@ canvas {
   <!-- MOBILE CONTROLS -->
   <div id="mobile-controls">
     <div class="dpad">
-      <button id="left-btn">&larr;</button>
-      <button id="right-btn">&rarr;</button>
+      <button id="left-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(196,168,107,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13,4 7,10 13,16"/></svg></button>
+      <button id="right-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(196,168,107,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,4 13,10 7,16"/></svg></button>
     </div>
     <button id="jump-btn">JUMP</button>
   </div>
@@ -600,9 +601,10 @@ canvas {
   <div id="cta-overlay">
     <div class="cta-title">TOP FLOOR</div>
     <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,3vw,14px);color:rgba(196,168,107,0.5);letter-spacing:6px;margin-top:4px">THE MOVIE</div>
-    <div style="font-family:'EB Garamond',Georgia,serif;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:24px">Find out what happens next</div>
-    <a class="cta-link" href="mailto:mcoynegreen@gmail.com?subject=Top%20Floor%20Screenplay%20Request">REQUEST THE SCREENPLAY</a>
-    <a class="cta-link small" href="https://coyne-green.com" target="_blank">EXPLORE MORE STORIES</a>
+    <div style="font-family:'EB Garamond',Georgia,serif;font-size:clamp(14px,3.5vw,18px);color:rgba(255,255,255,0.6);margin-top:16px;margin-bottom:24px">You made it to the top. The screenplay is yours.</div>
+    <a class="cta-link" href="#" id="screenplay-btn">REQUEST THE SCREENPLAY</a>
+    <a class="cta-link small" href="#" id="explore-btn">EXPLORE MORE STORIES</a>
+    <a class="cta-link small" href="#" id="share-btn" style="border-style:dashed;">SHARE THIS GAME</a>
     <div style="font-family:'EB Garamond',Georgia,serif;font-style:italic;color:rgba(196,168,107,0.4);font-size:clamp(13px,3vw,16px);margin-top:24px;letter-spacing:1px">Who do you want to be?</div>
     <a class="cta-replay" href="#" id="replay-btn">PLAY AGAIN</a>
   </div>
@@ -2296,6 +2298,7 @@ function initAudio() {
   if (GAME.audioStarted) return;
   Tone.start().then(() => {
     GAME.audioStarted = true;
+    Tone.Destination.mute = true;
     const reverb = new Tone.Reverb({ decay: 5, wet: 0.4 }).toDestination();
     const bigReverb = new Tone.Reverb({ decay: 8, wet: 0.6 }).toDestination();
     GAME.instruments = {
@@ -2314,6 +2317,17 @@ function initAudio() {
       // Wind — higher floors
       windNoise: new Tone.Noise('pink').connect(new Tone.Filter(500, 'bandpass').connect(new Tone.Volume(-28).toDestination())),
     };
+  });
+}
+
+// Mute toggle — default muted, persists across restarts
+let isMuted = true;
+const muteBtn = document.getElementById('mute-btn');
+if (muteBtn) {
+  muteBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    if (GAME.audioStarted) Tone.Destination.mute = isMuted;
+    muteBtn.textContent = isMuted ? '🔇' : '🔊';
   });
 }
 
@@ -3298,6 +3312,43 @@ function showEndingTitleAndCTA(gen) {
     });
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) replayBtn.addEventListener('click', e => { e.preventDefault(); restartGame(); });
+
+    // Screenplay button — anti-Cloudflare email obfuscation
+    const screenplayBtn = document.getElementById('screenplay-btn');
+    if (screenplayBtn) screenplayBtn.addEventListener('click', e => {
+      e.preventDefault();
+      stopAllAudio();
+      try { Tone.context.close(); } catch(e2) {}
+      window.location.href = 'mai' + 'lto:mcoynegreen' + '@gmail.com?subject=Top%20Floor%20-%20Screenplay%20Request';
+    });
+
+    // Explore button — same-tab navigation with audio cleanup
+    const exploreBtn = document.getElementById('explore-btn');
+    if (exploreBtn) exploreBtn.addEventListener('click', e => {
+      e.preventDefault();
+      stopAllAudio();
+      try { Tone.context.close(); } catch(e2) {}
+      window.location.href = 'https://coyne-green.com';
+    });
+
+    // Share button — Web Share API with clipboard fallback
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) shareBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const shareData = {
+        title: 'Top Floor \u2014 The Game',
+        text: 'An ambitious doorman. A stolen identity. A 22-story fall. Play the game.',
+        url: 'https://coyne-green.com/tfgame'
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareData.url).then(() => {
+          shareBtn.textContent = 'LINK COPIED';
+          setTimeout(() => { shareBtn.textContent = 'SHARE THIS GAME'; }, 2000);
+        }).catch(() => {});
+      }
+    });
   }, 1500);
 }
 

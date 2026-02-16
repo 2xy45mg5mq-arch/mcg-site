@@ -69,7 +69,7 @@
       "name": "Max Coyne-Green",
       "url": "https://coyne-green.com"
     },
-    "url": "https://coyne-green.com/#hr"
+    "url": "https://coyne-green.com/hr"
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2474,9 +2474,9 @@
         <div class="nav-item">
           <a href="#work" onclick="showPage('home'); setTimeout(() => document.getElementById('work').scrollIntoView({behavior:'smooth'}), 100); return false;">Work</a>
           <div class="dropdown">
-            <a href="#hr" onclick="showPage('hr'); return false;">Human Resource</a>
+            <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
             <a href="/tfgame">Top Floor</a>
-            <a href="#kanvatan" onclick="showPage('kanvatan'); return false;">Kan Vatan</a>
+            <a href="/kanvatan" onclick="showPage('kanvatan'); return false;">Kan Vatan</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -2581,7 +2581,7 @@
               <div class="type">TV Pilot · US/Turkey Co-Production</div>
               <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
               <div class="project-card-buttons" onclick="event.stopPropagation();">
-                <a href="#kanvatan" class="btn" onclick="showPage('kanvatan'); return false;">Learn More</a>
+                <a href="/kanvatan" class="btn" onclick="showPage('kanvatan'); return false;">Learn More</a>
                 <a href="/kanvatan/pilot" class="btn btn-primary">Request the Pilot</a>
               </div>
             </div>
@@ -2926,7 +2926,7 @@
           // This way, back button goes to home instead of leaving the site
           history.pushState({ page: 'home' }, '', '/');
         }
-        history.pushState({ page: id }, '', id === 'home' ? '/' : '#' + id);
+        history.pushState({ page: id }, '', id === 'home' ? '/' : '/' + id);
       }
 
       // Toggle floating back button
@@ -2955,8 +2955,13 @@
       }
     });
 
-    // Initialize history state on page load
-    history.replaceState({ page: 'home' }, '', '/');
+    // Initialize history state on page load (preserve path-based URLs)
+    (function() {
+      const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
+      const routes = { 'hr': 'hr', 'humanresource': 'hr', 'human-resource': 'hr', 'topfloor': 'topfloor', 'top-floor': 'topfloor', 'tf': 'topfloor', 'kanvatan': 'kanvatan', 'kan-vatan': 'kanvatan', 'kv': 'kanvatan' };
+      const page = routes[path] || 'home';
+      history.replaceState({ page: page }, '', page === 'home' ? '/' : '/' + page);
+    })();
 
     // Keyboard navigation: Escape closes modal first, then goes back to home
     document.addEventListener('keydown', e => {
@@ -3125,7 +3130,7 @@
       document.body.style.overflow = '';
     }
 
-    // URL ROUTING
+    // URL ROUTING — read pathname to show the correct page on direct load
     function handleRoute() {
       const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
       const routes = {
@@ -3139,12 +3144,12 @@
         'kan-vatan': 'kanvatan',
         'kv': 'kanvatan'
       };
-      
+
       if (routes[path]) {
-        showPage(routes[path]);
+        showPage(routes[path], false);
       }
     }
-    
+
     // Run routing on page load
     handleRoute();
 

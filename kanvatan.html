@@ -120,17 +120,21 @@
       font-family: 'EB Garamond', Georgia, serif;
       font-style: italic;
       font-weight: 500;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       color: rgba(200,190,168,0.9);
       margin-bottom: 8px;
     }
     .hero-tagline {
-      font-size: 0.95rem;
+      font-size: 1.15rem;
       color: rgba(228,228,228,0.4);
-      margin-bottom: 40px;
       letter-spacing: 0.02em;
     }
     .hero-logline {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
       font-family: 'EB Garamond', Georgia, serif;
       font-style: italic;
       font-weight: 400;
@@ -138,6 +142,8 @@
       line-height: 1.75;
       color: rgba(228,228,228,0.65);
       max-width: 520px;
+      width: max-content;
+      text-align: center;
       text-wrap: balance;
     }
     .hero-spacer {
@@ -667,8 +673,8 @@
       <h1 class="hero-title">KAN VATAN</h1>
       <p class="hero-subtitle">Blood at the Roots</p>
       <p class="hero-tagline">A neo-western spin on the classic Turkish dizi.</p>
-      <p class="hero-logline">A family of olive growers finds an American operative hiding out on their dying grove &mdash; just when they need him.</p>
     </div>
+    <p class="hero-logline">A family of olive growers finds an American operative hiding out on their dying grove &mdash; just when they need him.</p>
     <div class="scroll-indicator">
       <svg viewBox="0 0 16 16"><polyline points="2 5 8 11 14 5"></polyline></svg>
     </div>

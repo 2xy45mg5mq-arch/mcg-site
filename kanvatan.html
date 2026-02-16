@@ -221,6 +221,24 @@
     .section { padding: 100px 24px; }
     .section-alt { background: #0f1215; }
 
+    /* --- SECTION BACKGROUND IMAGES --- */
+    .section-with-bg {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+    .section-with-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10,13,16,0.85);
+      z-index: 0;
+    }
+    .section-with-bg > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .section-inner {
       max-width: 720px;
       margin: 0 auto;
@@ -243,6 +261,7 @@
       font-size: 1.1rem;
       line-height: 1.85;
       color: rgba(228,228,228,0.85);
+      text-wrap: pretty;
     }
     .body-text p { margin-bottom: 24px; text-wrap: pretty; }
     .body-text p:last-child { margin-bottom: 0; }
@@ -664,7 +683,7 @@
   </div>
 
   <!-- 5. TONE & INFLUENCES -->
-  <section class="section section-alt reveal">
+  <section class="section section-with-bg reveal" style="background-image: url('/images/kv_fire.webp');">
     <div class="section-inner">
       <p class="section-heading">Tone &amp; Influences</p>
       <div class="body-text">
@@ -680,7 +699,7 @@
   </div>
 
   <!-- 6. CONTEXT -->
-  <section class="section reveal">
+  <section class="section section-with-bg reveal" style="background-image: url('/images/img_44.webp');">
     <div class="section-inner--wide">
       <p class="section-heading">Context</p>
       <div class="context-grid">
@@ -707,7 +726,7 @@
   </div>
 
   <!-- 7. WHY CO-PRODUCTION -->
-  <section class="section section-alt reveal">
+  <section class="section section-with-bg reveal" style="background-image: url('/images/kv_corridor.webp');">
     <div class="section-inner">
       <p class="section-heading">Why Co-Production</p>
       <div class="body-text">
@@ -725,7 +744,7 @@
   </div>
 
   <!-- 8. ABOUT THE WRITER -->
-  <section class="section reveal">
+  <section class="section section-with-bg reveal" style="background-image: url('/images/img_45.webp');">
     <div class="section-inner">
       <p class="section-heading">About the Writer</p>
       <div class="body-text">

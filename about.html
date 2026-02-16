@@ -564,6 +564,25 @@ body {
 .modal-btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
 .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
 
+/* ============ WORK MODAL ============ */
+.work-modal { max-width: 700px; max-height: 85vh; overflow-y: auto; }
+.work-modal-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.work-modal-project { margin-bottom: 24px; }
+.work-modal-project h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 4px; }
+.work-modal-type { font-size: 0.8rem; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px; }
+.work-modal-logline { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 8px; }
+.work-modal-credits { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+.work-modal-credits a { color: var(--text); text-decoration: none; }
+.work-modal-credits a:hover { text-decoration: underline; }
+.work-modal-links { margin-top: 8px; }
+.work-modal-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px; transition: color 0.2s; }
+.work-modal-links a:hover { color: var(--muted); }
+.work-modal-divider { height: 1px; background: var(--border); margin: 24px 0; }
+.work-modal-section-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.work-modal-inspired { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-top: 4px; }
+.work-modal-portfolio .work-modal-project { margin-bottom: 20px; }
+.work-modal-portfolio .work-modal-project h3 { font-size: 1.1rem; }
+
 /* ============ TRANSITION FROM HOMEPAGE ============ */
 /* Timing variables — tune these live */
 :root {
@@ -639,7 +658,7 @@ body {
 <nav class="site-nav">
   <a href="/" class="site-nav-logo">HOME</a>
   <div class="site-nav-links">
-    <a href="/#work">Work</a>
+    <a href="#" onclick="openWorkModal(); return false;">Work</a>
     <a href="/about" class="nav-current">About</a>
     <a href="#" onclick="openConnectModal(); return false;">Connect</a>
   </div>
@@ -1321,6 +1340,87 @@ updateUI();
 })();
 </script>
 
+<!-- WORK MODAL -->
+<div class="modal-overlay" id="workModal" onclick="if(event.target===this) closeWorkModal()">
+  <div class="modal work-modal">
+    <h2>WORK</h2>
+    <p class="modal-subtitle">Selected projects</p>
+
+    <div class="work-modal-label">Featured</div>
+    <div class="work-modal-project">
+      <h3>HUMAN RESOURCE</h3>
+      <div class="work-modal-type">Short Film</div>
+      <p class="work-modal-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she&nbsp;thought.</p>
+      <div class="work-modal-credits">
+        Starring <a href="https://www.imdb.com/name/nm3123429/" target="_blank" rel="noopener noreferrer">Mia Vallet</a> &amp; <a href="https://www.imdb.com/name/nm0185274/" target="_blank" rel="noopener noreferrer">Veanne Cox</a><br>
+        Directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a><br>
+        Written &amp; Produced by <a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">Max Coyne-Green</a>
+      </div>
+      <div class="work-modal-links"><a href="/hr">View Project &rarr;</a></div>
+    </div>
+
+    <div class="work-modal-divider"></div>
+
+    <div class="work-modal-label">On Deck</div>
+    <div class="work-modal-project">
+      <h3>TOP FLOOR</h3>
+      <div class="work-modal-type">Feature &middot; Crime Thriller</div>
+      <p class="work-modal-logline">An ambitious Manhattan doorman moves into the penthouse of his dreams—only to be trapped in a dangerous new identity.</p>
+      <div class="work-modal-links"><a href="/topfloor">Learn More &rarr;</a></div>
+    </div>
+
+    <div class="work-modal-divider"></div>
+
+    <div class="work-modal-label">Coming Up</div>
+    <div class="work-modal-project">
+      <h3>KAN VATAN</h3>
+      <div class="work-modal-type">TV Pilot &middot; US/Turkey Co-Production</div>
+      <p class="work-modal-logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
+      <div class="work-modal-links"><a href="/kanvatan.html">Learn More &rarr;</a></div>
+    </div>
+    <div class="work-modal-project">
+      <h3>MEATSPACE</h3>
+      <div class="work-modal-type">Feature &middot; Satirical Sci-Fi</div>
+      <p class="work-modal-logline">In a near perfect future, a young man locked out of VR paradise must navigate real life for the first&nbsp;time.</p>
+      <div class="work-modal-links"><a href="/meatspace">Learn More &rarr;</a></div>
+    </div>
+
+    <div class="work-modal-divider"></div>
+
+    <div class="work-modal-section-label">Portfolio</div>
+    <div class="work-modal-portfolio">
+      <div class="work-modal-project">
+        <h3>MEMORY DOCS</h3>
+        <div class="work-modal-type">TV Series &middot; Drama</div>
+        <p class="work-modal-logline">A beloved but controversial TV doctor pushes the limits of science to save his own mind from advancing dementia.</p>
+        <p class="work-modal-inspired">Inspired by the life of Dr. Oz</p>
+      </div>
+      <div class="work-modal-project">
+        <h3>WATCH THE KIDS</h3>
+        <div class="work-modal-type">Feature &middot; Drama/Thriller</div>
+        <p class="work-modal-logline">A high school intern discovers their district secretly captured 66,000+ webcam images of students in their homes.</p>
+        <p class="work-modal-inspired">Based on original research into the Lower Merion surveillance scandal</p>
+      </div>
+      <div class="work-modal-project">
+        <h3>EDUCATED GUESS</h3>
+        <div class="work-modal-type">Feature &middot; Legal Drama</div>
+        <p class="work-modal-logline">On the eve of retirement, a professor at an elite college must decide how far he'll go to defend an immigrant student from harsh administrative justice.</p>
+        <p class="work-modal-inspired">Based on original reporting and research into a true story</p>
+      </div>
+      <div class="work-modal-project">
+        <h3>PEOPLE OPERATIONS</h3>
+        <div class="work-modal-type">Feature &middot; Sci-Fi Dramedy</div>
+        <p class="work-modal-logline">A desperate Filipino mother manages the digital life of a spoiled New Yorker—who doesn't even know she exists.</p>
+        <p class="work-modal-inspired">Academy Nicholl Fellowships Top 15%</p>
+      </div>
+    </div>
+
+    <div class="modal-buttons" style="margin-top:32px;">
+      <button type="button" class="modal-btn modal-btn-secondary" onclick="closeWorkModal()" style="width:100%;">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- CONNECT MODAL -->
 <form name="connect" netlify netlify-honeypot="bot-field" hidden>
   <input name="name"><input name="email"><input name="request">
@@ -1386,8 +1486,20 @@ updateUI();
     document.getElementById('connectModal').classList.remove('active');
   }
 
+  function openWorkModal() {
+    document.getElementById('workModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeWorkModal() {
+    document.getElementById('workModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeConnectModal();
+    if (e.key === 'Escape') {
+      closeConnectModal();
+      closeWorkModal();
+    }
   });
 
   (function() {

@@ -2476,7 +2476,7 @@
           <div class="dropdown">
             <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
             <a href="/tfgame">Top Floor</a>
-            <a href="/kanvatan" onclick="showPage('kanvatan'); return false;">Kan Vatan</a>
+            <a href="/kanvatan.html">Kan Vatan</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -2573,7 +2573,7 @@
         <div class="projects-grid">
 
           <!-- KAN VATAN -->
-          <div class="project-card kv-card" onclick="showPage('kanvatan')">
+          <div class="project-card kv-card" onclick="window.location.href='/kanvatan.html'">
             <div class="project-card-image">
               <img src="/images/img_7.webp" alt="Kan Vatan - Blood at the Roots" loading="lazy">
             </div>
@@ -2581,8 +2581,8 @@
               <div class="type">TV Pilot · US/Turkey Co-Production</div>
               <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
               <div class="project-card-buttons" onclick="event.stopPropagation();">
-                <a href="/kanvatan" class="btn" onclick="showPage('kanvatan'); return false;">Learn More</a>
-                <a href="/kanvatan/pilot" class="btn btn-primary">Request the Pilot</a>
+                <a href="/kanvatan.html" class="btn">Learn More</a>
+                <a href="/kanvatan.html" class="btn btn-primary">Request the Pilot</a>
               </div>
             </div>
           </div>
@@ -2872,7 +2872,7 @@
         <p class="comps" style="text-align: center; margin-bottom: 60px; color: #c8bea8;">A neo-western spin on the classic Turkish&nbsp;family&nbsp;drama.</p>
 
         <div class="treatment">
-          <p><strong>Hatay Province. 2013.</strong> The Yilmaz family has tended their olive trees for seven generations. But a new blight has swept the land. With her brother working at a New York hedge fund, Seda is left to manage the grove—and their ailing father. But help is coming from the east. And he's armed and&nbsp;dangerous.</p>
+          <p><strong>Hatay Province. 2013.</strong> The Yilmaz family has tended their olive trees for seven generations. But a new blight has swept the land. With her brother working at a New York hedge fund, Sezen is left to manage the grove—and their ailing father. But help is coming from the east. And he's armed and&nbsp;dangerous.</p>
           <p>In this neo-western spin on the classic Turkish "dizi" family drama, the unlikely partners must learn to work together to keep the trees—and&nbsp;themselves—alive.</p>
         </div>
 
@@ -3145,6 +3145,11 @@
         'kv': 'kanvatan'
       };
 
+      // Redirect kanvatan routes to standalone page
+      if (['kanvatan', 'kan-vatan', 'kv'].includes(path)) {
+        window.location.replace('/kanvatan.html');
+        return;
+      }
       if (routes[path]) {
         showPage(routes[path], false);
       }

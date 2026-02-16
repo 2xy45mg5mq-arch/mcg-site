@@ -3406,5 +3406,37 @@
   })();
   </script>
 
+  <script>
+  // Restore hero visibility when returning via bfcache (back button from about.html)
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+      var slideshow = document.querySelector('.hero-slideshow');
+      var overlay = document.querySelector('.hero-overlay');
+      var scrollInd = document.querySelector('.scroll-indicator');
+      var nav = document.querySelector('nav');
+      var sections = document.querySelectorAll('#page-home > section:not(.hero)');
+      var subtitles = document.querySelectorAll('.hero .subtitle');
+
+      if (slideshow) { slideshow.style.transition = 'none'; slideshow.style.opacity = ''; }
+      if (overlay) { overlay.style.transition = 'none'; overlay.style.opacity = ''; }
+      if (scrollInd) { scrollInd.style.transition = 'none'; scrollInd.style.opacity = ''; }
+      if (nav) { nav.style.transition = 'none'; nav.style.opacity = ''; }
+      sections.forEach(function(s) { s.style.transition = 'none'; s.style.opacity = ''; });
+      subtitles.forEach(function(s) { s.style.transition = 'none'; s.style.opacity = ''; });
+
+      // Force reflow then restore transitions
+      document.body.offsetHeight;
+      requestAnimationFrame(function() {
+        if (slideshow) slideshow.style.transition = '';
+        if (overlay) overlay.style.transition = '';
+        if (scrollInd) scrollInd.style.transition = '';
+        if (nav) nav.style.transition = '';
+        sections.forEach(function(s) { s.style.transition = ''; });
+        subtitles.forEach(function(s) { s.style.transition = ''; });
+      });
+    }
+  });
+  </script>
+
 </body>
 </html>

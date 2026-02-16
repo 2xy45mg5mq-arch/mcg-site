@@ -535,150 +535,6 @@
     }
     .modal-btn-primary:hover { background: rgba(200,190,168,0.25); }
 
-    /* --- NAV MODALS (Work / About) --- */
-    .nav-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-    }
-    .nav-modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .nav-modal {
-      background: #1a1a1a;
-      border: 1px solid rgba(200,190,168,0.15);
-      border-radius: 8px;
-      max-width: 560px;
-      width: 100%;
-      padding: 40px 36px;
-      max-height: 90vh;
-      overflow-y: auto;
-      transform: translateY(20px);
-      transition: transform 0.3s;
-    }
-    .nav-modal-overlay.active .nav-modal {
-      transform: translateY(0);
-    }
-    .nav-modal-close {
-      display: block;
-      margin: 28px auto 0;
-      padding: 10px 40px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,190,168,0.15);
-      border-radius: 4px;
-      color: rgba(228,228,228,0.5);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .nav-modal-close:hover {
-      background: rgba(255,255,255,0.08);
-      color: #e4e4e4;
-    }
-
-    /* Work modal project list */
-    .work-list { list-style: none; padding: 0; }
-    .work-item {
-      display: block;
-      padding: 18px 20px;
-      border-bottom: 1px solid rgba(200,190,168,0.06);
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .work-item:last-child { border-bottom: none; }
-    .work-item:hover { background: rgba(200,190,168,0.04); }
-    .work-item-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 3px;
-      color: #c8bea8;
-      margin-bottom: 2px;
-    }
-    .work-item-meta {
-      font-size: 0.8rem;
-      color: rgba(228,228,228,0.35);
-      letter-spacing: 0.02em;
-    }
-    .work-item-logline {
-      font-size: 0.95rem;
-      color: rgba(228,228,228,0.6);
-      margin-top: 4px;
-      line-height: 1.5;
-    }
-    .work-section-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(228,228,228,0.3);
-      margin-top: 24px;
-      margin-bottom: 8px;
-      padding-left: 20px;
-    }
-    .work-section-label:first-child { margin-top: 0; }
-
-    /* About modal */
-    .about-modal-photo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      margin: 0 auto 20px;
-      filter: grayscale(1);
-      opacity: 0.85;
-    }
-    .about-modal-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 4px;
-      color: #c8bea8;
-      text-align: center;
-      margin-bottom: 4px;
-    }
-    .about-modal-subtitle {
-      text-align: center;
-      font-size: 0.85rem;
-      color: rgba(228,228,228,0.4);
-      margin-bottom: 20px;
-    }
-    .about-modal-bio {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(228,228,228,0.75);
-      text-align: center;
-      text-wrap: pretty;
-    }
-    .about-modal-bio a {
-      color: #e4e4e4;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-    .about-modal-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      color: rgba(228,228,228,0.35);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .about-modal-link:hover { color: #e4e4e4; }
 
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
@@ -697,7 +553,6 @@
       .context-card { flex: none; }
       .display-heading { font-size: 1.4rem; letter-spacing: 3px; }
       .modal { padding: 28px 20px; }
-      .nav-modal { padding: 28px 20px; }
       .cta-section { padding: 72px 24px; }
     }
   </style>
@@ -707,8 +562,8 @@
   <nav class="site-nav">
     <a href="/" class="site-nav-logo">HOME</a>
     <div class="site-nav-links">
-      <a href="#" onclick="openWorkModal(); return false;">Work</a>
-      <a href="#" onclick="openAboutModal(); return false;">About</a>
+      <a href="/#work">Work</a>
+      <a href="/about">About</a>
       <a href="#" onclick="openConnectModal(); return false;">Connect</a>
     </div>
   </nav>
@@ -907,80 +762,6 @@
     </div>
   </div>
 
-  <!-- WORK MODAL -->
-  <div class="nav-modal-overlay" id="workModal" onclick="if(event.target === this) closeWorkModal()">
-    <div class="nav-modal">
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:4px; color:#c8bea8; text-align:center; margin-bottom:24px;">WORK</h2>
-
-      <div class="work-section-label">Featured</div>
-      <div class="work-list">
-        <a href="/hr" class="work-item">
-          <div class="work-item-title">HUMAN RESOURCE</div>
-          <div class="work-item-meta">Feature Film · Corporate Thriller</div>
-          <div class="work-item-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.</div>
-        </a>
-        <a href="/tfgame" class="work-item">
-          <div class="work-item-title">TOP FLOOR</div>
-          <div class="work-item-meta">Feature Film · Thriller</div>
-          <div class="work-item-logline">Ripley meets Parasite in a Manhattan high-rise.</div>
-        </a>
-      </div>
-
-      <div class="work-section-label">Coming Up</div>
-      <div class="work-list">
-        <a href="/kanvatan.html" class="work-item" onclick="closeWorkModal(); return false;">
-          <div class="work-item-title">KAN VATAN</div>
-          <div class="work-item-meta">TV Pilot · US/Turkey Co-Production</div>
-          <div class="work-item-logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</div>
-        </a>
-        <a href="/meatspace" class="work-item">
-          <div class="work-item-title">MEATSPACE</div>
-          <div class="work-item-meta">Feature · Satirical Sci-Fi</div>
-          <div class="work-item-logline">In a near perfect future, a young man locked out of VR paradise must navigate real life for the first time.</div>
-        </a>
-      </div>
-
-      <div class="work-section-label">Portfolio</div>
-      <div class="work-list">
-        <div class="work-item" style="cursor:default;">
-          <div class="work-item-title">MEMORY DOCS</div>
-          <div class="work-item-meta">TV Series · Drama</div>
-          <div class="work-item-logline">A beloved but controversial TV doctor pushes the limits of science to save his own mind from advancing dementia.</div>
-        </div>
-        <div class="work-item" style="cursor:default;">
-          <div class="work-item-title">WATCH THE KIDS</div>
-          <div class="work-item-meta">Feature · Drama/Thriller</div>
-          <div class="work-item-logline">A high school intern discovers their district secretly captured 66,000+ webcam images of students in their homes.</div>
-        </div>
-        <div class="work-item" style="cursor:default;">
-          <div class="work-item-title">EDUCATED GUESS</div>
-          <div class="work-item-meta">Feature · Legal Drama</div>
-          <div class="work-item-logline">On the eve of retirement, a professor at an elite college must decide how far he'll go to defend an immigrant student from harsh administrative justice.</div>
-        </div>
-        <div class="work-item" style="cursor:default;">
-          <div class="work-item-title">PEOPLE OPERATIONS</div>
-          <div class="work-item-meta">Feature · Sci-Fi Dramedy</div>
-          <div class="work-item-logline">A desperate Filipino mother manages the digital life of a spoiled New Yorker—who doesn't even know she exists.</div>
-        </div>
-      </div>
-
-      <button class="nav-modal-close" onclick="closeWorkModal()">Close</button>
-    </div>
-  </div>
-
-  <!-- ABOUT MODAL -->
-  <div class="nav-modal-overlay" id="aboutModal" onclick="if(event.target === this) closeAboutModal()">
-    <div class="nav-modal" style="max-width: 480px;">
-      <img src="/images/img_8.webp" alt="Max Coyne-Green" class="about-modal-photo" loading="lazy">
-      <div class="about-modal-name">MAX COYNE-GREEN</div>
-      <div class="about-modal-subtitle">Small Language Model · 1990</div>
-      <div class="about-modal-bio">
-        Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://www.linkedin.com/in/mcgwrites/" target="_blank" rel="noopener noreferrer">here</a>.
-      </div>
-      <a href="/about" class="about-modal-link">THE FULL STORY &rarr;</a>
-      <button class="nav-modal-close" onclick="closeAboutModal()">Close</button>
-    </div>
-  </div>
 
   <!-- Hidden Netlify form for build-time detection -->
   <form name="connect" netlify netlify-honeypot="bot-field" hidden>
@@ -1085,37 +866,11 @@
       });
     })();
 
-    // Work modal
-    function openWorkModal() {
-      document.getElementById('workModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeWorkModal() {
-      document.getElementById('workModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // About modal
-    function openAboutModal() {
-      document.getElementById('aboutModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeAboutModal() {
-      document.getElementById('aboutModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Keyboard: Escape closes any open modal
+    // Keyboard: Escape closes connect modal
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         if (document.getElementById('connectModal').classList.contains('active')) {
           closeConnectModal();
-        }
-        if (document.getElementById('workModal').classList.contains('active')) {
-          closeWorkModal();
-        }
-        if (document.getElementById('aboutModal').classList.contains('active')) {
-          closeAboutModal();
         }
       }
     });

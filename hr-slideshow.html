@@ -489,6 +489,64 @@
       opacity: 0.7;
       cursor: default;
     }
+    /* ── CONNECT MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .connect-modal {
+      background: #12171d; border: 1px solid #1f2933;
+      border-radius: 8px; padding: 40px;
+      max-width: 480px; width: 90%;
+      transform: translateY(20px); transition: transform 0.3s;
+    }
+    .modal-overlay.active .connect-modal { transform: translateY(0); }
+    .connect-modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 8px; }
+    .connect-modal .modal-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+    .connect-modal .modal-section { margin-bottom: 24px; }
+    .connect-modal .modal-section-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .connect-modal .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+    .connect-modal .checkbox-item { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .connect-modal .checkbox-item input { display: none; }
+    .connect-modal .checkbox-box {
+      width: 20px; height: 20px; border: 1px solid #1f2933; border-radius: 3px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .connect-modal .checkbox-item input:checked + .checkbox-box { background: var(--text); border-color: var(--text); }
+    .connect-modal .checkbox-box::after { content: '\2713'; color: var(--bg); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
+    .connect-modal .checkbox-item input:checked + .checkbox-box::after { opacity: 1; }
+    .connect-modal .checkbox-label { font-size: 0.95rem; }
+    .connect-modal .modal-input {
+      width: 100%; background: var(--bg); border: 1px solid #1f2933;
+      border-radius: 4px; padding: 12px; color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif; font-size: 0.95rem; margin-bottom: 10px;
+    }
+    .connect-modal .modal-input:focus { outline: none; border-color: var(--muted); }
+    .connect-modal .modal-input::placeholder { color: var(--muted); }
+    .connect-modal .modal-textarea {
+      width: 100%; background: var(--bg); border: 1px solid #1f2933;
+      border-radius: 4px; padding: 12px; color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif; font-size: 0.95rem; resize: vertical; min-height: 80px;
+    }
+    .connect-modal .modal-textarea:focus { outline: none; border-color: var(--muted); }
+    .connect-modal .modal-textarea::placeholder { color: var(--muted); }
+    .connect-modal .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
+    .connect-modal .modal-btn {
+      flex: 1; padding: 14px 24px; border: none; border-radius: 4px;
+      font-family: 'EB Garamond', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    }
+    .connect-modal .modal-btn-primary { background: var(--text); color: var(--bg); }
+    .connect-modal .modal-btn-primary:hover { background: #fff; }
+    .connect-modal .modal-btn-secondary { background: transparent; color: var(--muted); border: 1px solid #1f2933; }
+    .connect-modal .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
     @media (max-width: 600px) {
       .site-nav { padding: 16px 16px; }
       .site-nav-links { gap: 16px; }
@@ -505,9 +563,9 @@
   <nav class="site-nav">
     <a href="/" class="site-nav-logo">HOME</a>
     <div class="site-nav-links">
-      <a href="/">Work</a>
+      <a href="/#work">Work</a>
       <a href="/about">About</a>
-      <a href="/?connect=true">Connect</a>
+      <a href="#" onclick="openConnectModal(); return false;">Connect</a>
     </div>
   </nav>
   <div class="ss-breadcrumb">
@@ -723,6 +781,123 @@
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
+  </script>
+
+  <!-- CONNECT MODAL -->
+  <form name="connect" netlify netlify-honeypot="bot-field" hidden>
+    <input name="name"><input name="email"><input name="request">
+    <input name="interest" type="checkbox" value="Human Resource">
+    <input name="interest" type="checkbox" value="Top Floor">
+    <input name="interest" type="checkbox" value="Kan Vatan">
+    <input name="interest" type="checkbox" value="General Meeting">
+    <textarea name="message"></textarea><input name="bot-field">
+  </form>
+
+  <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
+    <div class="connect-modal">
+      <div id="connectFormState">
+        <h2>LET'S CONNECT</h2>
+        <p class="modal-subtitle">What brings you here?</p>
+        <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="connect">
+          <input type="hidden" name="request" id="connectRequest" value="">
+          <p style="display:none;"><input name="bot-field"></p>
+          <div class="modal-section">
+            <div class="modal-section-label">Your info</div>
+            <input type="text" name="name" class="modal-input" placeholder="Name" required>
+            <input type="email" name="email" class="modal-input" placeholder="Email" required>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-label">I'm interested in</div>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="interest" value="Human Resource" checked><span class="checkbox-box"></span><span class="checkbox-label">Human Resource</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interest" value="Top Floor"><span class="checkbox-box"></span><span class="checkbox-label">Top Floor</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interest" value="Kan Vatan"><span class="checkbox-box"></span><span class="checkbox-label">Kan Vatan</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interest" value="General Meeting"><span class="checkbox-box"></span><span class="checkbox-label">General meeting with Max</span></label>
+            </div>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-label">Anything else? (optional)</div>
+            <textarea class="modal-textarea" name="message" placeholder="Introduce yourself briefly..."></textarea>
+          </div>
+          <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
+            <button type="submit" class="modal-btn modal-btn-primary">Send</button>
+          </div>
+        </form>
+        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
+      </div>
+      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
+        <h2>SENT</h2>
+        <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
+        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openConnectModal() {
+      document.getElementById('connectForm').reset();
+      document.getElementById('connectRequest').value = '';
+      var hrCheckbox = document.querySelector('#connectForm input[value="Human Resource"]');
+      if (hrCheckbox) hrCheckbox.checked = true;
+      document.getElementById('connectFormState').style.display = '';
+      document.getElementById('connectSuccessState').style.display = 'none';
+      document.getElementById('connectModal').classList.add('active');
+      document.body.style.cursor = 'auto';
+    }
+
+    function closeConnectModal() {
+      document.getElementById('connectModal').classList.remove('active');
+      document.body.style.cursor = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (document.getElementById('connectModal').classList.contains('active')) {
+          closeConnectModal();
+          e.stopPropagation();
+        }
+      }
+    });
+
+    (function() {
+      var form = document.getElementById('connectForm');
+      if (!form) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
+
+        if (!isNetlify) {
+          setTimeout(function() {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          }, 400);
+          return;
+        }
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        })
+        .then(function(res) {
+          if (res.ok) {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          } else { throw new Error('fail'); }
+        })
+        .catch(function() {
+          btn.textContent = 'Send';
+          btn.disabled = false;
+          alert('Something went wrong. Email mcoynegreen@gmail.com directly.');
+        });
+      });
+    })();
   </script>
 
 </body>

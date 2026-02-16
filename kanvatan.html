@@ -177,92 +177,11 @@
       50% { opacity: 0.7; transform: translateX(-50%) translateY(6px); }
     }
 
-    /* --- SLIDESHOW --- */
-    .slideshow {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      background: #000;
-    }
-    .slideshow img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-    }
-    .slideshow img.active { opacity: 1; }
-    .slideshow::before,
-    .slideshow::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0;
-      height: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .slideshow::before {
-      top: 0;
-      background: linear-gradient(180deg, #0a0d10, transparent);
-    }
-    .slideshow::after {
-      bottom: 0;
-      background: linear-gradient(0deg, #0a0d10, transparent);
-    }
-    .slideshow .ss-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.5);
-      font-size: 2.2rem;
-      cursor: pointer;
-      padding: 20px;
-      transition: color 0.3s;
-    }
-    .slideshow .ss-arrow:hover { color: rgba(255,255,255,0.9); }
-    .slideshow .ss-arrow.prev { left: 12px; }
-    .slideshow .ss-arrow.next { right: 12px; }
-    .slideshow .ss-counter {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.4);
-    }
-    .slideshow .ss-dots {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      display: flex;
-      gap: 8px;
-    }
-    .ss-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .ss-dot.active { background: rgba(255,255,255,0.65); }
-
     /* --- SECTION DIVIDER IMAGES --- */
     .section-divider {
       position: relative;
       width: 100%;
-      height: 300px;
+      height: 400px;
       overflow: hidden;
       background: #000;
     }
@@ -294,7 +213,7 @@
     .section-divider-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(10,13,16,0.35);
+      background: rgba(10,13,16,0.6);
       z-index: 1;
     }
 
@@ -642,7 +561,7 @@
       .hero-title { font-size: clamp(3.5rem, 14vw, 5rem); }
       .hero-logline { font-size: 1.1rem; }
       .section { padding: 72px 20px; }
-      .section-divider { height: 200px; }
+      .section-divider { height: 280px; }
       .char-grid { flex-direction: column; gap: 16px; }
       .char-card { flex: none; }
       .char-card-img-wrap { height: 180px; }
@@ -682,24 +601,7 @@
 
   <div class="hero-spacer"></div>
 
-  <!-- 2. STILLS SLIDESHOW -->
-  <div class="slideshow" id="kv-slideshow">
-    <img src="/images/img_41.webp" alt="Ancient Olive Tree" class="active" loading="lazy">
-    <img src="/images/kv_village.webp" alt="Turkish Village at Dusk" loading="lazy">
-    <img src="/images/img_42.webp" alt="The Syrian Border" loading="lazy">
-    <img src="/images/kv_corridor.webp" alt="Family" loading="lazy">
-    <img src="/images/img_43.webp" alt="Graveyard" loading="lazy">
-    <img src="/images/kv_fire.webp" alt="The Blight" loading="lazy">
-    <img src="/images/img_44.webp" alt="Village" loading="lazy">
-    <img src="/images/kv_arrival.webp" alt="The Operative" loading="lazy">
-    <img src="/images/img_45.webp" alt="Landscape" loading="lazy">
-    <button class="ss-arrow prev" onclick="kvShow.prev()">&lsaquo;</button>
-    <button class="ss-arrow next" onclick="kvShow.next()">&rsaquo;</button>
-    <div class="ss-dots" id="kv-dots"></div>
-    <div class="ss-counter" id="kv-counter">1 / 9</div>
-  </div>
-
-  <!-- 3. THE STORY -->
+  <!-- 2. THE STORY -->
   <section class="section section-alt reveal">
     <div class="section-inner">
       <div class="display-heading">Hatay Province, 2013.</div>
@@ -710,10 +612,10 @@
     </div>
   </section>
 
-  <!-- DIVIDER: Desert -->
+  <!-- DIVIDER: After Story -->
   <div class="section-divider reveal">
     <div class="section-divider-overlay"></div>
-    <img src="/images/kv_divider_desert.webp?v=1" alt="Desert at dusk" loading="lazy">
+    <img src="/images/kv_village.webp" alt="Turkish village" loading="lazy">
   </div>
 
   <!-- 4. CHARACTERS -->
@@ -755,10 +657,10 @@
     </div>
   </section>
 
-  <!-- DIVIDER: Silhouette -->
+  <!-- DIVIDER: After Characters -->
   <div class="section-divider reveal">
     <div class="section-divider-overlay"></div>
-    <img src="/images/kv_divider_silhouette.webp?v=1" alt="Silhouettes at dusk" loading="lazy">
+    <img src="/images/img_42.webp" alt="The Syrian Border" loading="lazy">
   </div>
 
   <!-- 5. TONE & INFLUENCES -->
@@ -771,10 +673,10 @@
     </div>
   </section>
 
-  <!-- DIVIDER: Storm -->
+  <!-- DIVIDER: After Tone & Influences -->
   <div class="section-divider reveal">
     <div class="section-divider-overlay"></div>
-    <img src="/images/kv_divider_storm.webp?v=1" alt="Desert convoy at dusk" loading="lazy">
+    <img src="/images/img_43.webp" alt="Graveyard" loading="lazy">
   </div>
 
   <!-- 6. CONTEXT -->
@@ -798,10 +700,10 @@
     </div>
   </section>
 
-  <!-- DIVIDER: Fire -->
+  <!-- DIVIDER: After Context -->
   <div class="section-divider reveal">
     <div class="section-divider-overlay"></div>
-    <img src="/images/kv_divider_fire.webp?v=1" alt="Inferno" loading="lazy">
+    <img src="/images/kv_arrival.webp" alt="The Operative" loading="lazy">
   </div>
 
   <!-- 7. WHY CO-PRODUCTION -->
@@ -815,6 +717,12 @@
       </div>
     </div>
   </section>
+
+  <!-- DIVIDER: After Why Co-Production -->
+  <div class="section-divider reveal">
+    <div class="section-divider-overlay"></div>
+    <img src="/images/img_45.webp" alt="Landscape" loading="lazy">
+  </div>
 
   <!-- 8. ABOUT THE WRITER -->
   <section class="section reveal">
@@ -926,45 +834,6 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(r => observer.observe(r));
-
-    // Slideshow
-    const kvShow = (() => {
-      const container = document.getElementById('kv-slideshow');
-      const imgs = container.querySelectorAll('img');
-      const counter = document.getElementById('kv-counter');
-      const dotsContainer = document.getElementById('kv-dots');
-      let idx = 0;
-      let timer;
-
-      // Create dots
-      imgs.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.className = 'ss-dot' + (i === 0 ? ' active' : '');
-        dot.onclick = () => { goTo(i); resetTimer(); };
-        dotsContainer.appendChild(dot);
-      });
-      const dots = dotsContainer.querySelectorAll('.ss-dot');
-
-      function goTo(i) {
-        imgs[idx].classList.remove('active');
-        dots[idx].classList.remove('active');
-        idx = ((i % imgs.length) + imgs.length) % imgs.length;
-        imgs[idx].classList.add('active');
-        dots[idx].classList.add('active');
-        counter.textContent = (idx + 1) + ' / ' + imgs.length;
-      }
-
-      function next() { goTo(idx + 1); resetTimer(); }
-      function prev() { goTo(idx - 1); resetTimer(); }
-
-      function resetTimer() {
-        clearInterval(timer);
-        timer = setInterval(() => goTo(idx + 1), 5000);
-      }
-
-      resetTimer();
-      return { next, prev };
-    })();
 
     // Connect modal
     function openConnectModal(preset) {

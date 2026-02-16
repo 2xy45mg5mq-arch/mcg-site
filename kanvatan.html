@@ -89,6 +89,23 @@
       text-align: center;
       padding: 0 24px;
       position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('/images/img_41.webp') center center / cover no-repeat;
+      z-index: 0;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10,13,16,0.85);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
     }
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
@@ -103,30 +120,33 @@
       font-style: italic;
       font-size: 1.3rem;
       color: #c8bea8;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     .hero-tagline {
-      font-size: 1.1rem;
-      color: rgba(228,228,228,0.55);
-      max-width: 480px;
+      font-size: 1.05rem;
+      color: rgba(228,228,228,0.5);
+      margin-bottom: 36px;
+    }
+    .hero-logline {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+      line-height: 1.7;
+      color: rgba(228,228,228,0.75);
+      max-width: 560px;
     }
     .scroll-indicator {
       position: absolute;
       bottom: 40px;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
       opacity: 0.4;
       animation: scrollPulse 2s ease-in-out infinite;
-    }
-    .scroll-indicator span {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.55rem;
-      letter-spacing: 3px;
-      color: rgba(228,228,228,0.55);
     }
     .scroll-indicator svg {
       width: 16px;
@@ -158,6 +178,23 @@
       transition: opacity 1.2s ease-in-out;
     }
     .slideshow img.active { opacity: 1; }
+    .slideshow::before,
+    .slideshow::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .slideshow::before {
+      top: 0;
+      background: linear-gradient(180deg, #0a0d10, transparent);
+    }
+    .slideshow::after {
+      bottom: 0;
+      background: linear-gradient(0deg, #0a0d10, transparent);
+    }
     .slideshow .ss-arrow {
       position: absolute;
       top: 50%;
@@ -165,29 +202,29 @@
       z-index: 3;
       background: none;
       border: none;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.5);
       font-size: 2.2rem;
       cursor: pointer;
       padding: 20px;
       transition: color 0.3s;
     }
-    .slideshow .ss-arrow:hover { color: rgba(255,255,255,0.95); }
+    .slideshow .ss-arrow:hover { color: rgba(255,255,255,0.9); }
     .slideshow .ss-arrow.prev { left: 12px; }
     .slideshow .ss-arrow.next { right: 12px; }
     .slideshow .ss-counter {
       position: absolute;
-      bottom: 20px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.4);
     }
     .slideshow .ss-dots {
       position: absolute;
-      bottom: 42px;
+      bottom: 36px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
@@ -198,14 +235,54 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.2);
       cursor: pointer;
       transition: background 0.3s;
     }
-    .ss-dot.active { background: rgba(255,255,255,0.7); }
+    .ss-dot.active { background: rgba(255,255,255,0.65); }
+
+    /* --- SECTION DIVIDER IMAGES --- */
+    .section-divider {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      background: #000;
+    }
+    .section-divider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .section-divider::before {
+      top: 0;
+      height: 100px;
+      background: linear-gradient(180deg, #0a0d10, transparent);
+    }
+    .section-divider::after {
+      bottom: 0;
+      height: 100px;
+      background: linear-gradient(0deg, #0a0d10, transparent);
+    }
+    .section-divider-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,13,16,0.35);
+      z-index: 1;
+    }
 
     /* --- SECTIONS --- */
-    .section { padding: 80px 24px; }
+    .section { padding: 100px 24px; }
     .section-alt { background: #0f1215; }
 
     .section-inner {
@@ -213,129 +290,133 @@
       margin: 0 auto;
     }
     .section-inner--wide {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
     .section-heading {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.4rem;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: #c8bea8;
-      margin-bottom: 32px;
-    }
-    .section-heading--lg {
-      font-size: 1.6rem;
-      letter-spacing: 4px;
+      margin-bottom: 40px;
     }
 
     .body-text {
       font-size: 1.1rem;
-      line-height: 1.75;
+      line-height: 1.85;
       color: rgba(228,228,228,0.85);
     }
-    .body-text p { margin-bottom: 20px; }
+    .body-text p { margin-bottom: 24px; }
     .body-text p:last-child { margin-bottom: 0; }
 
-    /* --- FORMAT LINE --- */
-    .format-line {
-      text-align: center;
-      padding: 32px 24px 0;
+    /* --- STORY DISPLAY HEADING --- */
+    .display-heading {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      color: rgba(228,228,228,0.4);
-    }
-
-    /* --- LOGLINE --- */
-    .logline {
-      text-align: center;
-      padding: 56px 24px;
-    }
-    .logline p {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-style: italic;
-      font-size: 1.3rem;
-      line-height: 1.7;
-      color: rgba(228,228,228,0.85);
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    /* --- DISPLAY ELEMENT --- */
-    .display-element {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 4px;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      letter-spacing: 5px;
       color: #c8bea8;
-      margin-bottom: 28px;
+      margin-bottom: 36px;
       line-height: 1.2;
     }
 
     /* --- CHARACTER CARDS --- */
-    .cards-grid {
+    .char-grid {
       display: flex;
       gap: 24px;
     }
-    .card {
+    .char-card {
       flex: 1;
-      background: #1a1a1a;
-      border-left: 3px solid #c8bea8;
-      padding: 32px;
+      background: #141618;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(200,190,168,0.08);
     }
-    .card-name {
+    .char-card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .char-card-content {
+      padding: 32px 28px 36px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .char-card-header {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(200,190,168,0.08);
+    }
+    .char-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 3px;
+      font-size: 1.4rem;
+      letter-spacing: 4px;
       color: #c8bea8;
       margin-bottom: 4px;
+      line-height: 1.1;
     }
-    .card-subtitle {
+    .char-subtitle {
       font-family: 'EB Garamond', Georgia, serif;
       font-style: italic;
       font-size: 1rem;
-      color: rgba(228,228,228,0.55);
-      margin-bottom: 16px;
+      color: rgba(228,228,228,0.4);
     }
-    .card-body {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: rgba(228,228,228,0.85);
+    .char-body {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(228,228,228,0.75);
     }
 
     /* --- CONTEXT CARDS --- */
+    .context-grid {
+      display: flex;
+      gap: 24px;
+    }
     .context-card {
       flex: 1;
-      background: #1a1a1a;
-      border-left: 3px solid #c8bea8;
+      background: #141618;
+      border-left: 3px solid rgba(200,190,168,0.25);
       padding: 32px;
       display: flex;
       flex-direction: column;
     }
     .context-heading {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       letter-spacing: 3px;
       color: #c8bea8;
       margin-bottom: 16px;
     }
     .context-body {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: rgba(228,228,228,0.85);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(228,228,228,0.75);
     }
 
     /* --- CTA --- */
     .cta-section {
       text-align: center;
-      padding: 80px 24px;
+      padding: 100px 24px;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: rgba(200,190,168,0.3);
     }
     .cta-btn {
       display: inline-block;
-      padding: 16px 48px;
+      padding: 16px 52px;
       border: 1px solid rgba(200,190,168,0.3);
       background: transparent;
       color: #e4e4e4;
@@ -358,14 +439,14 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.55rem;
       letter-spacing: 3px;
-      color: rgba(228,228,228,0.3);
+      color: rgba(228,228,228,0.25);
     }
     .site-footer a {
-      color: rgba(228,228,228,0.4);
+      color: rgba(228,228,228,0.35);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .site-footer a:hover { color: rgba(228,228,228,0.7); }
+    .site-footer a:hover { color: rgba(228,228,228,0.6); }
 
     /* --- REVEAL --- */
     .reveal {
@@ -523,11 +604,18 @@
       .site-nav-links { gap: 16px; }
       .site-nav a { font-size: 0.55rem; letter-spacing: 2px; }
       .hero-title { font-size: clamp(3.5rem, 14vw, 5rem); }
-      .section { padding: 60px 20px; }
-      .cards-grid { flex-direction: column; }
-      .card, .context-card { flex: none; }
-      .display-element { font-size: 1.4rem; letter-spacing: 3px; }
+      .hero-logline { font-size: 1.1rem; }
+      .section { padding: 72px 20px; }
+      .section-divider { height: 200px; }
+      .char-grid { flex-direction: column; gap: 16px; }
+      .char-card { flex: none; }
+      .char-card-img { height: 180px; }
+      .char-name { font-size: 1.3rem; }
+      .context-grid { flex-direction: column; gap: 16px; }
+      .context-card { flex: none; }
+      .display-heading { font-size: 1.4rem; letter-spacing: 3px; }
       .modal { padding: 28px 20px; }
+      .cta-section { padding: 72px 24px; }
     }
   </style>
 </head>
@@ -544,9 +632,13 @@
 
   <!-- 1. HERO -->
   <section class="hero">
-    <h1 class="hero-title">KAN VATAN</h1>
-    <p class="hero-subtitle">Blood at the Roots</p>
-    <p class="hero-tagline">A neo-western spin on the classic Turkish dizi.</p>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">KAN VATAN</h1>
+      <p class="hero-subtitle">Blood at the Roots</p>
+      <p class="hero-tagline">A neo-western spin on the classic Turkish dizi.</p>
+      <p class="hero-logline">A family of olive growers finds an American operative hiding out on their dying grove &mdash; just when they need him.</p>
+    </div>
     <div class="scroll-indicator">
       <svg viewBox="0 0 16 16"><polyline points="2 5 8 11 14 5"></polyline></svg>
     </div>
@@ -569,19 +661,10 @@
     <div class="ss-counter" id="kv-counter">1 / 9</div>
   </div>
 
-  <!-- 3. FORMAT LINE -->
-  <div class="format-line">1-Hour Drama Pilot (59 pages) &middot; Trilingual: English / Turkish / Arabic &middot; 10-Episode Season</div>
-
-  <!-- 4. LOGLINE -->
-  <div class="logline reveal">
-    <p>A family of olive growers finds an American operative hiding out on their dying grove &mdash; just when they need him.</p>
-  </div>
-
-  <!-- 5. THE STORY -->
+  <!-- 3. THE STORY -->
   <section class="section section-alt reveal">
     <div class="section-inner">
-      <p class="section-heading section-heading--lg">The Story</p>
-      <div class="display-element">Hatay Province, 2013.</div>
+      <div class="display-heading">Hatay Province, 2013.</div>
       <div class="body-text">
         <p>The Y&#305;lmaz family has tended their olive grove for seven generations. A dangerous blight is killing the ancient trees. Patriarch Davut &mdash; lost to dementia &mdash; can&rsquo;t protect them anymore. His son Kaan, who trades derivatives in Manhattan, swore he&rsquo;d never return to the family grove. That leaves the youngest daughter Sezen to hold everything together alone.</p>
         <p>But death, disgrace, and a mysterious American fugitive from the Syrian border are all heading for the grove &mdash; and so is a foreign corporation with its eyes on the land. They&rsquo;ll need to learn to understand each other to save the trees &mdash; and themselves.</p>
@@ -589,31 +672,58 @@
     </div>
   </section>
 
-  <!-- 6. CHARACTERS -->
+  <!-- DIVIDER: Desert -->
+  <div class="section-divider reveal">
+    <div class="section-divider-overlay"></div>
+    <img src="/images/kv_divider_desert.webp?v=1" alt="Desert at dusk" loading="lazy">
+  </div>
+
+  <!-- 4. CHARACTERS -->
   <section class="section reveal">
     <div class="section-inner--wide">
       <p class="section-heading">The Characters</p>
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-name">SEZEN YILMAZ</div>
-          <div class="card-subtitle">Daughter of the Land</div>
-          <div class="card-body">The one who stayed. She gave up her foreign studies when her mother died to take care of her father. But now that her father is sick, she takes care of everything. With the blight sweeping through and her brother unavailable to help, she&rsquo;s the only one left to protect the trees. And she&rsquo;s done waiting for permission.</div>
+      <div class="char-grid">
+        <div class="char-card">
+          <img class="char-card-img" src="/images/kv_sezen.webp?v=1" alt="Sezen Yılmaz" loading="lazy">
+          <div class="char-card-content">
+            <div class="char-card-header">
+              <div class="char-name">SEZEN YILMAZ</div>
+              <div class="char-subtitle">Daughter of the Land</div>
+            </div>
+            <div class="char-body">The one who stayed. She gave up her foreign studies when her mother died to take care of her father. But now that her father is sick, she takes care of everything. With the blight sweeping through and her brother unavailable to help, she&rsquo;s the only one left to protect the trees. And she&rsquo;s done waiting for permission.</div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-name">KAAN YILMAZ</div>
-          <div class="card-subtitle">The Son Who Left</div>
-          <div class="card-body">With a dream job at a New York hedge fund, he swore he&rsquo;d never return to the family grove. But after tragedy strikes, he&rsquo;s forced to come home. And he&rsquo;ll stay for the war.</div>
+        <div class="char-card">
+          <img class="char-card-img" src="/images/kv_kaan.webp?v=1" alt="Kaan Yılmaz" loading="lazy">
+          <div class="char-card-content">
+            <div class="char-card-header">
+              <div class="char-name">KAAN YILMAZ</div>
+              <div class="char-subtitle">The Son Who Left</div>
+            </div>
+            <div class="char-body">With a dream job at a New York hedge fund, he swore he&rsquo;d never return to the family grove. But after tragedy strikes, he&rsquo;s forced to come home. And he&rsquo;ll stay for the war.</div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-name">ABE</div>
-          <div class="card-subtitle">The Nomad</div>
-          <div class="card-body">After a mission takes him across the border into Syria, the mysterious American operative comes face to face with the dark heart of humanity. When he turns on his CIA handlers, he has nowhere to go. So he disguises himself as a laborer and finds work on the Y&#305;lmaz grove. While he connects with the land in a way Kaan never could, his secrets carry a burden that will put them all at risk.</div>
+        <div class="char-card">
+          <img class="char-card-img" src="/images/kv_abe.webp?v=1" alt="Abe" loading="lazy">
+          <div class="char-card-content">
+            <div class="char-card-header">
+              <div class="char-name">ABE</div>
+              <div class="char-subtitle">The Nomad</div>
+            </div>
+            <div class="char-body">After a mission takes him across the border into Syria, the mysterious American operative comes face to face with the dark heart of humanity. When he turns on his CIA handlers, he has nowhere to go. So he disguises himself as a laborer and finds work on the Y&#305;lmaz grove. While he connects with the land in a way Kaan never could, his secrets carry a burden that will put them all at risk.</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 7. TONE & INFLUENCES -->
+  <!-- DIVIDER: Silhouette -->
+  <div class="section-divider reveal">
+    <div class="section-divider-overlay"></div>
+    <img src="/images/kv_divider_silhouette.webp?v=1" alt="Silhouettes at dusk" loading="lazy">
+  </div>
+
+  <!-- 5. TONE & INFLUENCES -->
   <section class="section section-alt reveal">
     <div class="section-inner">
       <p class="section-heading">Tone &amp; Influences</p>
@@ -623,11 +733,17 @@
     </div>
   </section>
 
-  <!-- 8. CONTEXT -->
+  <!-- DIVIDER: Storm -->
+  <div class="section-divider reveal">
+    <div class="section-divider-overlay"></div>
+    <img src="/images/kv_divider_storm.webp?v=1" alt="Desert convoy at dusk" loading="lazy">
+  </div>
+
+  <!-- 6. CONTEXT -->
   <section class="section reveal">
     <div class="section-inner--wide">
       <p class="section-heading">Context</p>
-      <div class="cards-grid">
+      <div class="context-grid">
         <div class="context-card">
           <div class="context-heading">Operation Timber Sycamore</div>
           <div class="context-body">Inspired by Operation Timber Sycamore &mdash; the covert CIA program that armed Syrian rebel groups through private contractors. Weapons meant for moderate rebels ended up in the hands of jihadist groups &mdash; some connected to bombings on Turkish soil. The border region became a pipeline of weapons, money, and moral compromise.</div>
@@ -644,7 +760,13 @@
     </div>
   </section>
 
-  <!-- 9. WHY CO-PRODUCTION -->
+  <!-- DIVIDER: Fire -->
+  <div class="section-divider reveal">
+    <div class="section-divider-overlay"></div>
+    <img src="/images/kv_divider_fire.webp?v=1" alt="Inferno" loading="lazy">
+  </div>
+
+  <!-- 7. WHY CO-PRODUCTION -->
   <section class="section section-alt reveal">
     <div class="section-inner">
       <p class="section-heading">Why Co-Production</p>
@@ -656,7 +778,7 @@
     </div>
   </section>
 
-  <!-- 10. ABOUT THE WRITER -->
+  <!-- 8. ABOUT THE WRITER -->
   <section class="section reveal">
     <div class="section-inner">
       <p class="section-heading">About the Writer</p>
@@ -666,12 +788,12 @@
     </div>
   </section>
 
-  <!-- 11. CTA -->
+  <!-- 9. CTA -->
   <div class="cta-section reveal">
     <button class="cta-btn" onclick="openConnectModal({heading:'REQUEST PILOT',subtitle:'Kan Vatan \u2014 TV Series',interest:'Kan Vatan',request:'Kan Vatan - Pilot',placeholder:'Introduce yourself briefly...'})">Request Pilot</button>
   </div>
 
-  <!-- 12. FOOTER -->
+  <!-- 10. FOOTER -->
   <footer class="site-footer">
     <p>&copy; 2026 <a href="/">coyne-green.com</a></p>
   </footer>

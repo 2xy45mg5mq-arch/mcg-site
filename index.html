@@ -868,14 +868,14 @@
     .tf-card .project-card-image img {
       position: absolute;
       width: 100%;
-      height: 108%;
-      top: 5%;
+      height: 100%;
+      top: 0;
       object-fit: cover;
       object-position: center center;
-      opacity: 0.45;
-      filter: blur(0.5px) contrast(1.1) brightness(1.05);
-      mask-image: radial-gradient(ellipse 95% 85% at 50% 52%, black 35%, transparent 78%);
-      -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 52%, black 35%, transparent 78%);
+      opacity: 0.65;
+      filter: contrast(1.1) brightness(1.05);
+      mask-image: radial-gradient(ellipse 100% 95% at 50% 50%, black 50%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse 100% 95% at 50% 50%, black 50%, transparent 90%);
     }
 
     /* Cold steel-blue tint overlay */
@@ -899,14 +899,12 @@
       pointer-events: none;
     }
 
-    .tf-card .tf-card-title {
-      position: relative;
+    .tf-cinematic .tf-content-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
       letter-spacing: 10px;
       color: #fff;
-      z-index: 2;
-      /* Clean white - no shadow needed with proper background fade */
+      margin-bottom: 8px;
     }
 
         /* Kan Vatan card - title image flush to black */
@@ -934,12 +932,12 @@
 
     /* Mobile title card adjustments */
     @media (max-width: 700px) {
-      .tf-card .tf-card-title {
+      .tf-cinematic .tf-content-title {
         font-size: 1.8rem;
         letter-spacing: 6px;
       }
       .tf-card .project-card-image img {
-        opacity: 0.3;
+        opacity: 0.5;
       }
       .kv-card-image .kv-card-title {
         font-size: 1.8rem;
@@ -2226,10 +2224,243 @@
       background: var(--text);
       transition: width 0.3s ease;
     }
-    
+
     .nav-links > a:hover::after,
     .nav-item > a:hover::after {
       width: 100%;
+    }
+
+    /* SECTION DIVIDERS — editorial legend-on-line */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 60px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), rgba(255,255,255,0.15));
+    }
+
+    .section-divider::after {
+      background: linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.15), transparent);
+    }
+
+    .section-divider span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* PROJECT CARD SECTION — individual project as standalone card */
+    .project-card-section {
+      position: relative;
+      padding: 100px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-card-section.visible { opacity: 1; transform: translateY(0); }
+
+    .project-card-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(94, 180, 176, 0.3), transparent);
+    }
+
+    /* Single centered project card */
+    .single-project-card {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* Meatspace CTA modal inline */
+    .meatspace-cta {
+      text-align: center;
+      margin-top: 20px;
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: none;
+    }
+
+    .meatspace-cta.open {
+      display: block;
+    }
+
+    .meatspace-cta p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .meatspace-cta a {
+      color: var(--text);
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .meatspace-cta a:hover {
+      color: var(--accent);
+    }
+
+    /* Project card button row */
+    .project-card-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .project-card-buttons .btn {
+      flex: 1;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .project-card-buttons {
+        flex-direction: column;
+      }
+      .project-card-buttons .btn {
+        width: 100%;
+      }
+    }
+
+    /* TF Cinematic full-bleed layout */
+    .tf-cinematic {
+      padding: 0;
+    }
+
+    .tf-cinematic::before {
+      display: none;
+    }
+
+    .tf-cinematic .project-card {
+      border-radius: 0;
+      max-width: none;
+    }
+
+    .tf-cinematic .project-card-image {
+      aspect-ratio: 21/9;
+      min-height: 400px;
+    }
+
+    .tf-cinematic .project-card-content {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 40px 24px 60px;
+    }
+
+    .tf-cinematic .project-card-buttons {
+      justify-content: center;
+    }
+
+    .tf-cinematic .project-card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .tf-cinematic .project-card:hover .project-card-image img {
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 900px) {
+      .tf-cinematic .project-card-image {
+        aspect-ratio: 16/9;
+        min-height: 280px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tf-cinematic .project-card-image {
+        min-height: 200px;
+      }
+      .tf-cinematic .project-card-content {
+        padding: 24px 16px 40px;
+      }
+    }
+
+    /* Meatspace title card */
+    .meatspace-card,
+    .meatspace-card .project-card-image {
+      border-radius: 0 !important;
+    }
+
+    .meatspace-title-card {
+      background: linear-gradient(135deg, #0a0e14 0%, #141c28 40%, #0d1219 70%, #0a0e14 100%);
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .meatspace-title-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.015) 2px,
+        rgba(255, 255, 255, 0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .meatspace-title-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(100, 140, 200, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    h3.meatspace-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      letter-spacing: 20px;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 0 40px rgba(100, 160, 220, 0.15);
+      font-weight: 400;
+    }
+
+    @media (max-width: 500px) {
+      h3.meatspace-title {
+        font-size: clamp(1.8rem, 7.5vw, 2.8rem);
+        letter-spacing: 5px;
+      }
+      .meatspace-title-card {
+        min-height: 200px;
+      }
     }
 
   </style>
@@ -2244,7 +2475,7 @@
           <a href="#work" onclick="showPage('home'); setTimeout(() => document.getElementById('work').scrollIntoView({behavior:'smooth'}), 100); return false;">Work</a>
           <div class="dropdown">
             <a href="#hr" onclick="showPage('hr'); return false;">Human Resource</a>
-            <a href="/topfloor">Top Floor</a>
+            <a href="/tfgame">Top Floor</a>
             <a href="#kanvatan" onclick="showPage('kanvatan'); return false;">Kan Vatan</a>
           </div>
         </div>
@@ -2312,31 +2543,63 @@
       </div>
     </section>
 
-    <section class="projects-section" id="projects">
+    <!-- ON DECK DIVIDER -->
+    <div class="section-divider"><span>On Deck</span></div>
+
+    <!-- TOP FLOOR — Full-width cinematic banner -->
+    <section class="project-card-section tf-cinematic" id="topfloor-section">
+      <div class="project-card tf-card">
+        <a href="/tfgame" class="project-card-image" style="display:block;">
+          <img src="/images/tf_pyramid_ref.webp" alt="Top Floor" loading="lazy">
+        </a>
+        <div class="project-card-content">
+          <h2 class="tf-content-title">TOP FLOOR</h2>
+          <div class="type">Feature · Crime Thriller</div>
+          <p class="logline">An ambitious Manhattan doorman moves into the penthouse of his dreams—only to be trapped in a dangerous new identity.</p>
+          <div class="project-card-buttons">
+            <a href="/tfgame" class="btn btn-primary">Play the Game</a>
+            <a href="#" class="btn" onclick="openConnectModal({heading:'REQUEST SCRIPT',subtitle:'Top Floor — Feature Film',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'}); return false;">Request the Script</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMING UP DIVIDER -->
+    <div class="section-divider"><span>Coming Up</span></div>
+
+    <!-- KAN VATAN + MEATSPACE — Two-column grid -->
+    <section class="project-card-section" id="coming-up-section">
       <div class="container">
-        <div class="label">Current Projects</div>
         <div class="projects-grid">
 
-          <div class="project-card tf-card" onclick="window.location.href='/topfloor'">
-            <div class="project-card-image">
-              <img src="/images/img_6.webp" alt="Top Floor" loading="lazy">
-              <a href="/tfgame" class="tf-game-overlay" onclick="event.stopPropagation();">Play the Game</a>
-            </div>
-            <div class="project-card-content">
-              <div class="type">Feature · Crime Thriller</div>
-              <p class="logline">An ambitious Manhattan doorman moves into the penthouse of his dreams—only to be trapped in a dangerous new identity.</p>
-              <span class="view-project">View Project</span>
-            </div>
-          </div>
-
-                    <div class="project-card kv-card" onclick="showPage('kanvatan')">
+          <!-- KAN VATAN -->
+          <div class="project-card kv-card" onclick="showPage('kanvatan')">
             <div class="project-card-image">
               <img src="/images/img_7.webp" alt="Kan Vatan - Blood at the Roots" loading="lazy">
             </div>
             <div class="project-card-content">
               <div class="type">TV Pilot · US/Turkey Co-Production</div>
               <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
-              <span class="view-project">View Project</span>
+              <div class="project-card-buttons" onclick="event.stopPropagation();">
+                <a href="#kanvatan" class="btn" onclick="showPage('kanvatan'); return false;">Learn More</a>
+                <a href="/kanvatan/pilot" class="btn btn-primary">Request the Pilot</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- MEATSPACE -->
+          <div class="project-card meatspace-card" id="meatspace-card">
+            <a href="/meatspace" style="text-decoration:none;color:inherit;display:block;">
+              <div class="project-card-image meatspace-title-card">
+                <h3 class="meatspace-title">MEATSPACE</h3>
+              </div>
+            </a>
+            <div class="project-card-content">
+              <div class="type">Feature · Satirical Sci-Fi</div>
+              <p class="logline">In a near perfect future, a young man locked out of VR paradise must navigate real life for the first&nbsp;time.</p>
+              <div class="project-card-buttons">
+                <a href="/meatspace" class="btn">Learn More</a>
+              </div>
             </div>
           </div>
 
@@ -2344,6 +2607,7 @@
       </div>
     </section>
 
+    <!-- PORTFOLIO -->
     <section class="portfolio-section" id="portfolio">
       <div class="container">
         <div class="label">Portfolio</div>
@@ -2371,24 +2635,6 @@
             <div class="type">Feature · Sci-Fi Dramedy</div>
             <p class="logline">A desperate Filipino mother manages the digital life of a spoiled New Yorker—who doesn't even know she exists.</p>
             <p class="inspired">Academy Nicholl Fellowships Top 15%</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="development-section" id="development">
-      <div class="container">
-        <div class="label">Coming Soon</div>
-        <div class="dev-list">
-          <div class="dev-item">
-            <h4>LOSING REALITY</h4>
-            <div class="type">Feature · Psychological Thriller</div>
-            <p class="logline">A disgraced reality TV villain enters a new show to prove he was manipulated—only to discover the show is designed to prove the opposite.</p>
-          </div>
-          <div class="dev-item">
-            <h4>MEATSPACE</h4>
-            <div class="type">Feature · Satirical Sci-Fi</div>
-            <p class="logline">In a near perfect future, a young man locked out of VR paradise must navigate real life for the first time.</p>
           </div>
         </div>
       </div>
@@ -2654,7 +2900,7 @@
     });
 
     // Scroll reveal
-    const sections = document.querySelectorAll('section:not(.hero)');
+    const sections = document.querySelectorAll('section:not(.hero), .project-card-section');
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
     }, { threshold: 0.15 });
@@ -2956,6 +3202,7 @@
     <input name="interest" type="checkbox" value="Human Resource">
     <input name="interest" type="checkbox" value="Top Floor">
     <input name="interest" type="checkbox" value="Kan Vatan">
+    <input name="interest" type="checkbox" value="Meatspace">
     <input name="interest" type="checkbox" value="General Meeting">
     <textarea name="message"></textarea>
     <input name="bot-field">
@@ -2997,6 +3244,11 @@
                 <input type="checkbox" name="interest" value="Kan Vatan">
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">Kan Vatan</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="Meatspace">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Meatspace</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" name="interest" value="General Meeting">

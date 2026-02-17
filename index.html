@@ -872,18 +872,17 @@
       top: 0;
       object-fit: cover;
       object-position: center center;
-      opacity: 0.65;
-      filter: contrast(1.1) brightness(1.05);
-      mask-image: radial-gradient(ellipse 100% 95% at 50% 50%, black 50%, transparent 90%);
-      -webkit-mask-image: radial-gradient(ellipse 100% 95% at 50% 50%, black 50%, transparent 90%);
+      opacity: 0.8;
+      filter: brightness(1.3) drop-shadow(0 0 30px rgba(184, 164, 114, 0.15));
+      transform: scale(1.15);
     }
 
-    /* Cold steel-blue tint overlay */
+    /* Darken center for readability, keep edges bright to show building */
     .tf-card .project-card-image::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(30, 60, 100, 0.18) 0%, rgba(20, 40, 70, 0.12) 100%);
+      background: radial-gradient(ellipse at center 50%, rgba(10, 13, 16, 0.65) 10%, rgba(10, 13, 16, 0.15) 28%, transparent 50%);
       z-index: 1;
       pointer-events: none;
     }
@@ -899,15 +898,7 @@
       pointer-events: none;
     }
 
-    .tf-cinematic .tf-content-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      letter-spacing: 10px;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-        /* Kan Vatan card - title image flush to black */
+    /* Kan Vatan card - title image flush to black */
     .kv-card,
     .kv-card .project-card-image {
       border-radius: 0 !important;
@@ -932,12 +923,9 @@
 
     /* Mobile title card adjustments */
     @media (max-width: 700px) {
-      .tf-cinematic .tf-content-title {
-        font-size: 1.8rem;
-        letter-spacing: 6px;
-      }
       .tf-card .project-card-image img {
-        opacity: 0.5;
+        opacity: 0.65;
+        filter: brightness(1.2) drop-shadow(0 0 20px rgba(184, 164, 114, 0.12));
       }
       .kv-card-image .kv-card-title {
         font-size: 1.8rem;
@@ -2550,10 +2538,9 @@
     <section class="project-card-section tf-cinematic" id="topfloor-section">
       <div class="project-card tf-card">
         <a href="/topfloor" class="project-card-image" style="display:block;">
-          <img src="/images/tf_pyramid_ref.webp" alt="Top Floor" loading="lazy">
+          <img src="/images/tf_art_deco_pyramid.webp?v=1" alt="Top Floor" loading="lazy">
         </a>
         <div class="project-card-content">
-          <h2 class="tf-content-title">TOP FLOOR</h2>
           <div class="type">Feature · Crime Thriller</div>
           <p class="logline">An ambitious Manhattan doorman moves into the penthouse of his dreams—only to be trapped in a dangerous new&nbsp;identity.</p>
           <div class="project-card-buttons">

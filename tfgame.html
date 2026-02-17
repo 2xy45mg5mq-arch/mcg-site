@@ -653,7 +653,7 @@ canvas {
 </head>
 <body>
 
-<a href="/topfloor" style="position:fixed;top:12px;left:16px;z-index:9999;font-family:'Bebas Neue',sans-serif;font-size:0.55rem;letter-spacing:3px;color:rgba(196,168,107,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#c4a86b'" onmouseout="this.style.color='rgba(196,168,107,0.5)'">&larr; TOP FLOOR</a>
+<a href="/topfloor" id="back-to-topfloor" style="position:fixed;top:12px;left:16px;z-index:9999;font-family:'Bebas Neue',sans-serif;font-size:0.55rem;letter-spacing:3px;color:rgba(196,168,107,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#c4a86b'" onmouseout="this.style.color='rgba(196,168,107,0.5)'">&larr; TOP FLOOR</a>
 
 <div id="game-wrap">
   <canvas id="canvas" width="420" height="720"></canvas>
@@ -2454,6 +2454,29 @@ function stopAllAudio() {
   GAME.lastAudioZone = -1;
 }
 
+// Full teardown: stop, dispose all Tone nodes, close context — for page exit
+function teardownAudio() {
+  stopAllAudio();
+  try { Tone.Transport.stop(); } catch(e) {}
+  try { Tone.Transport.cancel(); } catch(e) {}
+  if (GAME.instruments) {
+    Object.values(GAME.instruments).forEach(inst => {
+      try { inst.disconnect(); } catch(e) {}
+      try { inst.dispose(); } catch(e) {}
+    });
+    GAME.instruments = null;
+  }
+  try { Tone.getDestination().volume.value = -Infinity; } catch(e) {}
+  try { Tone.context.close(); } catch(e) {}
+}
+
+document.addEventListener('visibilitychange', () => { if (document.hidden) teardownAudio(); });
+window.addEventListener('beforeunload', teardownAudio);
+
+// Cleanup on top-left back link
+const backToTF = document.getElementById('back-to-topfloor');
+if (backToTF) backToTF.addEventListener('click', teardownAudio);
+
 function updateAudio() {
   if (!GAME.instruments) return;
   const floor = GAME.currentFloor;
@@ -3387,8 +3410,7 @@ function showEndingTitleAndCTA(gen) {
     // Explore button (Screen 1)
     const exploreBtn1 = document.getElementById('explore-btn-1');
     if (exploreBtn1) exploreBtn1.addEventListener('click', function(e) {
-      e.preventDefault(); stopAllAudio();
-      try { Tone.context.close(); } catch(e2) {}
+      e.preventDefault(); teardownAudio();
       window.location.href = '/';
     });
 
@@ -3437,6 +3459,7 @@ function showEndingTitleAndCTA(gen) {
         .then(response => {
           if (!response.ok) throw new Error('Submit failed');
           // Success — navigate the already-opened tab to screenplay
+          teardownAudio();
           if (pdfWin) pdfWin.location.href = '/topfloor/screenplay';
           else window.location.href = '/topfloor/screenplay';
           transitionToScreen1(gen);
@@ -3449,8 +3472,7 @@ function showEndingTitleAndCTA(gen) {
           formError.style.display = 'block';
           const fb = document.getElementById('fallback-mailto');
           if (fb) fb.addEventListener('click', function(ev) {
-            ev.preventDefault(); stopAllAudio();
-            try { Tone.context.close(); } catch(e2) {}
+            ev.preventDefault(); teardownAudio();
             window.location.href = 'mai' + 'lto:mcoynegreen' + '@gmail.com?subject=Top%20Floor%20-%20Screenplay%20Request';
           });
         });

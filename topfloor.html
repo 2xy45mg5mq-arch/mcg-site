@@ -185,14 +185,16 @@
       animation-delay: var(--d, 0s);
     }
     .genre-below {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem; letter-spacing: 0.1em;
-      color: var(--muted); text-transform: uppercase;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.5rem; letter-spacing: 0.35em;
+      font-weight: 400;
+      color: rgba(228, 228, 228, 0.5); text-transform: uppercase;
       margin-top: 48px;
-      max-width: 900px; margin-left: auto; margin-right: auto;
+      max-width: 1200px; margin-left: auto; margin-right: auto;
       opacity: 0;
       animation: floorBang 0.3s ease-out forwards;
       animation-delay: 1.3s;
+      font-style: italic;
     }
     @keyframes floorBang {
       0% { opacity: 0; transform: translateY(-8px); }
@@ -204,7 +206,7 @@
     .section {
       max-width: 800px;
       margin: 0 auto;
-      padding: 80px 40px;
+      padding: 60px 40px;
     }
     .section-label {
       font-family: 'Bebas Neue', sans-serif;
@@ -248,7 +250,7 @@
     .still::after { bottom: 0; background: linear-gradient(to top, var(--bg), transparent); }
 
     /* ── TAGLINE BEAT ── */
-    .tagline-beat { text-align: center; padding: 140px 40px; }
+    .tagline-beat { text-align: center; padding: 80px 40px; }
     .tagline-beat p {
       font-family: 'EB Garamond', Georgia, serif;
       font-style: italic;
@@ -448,11 +450,11 @@
       .pyramid-line-3 { max-width: 500px; }
       .pyramid-line-3 .fl-text { font-size: 1.2rem; }
 
-      .genre-below { font-size: 1.35rem; max-width: 650px; }
-      .section { padding: 60px 24px; }
+      .genre-below { font-size: 1.2rem; max-width: 750px; letter-spacing: 0.25em; }
+      .section { padding: 48px 24px; }
       .section + .section { padding-top: 12px; }
-      .story-open { padding: 70px 24px 40px !important; }
-      .tagline-beat { padding: 80px 24px; }
+      .story-open { padding: 32px 24px 32px !important; }
+      .tagline-beat { padding: 60px 24px; }
       .cta-section { padding: 60px 24px; }
       .stats-grid { grid-template-columns: 1fr; }
       .game-card { padding: 28px 20px; }
@@ -485,10 +487,11 @@
         letter-spacing: 0.06em !important;
       }
       .genre-below {
-        font-size: 1.1rem !important;
+        font-size: 0.95rem !important;
         margin-top: 28px !important;
+        letter-spacing: 0.2em !important;
       }
-      .story-open { padding: 60px 24px 8px !important; }
+      .story-open { padding: 32px 24px 8px !important; }
     }
   </style>
 </head>
@@ -542,8 +545,8 @@
   </header>
 
   <!-- ═══ CHAPTER OPEN ═══ -->
-  <section class="section story-open reveal" style="padding: 100px 40px 16px;">
-    <p><strong>MURRY</strong> opens the door.</p>
+  <section class="section story-open reveal" style="padding: 70px 40px 16px;">
+    <p style="font-size: 1.6rem; font-weight: 500; line-height: 1.4;"><strong>MURRY</strong> opens the door.</p>
   </section>
 
   <div class="still" style="max-height: 55vh; overflow: hidden;">
@@ -554,7 +557,7 @@
   <section class="section story-section reveal">
     <style>.story-section p { line-height: 1.4; margin-bottom: 20px; font-size: 1.15rem; }</style>
     <p>That's what he does. Six days a week in the green marble lobby of the storied uptown Pyramid House. But if you asked him, he wouldn't say he's a doorman. He'd say he's an <em>entrepreneur working as a doorman</em>. Waiting for the right door to open for&nbsp;him.</p>
-    <p style="font-family: 'EB Garamond', Georgia, serif; font-size: clamp(1.85rem, 5vw, 3.4rem); font-weight: 500; line-height: 1.3; color: var(--text); letter-spacing: 0.01em; margin-top: 48px; margin-bottom: 48px;">But while he dreams of the top, he's living in his sister's&nbsp;basement.</p>
+    <p>But while he dreams of the top, he's living in his sister's&nbsp;basement.</p>
     <p><strong>SERA</strong> is trying to keep him&nbsp;grounded.</p>
     <p>Their whole lives, he's been getting stuck in holes, leaving her to dig him out. She just wishes he would be happy with <em>who he&nbsp;is</em>. But Murry's listened to enough hustle culture podcasts to know he can be <em>anyone he wants to&nbsp;be</em>.</p>
     <p>And there is someone he's always wanted to&nbsp;be.</p>
@@ -597,7 +600,7 @@
   <!-- ═══ PRODUCTION ═══ -->
   <section class="section reveal">
     <div class="section-label">Production Considerations</div>
-    <h2>Contained, commercial, castable</h2>
+    <h2>Contained. Commercial. Castable.</h2>
     <p>A high-concept identity swap that hooks an audience in one sentence and sustains tension for ninety minutes. Built for efficient production with a festival-to-theatrical&nbsp;path.</p>
     <div class="stats-grid">
       <div class="stat">
@@ -630,7 +633,7 @@
   <section class="section bio-section reveal">
     <div class="section-label">Writer</div>
     <h2>Max Coyne-Green</h2>
-    <p>Screenwriter and producer based in New York. A decade in hedge fund research and startup operations before writing full-time. Currently producing the short film <em>Human Resource</em> (starring Veanne Cox), screening at nine festivals in 2025–26, with the feature in development. The corporate and wealth world in Top Floor comes from direct&nbsp;experience.</p>
+    <p>Screenwriter and producer based in New York. A decade in hedge fund research and startup operations before writing full-time. Currently producing the short film <em>Human Resource</em> (starring Veanne Cox), screening at nine festivals in 2025–26, with the feature in&nbsp;development.</p>
     <div class="bio-links">
       <a href="/about">Full Bio →</a>
     </div>

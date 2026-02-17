@@ -418,13 +418,28 @@
     }
     .bio-links a:hover { color: var(--text); }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 40px; text-align: center;
-      font-size: 0.75rem; color: var(--muted);
+    /* ── COPYRIGHT FOOTER ── */
+    .copyright-footer {
+      text-align: center;
+      padding: 60px 20px 40px;
       border-top: 1px solid var(--border);
+      margin-top: 0;
     }
-    footer a { color: rgba(228,228,228,0.5); text-decoration: none; }
+    .copyright-footer p {
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      opacity: 0.5;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .copyright-footer p:first-child {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
 
     /* ── REVEAL ON SCROLL ── */
     .reveal {
@@ -707,9 +722,10 @@
     </div>
   </section>
 
-  <footer>
+  <!-- COPYRIGHT FOOTER -->
+  <footer class="copyright-footer">
     <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
-    <p style="margin-top: 8px;"><a href="/">coyne-green.com</a></p>
+    <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
   </footer>
 
   <!-- ═══ CONNECT MODAL ═══ -->

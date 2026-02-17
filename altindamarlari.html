@@ -306,17 +306,28 @@
       background: rgba(184,134,11,0.1); border-color: rgba(184,134,11,0.6);
     }
 
-    /* --- FOOTER --- */
-    .site-footer {
-      text-align: center; padding: 60px 20px 40px;
+    /* --- COPYRIGHT FOOTER --- */
+    .copyright-footer {
+      text-align: center;
+      padding: 60px 20px 40px;
       border-top: 1px solid var(--border);
-      font-family: 'Bebas Neue', sans-serif; font-size: 0.65rem;
-      letter-spacing: 1px; color: rgba(228,228,228,0.25);
+      margin-top: 0;
     }
-    .site-footer a {
-      color: rgba(228,228,228,0.35); text-decoration: none; transition: color 0.2s;
+    .copyright-footer p {
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      opacity: 0.5;
+      max-width: 480px;
+      margin: 0 auto;
     }
-    .site-footer a:hover { color: rgba(228,228,228,0.6); }
+    .copyright-footer p:first-child {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
 
     /* --- REVEAL --- */
     .reveal {
@@ -538,9 +549,10 @@
     <button class="cta-btn" onclick="openConnectModal()">Connect</button>
   </div>
 
-  <!-- 7. FOOTER -->
-  <footer class="site-footer">
-    <p>&copy; 2026 <a href="/">coyne-green.com</a></p>
+  <!-- COPYRIGHT FOOTER -->
+  <footer class="copyright-footer">
+    <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
+    <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
   </footer>
 
   <!-- CONNECT MODAL -->

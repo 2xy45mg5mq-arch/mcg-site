@@ -74,7 +74,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -896,6 +896,35 @@
         linear-gradient(to right, var(--bg) 0%, transparent 15%, transparent 85%, var(--bg) 100%),
         linear-gradient(to bottom, var(--bg) 0%, transparent 12%, transparent 85%, var(--bg) 100%);
       pointer-events: none;
+    }
+
+    .tf-card-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 30px;
+      pointer-events: none;
+    }
+    .tf-card-overlay h2 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: #f0ece4;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      text-shadow: 0 3px 30px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1);
+    }
+    .tf-card-overlay p {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+      color: rgba(228,228,228,0.7);
+      max-width: 500px;
+      line-height: 1.5;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.95);
     }
 
     /* Kan Vatan card - title image flush to black */
@@ -2539,10 +2568,12 @@
       <div class="project-card tf-card">
         <a href="/topfloor" class="project-card-image" style="display:block;">
           <img src="/images/tf_art_deco_pyramid.webp?v=1" alt="Top Floor" loading="lazy">
+          <div class="tf-card-overlay">
+            <h2>TOP FLOOR</h2>
+            <p>An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous new identity.</p>
+          </div>
         </a>
         <div class="project-card-content">
-          <div class="type">Feature · Crime Thriller</div>
-          <p class="logline">An ambitious Manhattan doorman moves into the penthouse of his dreams—only to be trapped in a dangerous new&nbsp;identity.</p>
           <div class="project-card-buttons">
             <a href="/topfloor" class="btn btn-primary">Play the Game</a>
             <a href="/topfloor" class="btn">Learn More</a>

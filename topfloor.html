@@ -129,7 +129,7 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(4rem, 13vw, 9rem);
       letter-spacing: 0.18em;
-      text-indent: 0.18em;
+      padding-left: 0.18em;
       line-height: 0.85;
       margin-bottom: 0;
       font-weight: 400;
@@ -162,12 +162,12 @@
       font-family: 'Bebas Neue', sans-serif;
       text-transform: uppercase; text-align: center;
       letter-spacing: 0.1em;
-      text-indent: 0.1em;
+      padding-left: 0.1em;
       font-size: var(--fs, 0.85rem);
       color: var(--c, rgba(228,228,228,0.6));
       text-shadow: 0 1px 12px rgba(10, 13, 16, 0.9), 0 0 40px rgba(10, 13, 16, 0.5);
     }
-    .byline-floor .fl-text { letter-spacing: 0.18em; text-indent: 0.18em; }
+    .byline-floor .fl-text { letter-spacing: 0.18em; padding-left: 0.18em; }
     .tower-sep {
       width: var(--w, 50%); margin: 0 auto;
       border: none; border-top: 1px solid rgba(184, 164, 114, 0.25);
@@ -179,7 +179,7 @@
     .genre-below {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.55rem; letter-spacing: 5px;
-      text-indent: 5px;
+      padding-left: 5px;
       color: var(--muted); text-transform: uppercase;
       margin-top: 48px;
       opacity: 0;
@@ -424,10 +424,10 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .hero-content h1 { font-size: clamp(3.2rem, 15vw, 7rem); }
+      .hero-content h1 { font-size: clamp(3.5rem, 16vw, 7rem); }
       .tower-wrap { margin-top: 32px; max-width: 100%; padding: 0 12px; }
       .tower-floor { min-width: 48%; padding: 8px 6px; }
-      .tower-floor .fl-text { letter-spacing: 0.06em; text-indent: 0.06em; }
+      .tower-floor .fl-text { letter-spacing: 0.06em; padding-left: 0.06em; }
       .genre-below { margin-top: 36px; }
       .section { padding: 60px 24px; }
       .section + .section { padding-top: 12px; }
@@ -444,6 +444,10 @@
       .nav-links a { font-size: 0.7rem; letter-spacing: 1px; }
     }
     @media (max-width: 430px) {
+      .hero-content h1 {
+        letter-spacing: 0.14em;
+        padding-left: 0.14em;
+      }
       .tower-floor {
         border-color: transparent !important;
       }
@@ -456,16 +460,17 @@
       .tower-sep { opacity: 0 !important; height: 6px; }
       .tower-floor .fl-text {
         letter-spacing: 0.02em !important;
-        text-indent: 0.02em !important;
+        padding-left: 0.02em !important;
+        white-space: nowrap;
       }
       .byline-floor .fl-text {
         letter-spacing: 0.06em !important;
-        text-indent: 0.06em !important;
+        padding-left: 0.06em !important;
       }
       .genre-below {
         font-size: 0.7rem !important;
         letter-spacing: 3px !important;
-        text-indent: 3px !important;
+        padding-left: 3px !important;
         margin-top: 28px !important;
       }
       .story-open { padding: 60px 24px 8px !important; }
@@ -507,13 +512,13 @@
           <div class="fl-text">max coyne-green</div>
         </div>
         <hr class="tower-sep" style="--w:36%; --d:0.5s">
-        <div class="tower-floor" style="--w:54%; --fs:clamp(0.8rem,1.8vw,1.1rem); --c:rgba(228,228,228,0.7); --d:0.7s">
+        <div class="tower-floor" style="--w:58%; --fs:clamp(0.85rem,3.5vw,1.3rem); --c:rgba(228,228,228,0.7); --d:0.7s">
           <div class="fl-text">an ambitious manhattan doorman</div>
         </div>
-        <div class="tower-floor" style="--w:72%; --fs:clamp(0.9rem,2vw,1.25rem); --c:rgba(228,228,228,0.8); --d:0.9s">
+        <div class="tower-floor" style="--w:76%; --fs:clamp(0.95rem,4vw,1.5rem); --c:rgba(228,228,228,0.8); --d:0.9s">
           <div class="fl-text">moves into his doppelg&auml;nger's penthouse</div>
         </div>
-        <div class="tower-floor" style="--w:92%; --fs:clamp(1rem,2.2vw,1.45rem); --c:rgba(228,228,228,0.9); --d:1.1s">
+        <div class="tower-floor" style="--w:96%; --fs:clamp(1.05rem,4.3vw,1.7rem); --c:rgba(228,228,228,0.9); --d:1.1s">
           <div class="fl-text">only to be trapped in a dangerous new identity</div>
         </div>
       </div>

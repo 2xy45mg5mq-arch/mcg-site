@@ -84,6 +84,45 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 
 ---
 
+## Session Rules
+
+1. **Compaction strategy:** Commit in batches of ≤8 files. If context is running low, commit what you have before continuing.
+2. **Copy is sacred:** Never invent, paraphrase, or "improve" copy. Use approved text verbatim from reference docs or Chat prompts. If copy isn't provided, ask.
+3. **Read before writing:** Read the target file before editing. Read this file before every session.
+4. **3-strike rule:** If the same fix fails 3 times, stop. The approach is wrong, not the execution.
+5. **Screenshot after visual changes:** Always Playwright at 390, 768, 1440 after any visual edit.
+
+## Cross-File Consistency Rules
+
+These patterns are identical across all pages. When editing one, verify others match.
+
+- **Nav dropdown:** HR, Top Floor, divider, Türk Projeleri → /turkiye (dimmed label, clickable), then indented: Kan Vatan, Gömüldü, Altın Damarları. No Losing Reality or Meatspace.
+- **Connect modal checkboxes:** Human Resource, Top Floor, Kan Vatan, General meeting with Max. turkiye.html adds Turkish projects after divider.
+- **OG tags:** Every page has unique og:title, og:description, og:image, og:url. All use twitter:card = summary_large_image.
+- **Footer:** .copyright-footer class. Two paragraphs: © line + full IP protection. turkiye.html has Turkish translation.
+- **Fonts:** Bebas Neue (headings), EB Garamond (body). No exceptions except tfgame.html game UI.
+- **Colors:** Base #0a0d10, gold #b8a472, text #e4e4e4, muted #6b7a88, border #1a1f28. Page-specific accents: turkiye #c47a5a, gomuldu #8B7355, altindamarlari #B8860B, losingreality #2A7B9B.
+- **Image-baked text:** Always check if background images contain text before adding HTML text that could duplicate.
+
+## Active Pages (12)
+
+| URL | File |
+|-----|------|
+| `/` | index.html |
+| `/topfloor` | topfloor.html |
+| `/kanvatan` | kanvatan.html |
+| `/about` | about.html |
+| `/hr/deep` | hr-deep.html |
+| `/hr/characters` | hr-slideshow.html |
+| `/tfgame` | tfgame.html |
+| `/meatspace` | meatspace.html |
+| `/gomuldu` | gomuldu.html |
+| `/altindamarlari` | altindamarlari.html |
+| `/losingreality` | losingreality.html |
+| `/turkiye` | turkiye.html |
+
+---
+
 ## QA REQUIREMENTS
 
 **When to screenshot:** After any visual change. Always.
@@ -99,7 +138,6 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 These items are in progress or blocked. Do not modify unless a prompt explicitly says to:
 
 - Top Floor hero redesign (sandbox in topfloor-art-deco-test.html)
-- Top Floor elevator reverse-scroll mechanics in topfloor.html (fragile)
 - 9th festival laurel (Downtown Film Fest — no image yet)
 - Laurel images or festival counts (managed separately)
 - HR SPA extraction (deferred)
@@ -114,6 +152,8 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 - TF primary logline: "An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous new identity."
 - TF comps: "Parasite meets The Talented Mr. Ripley"
 - Portfolio order: HR → Top Floor → Kan Vatan → Türk Projeleri → Coming Up (LR, Meatspace)
+- TF tone refs: RIPLEY / PARASITE / ROSEMARY'S BABY
+- HR comp: "Black Mirror meets Margin Call"
 
 ---
 

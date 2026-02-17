@@ -505,6 +505,28 @@
     }
     .modal-btn-primary:hover { background: rgba(200,190,168,0.25); }
 
+    /* --- CINEMATIC BREAK --- */
+    .cinematic-break {
+      position: relative;
+      width: 100%;
+      height: 45vh;
+      min-height: 280px;
+      overflow: hidden;
+    }
+    .cinematic-break img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cinematic-break::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, #0a0d10 0%, transparent 25%),
+        linear-gradient(0deg, #0a0d10 0%, transparent 25%);
+    }
+
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
       .hero-title { font-size: clamp(3.5rem, 14vw, 5rem); }
@@ -567,8 +589,13 @@
     <p class="tagline-text">JOHN WICK meets the story of MOSES in post-earthquake Turkey</p>
   </div>
 
+  <!-- CINEMATIC BREAK -->
+  <div class="cinematic-break reveal">
+    <img src="/images/Gom6.webp" alt="" loading="lazy">
+  </div>
+
   <!-- 2. SYNOPSIS -->
-  <section class="section section-with-bg reveal" style="background-image: url('/images/gomuldu-hero.webp');">
+  <section class="section reveal">
     <div class="section-inner">
       <p class="section-heading">The Story</p>
       <div class="body-text">
@@ -581,12 +608,17 @@
     </div>
   </section>
 
+  <!-- CINEMATIC BREAK -->
+  <div class="cinematic-break reveal">
+    <img src="/images/Gom5.webp" alt="" loading="lazy">
+  </div>
+
   <!-- 3. VISUAL TREATMENT -->
   <section class="embed-section reveal">
     <div class="embed-inner">
       <p class="section-heading" style="text-align:center;">Visual Treatment</p>
       <a href="https://prewrite.com/web-app/story-viewer/645419b01a729e445e313ed6/home" target="_blank" rel="noopener noreferrer" class="treatment-thumb">
-        <img src="/images/gomuldu-hero.webp" alt="Gömüldü — Visual Treatment" loading="lazy">
+        <img src="/images/Gom7.webp" alt="Gömüldü — Visual Treatment" loading="lazy">
         <div class="treatment-thumb-overlay">
           <span>VIEW FULL TREATMENT &rarr;</span>
         </div>

@@ -2708,15 +2708,19 @@
     }
 
     .turk-pilot-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 4;
       text-align: center;
       padding: 5px 0;
-      background: rgba(201, 148, 14, 0.1);
-      border: 1px solid rgba(201, 148, 14, 0.25);
-      border-bottom: none;
+      background: rgba(201, 148, 14, 0.15);
+      border-bottom: 1px solid rgba(201, 148, 14, 0.25);
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.5rem;
       letter-spacing: 0.25em;
-      text-transform: uppercase;
+      text-transform: lowercase;
       color: #c9940e;
     }
 
@@ -2866,7 +2870,7 @@
         </a>
         <div class="project-card-content">
           <div class="project-card-buttons">
-            <a href="/topfloor" class="btn btn-primary">Play the Game</a>
+            <a href="/tfgame" class="btn btn-primary">Play the Game</a>
             <a href="/topfloor" class="btn">Learn More</a>
           </div>
         </div>
@@ -2896,7 +2900,7 @@
 
         <!-- KAN VATAN (CENTER — FEATURED) -->
         <a href="/kanvatan" class="turk-card turk-featured">
-          <div class="turk-pilot-strip">Pilot Available</div>
+          <div class="turk-pilot-strip">pilot now available</div>
           <div class="turk-poster">
             <img src="/images/img_41.webp" alt="Kan Vatan — Blood Homeland" loading="lazy">
             <div class="turk-poster-overlay"></div>
@@ -3021,8 +3025,7 @@
 
     <!-- COPYRIGHT FOOTER -->
     <footer class="copyright-footer">
-      <p>© 2026 Max Coyne-Green. All rights reserved.</p>
-      <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
+      <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
     </footer>
 
   </div>

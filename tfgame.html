@@ -535,12 +535,18 @@ canvas {
 }
 .cta-link {
   display: inline-block; color: #c4a86b; font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px; letter-spacing: 4px; padding: 12px 36px; text-decoration: none;
+  font-size: 13px; letter-spacing: 4px; padding: 8px 24px; text-decoration: none;
   border: 1px solid rgba(196,168,107,0.4); margin-top: 10px;
   transition: background 0.2s;
 }
 .cta-link:hover { background: rgba(196,168,107,0.1); }
-.cta-link.small { font-size: 13px; opacity: 0.7; margin-top: 10px; padding: 8px 24px; }
+.cta-link.primary {
+  font-size: 18px; letter-spacing: 5px; padding: 16px 44px;
+  background: rgba(196,168,107,0.15); border-color: rgba(196,168,107,0.6);
+  margin-bottom: 20px; margin-top: 8px;
+}
+.cta-link.primary:hover { background: rgba(196,168,107,0.25); }
+.cta-link.small { font-size: 12px; opacity: 0.55; margin-top: 8px; padding: 6px 20px; border-color: rgba(196,168,107,0.15); }
 .cta-replay {
   color: rgba(196,168,107,0.25); font-family: 'Bebas Neue', sans-serif;
   font-size: 11px; letter-spacing: 3px; text-decoration: none; margin-top: 24px;
@@ -708,7 +714,7 @@ canvas {
       <div class="cta-title">TOP FLOOR</div>
       <div class="cta-subtitle">THE MOVIE</div>
       <div class="cta-tagline">There's only one way to go from here.</div>
-      <a class="cta-link" href="#" id="read-screenplay-btn">DISCOVER THE FULL STORY</a>
+      <a class="cta-link primary" href="#" id="read-screenplay-btn">DISCOVER THE FULL STORY</a>
       <a class="cta-link small" href="/" id="explore-btn-1">EXPLORE MORE STORIES</a>
       <a class="cta-link small" href="#" id="share-btn">SHARE THIS GAME</a>
       <a class="cta-replay" href="#" id="replay-btn-1">PLAY AGAIN</a>

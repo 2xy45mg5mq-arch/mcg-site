@@ -113,13 +113,13 @@
     .hero-bg img {
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.15;
-      filter: brightness(0.5);
+      opacity: 0.4;
+      filter: brightness(0.75);
     }
     .hero-bg::after {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center 60%, transparent 20%, var(--bg) 75%);
+      background: radial-gradient(ellipse at center 60%, transparent 35%, var(--bg) 80%);
     }
     .hero-content { position: relative; z-index: 2; }
     .hero-content h1 {
@@ -201,7 +201,7 @@
     }
     .section h2 {
       font-family: 'EB Garamond', Georgia, serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
       font-weight: 500;
       line-height: 1.35;
       margin-bottom: 24px;
@@ -478,16 +478,18 @@
     </div>
   </header>
 
-  <!-- ═══ img_33 ═══ -->
-  <div class="still">
-    <img src="/images/img_33.webp" alt="Murry through the car window">
+  <!-- ═══ CHAPTER OPEN ═══ -->
+  <section class="section story-open reveal" style="padding: 100px 40px 60px;">
+    <p style="font-family: 'EB Garamond', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; line-height: 1.3; color: var(--text); letter-spacing: 0.01em;"><strong>MURRY</strong> opens the door.</p>
+  </section>
+
+  <div class="still" style="max-height: 55vh; overflow: hidden;">
+    <img src="/images/img_33.webp" alt="Murry the doorman" style="object-fit: cover; width: 100%; height: 55vh; object-position: center 30%;">
   </div>
 
   <!-- ═══ THE STORY ═══ -->
   <section class="section story-section reveal">
-    <div class="section-label">The Story</div>
     <style>.story-section p { line-height: 1.35; margin-bottom: 20px; }</style>
-    <p><strong>MURRY</strong> opens the door.</p>
     <p>That's what he does. Six days a week in the green marble lobby of the storied uptown Pyramid House. But if you asked him, he wouldn't say he's a doorman. He'd say he's an <em>entrepreneur working as a doorman</em>. Waiting for the right door to open for&nbsp;him.</p>
     <p>But while he dreams of the top, he's living in his sister's&nbsp;basement.</p>
     <p><strong>SERA</strong> just wants him&nbsp;grounded.</p>
@@ -507,31 +509,25 @@
   </div>
 
   <div class="still">
-    <img src="/images/tf_pushups1.webp" alt="Murry in the basement">
+    <img src="/images/tf_penthouse_window.webp" alt="The view from the penthouse">
   </div>
 
   <!-- ═══ THE WORLD ═══ -->
   <section class="section reveal">
-    <div class="section-label">The World</div>
-    <h2>There are levels to this city</h2>
-    <p>Every luxury co-op in Manhattan has two populations: the residents who ride the elevator, and the staff who hold the door. They see each other every day. They know each other's names, habits, secrets. But they live in different worlds separated by a uniform and a lobby&nbsp;desk.</p>
-    <p>Top Floor infuses the classic doppelg&auml;nger and identity theft story with modern hustle culture, financial schemes, and a new type of villain ruling from&nbsp;above.</p>
+    <h2>THERE ARE LEVELS TO THIS CITY</h2>
+    <p>And it's not a secret. But there is a code. Despite the intimacy, the access, the visibility, everyone knows their place. No one working on the ground floor expects to live at the&nbsp;top.</p>
+    <p>Except for Murry. From a new generation of reddit-pilled hustlers, Murry's on his way up one way or another. And upstairs, they've been waiting for&nbsp;him.</p>
   </section>
-
-  <div class="still">
-    <img src="/images/tf_penthouse_window.webp" alt="The view from the penthouse">
-  </div>
 
   <!-- ═══ TONE ═══ -->
   <section class="section reveal">
     <div class="section-label">Tone & Influences</div>
-    <p style="font-style: italic; font-size: 0.9rem; color: var(--muted); margin-bottom: 28px;"><em>Parasite</em> meets <em>The Talented Mr. Ripley</em></p>
     <p>A breathless, twisted climb into the darkness of New York's true high&nbsp;society.</p>
-    <p>The identity games of <em>Ripley</em>. The physical metaphors of <em>Parasite</em>. The self-delusions of <em>Fargo</em>. This is a quintessential Manhattan story about the rise and fall of the ambitious — and those waiting to prey at the&nbsp;top.</p>
+    <p>The identity games of RIPLEY. The physical metaphors of PARASITE. The delusions and paranoia of ROSEMARY'S BABY. Infusing classic doppelg&auml;nger and identity swap arcs with modern hustle culture, financial schemes, and a new type of villain ruling from above, it's a quintessential Manhattan story about the rise of ambition — and the predation up&nbsp;top.</p>
   </section>
 
   <div class="still">
-    <img src="/images/img_35.webp" alt="Penthouse interior">
+    <img src="/images/tf_pushups1.webp" alt="Training in the basement">
   </div>
 
   <!-- ═══ PRODUCTION ═══ -->
@@ -559,6 +555,13 @@
     <img src="/images/tf_penthouse_meeting.webp" alt="Meeting in the penthouse">
   </div>
 
+  <!-- ═══ PLAY THE STORY ═══ -->
+  <section class="cta-section reveal">
+    <h2>PLAY THE STORY</h2>
+    <p style="max-width:440px; margin:0 auto 32px; font-size:0.95rem; color:var(--muted);">An interactive adaptation. Climb the building floor by floor, collect the disguise, reach the top.</p>
+    <a href="/tfgame" class="btn btn-gold">Play Now</a>
+  </section>
+
   <!-- ═══ WRITER ═══ -->
   <section class="section bio-section reveal">
     <div class="section-label">Writer</div>
@@ -569,14 +572,9 @@
     </div>
   </section>
 
-  <!-- ═══ PLAY THE STORY ═══ -->
-  <section class="cta-section reveal">
-    <a href="/tfgame" class="btn btn-gold">Play the Story</a>
-    <p style="max-width:440px; margin:32px auto 0; font-size:0.95rem; color:var(--muted);">An interactive adaptation. Climb the building floor by floor, collect the disguise, reach the top.</p>
-  </section>
-
   <!-- ═══ CTA ═══ -->
-  <section class="cta-section" style="padding-top:0">
+  <section class="cta-section reveal">
+    <h2>REQUEST THE SCRIPT</h2>
     <a href="#" class="btn btn-gold" onclick="openConnectModal(); return false;">Request the Script</a>
     <div class="cta-nav">
       <a href="/#work">See Other Work</a>

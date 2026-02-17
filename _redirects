@@ -2,8 +2,8 @@
 /hr/deep          /hr-deep.html       200
 /hr/characters    /hr-slideshow.html   200
 /about            /about.html          200
-/topfloor/deep    /topfloor-deep.html  200
-/top-floor        /topfloor-deep.html  200
+/topfloor/deep    /topfloor            301
+/top-floor        /topfloor.html       200
 /topfloor/screenplay /files/TOP%20FLOOR.pdf 200
 /hr/screenplay     /files/HUMAN%20RESOURCE.pdf 200
 /kanvatan/pilot     /files/Kan%20Vatan.pdf 200
@@ -17,8 +17,8 @@
 
 # SPA section anchors
 /hr               /index.html          200
-/topfloor         /index.html          200
-/kanvatan         /index.html          200
+/topfloor         /topfloor.html       200
+/kanvatan         /kanvatan.html       200
 
 # SPA fallback — must be last
 /* /index.html 200

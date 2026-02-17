@@ -515,6 +515,29 @@ nav.scrolled .logo { opacity: 1; }
   cursor: default;
 }
 
+/* ============ COPYRIGHT FOOTER ============ */
+.copyright-footer {
+  text-align: center;
+  padding: 60px 20px 40px;
+  border-top: 1px solid var(--border);
+  margin-top: 0;
+}
+.copyright-footer p {
+  color: var(--muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  line-height: 1.7;
+  opacity: 0.5;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.copyright-footer p:first-child {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
 /* ============ CONNECT MODAL ============ */
 .modal-overlay {
   position: fixed; inset: 0;
@@ -654,10 +677,10 @@ nav.scrolled .logo { opacity: 1; }
         <div class="dropdown">
           <a href="/hr">Human Resource</a>
           <a href="/topfloor">Top Floor</a>
-          <a href="/kanvatan.html">Kan Vatan</a>
+          <a href="/kanvatan">Kan Vatan</a>
         </div>
       </div>
-      <a href="/about">About</a>
+      <a href="/about" class="nav-current">About</a>
       <a href="#" onclick="openConnectModal(); return false;">Connect</a>
     </div>
   </div>
@@ -1339,6 +1362,12 @@ updateUI();
 })();
 </script>
 
+<!-- COPYRIGHT FOOTER -->
+<footer class="copyright-footer">
+  <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
+  <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
+</footer>
+
 <!-- CONNECT MODAL -->
 <form name="connect" netlify netlify-honeypot="bot-field" hidden>
   <input name="name"><input name="email"><input name="request">
@@ -1405,10 +1434,12 @@ updateUI();
     document.getElementById('connectFormState').style.display = '';
     document.getElementById('connectSuccessState').style.display = 'none';
     document.getElementById('connectModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeConnectModal() {
     document.getElementById('connectModal').classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   document.addEventListener('keydown', function(e) {

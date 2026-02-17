@@ -409,17 +409,21 @@
 
     /* --- MODAL --- */
     .modal-overlay {
-      display: none;
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.85);
       z-index: 1000;
+      display: flex;
       justify-content: center;
       align-items: center;
       padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
     }
     .modal-overlay.active {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
     }
     .modal {
       background: #1a1a1a;
@@ -430,6 +434,11 @@
       padding: 40px 36px;
       max-height: 90vh;
       overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.active .modal {
+      transform: translateY(0);
     }
     .modal h2 {
       font-family: 'Bebas Neue', sans-serif;
@@ -548,8 +557,6 @@
 
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
-      .nav-links { gap: 20px; }
-      .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
       .hero-title { font-size: clamp(3.5rem, 14vw, 5rem); }
       .hero-logline { font-size: 1.1rem; }
       .section { padding: 72px 20px; }
@@ -564,6 +571,10 @@
       .modal { padding: 28px 20px; }
       .cta-section { padding: 72px 24px; }
     }
+    @media (max-width: 600px) {
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+    }
   </style>
 </head>
 <body>
@@ -577,7 +588,7 @@
           <div class="dropdown">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <a href="/kanvatan.html">Kan Vatan</a>
+            <a href="/kanvatan">Kan Vatan</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -619,7 +630,7 @@
       <p class="section-heading">The Characters</p>
       <div class="char-grid">
         <div class="char-card">
-          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_sezen.webp?v=1" alt="Sezen Yılmaz" loading="lazy"></div>
+          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_sezen.webp?v=1" alt="Sezen Y&#305;lmaz" loading="lazy"></div>
           <div class="char-card-content">
             <div class="char-card-header">
               <div class="char-name">SEZEN YILMAZ</div>
@@ -629,7 +640,7 @@
           </div>
         </div>
         <div class="char-card">
-          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_kaan.webp?v=1" alt="Kaan Yılmaz" loading="lazy"></div>
+          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_kaan.webp?v=1" alt="Kaan Y&#305;lmaz" loading="lazy"></div>
           <div class="char-card-content">
             <div class="char-card-header">
               <div class="char-name">KAAN YILMAZ</div>
@@ -899,6 +910,15 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         closeConnectModal();
+      }
+    });
+
+    // Fix bfcache scroll lock
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted) {
+        document.body.style.overflow = '';
+        var modal = document.querySelector('.modal-overlay');
+        if (modal) modal.classList.remove('active');
       }
     });
   </script>

@@ -14,13 +14,13 @@
   <title>TOP FLOOR — Feature Film</title>
   <meta name="description" content="Top Floor is a psychological thriller about identity and class inside a Manhattan luxury high-rise. Feature screenplay by Max Coyne-Green.">
   <meta property="og:title" content="TOP FLOOR">
-  <meta property="og:description" content="An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous financial scheme.">
+  <meta property="og:description" content="An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous new identity.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://coyne-green.com/images/og-topfloor.jpg">
   <meta property="og:url" content="https://coyne-green.com/topfloor">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TOP FLOOR">
-  <meta name="twitter:description" content="An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous financial scheme.">
+  <meta name="twitter:description" content="An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous new identity.">
   <meta name="twitter:image" content="https://coyne-green.com/images/og-topfloor.jpg">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
@@ -418,7 +418,7 @@
           <div class="dropdown">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <a href="/kanvatan.html">Kan Vatan</a>
+            <a href="/kanvatan">Kan Vatan</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -433,7 +433,7 @@
       <img src="/images/tf_pyramid_ref.webp" alt="Pyramid House at night">
     </div>
     <div class="hero-content">
-      <div class="hero-genre">Feature · Psychological Thriller · 98 Pages</div>
+      <div class="hero-genre">Feature · Psychological Thriller</div>
       <h1>TOP FLOOR</h1>
       <p class="hero-comps">Parasite meets The Talented Mr. Ripley</p>
     </div>
@@ -636,10 +636,12 @@
       document.getElementById('connectFormState').style.display = '';
       document.getElementById('connectSuccessState').style.display = 'none';
       document.getElementById('connectModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeConnectModal() {
       document.getElementById('connectModal').classList.remove('active');
+      document.body.style.overflow = '';
     }
 
     document.addEventListener('keydown', function(e) {

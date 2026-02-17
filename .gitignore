@@ -12,3 +12,10 @@ backups-*/
 # IDE
 .vscode/
 .idea/
+
+# Netlify
+.netlify/
+
+# Test artifacts
+test-results/
+test-nav-fixes.mjs

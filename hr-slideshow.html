@@ -37,6 +37,7 @@
       --accent: #9a8b6e;
       --accent-dim: rgba(154, 139, 110, 0.15);
       --gold: #b8a472;
+      --border: rgba(255,255,255,0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -249,7 +250,7 @@
       backdrop-filter: blur(8px);
     }
 
-    .nav-item {
+    .slide-nav-item {
       flex: 1;
       display: flex;
       align-items: center;
@@ -261,9 +262,9 @@
       transition: background 0.3s;
     }
 
-    .nav-item:last-child { border-right: none; }
+    .slide-nav-item:last-child { border-right: none; }
 
-    .nav-item:hover {
+    .slide-nav-item:hover {
       background: rgba(154,139,110,0.05);
     }
 
@@ -276,36 +277,36 @@
       white-space: nowrap;
     }
 
-    .nav-item.active .nav-item-label {
+    .slide-nav-item.active .nav-item-label {
       color: var(--accent);
     }
 
-    .nav-item:hover .nav-item-label {
+    .slide-nav-item:hover .nav-item-label {
       color: var(--text);
     }
 
     /* Feature-only nav items — dimmed with dot indicator */
-    .nav-item.feature-only {
+    .slide-nav-item.feature-only {
       opacity: 0.45;
     }
-    .nav-item.feature-only:hover {
+    .slide-nav-item.feature-only:hover {
       opacity: 0.75;
     }
-    .nav-item.feature-only.active {
+    .slide-nav-item.feature-only.active {
       opacity: 1;
     }
-    .nav-item.feature-only .nav-item-label {
+    .slide-nav-item.feature-only .nav-item-label {
       color: var(--muted);
       font-size: 0.45rem;
     }
-    .nav-item.feature-only.active .nav-item-label {
+    .slide-nav-item.feature-only.active .nav-item-label {
       color: var(--gold);
     }
     /* Thin top border to separate feature section */
-    .nav-item.feature-only:first-of-type {
+    .slide-nav-item.feature-only:first-of-type {
       border-left: 1px solid rgba(184,164,114,0.15);
     }
-    .nav-item.feature-only::before {
+    .slide-nav-item.feature-only::before {
       content: '';
       position: absolute;
       top: 0;
@@ -346,12 +347,12 @@
       transition: none;
     }
 
-    .nav-item.feature-only .nav-item-fill {
+    .slide-nav-item.feature-only .nav-item-fill {
       background: var(--gold);
       opacity: 0.6;
     }
 
-    .nav-item.active .nav-item-fill {
+    .slide-nav-item.active .nav-item-fill {
       transition: width linear;
     }
 
@@ -580,7 +581,7 @@
           <div class="dropdown">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <a href="/kanvatan.html">Kan Vatan</a>
+            <a href="/kanvatan">Kan Vatan</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -729,7 +730,7 @@
       }
 
       const item = document.createElement('div');
-      item.className = 'nav-item' + (i === 0 ? ' active' : '') + (isFeature ? ' feature-only' : '');
+      item.className = 'slide-nav-item' + (i === 0 ? ' active' : '') + (isFeature ? ' feature-only' : '');
       item.innerHTML = `
         <span class="nav-item-label">${slide.dataset.name}</span>
         <div class="nav-item-fill"></div>
@@ -741,7 +742,7 @@
       navBar.appendChild(item);
     });
 
-    const navItems = document.querySelectorAll('.nav-item');
+    const navItems = document.querySelectorAll('.slide-nav-item');
 
     function goTo(index) {
       if (index === current) return;
@@ -797,11 +798,16 @@
       cursor.style.top = e.clientY + 'px';
     });
 
-    document.querySelectorAll('.nav-item, a, .slide-arrow').forEach(el => {
+    document.querySelectorAll('.slide-nav-item, a, .slide-arrow').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
   </script>
+
+  <footer style="text-align:center;padding:40px 20px;color:#666;font-size:13px;letter-spacing:1px;">
+    <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
+    <p><a href="/" style="color:#888;text-decoration:none;">coyne-green.com</a></p>
+  </footer>
 
   <!-- CONNECT MODAL -->
   <form name="connect" netlify netlify-honeypot="bot-field" hidden>
@@ -872,11 +878,13 @@
       document.getElementById('connectSuccessState').style.display = 'none';
       document.getElementById('connectModal').classList.add('active');
       document.body.style.cursor = 'auto';
+      document.body.style.overflow = 'hidden';
     }
 
     function closeConnectModal() {
       document.getElementById('connectModal').classList.remove('active');
       document.body.style.cursor = '';
+      document.body.style.overflow = '';
     }
 
     document.addEventListener('keydown', function(e) {

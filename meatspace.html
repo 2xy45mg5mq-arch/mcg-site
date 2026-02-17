@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4XQR4QCNZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V4XQR4QCNZ');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>MEATSPACE — A Movie About a Guy Locked Out of Paradise</title>
@@ -8,10 +16,12 @@
 <meta property="og:title" content="MEATSPACE">
 <meta property="og:description" content="A movie about a guy locked out of paradise. Written by Max Coyne-Green.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://coyne-green.com/og-image.jpg">
 <meta property="og:url" content="https://coyne-green.com/meatspace">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MEATSPACE">
 <meta name="twitter:description" content="A movie about a guy locked out of paradise.">
+<meta name="twitter:image" content="https://coyne-green.com/og-image.jpg">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -39,19 +49,50 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  .back-link {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: var(--muted);
-    text-decoration: none;
-    z-index: 100;
-    transition: color 0.3s;
+  /* --- NAV --- */
+  .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 24px 0; background: transparent; transition: all 0.4s;
   }
-  .back-link:hover { color: var(--text); }
+  nav.scrolled {
+    background: rgba(10, 13, 16, 0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border); padding: 16px 0;
+  }
+  nav .nav-container { display: flex; justify-content: space-between; align-items: center; }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif; font-weight: 600; font-size: 1.1rem;
+    letter-spacing: 4px; color: var(--text); text-decoration: none;
+    opacity: 1; transition: opacity 0.3s;
+  }
+  nav.scrolled .logo { opacity: 1; }
+  .nav-links { display: flex; gap: 40px; }
+  .nav-links a {
+    color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-item { display: flex; align-items: center; position: relative; }
+  .nav-item > a { cursor: pointer; }
+  .dropdown {
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    min-width: 160px; background: rgba(10, 13, 16, 0.98);
+    border: 1px solid var(--border); border-radius: 4px; padding: 8px 0;
+    opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; margin-top: 12px;
+  }
+  .nav-item:hover .dropdown, .nav-item .dropdown.open { opacity: 1; visibility: visible; }
+  .dropdown a {
+    display: block; padding: 10px 20px; color: rgba(255,255,255,0.6);
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 1px;
+    text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
+  }
+  .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+  .nav-links > a, .nav-item > a { position: relative; }
+  .nav-links > a::after, .nav-item > a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
+  }
+  .nav-links > a:hover::after, .nav-item > a:hover::after { width: 100%; }
 
   .container {
     max-width: 740px;
@@ -172,58 +213,121 @@
   .modal {
     background: var(--card); border: 1px solid var(--border); border-radius: 8px;
     padding: 40px; max-width: 480px; width: 90%;
+    max-height: 90vh; overflow-y: auto;
     transform: translateY(20px); transition: transform 0.3s;
   }
   .modal-overlay.active .modal { transform: translateY(0); }
-  .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 8px; color: var(--text); }
-  .modal-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .modal h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 4px;
+    text-align: center; margin-bottom: 4px; color: var(--text);
+  }
+  .modal-subtitle {
+    text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 28px;
+  }
   .modal-section { margin-bottom: 24px; }
-  .modal-section-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .modal-section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
   .modal-input {
-    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
-    padding: 12px; color: var(--text); font-family: inherit; font-size: 0.95rem; margin-bottom: 10px;
+    display: block; width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 12px 16px; color: var(--text); font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1rem; margin-bottom: 10px; outline: none; transition: border-color 0.2s;
   }
   .modal-input:focus { outline: none; border-color: var(--muted); }
   .modal-input::placeholder { color: var(--muted); }
   .modal-textarea {
-    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
-    padding: 12px; color: var(--text); font-family: inherit; font-size: 0.95rem;
-    resize: vertical; min-height: 80px;
+    display: block; width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 12px 16px; color: var(--text); font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1rem; resize: vertical; min-height: 100px; outline: none; transition: border-color 0.2s;
   }
   .modal-textarea:focus { outline: none; border-color: var(--muted); }
   .modal-textarea::placeholder { color: var(--muted); }
   .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
   .modal-btn {
-    flex: 1; padding: 14px 24px; border: none; border-radius: 4px;
-    font-family: inherit; font-size: 0.8rem; letter-spacing: 1px;
-    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    flex: 1; padding: 12px 20px; border: none; border-radius: 4px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.7rem; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.2s;
   }
-  .modal-btn-primary { background: var(--text); color: var(--bg); }
-  .modal-btn-primary:hover { background: #fff; }
-  .modal-btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-  .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
-  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
-  .checkbox-item { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .modal-btn-primary { background: rgba(255,255,255,0.15); color: var(--text); }
+  .modal-btn-primary:hover { background: rgba(255,255,255,0.25); }
+  .modal-btn-secondary { background: rgba(255,255,255,0.05); color: var(--muted); }
+  .modal-btn-secondary:hover { background: rgba(255,255,255,0.08); }
+  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    font-size: 0.95rem; color: rgba(255,255,255,0.7);
+  }
   .checkbox-item input { display: none; }
   .checkbox-box {
-    width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 3px;
-    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 3px; flex-shrink: 0; position: relative; transition: all 0.2s;
   }
-  .checkbox-item input:checked + .checkbox-box { background: var(--text); border-color: var(--text); }
-  .checkbox-box::after { content: '\2713'; color: var(--bg); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
-  .checkbox-item input:checked + .checkbox-box::after { opacity: 1; }
+  .checkbox-item input:checked + .checkbox-box {
+    background: rgba(255,255,255,0.2); border-color: var(--text);
+  }
+  .checkbox-item input:checked + .checkbox-box::after {
+    content: ''; position: absolute; top: 2px; left: 5px;
+    width: 4px; height: 8px; border: solid var(--text);
+    border-width: 0 2px 2px 0; transform: rotate(45deg);
+  }
   .checkbox-label { font-size: 0.95rem; }
+
+  @media (max-width: 600px) {
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+  }
 
   @media (max-width: 600px) {
     .container { padding: 80px 20px 60px; }
     .title-card h1 { letter-spacing: 8px; }
-    .back-link { top: 16px; left: 16px; }
+    .modal { padding: 28px 20px; }
+  }
+
+  /* COPYRIGHT FOOTER */
+  .copyright-footer {
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+  }
+  .copyright-footer p {
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    opacity: 0.5;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .copyright-footer p:first-child {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    opacity: 0.6;
   }
 </style>
 </head>
 <body>
 
-<a href="https://coyne-green.com" class="back-link">&larr; coyne-green.com</a>
+<nav>
+  <div class="nav-container">
+    <a href="/" class="logo">MCG</a>
+    <div class="nav-links">
+      <div class="nav-item">
+        <a href="#" onclick="return false;">Work</a>
+        <div class="dropdown">
+          <a href="/hr">Human Resource</a>
+          <a href="/topfloor">Top Floor</a>
+          <a href="/kanvatan">Kan Vatan</a>
+        </div>
+      </div>
+      <a href="/about">About</a>
+      <a href="#" onclick="openConnectModal(); return false;">Connect</a>
+    </div>
+  </div>
+</nav>
 
 <div class="container">
 
@@ -262,26 +366,35 @@
   <p class="tagline">It's like The Matrix. But backwards.</p>
 
   <div class="cta-wrap">
-    <a href="#" class="cta-btn" onclick="openConnectModal(); return false;">Get More Info</a>
+    <a href="#" class="cta-btn" onclick="openConnectModal({heading:'GET MORE INFO',subtitle:'Meatspace \u2014 Satirical Sci-Fi Feature',interest:'Meatspace',request:'Meatspace - Info',placeholder:'Introduce yourself briefly...'}); return false;">Get More Info</a>
   </div>
 
 </div>
 
-<!-- Contact Modal — matches homepage modal exactly -->
+<!-- COPYRIGHT FOOTER -->
+<footer class="copyright-footer">
+  <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
+  <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
+</footer>
+
+<!-- CONNECT MODAL -->
 <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
   <div class="modal">
     <div id="connectFormState">
       <h2 id="connectHeading">GET MORE INFO</h2>
-      <p class="modal-subtitle" id="connectSubtitle">Meatspace — Satirical Sci-Fi Feature</p>
+      <p class="modal-subtitle" id="connectSubtitle">Meatspace &mdash; Satirical Sci-Fi Feature</p>
+
       <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="connect">
-        <input type="hidden" name="request" id="connectRequest" value="Meatspace - Info">
+        <input type="hidden" name="request" id="connectRequest" value="">
         <p style="display:none;"><input name="bot-field"></p>
+
         <div class="modal-section">
           <div class="modal-section-label">Your info</div>
           <input type="text" name="name" class="modal-input" placeholder="Name" required>
           <input type="email" name="email" class="modal-input" placeholder="Email" required>
         </div>
+
         <div class="modal-section">
           <div class="modal-section-label">I'm interested in</div>
           <div class="checkbox-group">
@@ -301,7 +414,7 @@
               <span class="checkbox-label">Kan Vatan</span>
             </label>
             <label class="checkbox-item">
-              <input type="checkbox" name="interest" value="Meatspace" checked>
+              <input type="checkbox" name="interest" value="Meatspace">
               <span class="checkbox-box"></span>
               <span class="checkbox-label">Meatspace</span>
             </label>
@@ -312,71 +425,129 @@
             </label>
           </div>
         </div>
+
         <div class="modal-section">
           <div class="modal-section-label">Anything else? (optional)</div>
           <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Introduce yourself briefly..."></textarea>
         </div>
+
         <div class="modal-buttons">
           <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
           <button type="submit" class="modal-btn modal-btn-primary">Send</button>
         </div>
       </form>
-      <p style="text-align:center; margin-top:16px; font-size:0.85rem; color:var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color:var(--text); text-decoration:underline;">mcoynegreen@gmail.com</a></p>
+      <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly &mdash; <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
     </div>
-    <div id="connectSuccessState" style="display:none; text-align:center; padding:20px 0;">
+
+    <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
       <h2>SENT</h2>
-      <p class="modal-subtitle" style="margin-bottom:32px;">Thanks for reaching out. I'll get back to you soon.</p>
-      <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width:100%;">Close</button>
+      <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
+      <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
     </div>
   </div>
 </div>
 
+<!-- Hidden Netlify form for build-time detection -->
+<form name="connect" netlify netlify-honeypot="bot-field" hidden>
+  <input name="name">
+  <input name="email">
+  <input name="request">
+  <input name="interest" type="checkbox" value="Human Resource">
+  <input name="interest" type="checkbox" value="Top Floor">
+  <input name="interest" type="checkbox" value="Kan Vatan">
+  <input name="interest" type="checkbox" value="Meatspace">
+  <input name="interest" type="checkbox" value="General Meeting">
+  <textarea name="message"></textarea>
+  <input name="bot-field">
+</form>
+
 <script>
-function openConnectModal() {
-  document.getElementById('connectModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeConnectModal() {
-  document.getElementById('connectModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-(function() {
-  var form = document.getElementById('connectForm');
-  if (!form) return;
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
-    if (!isNetlify) {
-      setTimeout(function() {
-        document.getElementById('connectFormState').style.display = 'none';
-        document.getElementById('connectSuccessState').style.display = '';
-      }, 400);
-      return;
-    }
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    })
-    .then(function(res) {
-      if (res.ok) {
-        document.getElementById('connectFormState').style.display = 'none';
-        document.getElementById('connectSuccessState').style.display = '';
-      } else { throw new Error('fail'); }
-    })
-    .catch(function() {
-      btn.textContent = 'Send';
-      btn.disabled = false;
-      alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
-    });
+  // Nav scroll
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 80);
   });
-})();
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeConnectModal();
-});
+
+  // Connect modal
+  function openConnectModal(preset) {
+    var form = document.getElementById('connectForm');
+    if (form) form.reset();
+    document.getElementById('connectRequest').value = '';
+
+    var heading = document.getElementById('connectHeading');
+    var subtitle = document.getElementById('connectSubtitle');
+    var message = document.getElementById('connectMessage');
+
+    if (preset) {
+      heading.textContent = preset.heading || "LET'S CONNECT";
+      subtitle.textContent = preset.subtitle || "What brings you here?";
+      message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
+      document.getElementById('connectRequest').value = preset.request || '';
+      if (preset.interest) {
+        var cb = form.querySelector('input[name="interest"][value="' + preset.interest + '"]');
+        if (cb) cb.checked = true;
+      }
+    } else {
+      heading.textContent = "LET'S CONNECT";
+      subtitle.textContent = "What brings you here?";
+      message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
+    }
+
+    document.getElementById('connectFormState').style.display = '';
+    document.getElementById('connectSuccessState').style.display = 'none';
+    document.getElementById('connectModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeConnectModal() {
+    document.getElementById('connectModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Form submission
+  (function() {
+    var form = document.getElementById('connectForm');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
+
+      if (!isNetlify) {
+        setTimeout(function() {
+          document.getElementById('connectFormState').style.display = 'none';
+          document.getElementById('connectSuccessState').style.display = '';
+        }, 400);
+        return;
+      }
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      })
+      .then(function(res) {
+        if (res.ok) {
+          document.getElementById('connectFormState').style.display = 'none';
+          document.getElementById('connectSuccessState').style.display = '';
+        } else {
+          throw new Error('fail');
+        }
+      })
+      .catch(function() {
+        btn.textContent = 'Send';
+        btn.disabled = false;
+        alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
+      });
+    });
+  })();
+
+  // Keyboard: Escape closes modal
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeConnectModal();
+  });
 </script>
 
 </body>

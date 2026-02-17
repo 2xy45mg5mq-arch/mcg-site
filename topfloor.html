@@ -217,7 +217,10 @@
 
     /* ── FULL-BLEED IMAGE ── */
     .still { position: relative; overflow: hidden; }
-    .still img { width: 100%; height: auto; display: block; }
+    .still img {
+      width: 100%; display: block;
+      max-height: 65vh; object-fit: cover;
+    }
     .still::before,
     .still::after {
       content: '';
@@ -230,7 +233,7 @@
     .still::after { bottom: 0; background: linear-gradient(to top, var(--bg), transparent); }
 
     /* ── TAGLINE BEAT ── */
-    .tagline-beat { text-align: center; padding: 100px 40px; }
+    .tagline-beat { text-align: center; padding: 140px 40px; }
     .tagline-beat p {
       font-family: 'EB Garamond', Georgia, serif;
       font-style: italic;
@@ -240,8 +243,11 @@
       max-width: 700px;
       margin: 0 auto;
       letter-spacing: 0.02em;
-      text-shadow: 0 0 60px rgba(184, 164, 114, 0.12);
+      text-shadow: 0 0 80px rgba(184, 164, 114, 0.15);
     }
+
+    /* Adjacent sections flow together (World → Tone) */
+    .section + .section { padding-top: 20px; }
 
     /* ── PRODUCTION STATS ── */
     .stats-grid {
@@ -417,11 +423,14 @@
       .tower-floor .fl-text { letter-spacing: 0.06em; }
       .genre-below { margin-top: 36px; }
       .section { padding: 60px 24px; }
-      .tagline-beat { padding: 60px 24px; }
+      .section + .section { padding-top: 12px; }
+      .story-open { padding: 70px 24px 40px !important; }
+      .tagline-beat { padding: 80px 24px; }
       .cta-section { padding: 60px 24px; }
       .stats-grid { grid-template-columns: 1fr; }
       .game-card { padding: 28px 20px; }
       .still::before, .still::after { height: 60px; }
+      .still img { max-height: 50vh; }
     }
     @media (max-width: 600px) {
       .nav-links { gap: 20px; }

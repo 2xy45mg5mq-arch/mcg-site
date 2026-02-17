@@ -477,24 +477,34 @@
             <div class="modal-section-label">I'm interested in</div>
             <div class="checkbox-group">
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Human Resource">
+                <input type="checkbox" name="human-resource" value="human-resource">
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">Human Resource</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Top Floor">
+                <input type="checkbox" name="top-floor" value="top-floor">
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">Top Floor</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Kan Vatan">
+                <input type="checkbox" name="turkish-projects" value="turkish-projects">
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label">Kan Vatan</span>
+                <span class="checkbox-label">Turkish Projects</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="General Meeting">
+                <input type="checkbox" name="collaborating-on-new-concepts" value="collaborating-on-new-concepts">
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label">General meeting with Max</span>
+                <span class="checkbox-label">Collaborating on new concepts</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="general-meeting" value="general-meeting">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">General meeting</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="other" value="other">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label">Other</span>
               </label>
             </div>
           </div>
@@ -519,10 +529,12 @@
 
   <form name="connect" netlify netlify-honeypot="bot-field" hidden>
     <input name="name"><input name="email"><input name="request">
-    <input name="interest" type="checkbox" value="Human Resource">
-    <input name="interest" type="checkbox" value="Top Floor">
-    <input name="interest" type="checkbox" value="Kan Vatan">
-    <input name="interest" type="checkbox" value="General Meeting">
+    <input name="human-resource" type="checkbox" value="human-resource">
+    <input name="top-floor" type="checkbox" value="top-floor">
+    <input name="turkish-projects" type="checkbox" value="turkish-projects">
+    <input name="collaborating-on-new-concepts" type="checkbox" value="collaborating-on-new-concepts">
+    <input name="general-meeting" type="checkbox" value="general-meeting">
+    <input name="other" type="checkbox" value="other">
     <textarea name="message"></textarea><input name="bot-field">
   </form>
 

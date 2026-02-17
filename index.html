@@ -14,19 +14,17 @@
   <meta name="description" content="Max Coyne-Green is a screenwriter splitting time between İstanbul and New York. Portfolio includes Human Resource, Top Floor, Kan Vatan, and Memory Docs.">
   <meta name="keywords" content="screenwriter, screenplay, film, television, Max Coyne-Green, Human Resource, Top Floor, Kan Vatan">
   <meta name="author" content="Max Coyne-Green">
-  <meta property="og:title" content="max">
+  <meta property="og:title" content="Max Coyne-Green — Writer / Producer">
   <meta property="og:description" content="Writer/Producer splitting time between İstanbul and New York. Portfolio includes Human Resource, Top Floor, Kan Vatan, and Memory Docs.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://coyne-green.com/og-image.jpg">
-  <meta property="og:image:secure_url" content="https://coyne-green.com/og-image.jpg">
-  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image" content="https://coyne-green.com/images/hr_hero_new.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Max Coyne-Green - Screenwriter Portfolio">
-  <meta property="og:url" content="https://coyne-green.com/">
-  <meta name="twitter:image" content="https://coyne-green.com/og-image.jpg">
+  <meta property="og:url" content="https://coyne-green.com">
+  <meta name="twitter:image" content="https://coyne-green.com/images/hr_hero_new.webp">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="max">
+  <meta name="twitter:title" content="Max Coyne-Green — Writer / Producer">
   <meta name="twitter:description" content="Writer/Producer splitting time between İstanbul and New York. Portfolio includes Human Resource, Top Floor, Kan Vatan, and Memory Docs.">
   <title>Max Coyne-Green | Screenwriter & Producer | New York</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -209,6 +207,14 @@
       color: var(--text);
       background: rgba(255,255,255,0.05);
     }
+    .dropdown .dropdown-group-label {
+      display: block; padding: 10px 20px 4px; font-size: 0.6rem; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.18);
+      border-top: 1px solid var(--border); margin-top: 4px;
+    }
+    .dropdown .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
+    .dropdown a.dropdown-group-label { text-decoration: none; cursor: pointer; transition: color 0.2s; }
+    .dropdown a.dropdown-group-label:hover { color: rgba(255,255,255,0.4); background: transparent; }
 
     /* CONNECT MODAL */
     .modal-overlay {
@@ -2768,7 +2774,7 @@
           <div class="dropdown">
             <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <span style="display:block;padding:10px 20px 4px;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.18);border-top:1px solid var(--border);margin-top:4px;cursor:default;pointer-events:none;">T&uuml;rk Projeleri</span>
+            <a href="/turkiye" class="dropdown-group-label">T&uuml;rk Projeleri</a>
             <a href="/kanvatan" style="padding-left:32px;">Kan Vatan</a>
             <a href="/gomuldu" style="padding-left:32px;">G&ouml;m&uuml;ld&uuml;</a>
             <a href="/altindamarlari" style="padding-left:32px;">Alt&#305;n Damarlar&#305;</a>

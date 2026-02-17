@@ -13,13 +13,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ALTIN DAMARLARI — Gold Veins</title>
   <meta name="description" content="Inside Turkey's most powerful gold mining dynasty, loyalty is the rarest commodity. A TV series about family, power, and betrayal.">
-  <meta property="og:title" content="ALTIN DAMARLARI — Gold Veins">
+  <meta property="og:title" content="Altın Damarları">
   <meta property="og:description" content="An unprepared heir. His ambitious adopted brother. A foreign woman who changes everything. Inside Turkey's most powerful gold mining dynasty, loyalty is the rarest commodity.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://coyne-green.com/images/altindamarlari-hero.webp">
   <meta property="og:url" content="https://coyne-green.com/altindamarlari">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ALTIN DAMARLARI — Gold Veins">
+  <meta name="twitter:title" content="Altın Damarları">
   <meta name="twitter:description" content="A modern reinterpretation of the stories of S&uuml;leyman, &#304;brahim, and H&uuml;rrem">
   <meta name="twitter:image" content="https://coyne-green.com/images/altindamarlari-hero.webp">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -83,12 +83,14 @@
       text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
     }
     .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-    .dropdown-group-label {
+    .dropdown .dropdown-group-label {
       display: block; padding: 10px 20px 4px; font-size: 0.6rem; letter-spacing: 2px;
       text-transform: uppercase; color: rgba(255,255,255,0.18);
       border-top: 1px solid var(--border); margin-top: 4px; cursor: default;
     }
-    .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
+    .dropdown .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
+    .dropdown a.dropdown-group-label { text-decoration: none; cursor: pointer; transition: color 0.2s; }
+    .dropdown a.dropdown-group-label:hover { color: rgba(255,255,255,0.4); background: transparent; }
     .dropdown a.dropdown-sub { padding-left: 32px; }
     .nav-links > a, .nav-item > a { position: relative; }
     .nav-links > a::after, .nav-item > a::after {
@@ -444,7 +446,7 @@
           <div class="dropdown">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <span class="dropdown-group-label">T&uuml;rk Projeleri</span>
+            <a href="/turkiye" class="dropdown-group-label">T&uuml;rk Projeleri</a>
             <a href="/kanvatan" class="dropdown-sub">Kan Vatan</a>
             <a href="/gomuldu" class="dropdown-sub">G&ouml;m&uuml;ld&uuml;</a>
             <a href="/altindamarlari" class="dropdown-sub">Alt&#305;n Damarlar&#305;</a>

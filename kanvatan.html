@@ -13,13 +13,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>KAN VATAN — Blood at the Roots</title>
   <meta name="description" content="Kan Vatan is a Turkish-American TV series about a family of olive growers, a CIA operative, and the land that binds them. A neo-western spin on the classic Turkish dizi.">
-  <meta property="og:title" content="KAN VATAN — Blood at the Roots">
+  <meta property="og:title" content="Kan Vatan — Neo-Western TV Pilot">
   <meta property="og:description" content="A family of olive growers finds an American operative hiding out on their dying grove — just when they need him.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://coyne-green.com/images/img_41.webp">
   <meta property="og:url" content="https://coyne-green.com/kanvatan">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="KAN VATAN — Blood at the Roots">
+  <meta name="twitter:title" content="Kan Vatan — Neo-Western TV Pilot">
   <meta name="twitter:description" content="A neo-western spin on the classic Turkish dizi.">
   <meta name="twitter:image" content="https://coyne-green.com/images/img_41.webp">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -83,12 +83,14 @@
       text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
     }
     .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-    .dropdown-group-label {
+    .dropdown .dropdown-group-label {
       display: block; padding: 10px 20px 4px; font-size: 0.6rem; letter-spacing: 2px;
       text-transform: uppercase; color: rgba(255,255,255,0.18);
       border-top: 1px solid var(--border); margin-top: 4px; cursor: default;
     }
-    .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
+    .dropdown .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
+    .dropdown a.dropdown-group-label { text-decoration: none; cursor: pointer; transition: color 0.2s; }
+    .dropdown a.dropdown-group-label:hover { color: rgba(255,255,255,0.4); background: transparent; }
     .dropdown a.dropdown-sub { padding-left: 32px; }
     .nav-links > a, .nav-item > a { position: relative; }
     .nav-links > a::after, .nav-item > a::after {
@@ -617,7 +619,7 @@
           <div class="dropdown" style="min-width:200px;">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <span class="dropdown-group-label">T&uuml;rk Projeleri</span>
+            <a href="/turkiye" class="dropdown-group-label">T&uuml;rk Projeleri</a>
             <a href="/kanvatan" class="dropdown-sub">Kan Vatan</a>
             <a href="/gomuldu" class="dropdown-sub">G&ouml;m&uuml;ld&uuml;</a>
             <a href="/altindamarlari" class="dropdown-sub">Alt&#305;n Damarlar&#305;</a>

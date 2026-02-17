@@ -113,9 +113,9 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('/images/AD5.webp') center center / cover no-repeat;
+      background: url('/images/AD7.webp') center center / cover no-repeat;
       z-index: 0;
-      filter: sepia(0.15) saturate(1.2) brightness(1.1);
+      filter: sepia(0.08) saturate(1.15);
     }
     .hero-bg::after {
       content: '';
@@ -123,11 +123,11 @@
       inset: 0;
       background:
         linear-gradient(180deg,
-          rgba(10,13,16,0.3) 0%,
-          rgba(10,13,16,0.4) 35%,
-          rgba(10,13,16,0.65) 60%,
-          rgba(10,13,16,0.82) 80%,
-          rgba(10,13,16,0.9) 100%);
+          rgba(10,13,16,0.4) 0%,
+          rgba(10,13,16,0.5) 35%,
+          rgba(10,13,16,0.7) 60%,
+          rgba(10,13,16,0.85) 80%,
+          rgba(10,13,16,0.93) 100%);
     }
     .hero-content { position: relative; z-index: 1; }
     .hero-format {
@@ -401,23 +401,22 @@
     .cinematic-break {
       position: relative;
       width: 100%;
-      height: 45vh;
-      min-height: 280px;
+      height: 40vh;
+      min-height: 240px;
       overflow: hidden;
     }
     .cinematic-break img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: sepia(0.1) saturate(1.15) brightness(1.05);
+      filter: sepia(0.06) saturate(1.1);
     }
     .cinematic-break::after {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, #0a0d10 0%, transparent 25%),
-        linear-gradient(0deg, #0a0d10 0%, transparent 25%);
+        linear-gradient(180deg, #0a0d10 0%, rgba(10,13,16,0.2) 35%, transparent 50%, rgba(10,13,16,0.2) 65%, #0a0d10 100%);
     }
 
     /* --- RESPONSIVE --- */
@@ -525,7 +524,7 @@
 
   <!-- CINEMATIC BREAK -->
   <div class="cinematic-break reveal">
-    <img src="/images/AD7.webp" alt="" loading="lazy">
+    <img src="/images/AD5.webp" alt="" loading="lazy">
   </div>
 
   <!-- 5. ABOUT THE WRITER -->

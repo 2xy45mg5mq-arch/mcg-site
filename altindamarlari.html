@@ -113,7 +113,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('/images/altindamarlari-hero.webp') center center / cover no-repeat;
+      background: url('/images/AD5.webp') center center / cover no-repeat;
       z-index: 0;
       filter: sepia(0.15) saturate(1.2) brightness(1.1);
     }
@@ -397,6 +397,29 @@
     .modal-btn-primary { background: rgba(200,190,168,0.15); color: #c8bea8; }
     .modal-btn-primary:hover { background: rgba(200,190,168,0.25); }
 
+    /* --- CINEMATIC BREAK --- */
+    .cinematic-break {
+      position: relative;
+      width: 100%;
+      height: 45vh;
+      min-height: 280px;
+      overflow: hidden;
+    }
+    .cinematic-break img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.1) saturate(1.15) brightness(1.05);
+    }
+    .cinematic-break::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, #0a0d10 0%, transparent 25%),
+        linear-gradient(0deg, #0a0d10 0%, transparent 25%);
+    }
+
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
       .hero-title { font-size: clamp(2.8rem, 12vw, 4rem); }
@@ -428,6 +451,7 @@
             <a href="/altindamarlari" class="dropdown-sub">Alt&#305;n Damarlar&#305;</a>
             <span class="dropdown-group-label">&nbsp;</span>
             <a href="/losingreality">Losing Reality</a>
+            <a href="/meatspace">Meatspace</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -481,12 +505,17 @@
     </div>
   </section>
 
+  <!-- CINEMATIC BREAK -->
+  <div class="cinematic-break reveal">
+    <img src="/images/AD4.webp" alt="" loading="lazy">
+  </div>
+
   <!-- 4. VISUAL TREATMENT -->
   <section class="embed-section reveal">
     <div class="embed-inner">
       <p class="section-heading" style="text-align:center;">Visual Treatment</p>
       <a href="https://prewrite.com/web-app/story-viewer/64e64ba99cfc127bea05279e/home" target="_blank" rel="noopener noreferrer" class="treatment-thumb">
-        <img src="/images/altindamarlari-hero.webp" alt="Altın Damarları — Visual Treatment" loading="lazy">
+        <img src="/images/AD3.webp" alt="Altın Damarları — Visual Treatment" loading="lazy">
         <div class="treatment-thumb-overlay">
           <span>VIEW FULL TREATMENT &rarr;</span>
         </div>

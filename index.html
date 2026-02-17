@@ -2330,6 +2330,44 @@
       margin: 0 auto;
     }
 
+    /* Coming Up — explore hover overlay */
+    .coming-up-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 13, 16, 0.7);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      text-decoration: none;
+      pointer-events: none;
+    }
+    .coming-up-overlay span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 6px;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+    .project-card:hover .coming-up-overlay {
+      opacity: 1;
+    }
+
+    /* Coming Up cards — tighter bottom, wider loglines */
+    #coming-up-section .project-card-content {
+      padding: 20px 28px;
+    }
+    #coming-up-section .logline {
+      margin-bottom: 0;
+      font-size: 1.05rem;
+      color: rgba(228,228,228,0.7);
+    }
+    #coming-up-section .lr-card .logline {
+      font-size: 1.1rem;
+    }
+
     /* Meatspace CTA modal inline */
     .meatspace-cta {
       text-align: center;
@@ -2739,6 +2777,7 @@
             <a href="/altindamarlari" style="padding-left:32px;">Alt&#305;n Damarlar&#305;</a>
             <span style="display:block;padding:4px 20px;border-top:1px solid var(--border);margin-top:4px;"></span>
             <a href="/losingreality">Losing Reality</a>
+            <a href="/meatspace">Meatspace</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -2894,29 +2933,26 @@
         <div class="projects-grid">
 
           <!-- LOSING REALITY -->
-          <div class="project-card lr-card" onclick="window.location.href='/losingreality'">
+          <a href="/losingreality" class="project-card lr-card" style="text-decoration:none;color:inherit;">
             <div class="project-card-image lr-title-card">
+              <div class="coming-up-overlay"><span>Explore</span></div>
             </div>
             <div class="project-card-content">
               <div class="type">Feature Film · Psychological Thriller</div>
               <p class="logline">A disgraced reality star fights for redemption on a dangerous new competition show produced by a mysterious entity with dramatic plans for his&nbsp;story.</p>
             </div>
-          </div>
+          </a>
 
           <!-- MEATSPACE -->
-          <div class="project-card meatspace-card" id="meatspace-card">
-            <a href="/meatspace" style="text-decoration:none;color:inherit;display:block;">
-              <div class="project-card-image meatspace-title-card">
-              </div>
-            </a>
+          <a href="/meatspace" class="project-card meatspace-card" id="meatspace-card" style="text-decoration:none;color:inherit;">
+            <div class="project-card-image meatspace-title-card">
+              <div class="coming-up-overlay"><span>Explore</span></div>
+            </div>
             <div class="project-card-content">
               <div class="type">Feature · Satirical Sci-Fi</div>
               <p class="logline">In a near perfect future, a young man locked out of VR paradise must navigate real life for the&nbsp;first&nbsp;time.</p>
-              <div class="project-card-buttons">
-                <a href="/meatspace" class="btn">Learn More</a>
-              </div>
             </div>
-          </div>
+          </a>
 
         </div>
       </div>

@@ -14,13 +14,13 @@
   <title>TOP FLOOR — Feature Film</title>
   <meta name="description" content="Top Floor is a psychological thriller about identity and class inside a Manhattan luxury high-rise. Feature screenplay by Max Coyne-Green.">
   <meta property="og:title" content="TOP FLOOR">
-  <meta property="og:description" content="An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous new identity.">
+  <meta property="og:description" content="An ambitious doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous financial scheme.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://coyne-green.com/images/og-topfloor.jpg">
   <meta property="og:url" content="https://coyne-green.com/topfloor">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TOP FLOOR">
-  <meta name="twitter:description" content="An ambitious Manhattan doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous new identity.">
+  <meta name="twitter:description" content="An ambitious doorman moves into his doppelgänger's penthouse, only to get trapped in a dangerous financial scheme.">
   <meta name="twitter:image" content="https://coyne-green.com/images/og-topfloor.jpg">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
@@ -129,7 +129,6 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(4rem, 13vw, 9rem);
       letter-spacing: 0.18em;
-      padding-left: 0.18em;
       line-height: 0.85;
       margin-bottom: 0;
       font-weight: 400;
@@ -139,11 +138,10 @@
     .tower-wrap {
       margin-top: 48px;
       display: flex; flex-direction: column; align-items: center;
-      width: 100%; max-width: 680px;
+      width: 100%;
     }
     .tower-floor {
       position: relative; text-align: center;
-      width: var(--w, 100%);
       padding: var(--pad, 10px 0);
       border-bottom: 1px solid rgba(184, 164, 114, 0.12);
       opacity: 0;
@@ -162,12 +160,21 @@
       font-family: 'Bebas Neue', sans-serif;
       text-transform: uppercase; text-align: center;
       letter-spacing: 0.1em;
-      padding-left: 0.1em;
       font-size: var(--fs, 0.85rem);
       color: var(--c, rgba(228,228,228,0.6));
       text-shadow: 0 1px 12px rgba(10, 13, 16, 0.9), 0 0 40px rgba(10, 13, 16, 0.5);
     }
-    .byline-floor .fl-text { letter-spacing: 0.18em; padding-left: 0.18em; }
+    .byline-floor .fl-text { letter-spacing: 0.18em; }
+
+    /* ── PYRAMID LINES (fixed max-widths) ── */
+    .pyramid-line-1 { max-width: 420px; margin: 0 auto; }
+    .pyramid-line-1 .fl-text { font-size: 1.1rem; }
+
+    .pyramid-line-2 { max-width: 580px; margin: 0 auto; }
+    .pyramid-line-2 .fl-text { font-size: 1.35rem; }
+
+    .pyramid-line-3 { max-width: 750px; margin: 0 auto; }
+    .pyramid-line-3 .fl-text { font-size: 1.55rem; }
     .tower-sep {
       width: var(--w, 50%); margin: 0 auto;
       border: none; border-top: 1px solid rgba(184, 164, 114, 0.25);
@@ -425,10 +432,20 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .hero-content h1 { font-size: clamp(3.5rem, 16vw, 7rem); }
-      .tower-wrap { margin-top: 32px; max-width: 100%; padding: 0 12px; }
-      .tower-floor { min-width: 48%; padding: 8px 6px; }
-      .tower-floor .fl-text { letter-spacing: 0.06em; padding-left: 0.06em; }
+      .tower-wrap { margin-top: 32px; padding: 0 12px; }
+      .tower-floor { padding: 8px 6px; }
+      .tower-floor .fl-text { letter-spacing: 0.06em; }
       .genre-below { margin-top: 36px; }
+
+      /* Pyramid lines - proportionally smaller */
+      .pyramid-line-1 { max-width: 300px; }
+      .pyramid-line-1 .fl-text { font-size: 0.9rem; }
+
+      .pyramid-line-2 { max-width: 400px; }
+      .pyramid-line-2 .fl-text { font-size: 1.05rem; }
+
+      .pyramid-line-3 { max-width: 500px; }
+      .pyramid-line-3 .fl-text { font-size: 1.2rem; }
       .section { padding: 60px 24px; }
       .section + .section { padding-top: 12px; }
       .story-open { padding: 70px 24px 40px !important; }
@@ -446,7 +463,6 @@
     @media (max-width: 480px) {
       .hero-content h1 {
         letter-spacing: 0.14em;
-        padding-left: 0.14em;
       }
       .tower-floor {
         border-color: transparent !important;
@@ -460,20 +476,14 @@
       .tower-sep { opacity: 0 !important; height: 6px; }
       .tower-floor .fl-text {
         letter-spacing: 0.02em !important;
-        padding-left: 0.02em !important;
         white-space: nowrap;
       }
-      .tower-wrap > :nth-child(4) .fl-text { font-size: 5.2vw !important; }
-      .tower-wrap > :nth-child(5) .fl-text { font-size: 5.3vw !important; }
-      .tower-wrap > :nth-child(6) .fl-text { font-size: 5.7vw !important; }
       .byline-floor .fl-text {
         letter-spacing: 0.06em !important;
-        padding-left: 0.06em !important;
       }
       .genre-below {
         font-size: 0.95rem !important;
         letter-spacing: 3px !important;
-        padding-left: 3px !important;
         margin-top: 28px !important;
       }
       .story-open { padding: 60px 24px 8px !important; }
@@ -508,21 +518,21 @@
     <div class="hero-content">
       <h1>TOP FLOOR</h1>
       <div class="tower-wrap">
-        <div class="tower-floor byline-floor" style="--w:30%; --pad:10px 12px; --fs:0.85rem; --c:rgba(228,228,228,0.5); --d:0.3s">
+        <div class="tower-floor byline-floor" style="max-width:180px; margin:0 auto; --pad:10px 12px; --fs:0.85rem; --c:rgba(228,228,228,0.5); --d:0.3s">
           <div class="fl-text">written by</div>
         </div>
-        <div class="tower-floor byline-floor" style="--w:36%; --pad:10px 12px; --fs:0.85rem; --c:rgba(228,228,228,0.65); --d:0.5s">
+        <div class="tower-floor byline-floor" style="max-width:220px; margin:0 auto; --pad:10px 12px; --fs:0.85rem; --c:rgba(228,228,228,0.65); --d:0.5s">
           <div class="fl-text">max coyne-green</div>
         </div>
         <hr class="tower-sep" style="--w:36%; --d:0.5s">
-        <div class="tower-floor" style="--w:58%; --fs:clamp(0.85rem,2.5vw,1.25rem); --c:rgba(228,228,228,0.7); --d:0.7s">
-          <div class="fl-text">an ambitious manhattan doorman</div>
+        <div class="tower-floor pyramid-line-1" style="--c:rgba(228,228,228,0.7); --d:0.7s">
+          <div class="fl-text">an ambitious doorman</div>
         </div>
-        <div class="tower-floor" style="--w:76%; --fs:clamp(0.95rem,2.7vw,1.45rem); --c:rgba(228,228,228,0.8); --d:0.9s">
+        <div class="tower-floor pyramid-line-2" style="--c:rgba(228,228,228,0.8); --d:0.9s">
           <div class="fl-text">moves into his doppelg&auml;nger's penthouse</div>
         </div>
-        <div class="tower-floor" style="--w:100%; --fs:clamp(1.05rem,3.0vw,1.65rem); --c:rgba(228,228,228,0.9); --d:1.1s">
-          <div class="fl-text">only to be trapped in a dangerous new identity</div>
+        <div class="tower-floor pyramid-line-3" style="--c:rgba(228,228,228,0.9); --d:1.1s">
+          <div class="fl-text">only to get trapped in a dangerous financial scheme</div>
         </div>
       </div>
       <div class="genre-below">Feature &middot; Psychological Thriller</div>

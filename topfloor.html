@@ -250,9 +250,35 @@
     .still::after { bottom: 0; background: linear-gradient(to top, var(--bg), transparent); }
 
     /* ── TAGLINE BEAT ── */
-    .tagline-beat { text-align: center; padding: 80px 40px; }
+    .tagline-beat {
+      text-align: center; padding: 120px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tagline-beat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('/images/tf_act_top.webp?v=2');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 0.4;
+      z-index: 0;
+    }
+    .tagline-beat::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--bg) 0%, transparent 15%, transparent 85%, var(--bg) 100%),
+        radial-gradient(ellipse at center, transparent 30%, rgba(10, 13, 16, 0.6) 70%);
+      z-index: 1;
+    }
     .tagline-beat p {
       font-family: 'EB Garamond', Georgia, serif;
+      position: relative;
+      z-index: 2;
       font-style: italic;
       font-size: clamp(2.2rem, 5.5vw, 3.8rem);
       line-height: 1.3;
@@ -265,6 +291,41 @@
 
     /* Adjacent sections flow together (World → Tone) */
     .section + .section { padding-top: 20px; }
+
+    /* ── ACT SECTIONS ── */
+    .act-section {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 80px 40px;
+    }
+    .act-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .act-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .act-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 20%, transparent 80%, var(--bg) 100%);
+    }
+    .act-content {
+      position: relative;
+      z-index: 2;
+      color: var(--text);
+      text-shadow: 0 2px 20px rgba(10, 13, 16, 0.9);
+    }
 
     /* ── PRODUCTION STATS ── */
     .stats-grid {
@@ -454,7 +515,10 @@
       .section { padding: 48px 24px; }
       .section + .section { padding-top: 12px; }
       .story-open { padding: 32px 24px 32px !important; }
-      .tagline-beat { padding: 60px 24px; }
+      .tagline-beat { padding: 80px 24px; }
+      .tagline-beat::before { background-attachment: scroll; background-position: center 35%; }
+      .act-section { min-height: 60vh; padding: 60px 24px; }
+      .act-content p { font-size: 1.2rem !important; }
       .cta-section { padding: 60px 24px; }
       .stats-grid { grid-template-columns: 1fr; }
       .game-card { padding: 28px 20px; }
@@ -544,14 +608,15 @@
     </div>
   </header>
 
-  <!-- ═══ CHAPTER OPEN ═══ -->
-  <section class="section story-open reveal" style="padding: 70px 40px 16px;">
-    <p style="font-size: 1.6rem; font-weight: 500; line-height: 1.4;"><strong>MURRY</strong> opens the door.</p>
+  <!-- ═══ ACT ONE: BOTTOM ═══ -->
+  <section class="act-section act-bottom reveal">
+    <div class="act-bg">
+      <img src="/images/tf_act_bottom.webp?v=2" alt="Act One: Bottom">
+    </div>
+    <div class="act-content">
+      <p style="font-size: 1.6rem; font-weight: 500; line-height: 1.4; max-width: 600px; margin: 0 auto;"><strong>MURRY</strong> opens the door.</p>
+    </div>
   </section>
-
-  <div class="still" style="max-height: 55vh; overflow: hidden;">
-    <img src="/images/img_33.webp" alt="Murry the doorman" style="object-fit: cover; width: 100%; height: 55vh; object-position: center 30%;">
-  </div>
 
   <!-- ═══ THE STORY ═══ -->
   <section class="section story-section reveal">
@@ -566,10 +631,29 @@
     <p><strong>...the two look strikingly&nbsp;similar.</strong></p>
     <p>So when Nik has a work emergency out of town, he turns to Murry with an offer: stay with Snacks in the penthouse. It's a dream come true — with a catch. If someone sees him, he'll get&nbsp;fired.</p>
     <p>He'll need to make sure everyone sees&nbsp;Nik.</p>
-    <p>Murry shaves his beard and puts on Nik's sweater, and no one seems to notice. But once he makes it to the top, he discovers the man he's pretending to be isn't who he thought he&nbsp;was.</p>
   </section>
 
-  <!-- ═══ TAGLINE ═══ -->
+  <!-- ═══ ACT TWO: UP ═══ -->
+  <section class="act-section act-up reveal">
+    <div class="act-bg">
+      <img src="/images/tf_act_up.webp?v=2" alt="Act Two: Up">
+    </div>
+    <div class="act-content">
+      <p style="font-size: 1.4rem; font-weight: 400; line-height: 1.5; max-width: 700px; margin: 0 auto;">Murry shaves his beard and puts on Nik's sweater, and no one seems to notice.</p>
+    </div>
+  </section>
+
+  <!-- ═══ ACT THREE: DROP ═══ -->
+  <section class="act-section act-drop reveal">
+    <div class="act-bg">
+      <img src="/images/tf_act_drop.webp?v=2" alt="Act Three: Drop">
+    </div>
+    <div class="act-content">
+      <p style="font-size: 1.4rem; font-weight: 400; line-height: 1.5; max-width: 700px; margin: 0 auto;">But once he makes it to the top, he discovers the man he's pretending to be isn't who he thought he&nbsp;was.</p>
+    </div>
+  </section>
+
+  <!-- ═══ ACT FOUR: TOP + TAGLINE ═══ -->
   <div class="tagline-beat reveal">
     <p>It's not personal.<br>It's just Manhattan.</p>
   </div>

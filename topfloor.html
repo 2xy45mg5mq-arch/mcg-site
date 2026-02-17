@@ -453,7 +453,8 @@
       .genre-below { font-size: 1.2rem; max-width: 700px; letter-spacing: 0.2em; }
       .section { padding: 40px 24px; }
       .section + .section { padding-top: 12px; }
-      .story-open { padding: 32px 24px 32px !important; }
+      .story-open { padding: 16px 24px 32px !important; }
+      .hero + div { margin-top: 30px !important; margin-bottom: 30px !important; }
       .tagline-beat { padding: 40px 24px; }
       .cta-section { padding: 60px 24px; }
       .stats-grid { grid-template-columns: 1fr; }
@@ -487,9 +488,11 @@
         letter-spacing: 0.06em !important;
       }
       .genre-below {
-        font-size: 0.8rem !important;
+        font-size: 0.85rem !important;
         margin-top: 28px !important;
-        letter-spacing: 0.12em !important;
+        margin-bottom: 16px !important;
+        letter-spacing: 0.08em !important;
+        max-width: 90% !important;
       }
       .story-open { padding: 32px 24px 8px !important; }
     }
@@ -543,6 +546,8 @@
       <div class="genre-below">Feature &middot; Psychological Thriller</div>
     </div>
   </header>
+
+  <div style="height: 1px; background: linear-gradient(to right, transparent, rgba(184, 164, 114, 0.2) 50%, transparent); margin: 60px auto; max-width: 400px;"></div>
 
   <!-- ═══ CHAPTER OPEN ═══ -->
   <section class="section story-open reveal" style="padding: 70px 40px 16px;">

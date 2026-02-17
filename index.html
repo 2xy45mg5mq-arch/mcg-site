@@ -2444,7 +2444,70 @@
     }
 
     .meatspace-title-card {
-      background: linear-gradient(135deg, #0a0e14 0%, #141c28 40%, #0d1219 70%, #0a0e14 100%);
+      background: #0b0c0f;
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 clamp(24px, 6%, 60px);
+    }
+
+    /* Film grain */
+    .meatspace-title-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Warm vignette */
+    .meatspace-title-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.55) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    h3.meatspace-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      letter-spacing: 0.35em;
+      text-indent: 0.35em;
+      color: #943230;
+      margin: 0;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+      font-weight: 400;
+    }
+
+    @media (max-width: 500px) {
+      h3.meatspace-title {
+        font-size: clamp(1.6rem, 7vw, 2.4rem);
+        letter-spacing: 0.25em;
+        text-indent: 0.25em;
+      }
+      .meatspace-title-card {
+        min-height: 200px;
+      }
+    }
+
+    /* LOSING REALITY title card */
+    .lr-card,
+    .lr-card .project-card-image {
+      border-radius: 0 !important;
+    }
+
+    .lr-title-card {
+      background: url('/images/losingreality-hero.webp') center 30% / cover no-repeat;
       position: relative;
       overflow: hidden;
       min-height: 280px;
@@ -2453,54 +2516,206 @@
       justify-content: center;
     }
 
-    .meatspace-title-card::before {
+    .lr-title-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.015) 2px,
-        rgba(255, 255, 255, 0.015) 4px
-      );
+      background:
+        linear-gradient(180deg,
+          rgba(10,13,16,0.3) 0%,
+          rgba(10,13,16,0.45) 50%,
+          rgba(10,13,16,0.7) 100%);
       pointer-events: none;
       z-index: 1;
     }
 
-    .meatspace-title-card::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 60%;
-      height: 60%;
-      background: radial-gradient(ellipse, rgba(100, 140, 200, 0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    h3.meatspace-title {
+    h3.lr-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 6vw, 6rem);
-      letter-spacing: 20px;
-      color: rgba(255, 255, 255, 0.75);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      letter-spacing: 14px;
+      color: rgba(255, 255, 255, 0.9);
       margin: 0;
       position: relative;
       z-index: 2;
-      text-shadow: 0 0 40px rgba(100, 160, 220, 0.15);
+      text-align: center;
+      width: 100%;
+      text-shadow:
+        0 2px 16px rgba(10,13,16,0.9),
+        0 4px 32px rgba(10,13,16,0.7);
       font-weight: 400;
     }
 
     @media (max-width: 500px) {
-      h3.meatspace-title {
+      h3.lr-title {
         font-size: clamp(1.8rem, 7.5vw, 2.8rem);
         letter-spacing: 5px;
+        text-indent: 5px;
       }
-      .meatspace-title-card {
+      .lr-title-card {
         min-height: 200px;
       }
+    }
+
+    /* ── TÜRK PROJELERİ ── */
+    .turk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .turk-card {
+      display: block;
+      border: none;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: filter 0.3s ease;
+    }
+
+    .turk-card:hover {
+      filter: brightness(1.1);
+    }
+
+    .turk-poster {
+      display: block;
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .turk-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 8s ease;
+    }
+
+    .turk-poster:hover img {
+      transform: scale(1.05);
+    }
+
+    .turk-poster-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 70%),
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.4) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .turk-poster-text {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .turk-poster-text h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: #e8e0d0;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.8);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .turk-poster-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: #e8e0d0;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    .turk-info {
+      padding: 16px 0 0;
+    }
+
+    .turk-logline {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.7);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .turk-pilot-tag {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c9940e;
+      border: 1px solid #c9940e;
+      padding: 4px 12px;
+      margin-top: 12px;
+      text-align: center;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* KAN VATAN — featured gold border on poster only */
+    .turk-featured .turk-poster {
+      border: 2px solid #c9940e;
+      box-shadow:
+        0 0 8px rgba(201, 148, 14, 0.3),
+        0 0 20px rgba(201, 148, 14, 0.15),
+        inset 0 0 1px rgba(201, 148, 14, 0.2);
+      animation: turkGlow 4s ease infinite;
+    }
+
+    @property --gold-hue {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes turkGlow {
+      0%, 100% {
+        border-color: #c9940e;
+        box-shadow: 0 0 8px rgba(201, 148, 14, 0.3), 0 0 20px rgba(201, 148, 14, 0.15);
+      }
+      50% {
+        border-color: #e0b84a;
+        box-shadow: 0 0 12px rgba(224, 184, 74, 0.4), 0 0 30px rgba(224, 184, 74, 0.2);
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .turk-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .turk-poster-text h3 {
+        font-size: clamp(2rem, 8vw, 3rem);
+      }
+
+      .turk-featured { order: -1; }
     }
 
   </style>
@@ -2516,7 +2731,13 @@
           <div class="dropdown">
             <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <a href="/kanvatan">Kan Vatan</a>
+            <span style="display:block;padding:10px 20px 4px;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);border-top:1px solid var(--border);margin-top:4px;cursor:default;">T&uuml;rk Projeleri</span>
+            <a href="/kanvatan" style="padding-left:32px;">Kan Vatan</a>
+            <a href="/gomuldu" style="padding-left:32px;">G&ouml;m&uuml;ld&uuml;</a>
+            <a href="/altindamarlari" style="padding-left:32px;">Alt&#305;n Damarlar&#305;</a>
+            <span style="display:block;padding:4px 20px;border-top:1px solid var(--border);margin-top:4px;"></span>
+            <a href="/losingreality">Losing Reality</a>
+            <a href="/meatspace">Meatspace</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -2612,22 +2833,21 @@
     <!-- COMING UP DIVIDER -->
     <div class="section-divider"><span>Coming Up</span></div>
 
-    <!-- KAN VATAN + MEATSPACE — Two-column grid -->
+    <!-- LOSING REALITY + MEATSPACE — Two-column grid -->
     <section class="project-card-section" id="coming-up-section">
       <div class="container">
         <div class="projects-grid">
 
-          <!-- KAN VATAN -->
-          <div class="project-card kv-card" onclick="window.location.href='/kanvatan'">
-            <div class="project-card-image">
-              <img src="/images/img_7.webp" alt="Kan Vatan - Blood at the Roots" loading="lazy">
+          <!-- LOSING REALITY -->
+          <div class="project-card lr-card" onclick="window.location.href='/losingreality'">
+            <div class="project-card-image lr-title-card">
+              <h3 class="lr-title">LOSING REALITY</h3>
             </div>
             <div class="project-card-content">
-              <div class="type">TV Pilot · US/Turkey Co-Production</div>
-              <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need&nbsp;him.</p>
+              <div class="type">Feature Film · Psychological Thriller</div>
+              <p class="logline">A disgraced reality star fights for redemption on a dangerous new competition show produced by a mysterious entity with dramatic plans for his&nbsp;story.</p>
               <div class="project-card-buttons" onclick="event.stopPropagation();">
-                <a href="/kanvatan" class="btn">Learn More</a>
-                <a href="/kanvatan" class="btn btn-primary">Request the Pilot</a>
+                <a href="/losingreality" class="btn">Explore →</a>
               </div>
             </div>
           </div>
@@ -2649,6 +2869,60 @@
           </div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- TÜRK PROJELERİ DIVIDER -->
+    <div class="section-divider"><span>T&uuml;rk Projeleri</span></div>
+
+    <!-- TÜRK PROJELERİ — Three-column grid -->
+    <section id="turk-projeleri" style="padding:40px 0 80px;">
+      <div class="turk-grid">
+
+        <!-- GÖMÜLDÜ (LEFT) -->
+        <a href="/gomuldu" class="turk-card">
+          <div class="turk-poster">
+            <img src="/images/gomuldu-hero.webp" alt="Gömüldü — Buried Underneath" loading="lazy">
+            <div class="turk-poster-overlay"></div>
+            <div class="turk-poster-text">
+              <h3>G&Ouml;M&Uuml;LD&Uuml;</h3>
+            </div>
+          </div>
+          <div class="turk-info">
+            <p class="turk-logline">After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were&nbsp;promised.</p>
+          </div>
+        </a>
+
+        <!-- KAN VATAN (CENTER — FEATURED) -->
+        <a href="/kanvatan" class="turk-card turk-featured">
+          <div class="turk-poster">
+            <img src="/images/img_41.webp" alt="Kan Vatan — Blood Homeland" loading="lazy">
+            <div class="turk-poster-overlay"></div>
+            <div class="turk-poster-text">
+              <h3>KAN VATAN</h3>
+              <p class="turk-poster-subtitle">Blood at the Roots</p>
+            </div>
+          </div>
+          <div class="turk-info">
+            <p class="turk-logline">A family of olive growers finds an American operative hiding out on their dying grove&mdash;just when they need&nbsp;him.</p>
+            <span class="turk-pilot-tag">Pilot Available</span>
+          </div>
+        </a>
+
+        <!-- ALTIN DAMARLARI (RIGHT) -->
+        <a href="/altindamarlari" class="turk-card">
+          <div class="turk-poster">
+            <img src="/images/altindamarlari-hero.webp" alt="Altın Damarları — Gold Veins" loading="lazy">
+            <div class="turk-poster-overlay"></div>
+            <div class="turk-poster-text">
+              <h3>ALTIN DAMARLARI</h3>
+            </div>
+          </div>
+          <div class="turk-info">
+            <p class="turk-logline">An unprepared heir. His ambitious adopted brother. A foreign woman who changes everything. Inside Turkey&rsquo;s most powerful gold mining dynasty, loyalty is the rarest&nbsp;commodity.</p>
+          </div>
+        </a>
+
       </div>
     </section>
 

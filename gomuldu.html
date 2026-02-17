@@ -11,21 +11,21 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>KAN VATAN — Blood at the Roots</title>
-  <meta name="description" content="Kan Vatan is a Turkish-American TV series about a family of olive growers, a CIA operative, and the land that binds them. A neo-western spin on the classic Turkish dizi.">
-  <meta property="og:title" content="KAN VATAN — Blood at the Roots">
-  <meta property="og:description" content="A family of olive growers finds an American operative hiding out on their dying grove — just when they need him.">
+  <title>GOMULDU — Buried Underneath</title>
+  <meta name="description" content="After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were promised.">
+  <meta property="og:title" content="GOMULDU — Buried Underneath">
+  <meta property="og:description" content="After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were promised.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://coyne-green.com/images/img_41.webp">
-  <meta property="og:url" content="https://coyne-green.com/kanvatan">
+  <meta property="og:image" content="https://coyne-green.com/images/gomuldu-hero.webp">
+  <meta property="og:url" content="https://coyne-green.com/gomuldu">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="KAN VATAN — Blood at the Roots">
-  <meta name="twitter:description" content="A neo-western spin on the classic Turkish dizi.">
-  <meta name="twitter:image" content="https://coyne-green.com/images/img_41.webp">
+  <meta name="twitter:title" content="GOMULDU — Buried Underneath">
+  <meta name="twitter:description" content="JOHN WICK meets the story of MOSES in post-earthquake Turkey">
+  <meta name="twitter:image" content="https://coyne-green.com/images/gomuldu-hero.webp">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
   <link rel="apple-touch-icon" href="/favicon.png">
-  <link rel="canonical" href="https://coyne-green.com/kanvatan">
+  <link rel="canonical" href="https://coyne-green.com/gomuldu">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@
     .nav-item > a { cursor: pointer; }
     .dropdown {
       position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-      min-width: 160px; background: rgba(10, 13, 16, 0.98);
+      min-width: 200px; background: rgba(10, 13, 16, 0.98);
       border: 1px solid var(--border); border-radius: 4px; padding: 8px 0;
       opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; margin-top: 12px;
     }
@@ -113,7 +113,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('/images/img_41.webp') center center / cover no-repeat;
+      background: url('/images/gomuldu-hero.webp') center center / cover no-repeat;
       z-index: 0;
     }
     .hero-bg::after {
@@ -131,6 +131,14 @@
     .hero-content {
       position: relative;
       z-index: 1;
+    }
+    .hero-format {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(228,228,228,0.4);
+      margin-bottom: 16px;
     }
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
@@ -151,14 +159,16 @@
         0 2px 12px rgba(10,13,16,0.8),
         0 4px 24px rgba(10,13,16,0.6);
     }
-    .hero-tagline {
-      font-size: 1.15rem;
-      color: rgba(228,228,228,0.4);
-      letter-spacing: 0.02em;
-      text-shadow:
-        0 2px 12px rgba(10,13,16,0.9),
-        0 4px 24px rgba(10,13,16,0.7),
-        0 6px 32px rgba(10,13,16,0.6);
+    .hero-status {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(200,190,168,0.7);
+      border: 1px solid rgba(200,190,168,0.2);
+      padding: 6px 16px;
+      margin-top: 16px;
     }
     .hero-logline {
       position: absolute;
@@ -216,7 +226,6 @@
     /* --- SECTIONS --- */
     .section { padding: 100px 24px; }
 
-    /* --- SECTION BACKGROUND IMAGES --- */
     .section-with-bg {
       position: relative;
       background-size: cover;
@@ -242,10 +251,6 @@
       max-width: 720px;
       margin: 0 auto;
     }
-    .section-inner--wide {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
 
     .section-heading {
       font-family: 'Bebas Neue', sans-serif;
@@ -265,7 +270,6 @@
     .body-text p { margin-bottom: 24px; text-wrap: pretty; }
     .body-text p:last-child { margin-bottom: 0; }
 
-    /* --- STORY DISPLAY HEADING --- */
     .display-heading {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(1.6rem, 4vw, 2.2rem);
@@ -275,100 +279,62 @@
       line-height: 1.2;
     }
 
-    /* --- CHARACTER CARDS --- */
-    .char-grid {
-      display: flex;
-      gap: 24px;
+    /* --- TAGLINE --- */
+    .tagline-section {
+      text-align: center;
+      padding: 60px 24px;
     }
-    .char-card {
-      flex: 1;
-      background: #141618;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(200,190,168,0.08);
+    .tagline-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      letter-spacing: 4px;
+      color: rgba(228,228,228,0.5);
+      text-transform: uppercase;
     }
-    .char-card-img-wrap {
+
+    /* --- TREATMENT THUMBNAIL --- */
+    .embed-section {
+      padding: 60px 24px;
+    }
+    .embed-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .treatment-thumb {
+      display: block;
       position: relative;
       width: 100%;
-      height: 200px;
+      aspect-ratio: 16/9;
       overflow: hidden;
-      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .char-card-img-wrap::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: linear-gradient(0deg, #141618, transparent);
-      z-index: 1;
-    }
-    .char-card-img {
+    .treatment-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      transition: transform 0.6s ease;
     }
-    .char-card-content {
-      padding: 32px 28px 32px;
+    .treatment-thumb:hover img {
+      transform: scale(1.03);
+    }
+    .treatment-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,13,16,0.55);
       display: flex;
-      flex-direction: column;
-      flex: 1;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
     }
-    .char-card-header {
-      margin-bottom: 20px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(200,190,168,0.08);
+    .treatment-thumb:hover .treatment-thumb-overlay {
+      background: rgba(10,13,16,0.4);
     }
-    .char-name {
+    .treatment-thumb-overlay span {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 4px;
-      color: #c8bea8;
-      margin-bottom: 4px;
-      line-height: 1.1;
-    }
-    .char-subtitle {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: rgba(228,228,228,0.4);
-    }
-    .char-body {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(228,228,228,0.75);
-      text-wrap: pretty;
-    }
-
-    /* --- CONTEXT CARDS --- */
-    .context-grid {
-      display: flex;
-      gap: 24px;
-    }
-    .context-card {
-      flex: 1;
-      background: #141618;
-      border-left: 3px solid rgba(200,190,168,0.25);
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-    }
-    .context-heading {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.05rem;
-      letter-spacing: 3px;
-      color: #c8bea8;
-      margin-bottom: 16px;
-    }
-    .context-body {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(228,228,228,0.75);
-      text-wrap: pretty;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     /* --- CTA --- */
@@ -480,9 +446,7 @@
       color: rgba(228,228,228,0.55);
       margin-bottom: 28px;
     }
-    .modal-section {
-      margin-bottom: 24px;
-    }
+    .modal-section { margin-bottom: 24px; }
     .modal-section-label {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.6rem;
@@ -492,92 +456,51 @@
       margin-bottom: 10px;
     }
     .modal-input {
-      display: block;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px;
-      color: #e4e4e4;
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1rem;
-      margin-bottom: 10px;
-      outline: none;
-      transition: border-color 0.2s;
+      display: block; width: 100%; padding: 12px 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px; color: #e4e4e4;
+      font-family: 'EB Garamond', Georgia, serif; font-size: 1rem;
+      margin-bottom: 10px; outline: none; transition: border-color 0.2s;
     }
     .modal-input:focus { border-color: rgba(200,190,168,0.4); }
     .modal-textarea {
-      display: block;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px;
-      color: #e4e4e4;
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1rem;
-      min-height: 100px;
-      resize: vertical;
-      outline: none;
-      transition: border-color 0.2s;
+      display: block; width: 100%; padding: 12px 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px; color: #e4e4e4;
+      font-family: 'EB Garamond', Georgia, serif; font-size: 1rem;
+      min-height: 100px; resize: vertical; outline: none; transition: border-color 0.2s;
     }
     .modal-textarea:focus { border-color: rgba(200,190,168,0.4); }
     .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
     .checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      color: rgba(228,228,228,0.7);
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; font-size: 0.95rem; color: rgba(228,228,228,0.7);
     }
     .checkbox-item input { display: none; }
     .checkbox-box {
-      width: 16px;
-      height: 16px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 3px;
-      flex-shrink: 0;
-      position: relative;
-      transition: all 0.2s;
+      width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 3px; flex-shrink: 0; position: relative; transition: all 0.2s;
     }
     .checkbox-item input:checked + .checkbox-box {
-      background: rgba(200,190,168,0.2);
-      border-color: #c8bea8;
+      background: rgba(200,190,168,0.2); border-color: #c8bea8;
     }
     .checkbox-item input:checked + .checkbox-box::after {
-      content: '';
-      position: absolute;
-      top: 2px; left: 5px;
-      width: 4px; height: 8px;
-      border: solid #c8bea8;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
+      content: ''; position: absolute; top: 2px; left: 5px;
+      width: 4px; height: 8px; border: solid #c8bea8;
+      border-width: 0 2px 2px 0; transform: rotate(45deg);
     }
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 28px;
-    }
+    .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
     .modal-btn {
-      flex: 1;
-      padding: 12px 20px;
-      border-radius: 4px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
+      flex: 1; padding: 12px 20px; border-radius: 4px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 0.7rem;
+      letter-spacing: 2px; cursor: pointer; transition: all 0.2s; border: none;
     }
     .modal-btn-secondary {
-      background: rgba(255,255,255,0.05);
-      color: rgba(228,228,228,0.6);
+      background: rgba(255,255,255,0.05); color: rgba(228,228,228,0.6);
     }
     .modal-btn-secondary:hover { background: rgba(255,255,255,0.08); }
     .modal-btn-primary {
-      background: rgba(200,190,168,0.15);
-      color: #c8bea8;
+      background: rgba(200,190,168,0.15); color: #c8bea8;
     }
     .modal-btn-primary:hover { background: rgba(200,190,168,0.25); }
 
@@ -587,16 +510,6 @@
       .hero-logline { font-size: 1.1rem; }
       .section { padding: 72px 20px; }
       .section-with-bg { background-attachment: scroll; }
-      .section-inner[style*="padding"] {
-        padding: 28px 20px !important;
-      }
-      .char-grid { flex-direction: column; gap: 16px; }
-      .char-card { flex: none; }
-      .char-card-img-wrap { height: 180px; }
-      .char-name { font-size: 1.3rem; }
-      .context-grid { flex-direction: column; gap: 16px; }
-      .context-card { flex: none; }
-      .display-heading { font-size: 1.4rem; letter-spacing: 3px; }
       .modal { padding: 28px 20px; }
       .cta-section { padding: 72px 20px; }
     }
@@ -614,7 +527,7 @@
       <div class="nav-links">
         <div class="nav-item">
           <a href="#" onclick="return false;">Work</a>
-          <div class="dropdown" style="min-width:200px;">
+          <div class="dropdown">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <span class="dropdown-group-label"><a href="/#turk-projeleri" style="color:inherit;text-decoration:none;">T&uuml;rk Projeleri</a></span>
@@ -636,11 +549,12 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <h1 class="hero-title">KAN VATAN</h1>
-      <p class="hero-subtitle">Blood at the Roots</p>
-      <p class="hero-tagline">A neo-western spin on the classic Turkish dizi</p>
+      <p class="hero-format">Feature Film &middot; Thriller &middot; Drama</p>
+      <h1 class="hero-title">G&Ouml;M&Uuml;LD&Uuml;</h1>
+      <p class="hero-subtitle">Buried Underneath</p>
+      <span class="hero-status">Konsept Geli&#351;tirme</span>
     </div>
-    <p class="hero-logline">A family of olive growers finds an American operative hiding out on their dying grove &mdash; just when they need&nbsp;him.</p>
+    <p class="hero-logline">&ldquo;After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were&nbsp;promised.&rdquo;</p>
     <div class="scroll-indicator">
       <svg viewBox="0 0 16 16"><polyline points="2 5 8 11 14 5"></polyline></svg>
     </div>
@@ -648,115 +562,54 @@
 
   <div class="hero-spacer"></div>
 
-  <!-- 2. THE STORY -->
-  <section class="section section-with-bg reveal" style="background-image: url('/images/kv_village.webp');">
-    <div class="section-inner" style="background: rgba(10,13,16,0.75); padding: 48px;">
-      <div class="display-heading">Hatay Province, 2013.</div>
-      <div class="body-text">
-        <p>The Y&#305;lmaz family has tended their olive grove for seven generations. A dangerous blight is killing the ancient trees. Patriarch Davut &mdash; lost to dementia &mdash; can&rsquo;t protect them anymore. His son Kaan, who trades derivatives in Manhattan, swore he&rsquo;d never return to the family grove. That leaves the youngest daughter Sezen to hold everything together alone.</p>
-        <p>But death, disgrace, and a mysterious American fugitive from the Syrian border are all heading for the grove &mdash; and so is a foreign corporation with its eyes on the land. They&rsquo;ll need to learn to understand each other to save the trees &mdash; and&nbsp;themselves.</p>
-      </div>
-    </div>
-  </section>
+  <!-- TAGLINE -->
+  <div class="tagline-section reveal">
+    <p class="tagline-text">JOHN WICK meets the story of MOSES in post-earthquake Turkey</p>
+  </div>
 
-  <!-- 3. CHARACTERS -->
+  <!-- 2. SYNOPSIS -->
   <section class="section reveal">
-    <div class="section-inner--wide">
-      <p class="section-heading">The Characters</p>
-      <div class="char-grid">
-        <div class="char-card">
-          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_sezen.webp?v=1" alt="Sezen Y&#305;lmaz" loading="lazy"></div>
-          <div class="char-card-content">
-            <div class="char-card-header">
-              <div class="char-name">SEZEN YILMAZ</div>
-              <div class="char-subtitle">Daughter of the Land</div>
-            </div>
-            <div class="char-body">The one who stayed. She gave up her foreign studies when her mother died to take care of her father. But now that her father is sick, she takes care of everything. With the blight sweeping through and her brother unavailable to help, she&rsquo;s the only one left to protect the trees. And she&rsquo;s done waiting for&nbsp;permission.</div>
-          </div>
-        </div>
-        <div class="char-card">
-          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_kaan.webp?v=1" alt="Kaan Y&#305;lmaz" loading="lazy"></div>
-          <div class="char-card-content">
-            <div class="char-card-header">
-              <div class="char-name">KAAN YILMAZ</div>
-              <div class="char-subtitle">The Son Who Left</div>
-            </div>
-            <div class="char-body">With a dream job at a New York hedge fund, he swore he&rsquo;d never return to the family grove. But after tragedy strikes, he&rsquo;s forced to come home. And he&rsquo;ll stay for the&nbsp;war.</div>
-          </div>
-        </div>
-        <div class="char-card">
-          <div class="char-card-img-wrap"><img class="char-card-img" src="/images/kv_abe.webp?v=1" alt="Abe" loading="lazy"></div>
-          <div class="char-card-content">
-            <div class="char-card-header">
-              <div class="char-name">ABE</div>
-              <div class="char-subtitle">The Nomad</div>
-            </div>
-            <div class="char-body">After a mission takes him across the border into Syria, the mysterious American operative comes face to face with the dark heart of humanity. When he turns on his CIA handlers, he has nowhere to go. So he disguises himself as a laborer and finds work on the Y&#305;lmaz grove. While he connects with the land in a way Kaan never could, his secrets carry a burden that will put them all at&nbsp;risk.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. TONE & INFLUENCES -->
-  <section class="section section-with-bg reveal" style="background-image: url('/images/kv_fire.webp');">
     <div class="section-inner">
-      <p class="section-heading">Tone &amp; Influences</p>
+      <p class="section-heading">The Story</p>
       <div class="body-text">
-        <p>Kan Vatan merges the geopolitical thriller with the Turkish cinematic tradition &mdash; Homeland&rsquo;s paranoid urgency meets the contemplative dread of Nuri Bilge Ceylan, where modern investigations excavate centuries of buried violence. The aesthetic draws from neo-Western noir like Sicario and No Country for Old Men: border zones where law dissolves and violence follows ancient rules. The family-and-land stakes evoke Yellowstone &mdash; a dynasty fighting to hold territory against outside forces. The supernatural elements echo Anatolian folk horror &mdash; land that remembers, trees that grow from blood, cycles that repeat across empires.</p>
+        <p>Musa can fix anything. At least anything he understands. As an engineer, he deals in observable data&mdash;angles, leverage, force, and facts. He knows his parents left him. He knows he was adopted by crime boss Ramazan, who raised him like a son and made him his organization&rsquo;s head of construction. But there are many unknowns: What happened to his parents? What is the strange symbol branded on his foot? What is the actual nature of Ramazan&rsquo;s&nbsp;business?</p>
+        <p>But Ramazan taught him to focus on what he can control. To leave unknowns buried. And he does. So each day, Musa steps over the secrets buried below...until one day the earth cracks&nbsp;open.</p>
+        <p>A massive earthquake swallows buildings whole. The house Musa built for Ramazan stays standing. Old and ailing, Ramazan panics when a shipment of valuable &ldquo;product&rdquo; is trapped underground. Musa is sent to the border to drill out the&nbsp;&ldquo;products.&rdquo;</p>
+        <p>After hours of backbreaking work, Musa breaks through&mdash;only to find terrified children and a woman named Meryem. Before he can understand, an aftershock buries them all underground&nbsp;together.</p>
+        <p>Trapped underground, Musa must confront the truth about Ramazan&rsquo;s empire&mdash;and about his own&nbsp;past.</p>
       </div>
     </div>
   </section>
 
-  <!-- 6. CONTEXT -->
-  <section class="section section-with-bg reveal" style="background-image: url('/images/img_43.webp');">
-    <div class="section-inner--wide">
-      <p class="section-heading">Context</p>
-      <div class="context-grid">
-        <div class="context-card">
-          <div class="context-heading">Operation Timber Sycamore</div>
-          <div class="context-body">Inspired by Operation Timber Sycamore &mdash; the covert CIA program that armed Syrian rebel groups through private contractors. Weapons meant for moderate rebels ended up in the hands of jihadist groups &mdash; some connected to bombings on Turkish soil. The border region became a pipeline of weapons, money, and moral compromise.</div>
+  <!-- 3. VISUAL TREATMENT -->
+  <section class="embed-section reveal">
+    <div class="embed-inner">
+      <p class="section-heading" style="text-align:center;">Visual Treatment</p>
+      <a href="https://prewrite.com/web-app/story-viewer/645419b01a729e445e313ed6/home" target="_blank" rel="noopener noreferrer" class="treatment-thumb">
+        <img src="/images/gomuldu-hero.webp" alt="Gömüldü — Visual Treatment" loading="lazy">
+        <div class="treatment-thumb-overlay">
+          <span>VIEW FULL TREATMENT &rarr;</span>
         </div>
-        <div class="context-card">
-          <div class="context-heading">Hatay Province</div>
-          <div class="context-body">Set in Hatay Province, one of the oldest continuously inhabited regions on earth &mdash; conquered by Hittites, Romans, Crusaders, Ottomans. The olive trees here can live thousands of years. Their roots connect underground across vast distances. And they can literally fuse with foreign wood through grafting &mdash; ancient and new growth becoming one organism.</div>
-        </div>
-        <div class="context-card">
-          <div class="context-heading">Cain &amp; Abel</div>
-          <div class="context-body">At its core, Kan Vatan is a Cain and Abel story. The farmer who abandoned his land. The nomad who killed a man. And the question of whose blood the soil accepts.</div>
-        </div>
-      </div>
+      </a>
     </div>
   </section>
 
-  <!-- 7. WHY CO-PRODUCTION -->
-  <section class="section section-with-bg reveal" style="background-image: url('/images/kv_corridor.webp');">
-    <div class="section-inner">
-      <p class="section-heading">Why Co-Production</p>
-      <div class="body-text">
-        <p>Turkish drama is the second most exported television in the world &mdash; $600M+ annually, 170+ countries, 750 million viewers. Everywhere except America. The barrier is simple: Americans don&rsquo;t watch subtitles at scale.</p>
-        <p>Kan Vatan solves this by design. Drawing on the model of international co-productions like Narcos and Sh&#333;gun, the story embeds American characters &mdash; a CIA operative, a Turkish-American son raised in the States, an international corporation &mdash; so that 40&ndash;50% of dialogue is naturally English through premise, not contrivance.</p>
-        <p>Turkish production quality rivals anything on American cable. The talent, the crews, the locations are world-class. What&rsquo;s been missing is the right packaging for the US market. Kan Vatan is built to be that bridge.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. ABOUT THE WRITER -->
+  <!-- 4. ABOUT THE WRITER -->
   <section class="section reveal">
     <div class="section-inner">
       <p class="section-heading">About the Writer</p>
       <div class="body-text">
-        <p>Written by Max Coyne-Green. Max lives in Turkey for months each year with his wife&rsquo;s Turkish family, and is deeply immersed in Turkish history, culture, and mythical storytelling traditions. Before writing full-time, he spent a decade managing research for hedge funds and tech companies &mdash; experience that directly shapes the institutional machinery driving the story&rsquo;s conflicts.</p>
+        <p>Written by Max Coyne-Green. Max lives in Turkey for months each year with his wife&rsquo;s Turkish family, and is deeply immersed in Turkish history, culture, and mythical storytelling traditions. Before writing full-time, he spent a decade managing research for hedge funds and tech companies&mdash;experience that directly shapes the institutional machinery driving the story&rsquo;s&nbsp;conflicts.</p>
       </div>
     </div>
   </section>
 
-  <!-- 9. CTA -->
+  <!-- 5. CTA -->
   <div class="cta-section reveal">
-    <button class="cta-btn" onclick="openConnectModal({heading:'REQUEST PILOT',subtitle:'Kan Vatan \u2014 TV Series',interest:'Kan Vatan',request:'Kan Vatan - Pilot',placeholder:'Introduce yourself briefly...'})">Request Pilot</button>
+    <button class="cta-btn" onclick="openConnectModal()">Connect</button>
   </div>
 
-  <!-- 10. FOOTER -->
+  <!-- 6. FOOTER -->
   <footer class="site-footer">
     <p>&copy; 2026 <a href="/">coyne-green.com</a></p>
   </footer>
@@ -765,8 +618,8 @@
   <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
     <div class="modal">
       <div id="connectFormState">
-        <h2 id="connectHeading">REQUEST PILOT</h2>
-        <p class="modal-subtitle" id="connectSubtitle">Kan Vatan &mdash; TV Series</p>
+        <h2 id="connectHeading">LET'S CONNECT</h2>
+        <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
 
         <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="connect">
@@ -783,9 +636,9 @@
             <div class="modal-section-label">I'm interested in</div>
             <div class="checkbox-group">
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Kan Vatan">
+                <input type="checkbox" name="interest" value="Gomuldu" checked>
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label">Kan Vatan</span>
+                <span class="checkbox-label">G&ouml;m&uuml;ld&uuml;</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" name="interest" value="Human Resource">
@@ -798,9 +651,9 @@
                 <span class="checkbox-label">Top Floor</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Meatspace">
+                <input type="checkbox" name="interest" value="Kan Vatan">
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label">Meatspace</span>
+                <span class="checkbox-label">Kan Vatan</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" name="interest" value="General Meeting">
@@ -831,7 +684,6 @@
     </div>
   </div>
 
-
   <!-- Hidden Netlify form for build-time detection -->
   <form name="connect" netlify netlify-honeypot="bot-field" hidden>
     <input name="name">
@@ -840,6 +692,7 @@
     <input name="interest" type="checkbox" value="Human Resource">
     <input name="interest" type="checkbox" value="Top Floor">
     <input name="interest" type="checkbox" value="Kan Vatan">
+    <input name="interest" type="checkbox" value="Gomuldu">
     <input name="interest" type="checkbox" value="Meatspace">
     <input name="interest" type="checkbox" value="General Meeting">
     <textarea name="message"></textarea>
@@ -887,6 +740,9 @@
         heading.textContent = "LET'S CONNECT";
         subtitle.textContent = "What brings you here?";
         message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
+        // Pre-check Gomuldu since we're on the Gomuldu page
+        var gc = form.querySelector('input[name="interest"][value="Gomuldu"]');
+        if (gc) gc.checked = true;
       }
 
       document.getElementById('connectFormState').style.display = '';

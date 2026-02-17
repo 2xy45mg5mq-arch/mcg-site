@@ -51,7 +51,7 @@ These define patterns that must be identical across all pages. When editing ANY 
 - turkiye.html has additional Turkish left-nav (Projeler, Hakkımda, İletişim) but same Work dropdown
 
 **Connect modal checkboxes (all pages with modals):**
-- Human Resource, Top Floor, Kan Vatan, General meeting with Max
+- Human Resource, Top Floor, Turkish Projects, Collaborating on new concepts, General meeting, Other
 - turkiye.html has its own Turkish modal with both English and Turkish project groups (no LR or Meatspace in either)
 
 **OG tag pattern (every page):**
@@ -97,7 +97,7 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 These patterns are identical across all pages. When editing one, verify others match.
 
 - **Nav dropdown:** HR, Top Floor, divider, Türk Projeleri → /turkiye (dimmed label, clickable), then indented: Kan Vatan, Gömüldü, Altın Damarları. No Losing Reality or Meatspace.
-- **Connect modal checkboxes:** Human Resource, Top Floor, Kan Vatan, General meeting with Max. turkiye.html adds Turkish projects after divider.
+- **Connect modal checkboxes:** Human Resource, Top Floor, Turkish Projects, Collaborating on new concepts, General meeting, Other. turkiye.html has its own Turkish modal (unchanged).
 - **OG tags:** Every page has unique og:title, og:description, og:image, og:url. All use twitter:card = summary_large_image.
 - **Footer:** .copyright-footer class. Two paragraphs: © line + full IP protection. turkiye.html has Turkish translation.
 - **Fonts:** Bebas Neue (headings), EB Garamond (body). No exceptions except tfgame.html game UI.

@@ -113,13 +113,16 @@
     .hero-bg img {
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.4;
-      filter: brightness(0.75);
+      object-position: center 35%;
+      opacity: 0.45;
+      filter: brightness(0.6) contrast(1.2);
     }
     .hero-bg::after {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center 60%, transparent 35%, var(--bg) 80%);
+      background:
+        linear-gradient(to bottom, transparent 35%, rgba(10, 13, 16, 0.35) 55%, rgba(10, 13, 16, 0.3) 70%, transparent 85%),
+        radial-gradient(ellipse at center 40%, transparent 25%, var(--bg) 75%);
     }
     .hero-content { position: relative; z-index: 2; }
     .hero-content h1 {
@@ -160,6 +163,7 @@
       letter-spacing: 0.1em;
       font-size: var(--fs, 0.85rem);
       color: var(--c, rgba(228,228,228,0.6));
+      text-shadow: 0 1px 12px rgba(10, 13, 16, 0.9), 0 0 40px rgba(10, 13, 16, 0.5);
     }
     .byline-floor .fl-text { letter-spacing: 0.18em; }
     .tower-sep {
@@ -436,6 +440,31 @@
       .nav-links { gap: 20px; }
       .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
     }
+    @media (max-width: 430px) {
+      .tower-floor {
+        border-color: transparent !important;
+      }
+      .tower-floor:first-child {
+        border-top-color: transparent !important;
+      }
+      .tower-floor::before, .tower-floor::after {
+        display: none;
+      }
+      .tower-sep { opacity: 0 !important; height: 6px; }
+      .tower-floor .fl-text {
+        font-size: 0.55rem !important;
+        letter-spacing: 0.02em !important;
+      }
+      .byline-floor .fl-text {
+        letter-spacing: 0.06em !important;
+      }
+      .genre-below {
+        font-size: 0.7rem !important;
+        letter-spacing: 3px !important;
+        margin-top: 28px !important;
+      }
+      .story-open { padding: 60px 24px 8px !important; }
+    }
   </style>
 </head>
 <body>
@@ -488,7 +517,7 @@
   </header>
 
   <!-- ═══ CHAPTER OPEN ═══ -->
-  <section class="section story-open reveal" style="padding: 100px 40px 60px;">
+  <section class="section story-open reveal" style="padding: 100px 40px 16px;">
     <p style="font-family: 'EB Garamond', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; line-height: 1.3; color: var(--text); letter-spacing: 0.01em;"><strong>MURRY</strong> opens the door.</p>
   </section>
 

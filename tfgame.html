@@ -1373,6 +1373,7 @@ function endComic() {
   GAME.state = 'playing';
   GAME.gen++;
   GAME.floors = generateFloors();
+  verifyReachability(GAME.floors);
   GAME.npcs = generateNPCs(GAME.floors);
   GAME.murry.x = 195;
   GAME.murry.y = 640 - PH_SIZE;
@@ -1395,7 +1396,6 @@ function endComic() {
   GAME.zoneLabelTimer = 160;
   GAME.lastZone = 0;
 
-  // Nik encounter triggers on floor 2
 }
 
 function showControlHint(text) {
@@ -1960,7 +1960,7 @@ function showMissionCards(cards, onComplete) {
   if (GAME.missionCards.safetyTimer) clearTimeout(GAME.missionCards.safetyTimer);
   GAME.missionCards.safetyTimer = setTimeout(() => {
     if (GAME.missionCards.active) dismissMissionCards();
-  }, 120000); // 2 min safety (player-paced, generous timeout)
+  }, 30000); // 30s safety — prevents permanent softlock if dialogue gets stuck
 }
 
 function renderMissionCard(index) {
@@ -2241,6 +2241,24 @@ function generateFloors() {
   floors.push({ index: 22, y: 640 - 22 * FH, platforms: [{ x: 20, y: 640 - 22 * FH, w: 380 }], items: [], door: true });
 
   return floors;
+}
+
+// Verify every floor N → N+1 is jumpable. If gap exceeds max jump height,
+// insert a stepping-stone platform on floor N. (With current FH=118 and
+// JUMP=10.8/GRAV=0.42 → max ≈138.9px, this should never fire — but it's a
+// safety net for future tuning.)
+function verifyReachability(floors) {
+  const MAX_JUMP_H = (JUMP * JUMP) / (2 * GRAV); // ~138.9px
+  for (let i = 0; i < TOTAL_FLOORS; i++) {
+    const floorN = floors.find(f => f.index === i);
+    const floorAbove = floors.find(f => f.index === i + 1);
+    if (!floorN || !floorAbove) continue;
+    const vertGap = floorN.y - floorAbove.y;
+    if (vertGap <= MAX_JUMP_H) continue; // reachable — no action needed
+    // Insert a mid-height stepping stone centered on the screen
+    const midY = Math.round((floorN.y + floorAbove.y) / 2);
+    floorN.platforms.push({ x: W / 2 - 60, y: midY, w: 120 });
+  }
 }
 
 function generateNPCs(floors) {
@@ -2687,11 +2705,16 @@ function loseAFloor() {
   const m = GAME.murry;
   const prevFloor = Math.max(0, GAME.currentFloor - 1);
   const target = GAME.floors.find(f => f.index === prevFloor);
-  if (target) {
-    m.x = target.platforms[0].x + target.platforms[0].w / 2 - PW / 2;
-    m.y = target.platforms[0].y - PH_SIZE;
+  const plat = (target && target.platforms.length > 0)
+    ? target.platforms[0]
+    : findSafePlatform(prevFloor);
+  if (plat) {
+    m.x = plat.x + plat.w / 2 - PW / 2;
+    m.y = plat.y - PH_SIZE;
     m.vy = 0; m.stunTimer = 20;
     GAME.currentFloor = prevFloor;
+    // Snap camera so player is visible after enemy drop (don't leave them off-screen)
+    GAME.camera.y = Math.max(0, -(m.y - 400));
   }
   GAME.shakeTimer = 10;
 }

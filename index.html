@@ -2536,6 +2536,77 @@
       }
     }
 
+    /* TF card — cinematic poster moment on mobile */
+    @media (max-width: 480px) {
+      .section-divider {
+        padding: 32px 24px;
+      }
+      .project-card-section {
+        padding: 0;
+      }
+      .tf-cinematic .project-card-image {
+        aspect-ratio: auto;
+        min-height: 85vh;
+        overflow: hidden;
+      }
+      .tf-card .project-card-image img {
+        object-fit: cover;
+        object-position: center 20%;
+        transform: scale(1.05);
+        opacity: 0.9;
+        filter: brightness(1.4) contrast(1.1) drop-shadow(0 0 30px rgba(184, 164, 114, 0.3));
+      }
+      .tf-card .project-card-image::before {
+        background: radial-gradient(ellipse at center 45%, rgba(10, 13, 16, 0.7) 5%, rgba(10, 13, 16, 0.3) 25%, transparent 55%);
+      }
+      .tf-card .project-card-image::after {
+        background:
+          linear-gradient(to right, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%),
+          linear-gradient(to bottom, var(--bg) 0%, transparent 8%, transparent 75%, var(--bg) 100%);
+      }
+      .tf-card-overlay {
+        justify-content: flex-end;
+        padding: 0 24px 28px;
+      }
+      .tf-card-overlay h2 {
+        font-size: clamp(2.8rem, 12vw, 4rem);
+        margin-bottom: 16px;
+        letter-spacing: 0.08em;
+      }
+      .tf-pyramid {
+        gap: 5px;
+        margin-bottom: 8px;
+      }
+      .tf-pyramid-line {
+        font-size: clamp(0.85rem, 3.8vw, 1.05rem);
+      }
+      .tf-card-buttons {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        margin-top: 24px;
+      }
+      .tf-card-buttons .btn {
+        width: 100%;
+        max-width: none;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        letter-spacing: 0.14em;
+        padding: 14px 20px;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.25);
+        color: #e4e4e4;
+      }
+      .tf-card-buttons .btn-primary {
+        background: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.45);
+        color: #f0ece4;
+      }
+    }
+
     /* Meatspace title card */
     .meatspace-card,
     .meatspace-card .project-card-image {

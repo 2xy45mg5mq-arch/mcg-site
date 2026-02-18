@@ -215,6 +215,7 @@
     .dropdown .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
     .dropdown a.dropdown-group-label { text-decoration: none; cursor: pointer; transition: color 0.2s; }
     .dropdown a.dropdown-group-label:hover { color: rgba(255,255,255,0.4); background: transparent; }
+    .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
 
     /* CONNECT MODAL */
     .modal-overlay {
@@ -977,21 +978,30 @@
       color: #e4e4e4;
     }
     .tf-card-buttons .btn-primary {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.35);
-      color: #e4e4e4;
-      font-weight: 400;
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.45);
+      color: #f0ece4;
+      font-weight: 500;
     }
 
     @media (max-width: 600px) {
       .tf-card-buttons {
-        gap: 10px;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
       }
       .tf-card-buttons .btn {
-        flex: 1;
-        padding: 12px 0;
-        font-size: 0.7rem;
+        width: 100%;
+        max-width: 280px;
+        padding: 14px 20px;
+        font-size: 0.85rem;
         text-align: center;
+        box-sizing: border-box;
+      }
+      .tf-card-buttons .btn-primary {
+        background: rgba(255,255,255,0.18);
+        border-color: rgba(255,255,255,0.5);
+        color: #fff;
       }
     }
 
@@ -1367,7 +1377,7 @@
     /* CONTACT */
     .contact {
       text-align: center;
-      padding-bottom: 120px;
+      padding-bottom: 60px;
     }
 
     .contact h2 {
@@ -2011,7 +2021,7 @@
     }
 
     @media (max-width: 600px) {
-      section { padding: 70px 0; }
+      section { padding: 48px 0; }
       .hero h1 { letter-spacing: 6px; }
       .hero .subtitle { 
         font-size: 0.7rem; 
@@ -2823,6 +2833,7 @@
           <div class="dropdown" style="min-width:200px;">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
+            <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
@@ -3043,7 +3054,7 @@
             <h2>MAX COYNE-GREEN</h2>
             <p class="bio-subtitle">Small Language Model · 1990</p>
             <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://www.linkedin.com/in/mcgwrites/" target="_blank" rel="noopener noreferrer">here</a>.</p>
-            <a href="/about#journey" style="display:inline-block; margin-top:20px; font-family:'Bebas Neue',sans-serif; font-size:0.7rem; letter-spacing:3px; color:var(--muted); text-decoration:none; transition:color 0.3s;">THE FULL STORY &rarr;</a>
+            <a href="/about" style="display:inline-block; margin-top:20px; font-family:'Bebas Neue',sans-serif; font-size:0.7rem; letter-spacing:3px; color:var(--muted); text-decoration:none; transition:color 0.3s;">THE FULL STORY &rarr;</a>
           </div>
         </div>
       </div>

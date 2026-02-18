@@ -87,6 +87,7 @@
       text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
     }
     .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
     .nav-links > a, .nav-item > a { position: relative; }
     .nav-links > a::after, .nav-item > a::after {
       content: ''; position: absolute; bottom: -4px; left: 0;
@@ -456,6 +457,7 @@
           <div class="dropdown" style="min-width:200px;">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
+            <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
@@ -536,7 +538,7 @@
       <p style="text-align: center; font-size: 0.78rem; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin: 0 0 56px 0;">Story by Max Coyne-Green & Mia Blake Vallet</p>
 
       <!-- 6. Request Feature Script -->
-      <div class="detail-actions" style="justify-content: center; margin-bottom: 100px;">
+      <div class="detail-actions" style="justify-content: center; margin-bottom: 48px;">
         <a href="#" class="btn btn-primary" style="padding: 16px 40px; font-size: 0.75rem; letter-spacing: 3px;" onclick="openConnectModal({heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'}); return false;">Request Feature Script</a>
       </div>
 
@@ -580,9 +582,9 @@
         </div>
       </div>
 
-      <div class="hr-bottom-links" style="display: flex; justify-content: center; gap: 40px; margin-top: 60px;">
-        <a href="/hr/deep" class="text-link" style="font-size: 1.1rem; padding: 16px 32px; height: 54px; display: inline-flex; align-items: center;">Deep Dive &rarr;</a>
-        <a href="/hr/characters" class="text-link" style="font-size: 1.1rem; padding: 16px 32px; height: 54px; display: inline-flex; align-items: center;">Characters &rarr;</a>
+      <div class="hr-bottom-links" style="display: flex; justify-content: center; gap: 20px; margin-top: 48px; flex-wrap: wrap;">
+        <a href="/hr/deep" class="text-link" style="font-size: 0.95rem; padding: 14px 28px; height: 50px; display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 140px; max-width: 200px; box-sizing: border-box;">Deep Dive &rarr;</a>
+        <a href="/hr/characters" class="text-link" style="font-size: 0.95rem; padding: 14px 28px; height: 50px; display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 140px; max-width: 200px; box-sizing: border-box;">Characters &rarr;</a>
       </div>
     </div>
   </div>

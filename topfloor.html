@@ -89,6 +89,7 @@
       text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
     }
     .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
     .dropdown .dropdown-group-label {
       display: block; padding: 10px 20px 4px; font-size: 0.6rem; letter-spacing: 2px;
       text-transform: uppercase; color: rgba(255,255,255,0.18);
@@ -578,6 +579,7 @@
           <div class="dropdown" style="min-width:200px;">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
+            <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
@@ -615,7 +617,7 @@
     </div>
   </header>
   <div class="genre-below">Feature &middot; Psychological Thriller</div>
-  <div style="height: 1px; background: linear-gradient(to right, transparent, rgba(184, 164, 114, 0.2) 50%, transparent); margin: 60px auto; max-width: 400px;"></div>
+  <div style="height: 1px; background: linear-gradient(to right, transparent, rgba(184, 164, 114, 0.2) 50%, transparent); margin: 40px auto; max-width: 400px;"></div>
 
   <!-- ═══ CHAPTER OPEN ═══ -->
   <section class="section story-open reveal" style="padding: 70px 40px 16px;">
@@ -693,15 +695,15 @@
   </div>
 
   <!-- ═══ PLAY THE STORY ═══ -->
-  <section class="cta-section reveal" style="padding-bottom: 32px;">
-    <a href="/tfgame" style="display:block; max-width:560px; margin:0 auto 28px; border-radius:8px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,0.4); transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.5)';" onmouseout="this.style.transform='';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.4)';">
+  <section class="cta-section reveal" style="padding: 48px 40px 24px;">
+    <a href="/tfgame" style="display:block; max-width:560px; margin:0 auto 20px; border-radius:8px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,0.4); transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.5)';" onmouseout="this.style.transform='';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.4)';">
       <img src="/images/og-topfloor.jpg" alt="Play Top Floor — Interactive Story" style="width:100%; display:block;">
     </a>
-    <a href="/tfgame" class="btn btn-gold">Play Now</a>
+    <a href="/tfgame" class="btn btn-gold">Play the Story</a>
   </section>
 
   <!-- ═══ CTA ═══ -->
-  <section class="cta-section reveal" style="padding-top: 32px;">
+  <section class="cta-section reveal" style="padding-top: 24px;">
     <a href="#" class="btn btn-gold" onclick="openConnectModal(); return false;">Request the Script</a>
     <div class="cta-nav">
       <a href="/#work">See Other Work</a>

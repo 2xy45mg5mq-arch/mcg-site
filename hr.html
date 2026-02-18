@@ -373,6 +373,7 @@
       background: var(--card); border: 1px solid var(--border);
       border-radius: 8px; padding: 40px;
       max-width: 480px; width: 90%;
+      max-height: 90vh; overflow-y: auto;
       transform: translateY(20px); transition: transform 0.3s;
     }
     .modal-overlay.active .modal { transform: translateY(0); }
@@ -582,9 +583,9 @@
         </div>
       </div>
 
-      <div class="hr-bottom-links" style="display: flex; justify-content: center; gap: 20px; margin-top: 48px; flex-wrap: wrap;">
-        <a href="/hr/deep" class="text-link" style="font-size: 0.95rem; padding: 14px 28px; height: 50px; display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 140px; max-width: 200px; box-sizing: border-box;">Deep Dive &rarr;</a>
-        <a href="/hr/characters" class="text-link" style="font-size: 0.95rem; padding: 14px 28px; height: 50px; display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 140px; max-width: 200px; box-sizing: border-box;">Characters &rarr;</a>
+      <div class="hr-bottom-links" style="display: flex; justify-content: center; gap: 20px; margin-top: 48px; max-width: 420px; margin-left: auto; margin-right: auto;">
+        <a href="/hr/deep" class="text-link" style="font-size: 0.85rem; padding: 14px 24px; height: 50px; display: inline-flex; align-items: center; justify-content: center; flex: 1; text-align: center; box-sizing: border-box; white-space: nowrap;">Deep Dive</a>
+        <a href="/hr/characters" class="text-link" style="font-size: 0.85rem; padding: 14px 24px; height: 50px; display: inline-flex; align-items: center; justify-content: center; flex: 1; text-align: center; box-sizing: border-box; white-space: nowrap;">Characters</a>
       </div>
     </div>
   </div>

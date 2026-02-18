@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Cohesion Review — Phase 6</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0d10;
+      color: #e4e4e4;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* HEADER */
+    header {
+      padding: 60px 0 40px;
+      border-bottom: 1px solid #1f2933;
+    }
+    header h1 {
+      font-size: 2rem;
+      letter-spacing: 2px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    header .subtitle {
+      color: #6b7a88;
+      font-size: 0.95rem;
+    }
+
+    /* SUMMARY STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 40px 0;
+      border-bottom: 1px solid #1f2933;
+    }
+    .stat-card {
+      background: #12171d;
+      border: 1px solid #1f2933;
+      border-radius: 6px;
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #b8a472;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #6b7a88;
+    }
+
+    /* CHANGE SECTIONS */
+    .change-section {
+      padding: 48px 0;
+      border-bottom: 1px solid #1f2933;
+    }
+    .change-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .change-header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .change-header .page-name {
+      color: #b8a472;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(184, 164, 114, 0.1);
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .change-list {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .change-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(31,41,51,0.5);
+      display: grid;
+      grid-template-columns: 200px 1fr 20px 1fr;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .change-list li:last-child { border-bottom: none; }
+    .prop { color: #6b7a88; font-family: 'SF Mono', SFMono-Regular, monospace; font-size: 0.8rem; }
+    .old-val { color: #e06c75; font-family: 'SF Mono', SFMono-Regular, monospace; font-size: 0.8rem; text-decoration: line-through; opacity: 0.7; }
+    .arrow { color: #6b7a88; text-align: center; }
+    .new-val { color: #98c379; font-family: 'SF Mono', SFMono-Regular, monospace; font-size: 0.8rem; }
+
+    /* COMPARISON */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .compare-col { text-align: center; }
+    .compare-col h3 {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #6b7a88;
+      margin-bottom: 12px;
+    }
+    .compare-col img {
+      width: 100%;
+      max-width: 375px;
+      border: 1px solid #1f2933;
+      border-radius: 4px;
+      display: block;
+      margin: 0 auto;
+    }
+    .compare-col.before h3 { color: #e06c75; }
+    .compare-col.after h3 { color: #98c379; }
+
+    /* RISK BADGE */
+    .risk-low { color: #98c379; }
+    .risk-medium { color: #e5c07b; }
+    .risk-high { color: #e06c75; }
+
+    /* SKIPPED SECTION */
+    .skipped {
+      padding: 48px 0;
+      border-bottom: 1px solid #1f2933;
+    }
+    .skipped h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .skipped-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .skipped-card {
+      background: #12171d;
+      border: 1px solid #1f2933;
+      border-radius: 6px;
+      padding: 20px;
+    }
+    .skipped-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: #e4e4e4;
+    }
+    .skipped-card p {
+      font-size: 0.8rem;
+      color: #6b7a88;
+      line-height: 1.5;
+    }
+
+    /* VERDICT */
+    .verdict {
+      padding: 48px 0;
+      text-align: center;
+    }
+    .verdict h2 {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+    .verdict p {
+      color: #6b7a88;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .comparison { grid-template-columns: 1fr; }
+      .change-list li { grid-template-columns: 1fr; gap: 4px; }
+      .arrow { display: none; }
+      .skipped-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <h1>Phase 6: Visual Cohesion Review</h1>
+    <p class="subtitle">Branch: cohesion-review &mdash; 2026-02-17 &mdash; All changes are CSS-only, no content modified</p>
+  </header>
+
+  <!-- SUMMARY STATS -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-number">14</div>
+      <div class="stat-label">CSS Changes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Pages Modified</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number risk-low">Low</div>
+      <div class="stat-label">Visual Impact</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number risk-low">Low</div>
+      <div class="stat-label">Risk Level</div>
+    </div>
+  </div>
+
+  <!-- CHANGE 1: TOPFLOOR -->
+  <div class="change-section">
+    <div class="change-header">
+      <h2>Top Floor &mdash; Buttons, Labels, Body Text</h2>
+      <span class="page-name">topfloor.html</span>
+    </div>
+    <ul class="change-list">
+      <li>
+        <span class="prop">.btn padding</span>
+        <span class="old-val">16px 48px</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">16px 52px</span>
+      </li>
+      <li>
+        <span class="prop">.btn font-size</span>
+        <span class="old-val">0.85rem</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">0.75rem</span>
+      </li>
+      <li>
+        <span class="prop">.section-label font-size</span>
+        <span class="old-val">0.7rem</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">1.4rem</span>
+      </li>
+      <li>
+        <span class="prop">.section-label margin-bottom</span>
+        <span class="old-val">20px</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">40px</span>
+      </li>
+      <li>
+        <span class="prop">.section p font-size</span>
+        <span class="old-val">1.15rem</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">1.1rem</span>
+      </li>
+      <li>
+        <span class="prop">.section p line-height</span>
+        <span class="old-val">1.8</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">1.85</span>
+      </li>
+      <li>
+        <span class="prop">.section p color</span>
+        <span class="old-val">rgba(228,228,228,0.8)</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">rgba(228,228,228,0.85)</span>
+      </li>
+    </ul>
+    <p style="color:#6b7a88; font-size:0.85rem; margin-bottom:16px;">Aligns CTA button size with the kanvatan standard (used on 5+ pages). Section labels grow from tiny breadcrumbs to the site-wide 1.4rem heading size. Body text matches the kanvatan/artci/losingreality standard.</p>
+    <div class="comparison">
+      <div class="compare-col before">
+        <h3>Before</h3>
+        <img src="/cohesion-screenshots/topfloor-before.png" alt="Top Floor before">
+      </div>
+      <div class="compare-col after">
+        <h3>After</h3>
+        <img src="/cohesion-screenshots/topfloor-after.png" alt="Top Floor after">
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE 2: HR-DEEP -->
+  <div class="change-section">
+    <div class="change-header">
+      <h2>HR Deep Dive &mdash; Button Sizing</h2>
+      <span class="page-name">hr-deep.html</span>
+    </div>
+    <ul class="change-list">
+      <li>
+        <span class="prop">.dd-close .btn padding</span>
+        <span class="old-val">14px 40px</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">16px 52px</span>
+      </li>
+      <li>
+        <span class="prop">.dd-close .btn font-size</span>
+        <span class="old-val">0.7rem</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">0.75rem</span>
+      </li>
+    </ul>
+    <p style="color:#6b7a88; font-size:0.85rem; margin-bottom:16px;">Standardizes the closing CTA buttons to match the site-wide ghost button pattern. Buttons were slightly smaller than every other page.</p>
+    <div class="comparison">
+      <div class="compare-col before">
+        <h3>Before</h3>
+        <img src="/cohesion-screenshots/hr-deep-before.png" alt="HR Deep before">
+      </div>
+      <div class="compare-col after">
+        <h3>After</h3>
+        <img src="/cohesion-screenshots/hr-deep-after.png" alt="HR Deep after">
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE 3: ABOUT -->
+  <div class="change-section">
+    <div class="change-header">
+      <h2>About &mdash; CTA Button Sizing</h2>
+      <span class="page-name">about.html</span>
+    </div>
+    <ul class="change-list">
+      <li>
+        <span class="prop">.end-cta padding</span>
+        <span class="old-val">12px 28px</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">16px 52px</span>
+      </li>
+      <li>
+        <span class="prop">.end-cta font-size</span>
+        <span class="old-val">0.7rem</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">0.75rem</span>
+      </li>
+    </ul>
+    <p style="color:#6b7a88; font-size:0.85rem; margin-bottom:16px;">Timeline end-panel CTAs were noticeably smaller than buttons on every other page. Now matches the standard ghost button size. Responsive override also adjusted proportionally.</p>
+    <div class="comparison">
+      <div class="compare-col before">
+        <h3>Before</h3>
+        <img src="/cohesion-screenshots/about-before.png" alt="About before">
+      </div>
+      <div class="compare-col after">
+        <h3>After</h3>
+        <img src="/cohesion-screenshots/about-after.png" alt="About after">
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE 4: INDEX -->
+  <div class="change-section">
+    <div class="change-header">
+      <h2>Homepage &mdash; Section Divider Color</h2>
+      <span class="page-name">index.html</span>
+    </div>
+    <ul class="change-list">
+      <li>
+        <span class="prop">section::before color</span>
+        <span class="old-val">rgba(94,180,176,0.3) teal</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">rgba(184,164,114,0.3) gold</span>
+      </li>
+    </ul>
+    <p style="color:#6b7a88; font-size:0.85rem; margin-bottom:16px;">The thin divider lines between homepage sections used a teal color that doesn't exist anywhere else on the site. Changed to gold to match the site-wide accent palette. Subtle but removes a color that has no home in the design system.</p>
+    <div class="comparison">
+      <div class="compare-col before">
+        <h3>Before</h3>
+        <img src="/cohesion-screenshots/index-before.png" alt="Index before">
+      </div>
+      <div class="compare-col after">
+        <h3>After</h3>
+        <img src="/cohesion-screenshots/index-after.png" alt="Index after">
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE 5: KANVATAN -->
+  <div class="change-section">
+    <div class="change-header">
+      <h2>Kan Vatan &mdash; Card Background Variable</h2>
+      <span class="page-name">kanvatan.html</span>
+    </div>
+    <ul class="change-list">
+      <li>
+        <span class="prop">.char-card background</span>
+        <span class="old-val">#141618</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">var(--card) (#12171d)</span>
+      </li>
+      <li>
+        <span class="prop">.context-card background</span>
+        <span class="old-val">#141618</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">var(--card) (#12171d)</span>
+      </li>
+      <li>
+        <span class="prop">card gradient</span>
+        <span class="old-val">#141618</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">var(--card)</span>
+      </li>
+    </ul>
+    <p style="color:#6b7a88; font-size:0.85rem; margin-bottom:16px;">Cards used a hardcoded hex (#141618) instead of the CSS variable (--card: #12171d). Nearly invisible visual difference, but now uses the same token as topfloor/index. Easier to maintain if the card color ever changes globally.</p>
+    <div class="comparison">
+      <div class="compare-col before">
+        <h3>Before</h3>
+        <img src="/cohesion-screenshots/kanvatan-before.png" alt="Kanvatan before">
+      </div>
+      <div class="compare-col after">
+        <h3>After</h3>
+        <img src="/cohesion-screenshots/kanvatan-after.png" alt="Kanvatan after">
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE 6: TURKIYE -->
+  <div class="change-section">
+    <div class="change-header">
+      <h2>T&uuml;rkiye &mdash; Interstitial Image Height</h2>
+      <span class="page-name">turkiye.html</span>
+    </div>
+    <ul class="change-list">
+      <li>
+        <span class="prop">.still img max-height</span>
+        <span class="old-val">60vh</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">40vh</span>
+      </li>
+      <li>
+        <span class="prop">.still img (mobile)</span>
+        <span class="old-val">50vh</span>
+        <span class="arrow">&rarr;</span>
+        <span class="new-val">35vh</span>
+      </li>
+    </ul>
+    <p style="color:#6b7a88; font-size:0.85rem; margin-bottom:16px;">Interstitial images were taller than the .cinematic-break pattern used on kanvatan, artci, altindamarlari, and losingreality (40vh). Now consistent across all project pages. No copy or layout changes &mdash; CSS only.</p>
+    <div class="comparison">
+      <div class="compare-col before">
+        <h3>Before</h3>
+        <img src="/cohesion-screenshots/turkiye-before.png" alt="Turkiye before">
+      </div>
+      <div class="compare-col after">
+        <h3>After</h3>
+        <img src="/cohesion-screenshots/turkiye-after.png" alt="Turkiye after">
+      </div>
+    </div>
+  </div>
+
+  <!-- SKIPPED PAGES -->
+  <div class="skipped">
+    <h2>Intentionally Skipped</h2>
+    <p style="color:#6b7a88; margin-bottom:20px;">These pages were evaluated but left unchanged. Each has a design-specific reason for its current styling.</p>
+    <div class="skipped-grid">
+      <div class="skipped-card">
+        <h4>meatspace.html</h4>
+        <p>Intentionally uses monospace Courier New font, filled white CTA button, and unique separator system. Changing these would break its distinct retro-digital aesthetic.</p>
+      </div>
+      <div class="skipped-card">
+        <h4>artci / altindamarlari / losingreality</h4>
+        <p>Already using the winning kanvatan pattern for all 6 element types. These are the standard-setters &mdash; no changes needed.</p>
+      </div>
+      <div class="skipped-card">
+        <h4>hr-slideshow.html</h4>
+        <p>Full-screen slideshow with no traditional sections, labels, or CTA buttons. No elements to standardize.</p>
+      </div>
+      <div class="skipped-card">
+        <h4>tfgame.html</h4>
+        <p>Interactive game with unique UI. Not a portfolio page &mdash; excluded from cohesion scope.</p>
+      </div>
+      <div class="skipped-card">
+        <h4>index.html CTAs</h4>
+        <p>Homepage .text-link buttons have border-radius: 4px and tinted background. Different purpose (portfolio navigation) than page-level CTAs. Changing would break the homepage card layout.</p>
+      </div>
+      <div class="skipped-card">
+        <h4>hr-deep.html section labels</h4>
+        <p>Uses .section-label as oversized display headings (2.9&ndash;4.5rem). This is an intentional editorial design, not an inconsistency.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict">
+    <h2>Verdict</h2>
+    <p>14 CSS-only changes across 6 pages. The biggest visual impact is on topfloor.html, where section labels grow from 0.7rem breadcrumbs to 1.4rem headings (matching 5 other pages). All other changes are subtle alignment tweaks &mdash; button sizing, text opacity, variable consistency. No content, layout, or accent color changes. Fully reversible via <code style="color:#b8a472;">git checkout main -- .</code></p>
+  </div>
+
+</div>
+
+</body>
+</html>

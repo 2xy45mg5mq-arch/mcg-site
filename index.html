@@ -987,8 +987,10 @@
         gap: 10px;
       }
       .tf-card-buttons .btn {
-        padding: 10px 18px;
+        flex: 1;
+        padding: 12px 0;
         font-size: 0.7rem;
+        text-align: center;
       }
     }
 
@@ -2509,11 +2511,17 @@
     @media (max-width: 600px) {
       .tf-cinematic .project-card-image {
         aspect-ratio: auto;
-        min-height: 380px;
+        min-height: 480px;
+        overflow: visible;
       }
       .tf-card-overlay {
-        justify-content: flex-end;
-        padding-bottom: 28px;
+        justify-content: center;
+        align-items: center;
+        padding: 24px 20px;
+      }
+      .tf-card-buttons {
+        justify-content: center;
+        width: 100%;
       }
     }
 

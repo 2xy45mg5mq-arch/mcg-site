@@ -2779,6 +2779,9 @@
             <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
+            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
+            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Artçı</a>
+            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -2979,13 +2982,13 @@
           <div class="portfolio-item">
             <h4>EDUCATED GUESS</h4>
             <div class="type">Feature · Legal Drama</div>
-            <p class="logline">On the eve of retirement, a professor at an elite college must decide how far he'll go to defend an immigrant student from harsh administrative&nbsp;justice.</p>
+            <p class="logline">On the eve of retirement, a professor at an elite college must decide how far he&rsquo;ll go to defend an immigrant student from harsh administrative&nbsp;justice.</p>
             <p class="inspired">Based on original reporting and research into a true story</p>
           </div>
           <div class="portfolio-item">
             <h4>PEOPLE OPERATIONS</h4>
             <div class="type">Feature · Sci-Fi Dramedy</div>
-            <p class="logline">A desperate Filipino mother manages the digital life of a spoiled New Yorker—who doesn't even know she&nbsp;exists.</p>
+            <p class="logline">A desperate Filipino mother manages the digital life of a spoiled New Yorker—who doesn&rsquo;t even know she&nbsp;exists.</p>
             <p class="inspired">Academy Nicholl Fellowships Top 15%</p>
           </div>
         </div>
@@ -3083,10 +3086,10 @@
 
         <!-- 4. Synopsis -->
         <div class="treatment" style="margin-bottom: 12px;">
-          <p><strong>SHAE</strong> is a people person. As Head of HR, she's given her life to her company. And in exchange, she's been given a family, a career path, and all the luxury perks of a booming tech sector.</p>
-          <p>But when the market crashes and rapacious investor, <strong>ELLSIE</strong>, arrives for restructuring, Shae's life is restructured in the process.</p>
-          <p>Lacking hard skills needed in the new economy, Shae learns she's not as valuable as she thought. But Ellsie disagrees. In fact, she could really use a dedicated person to deal with all the...people. So when she finds Shae at her lowest, Ellsie spots a distressed asset opportunity. And offers to invest in her. Literally.</p>
-          <p>With Ellsie's backing, Shae rises quickly...even as she descends into a dark financialized world with a terrifying understanding of human&nbsp;value.</p>
+          <p><strong>SHAE</strong> is a people person. As Head of HR, she&rsquo;s given her life to her company. And in exchange, she&rsquo;s been given a family, a career path, and all the luxury perks of a booming tech sector.</p>
+          <p>But when the market crashes and rapacious investor, <strong>ELLSIE</strong>, arrives for restructuring, Shae&rsquo;s life is restructured in the process.</p>
+          <p>Lacking hard skills needed in the new economy, Shae learns she&rsquo;s not as valuable as she thought. But Ellsie disagrees. In fact, she could really use a dedicated person to deal with all the&hellip;people. So when she finds Shae at her lowest, Ellsie spots a distressed asset opportunity. And offers to invest in her. Literally.</p>
+          <p>With Ellsie&rsquo;s backing, Shae rises quickly&hellip;even as she descends into a dark financialized world with a terrifying understanding of human&nbsp;value.</p>
         </div>
 
         <!-- 5. Comps -->
@@ -3364,7 +3367,7 @@
 
       if (preset) {
         // Context-aware mode: came from a specific request button
-        heading.textContent = preset.heading || "LET'S CONNECT";
+        heading.textContent = preset.heading || "LET&rsquo;S CONNECT";
         subtitle.textContent = preset.subtitle || "What brings you here?";
         message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
         document.getElementById('connectRequest').value = preset.request || '';
@@ -3375,7 +3378,7 @@
         }
       } else {
         // Default mode: general connect
-        heading.textContent = "LET'S CONNECT";
+        heading.textContent = "LET&rsquo;S CONNECT";
         subtitle.textContent = "What brings you here?";
         message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
       }
@@ -3479,7 +3482,7 @@
     <div class="modal">
       <!-- Form State -->
       <div id="connectFormState">
-        <h2 id="connectHeading">LET'S CONNECT</h2>
+        <h2 id="connectHeading">LET&rsquo;S CONNECT</h2>
         <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
 
         <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">

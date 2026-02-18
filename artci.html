@@ -11,7 +11,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ARTCI — Aftershock</title>
+  <title>ARTÇI — Aftershock</title>
   <meta name="description" content="After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were promised.">
   <meta property="og:title" content="Artçı">
   <meta property="og:description" content="After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were promised.">
@@ -565,6 +565,9 @@
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
+            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
+            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Artçı</a>
+            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -605,7 +608,7 @@
       <p class="section-heading">The Story</p>
       <div class="body-text">
         <p>Musa can fix anything. At least anything he understands. As an engineer, he deals in observable data&mdash;angles, leverage, force, and facts. He knows his parents left him. He knows he was adopted by crime boss Ramazan, who raised him like a son and made him his organization&rsquo;s head of construction. But there are many unknowns: What happened to his parents? What is the strange symbol branded on his foot? What is the actual nature of Ramazan&rsquo;s&nbsp;business?</p>
-        <p>But Ramazan taught him to focus on what he can control. To leave unknowns buried. And he does. So each day, Musa steps over the secrets buried below...until one day the earth cracks&nbsp;open.</p>
+        <p>But Ramazan taught him to focus on what he can control. To leave unknowns buried. And he does. So each day, Musa steps over the secrets buried below&hellip;until one day the earth cracks&nbsp;open.</p>
         <p>A massive earthquake swallows buildings whole. The house Musa built for Ramazan stays standing. Old and ailing, Ramazan panics when a shipment of valuable &ldquo;product&rdquo; is trapped underground. Musa is sent to the border to drill out the&nbsp;&ldquo;products.&rdquo;</p>
         <p>After hours of backbreaking work, Musa breaks through&mdash;only to find terrified children and a woman named Meryem. Before he can understand, an aftershock buries them all underground&nbsp;together.</p>
         <p>Trapped underground, Musa must confront the truth about Ramazan&rsquo;s empire&mdash;and about his own&nbsp;past.</p>
@@ -653,7 +656,7 @@
   <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
     <div class="modal">
       <div id="connectFormState">
-        <h2 id="connectHeading">LET'S CONNECT</h2>
+        <h2 id="connectHeading">LET&rsquo;S CONNECT</h2>
         <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
 
         <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
@@ -768,7 +771,7 @@
       const message = document.getElementById('connectMessage');
 
       if (preset) {
-        heading.textContent = preset.heading || "LET'S CONNECT";
+        heading.textContent = preset.heading || "LET&rsquo;S CONNECT";
         subtitle.textContent = preset.subtitle || "What brings you here?";
         message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
         document.getElementById('connectRequest').value = preset.request || '';
@@ -777,7 +780,7 @@
           if (cb) cb.checked = true;
         }
       } else {
-        heading.textContent = "LET'S CONNECT";
+        heading.textContent = "LET&rsquo;S CONNECT";
         subtitle.textContent = "What brings you here?";
         message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
         // Pre-check Artçı since we're on the Artçı page

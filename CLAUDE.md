@@ -160,4 +160,7 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 ## SERVER
 
 - Port 8878, threaded Python server
-- Open pages via AppleScript only
+
+
+## File Opening
+NEVER use the `open` command. NEVER open files, folders, or applications. When done, print the filepath as text — the user will open it themselves.

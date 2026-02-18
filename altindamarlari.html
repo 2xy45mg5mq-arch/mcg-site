@@ -458,6 +458,9 @@
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
+            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
+            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Artçı</a>
+            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -492,7 +495,7 @@
     <div class="section-inner">
       <p class="section-heading">The Story</p>
       <div class="body-text">
-        <p>When his father suddenly dies, Kerem Damar must take over the family gold mining empire. But he&rsquo;s unprepared for the job. Naive, spoiled, and insecure, Kerem is more interested in cars and women than mineral exploration and revenue targets. Even his father thought he was&nbsp;weak...</p>
+        <p>When his father suddenly dies, Kerem Damar must take over the family gold mining empire. But he&rsquo;s unprepared for the job. Naive, spoiled, and insecure, Kerem is more interested in cars and women than mineral exploration and revenue targets. Even his father thought he was&nbsp;weak&hellip;</p>
         <p>But that&rsquo;s why he has Emre. After losing everything as a child, Emre was taken into the Damar family estate and educated at the finest schools with Kerem. Now, he leads the company&rsquo;s mining operations. Bold, brilliant, and domineering, he works hard to make Kerem look good. Because the higher Kerem goes, the higher Emre&nbsp;goes.</p>
         <p>But there are rivals and enemies in the family, the company, and abroad. Like wolves, they can smell weakness. Emre must carefully defend Kerem&rsquo;s throne. Even if it comes at the cost of his own biological&nbsp;family.</p>
       </div>
@@ -504,7 +507,7 @@
     <div class="section-inner">
       <p class="section-heading">World &amp; Themes</p>
       <div class="body-text">
-        <p>Family. Business. Homeland. And the treasure beneath our&nbsp;feet...</p>
+        <p>Family. Business. Homeland. And the treasure beneath our&nbsp;feet&hellip;</p>
         <p>Imagine SUCCESSION as a Turkish-style family drama. Lightly inspired by the story of S&uuml;leyman, &#304;brahim, and H&uuml;rrem. Tapping into the emotional depths that make Turkish drama series so popular around the&nbsp;world.</p>
         <p>Using the mining industry as a framing allows us to drill into high-intrigue situations and thematic concepts. Exploration. Underground Secrets. Explosions. Land Ownership. Environment. Purity. Labor. Danger. Fortune. Community. Layered on top of this are the worlds of corporations and international finance&mdash;opening thematically interconnected ideas such as hierarchy, risk, politics, and influence. And underneath it all are the relationships between unequal people. Raising questions of loyalty, friendship, love, gender, and&nbsp;trust.</p>
       </div>
@@ -556,7 +559,7 @@
   <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
     <div class="modal">
       <div id="connectFormState">
-        <h2 id="connectHeading">LET'S CONNECT</h2>
+        <h2 id="connectHeading">LET&rsquo;S CONNECT</h2>
         <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
 
         <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
@@ -659,7 +662,7 @@
       const subtitle = document.getElementById('connectSubtitle');
       const message = document.getElementById('connectMessage');
       if (preset) {
-        heading.textContent = preset.heading || "LET'S CONNECT";
+        heading.textContent = preset.heading || "LET&rsquo;S CONNECT";
         subtitle.textContent = preset.subtitle || "What brings you here?";
         message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
         document.getElementById('connectRequest').value = preset.request || '';
@@ -668,7 +671,7 @@
           if (cb) cb.checked = true;
         }
       } else {
-        heading.textContent = "LET'S CONNECT";
+        heading.textContent = "LET&rsquo;S CONNECT";
         subtitle.textContent = "What brings you here?";
         message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
         var ac = form.querySelector('input[name="interest"][value="Altin Damarlari"]');

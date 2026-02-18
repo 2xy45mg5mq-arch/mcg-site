@@ -626,6 +626,9 @@
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
+            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
+            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Artçı</a>
+            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -884,7 +887,7 @@
       const message = document.getElementById('connectMessage');
 
       if (preset) {
-        heading.textContent = preset.heading || "LET'S CONNECT";
+        heading.textContent = preset.heading || "LET\u2019S CONNECT";
         subtitle.textContent = preset.subtitle || "What brings you here?";
         message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
         document.getElementById('connectRequest').value = preset.request || '';
@@ -893,7 +896,7 @@
           if (cb) cb.checked = true;
         }
       } else {
-        heading.textContent = "LET'S CONNECT";
+        heading.textContent = "LET\u2019S CONNECT";
         subtitle.textContent = "What brings you here?";
         message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
       }

@@ -389,6 +389,9 @@
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
+            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
+            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Artçı</a>
+            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -418,8 +421,8 @@
       <p class="section-heading">The Story</p>
       <div class="body-text">
         <p>Ten years after a violent meltdown on a dating show destroyed his life, Rudy is finally a&nbsp;nobody.</p>
-        <p>But when a viral clip of his worst moment recirculates, he&rsquo;s outed at work and dragged back into humiliating infamy. Desperate to reclaim his reputation, he agrees to join a new show in which losers and villains from across reality TV compete for the opportunity to finally be a hero. But as the competition heats up at a remote mountain house, Rudy makes a terrifying discovery on&nbsp;set...</p>
-        <p>...and the real game&nbsp;begins.</p>
+        <p>But when a viral clip of his worst moment recirculates, he&rsquo;s outed at work and dragged back into humiliating infamy. Desperate to reclaim his reputation, he agrees to join a new show in which losers and villains from across reality TV compete for the opportunity to finally be a hero. But as the competition heats up at a remote mountain house, Rudy makes a terrifying discovery on&nbsp;set&hellip;</p>
+        <p>&hellip;and the real game&nbsp;begins.</p>
       </div>
     </div>
   </section>
@@ -459,7 +462,7 @@
   <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
     <div class="modal">
       <div id="connectFormState">
-        <h2 id="connectHeading">LET'S CONNECT</h2>
+        <h2 id="connectHeading">LET&rsquo;S CONNECT</h2>
         <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
         <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="connect">
@@ -555,7 +558,7 @@
       const subtitle = document.getElementById('connectSubtitle');
       const message = document.getElementById('connectMessage');
       if (preset) {
-        heading.textContent = preset.heading || "LET'S CONNECT";
+        heading.textContent = preset.heading || "LET&rsquo;S CONNECT";
         subtitle.textContent = preset.subtitle || "What brings you here?";
         message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
         document.getElementById('connectRequest').value = preset.request || '';
@@ -564,7 +567,7 @@
           if (cb) cb.checked = true;
         }
       } else {
-        heading.textContent = "LET'S CONNECT";
+        heading.textContent = "LET&rsquo;S CONNECT";
         subtitle.textContent = "What brings you here?";
         message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
         var lc = form.querySelector('input[name="interest"][value="Losing Reality"]');

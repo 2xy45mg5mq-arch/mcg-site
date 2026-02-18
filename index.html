@@ -3645,50 +3645,60 @@
       e.preventDefault();
       var href = link.getAttribute('href');
 
-      // Scroll to top so hero name is visible
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      // Check if we're near the hero (name click) or further down (Full Story click)
+      var isNearTop = window.scrollY < 200;
 
-      // Also ensure we're on the home page view
-      if (typeof showPage === 'function') showPage('home');
+      if (isNearTop) {
+        // Near hero: do the cinematic fade transition
+        var slideshow = document.querySelector('.hero-slideshow');
+        var overlay = document.querySelector('.hero-overlay');
+        var scrollInd = document.querySelector('.scroll-indicator');
+        var nav = document.querySelector('nav');
+        var sections = document.querySelectorAll('#page-home > section:not(.hero)');
 
-      // Fade out slideshow images and overlay — leave name on pure black
-      var slideshow = document.querySelector('.hero-slideshow');
-      var overlay = document.querySelector('.hero-overlay');
-      var scrollInd = document.querySelector('.scroll-indicator');
-      var nav = document.querySelector('nav');
-      var sections = document.querySelectorAll('#page-home > section:not(.hero)');
+        if (slideshow) { slideshow.style.transition = 'opacity 0.5s ease-out'; slideshow.style.opacity = '0'; }
+        if (overlay) { overlay.style.transition = 'opacity 0.5s ease-out'; overlay.style.opacity = '0'; }
+        if (scrollInd) { scrollInd.style.transition = 'opacity 0.3s'; scrollInd.style.opacity = '0'; }
+        if (nav) { nav.style.transition = 'opacity 0.3s'; nav.style.opacity = '0'; }
+        sections.forEach(function(s) { s.style.transition = 'opacity 0.3s'; s.style.opacity = '0'; });
 
-      if (slideshow) { slideshow.style.transition = 'opacity 0.5s ease-out'; slideshow.style.opacity = '0'; }
-      if (overlay) { overlay.style.transition = 'opacity 0.5s ease-out'; overlay.style.opacity = '0'; }
-      if (scrollInd) { scrollInd.style.transition = 'opacity 0.3s'; scrollInd.style.opacity = '0'; }
-      if (nav) { nav.style.transition = 'opacity 0.3s'; nav.style.opacity = '0'; }
-      sections.forEach(function(s) { s.style.transition = 'opacity 0.3s'; s.style.opacity = '0'; });
+        var subtitles = document.querySelectorAll('.hero .subtitle');
+        setTimeout(function() {
+          subtitles.forEach(function(s) { s.style.transition = 'opacity 0.2s'; s.style.opacity = '0'; });
+        }, 300);
 
-      // Fade subtitle/location just before navigation so they disappear cleanly
-      var subtitles = document.querySelectorAll('.hero .subtitle');
-      setTimeout(function() {
-        subtitles.forEach(function(s) { s.style.transition = 'opacity 0.2s'; s.style.opacity = '0'; });
-      }, 300);
+        // Capture h1 position for seamless handoff
+        var heroH1 = document.querySelector('.hero h1');
+        if (heroH1) {
+          var rect = heroH1.getBoundingClientRect();
+          sessionStorage.setItem('about-h1-top', Math.round(rect.top));
+        }
 
-      // Capture the exact pixel position of the h1 for seamless handoff
-      var heroH1 = document.querySelector('.hero h1');
-      if (heroH1) {
-        var rect = heroH1.getBoundingClientRect();
-        sessionStorage.setItem('about-h1-top', Math.round(rect.top));
+        sessionStorage.setItem('about-transition', 'true');
+        if (href.indexOf('#') !== -1) {
+          sessionStorage.setItem('about-hash', href.split('#')[1]);
+        }
+
+        setTimeout(function() {
+          var base = window.location.hostname === 'localhost' ? '/Live/about.html' : '/about';
+          var hash = href.indexOf('#') !== -1 ? '#' + href.split('#')[1] : '';
+          window.location.href = base + hash;
+        }, 500);
+      } else {
+        // Scrolled down: simple fade-out of whole page, then navigate normally
+        document.body.style.transition = 'opacity 0.3s ease-out';
+        document.body.style.opacity = '0';
+
+        if (href.indexOf('#') !== -1) {
+          sessionStorage.setItem('about-hash', href.split('#')[1]);
+        }
+
+        setTimeout(function() {
+          var base = window.location.hostname === 'localhost' ? '/Live/about.html' : '/about';
+          var hash = href.indexOf('#') !== -1 ? '#' + href.split('#')[1] : '';
+          window.location.href = base + hash;
+        }, 300);
       }
-
-      // Store transition flag
-      sessionStorage.setItem('about-transition', 'true');
-      if (href.indexOf('#') !== -1) {
-        sessionStorage.setItem('about-hash', href.split('#')[1]);
-      }
-
-      // Navigate as soon as the fade completes — no extra delay
-      setTimeout(function() {
-        var base = window.location.hostname === 'localhost' ? '/Live/about.html' : '/about';
-        var hash = href.indexOf('#') !== -1 ? '#' + href.split('#')[1] : '';
-        window.location.href = base + hash;
-      }, 500); // just enough for the fade
     });
   })();
   </script>

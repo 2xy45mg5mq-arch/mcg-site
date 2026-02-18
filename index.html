@@ -947,6 +947,36 @@
     .tf-pyramid-2 { max-width: 480px; }
     .tf-pyramid-3 { max-width: 620px; }
 
+    .tf-card-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 28px;
+      pointer-events: auto;
+    }
+    .tf-card-buttons .btn {
+      padding: 12px 28px;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-color: rgba(255,255,255,0.25);
+      color: #e4e4e4;
+    }
+    .tf-card-buttons .btn-primary {
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .tf-card-buttons {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      .tf-card-buttons .btn {
+        width: 200px;
+        text-align: center;
+      }
+    }
+
     /* Kan Vatan card - title image flush to black */
     .kv-card,
     .kv-card .project-card-image {
@@ -2445,17 +2475,6 @@
       min-height: 400px;
     }
 
-    .tf-cinematic .project-card-content {
-      max-width: 620px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 40px 24px 60px;
-    }
-
-    .tf-cinematic .project-card-buttons {
-      justify-content: center;
-    }
-
     .tf-cinematic .project-card:hover {
       transform: none;
       box-shadow: none;
@@ -2474,10 +2493,8 @@
 
     @media (max-width: 600px) {
       .tf-cinematic .project-card-image {
-        min-height: 200px;
-      }
-      .tf-cinematic .project-card-content {
-        padding: 24px 16px 40px;
+        aspect-ratio: 3/4;
+        min-height: 420px;
       }
     }
 
@@ -2851,7 +2868,7 @@
     <!-- TOP FLOOR — Full-width cinematic banner -->
     <section class="project-card-section tf-cinematic" id="topfloor-section">
       <div class="project-card tf-card">
-        <a href="/topfloor" class="project-card-image" style="display:block;">
+        <div class="project-card-image">
           <img src="/images/tf_art_deco_pyramid.webp?v=1" alt="Top Floor" loading="lazy">
           <div class="tf-card-overlay">
             <h2>TOP FLOOR</h2>
@@ -2860,12 +2877,10 @@
               <div class="tf-pyramid-line tf-pyramid-2">moves into his doppelgänger's penthouse</div>
               <div class="tf-pyramid-line tf-pyramid-3">only to get trapped in a dangerous new identity</div>
             </div>
-          </div>
-        </a>
-        <div class="project-card-content">
-          <div class="project-card-buttons">
-            <a href="/tfgame" class="btn btn-primary">Play the Game</a>
-            <a href="/topfloor" class="btn">Learn More</a>
+            <div class="tf-card-buttons">
+              <a href="/topfloor" class="btn btn-primary">Explore the Story</a>
+              <a href="/tfgame" class="btn">Play the Story</a>
+            </div>
           </div>
         </div>
       </div>

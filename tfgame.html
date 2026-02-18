@@ -395,8 +395,8 @@ canvas {
   padding: 0 14px; z-index: 15; pointer-events: none;
 }
 #mobile-controls button {
-  pointer-events: auto; border: 1px solid rgba(196,168,107,0.25); border-radius: 8px;
-  background: rgba(0,0,0,0.4); color: rgba(196,168,107,0.4); font-size: 24px;
+  pointer-events: auto; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+  background: rgba(0,0,0,0.4); color: rgba(196,168,107,0.7); font-size: 24px;
   width: 58px; height: 58px; display: flex; align-items: center; justify-content: center;
   cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
@@ -2618,6 +2618,8 @@ function updatePhysics() {
     m.vy = JUMP;
     m.onGround = false;
     m.coyoteTimer = 0;
+    // Signal Snacks to jump after ~8 frame delay
+    if (GAME.snacks) GAME.snacks.jumpDelay = 8;
   }
   keys.jumpPressed = false;
 
@@ -2678,15 +2680,32 @@ function updateSnacks() {
   const s = GAME.snacks, m = GAME.murry;
   const targetX = m.x + (m.facing > 0 ? -20 : PW + 5);
   s.x += (targetX - s.x) * 0.08;
+  // Countdown jump delay
+  if (s.jumpDelay > 0) s.jumpDelay--;
   s.vy += GRAV; s.y += s.vy;
+  let onGround = false;
   for (const floor of GAME.floors) {
     for (const plat of floor.platforms) {
       if (s.vy >= 0 && s.x + 14 > plat.x && s.x < plat.x + plat.w &&
           s.y + 14 >= plat.y && s.y + 14 <= plat.y + PLATH + s.vy + 5) {
-        s.y = plat.y - 14; s.vy = 0;
-        if (m.vy < -3) s.vy = JUMP * 0.88;
+        s.y = plat.y - 14; s.vy = 0; onGround = true;
         break;
       }
+    }
+    if (onGround) break;
+  }
+  // Option A: delayed jump mimicry — jump when on ground and delay just expired
+  if (onGround && s.jumpDelay === 0) {
+    s.vy = JUMP * 0.85;
+    s.jumpDelay = -1; // consumed
+  }
+  // Option B: rubber-band teleport if Snacks falls too far behind (higher Y = lower position)
+  if (s.y > m.y + FH * 1.5) {
+    const mFloor = GAME.floors.find(f => f.index === GAME.currentFloor);
+    if (mFloor) {
+      const plat = mFloor.platforms.reduce((a, b) => a.w > b.w ? a : b);
+      s.x = m.x + (m.facing > 0 ? -20 : PW + 5);
+      s.y = plat.y - 14; s.vy = 0; s.jumpDelay = -1;
     }
   }
 }
@@ -2881,7 +2900,7 @@ function finishNikEncounter() {
   // Spawn Snacks on floor 5 (Nik hands him off)
   const f = GAME.floors.find(f => f.index === 5);
   if (f && !GAME.snacks) {
-    GAME.snacks = { x: GAME.murry.x + 20, y: f.platforms[0].y - 14, vy: 0 };
+    GAME.snacks = { x: GAME.murry.x + 20, y: f.platforms[0].y - 14, vy: 0, jumpDelay: -1 };
   }
   showControlHint('Get to the top.');
   setTimeout(() => { showControlHint('KEEP CLIMBING \u2191'); }, 3500);

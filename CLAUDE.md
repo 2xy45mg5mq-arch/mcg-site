@@ -92,6 +92,7 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 3. **Read before writing:** Read the target file before editing. Read this file before every session.
 4. **3-strike rule:** If the same fix fails 3 times, stop. The approach is wrong, not the execution.
 5. **Screenshot after visual changes:** Always Playwright at 390, 768, 1440 after any visual edit.
+6. **Model awareness:** Flag when Opus is being used for non-creative work. File reads, status checks, audits, cleanup, code deployment, simple edits = Sonnet. Creative writing, screenplay feedback, strategic analysis, comp language, pitch crafting = Opus. Quick nudge, not a lecture.
 
 ## Cross-File Consistency Rules
 
@@ -164,3 +165,18 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 
 ## File Opening
 Do NOT automatically open files, folders, or Finder windows during work. Only use the `open` command when the user explicitly asks to open or view something. When finishing a task, print the filepath as text — do not open it unless asked.
+
+---
+
+## Time Estimates & Progress Updates
+
+Before starting any task, estimate and state:
+- ⏱️ Est: ~X min (Y prep + Z execution + W verify)
+- Prep = reading files, understanding scope
+- Execution = edits, commits, builds
+- Verify = screenshots, toggle checks, deploy confirm, checklist
+
+Then give a brief progress update every 2 minutes during execution:
+- "⏱️ 2 min in — [what's done], [what's next]. On track / behind."
+
+If a task is going to exceed the estimate by more than 50%, stop and say so before continuing.

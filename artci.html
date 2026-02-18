@@ -442,6 +442,10 @@
     .modal-overlay.active .modal {
       transform: translateY(0);
     }
+    @media (max-width: 768px) {
+      .modal-overlay { align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 60px 16px 24px; }
+      .modal { max-height: none; }
+    }
     .modal h2 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.6rem;

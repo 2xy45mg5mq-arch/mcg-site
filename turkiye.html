@@ -676,6 +676,11 @@
       .mobile-menu { display: none !important; }
       #lang-toggle-mobile-nav { display: none !important; }
     }
+    @keyframes lang-hint {
+      0% { box-shadow: 0 0 0 0 rgba(196, 122, 90, 0.5); }
+      50% { box-shadow: 0 0 12px 4px rgba(196, 122, 90, 0.35); }
+      100% { box-shadow: 0 0 0 0 rgba(196, 122, 90, 0); }
+    }
     #lang-toggle {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1rem;
@@ -691,6 +696,7 @@
       align-items: center;
       gap: 8px;
       margin-left: 24px;
+      animation: lang-hint 1.2s ease-in-out 2s 3;
     }
     #lang-toggle:hover {
       color: #e4e4e4;
@@ -876,9 +882,7 @@
   <!-- Connections section merged into Projects above -->
 
   <!-- 5. CTA -->
-  <div class="cta-section reveal">
-    <div class="cta-heading" data-tr="BİRLİKTE ÇALIŞALIM" data-en="LET&rsquo;S WORK TOGETHER">B&#304;RL&#304;KTE &Ccedil;ALI&#350;ALIM</div>
-    <p class="cta-subtitle" data-tr="Türk hikâyelerini birlikte anlatmak için iletişime&nbsp;geçin." data-en="Get in touch to tell Turkish stories&nbsp;together.">T&uuml;rk hik&acirc;yelerini birlikte anlatmak i&ccedil;in ileti&#351;ime&nbsp;ge&ccedil;in.</p>
+  <div class="cta-section reveal" style="padding-top:40px;padding-bottom:40px;">
     <button class="cta-btn" onclick="openConnectModal()" data-tr="İletişim" data-en="Contact">&#304;leti&#351;im</button>
   </div>
 
@@ -983,7 +987,7 @@
       var DEFAULT_LANG = 'tr';
 
       function getLang() {
-        return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+        return DEFAULT_LANG;
       }
 
       function setLang(lang) {

@@ -142,7 +142,7 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 - Top Floor hero redesign (sandbox in topfloor-art-deco-test.html)
 - 9th festival laurel (Downtown Film Fest — no image yet)
 - Laurel images or festival counts (managed separately)
-- turkiye.html copy (wife review applied 2026-02-17)
+- turkiye.html copy — wife review complete 2026-02-17, bio rewrite approved
 - Top Floor game content (tfgame.html — separate workflow)
 - `Live/backups-*` folders
 
@@ -154,7 +154,7 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 - TF comps: "Parasite meets The Talented Mr. Ripley"
 - Portfolio order: HR → Top Floor → Kan Vatan → Türk Projeleri → Coming Up (LR, Meatspace)
 - TF tone refs: RIPLEY / PARASITE / ROSEMARY'S BABY
-- HR comp: "Black Mirror meets Margin Call"
+- HR comp: "Severance meets Margin Call"
 
 ---
 

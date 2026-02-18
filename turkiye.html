@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="notranslate" translate="no">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4XQR4QCNZ"></script>
@@ -11,6 +11,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="google" content="notranslate">
   <title>Türk Portfölyesi | Max Coyne-Green</title>
   <meta name="description" content="New York/Istanbul-based screenwriter and producer developing Turkish-American co-productions. Seeking creative and production partners to bring Turkish stories to the US market.">
   <meta property="og:title" content="Türk Portfölyesi | Max Coyne-Green">
@@ -61,19 +62,29 @@
       background: rgba(10, 13, 16, 0.95); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border); padding: 16px 0;
     }
-    nav .container { display: flex; justify-content: flex-start; align-items: center; position: relative; }
-    .nav-left { display: flex; gap: 32px; margin-left: 40px; }
-    .nav-left a {
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .nav-links { display: flex; gap: 40px; align-items: center; }
+    .nav-links > a, .nav-links > .nav-item > a {
       color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem;
       font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s;
     }
-    .nav-left a:hover { color: var(--text); }
-    .nav-left > a { position: relative; }
-    .nav-left > a::after {
-      content: ''; position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
+    .nav-links > a:hover, .nav-links > .nav-item > a:hover { color: var(--text); }
+    .nav-item { display: flex; align-items: center; position: relative; }
+    .nav-item > a { cursor: pointer; }
+    .dropdown {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 160px; background: rgba(10, 13, 16, 0.98);
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 8px 0; opacity: 0; visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s; margin-top: 12px;
     }
-    .nav-left > a:hover::after { width: 100%; }
+    .nav-item:hover .dropdown, .nav-item .dropdown.open { opacity: 1; visibility: visible; }
+    .dropdown a {
+      display: block; padding: 10px 20px; color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 0.75rem; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
+    }
+    .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
 
     /* --- HAMBURGER (MOBILE) --- */
     .hamburger {
@@ -653,41 +664,34 @@
       .conn-grid { grid-template-columns: 1fr; gap: 16px; }
       .modal { padding: 28px 20px; }
       .cta-section { padding: 72px 20px; }
-      .nav-left { display: none; }
+      .nav-links { display: none; }
       .hamburger { display: flex; }
-      #lang-toggle { margin-right: 16px; font-size: 0.6rem; letter-spacing: 1.5px; }
+      #lang-toggle { display: none; }
     }
     @media (max-width: 600px) {
-      .nav-left a { font-size: 0.7rem; letter-spacing: 1px; }
     }
     @media (min-width: 769px) {
       .hamburger { display: none; }
       .mobile-menu { display: none !important; }
     }
     #lang-toggle {
-      margin-left: auto;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: rgba(228, 228, 228, 0.5);
       background: none;
       border: none;
-      color: rgba(255,255,255,0.6);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 2.5px;
       cursor: pointer;
+      padding: 6px 12px;
       transition: color 0.3s ease;
-      padding: 0;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      white-space: nowrap;
-      text-transform: uppercase;
-      position: relative;
+      margin-left: 24px;
     }
-    #lang-toggle::after {
-      content: ''; position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
+    #lang-toggle:hover {
+      color: rgba(228, 228, 228, 0.85);
     }
-    #lang-toggle:hover { color: var(--text); }
-    #lang-toggle:hover::after { width: 100%; }
   </style>
 </head>
 <body>
@@ -695,12 +699,19 @@
   <nav>
     <div class="container">
       <a href="/" class="logo">MCG</a>
-      <div class="nav-left">
-        <a href="#projeler" data-tr="Projeler" data-en="Projects">Projeler</a>
-        <a href="#hakkimda" data-tr="Hakkımda" data-en="About Me">Hakk&#305;mda</a>
-        <a href="#" onclick="openConnectModal(); return false;" data-tr="İletişim" data-en="Contact">&#304;leti&#351;im</a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="#" onclick="return false;">Work</a>
+          <div class="dropdown">
+            <a href="/hr">Human Resource</a>
+            <a href="/topfloor">Top Floor</a>
+            <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
+          </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="#" onclick="openConnectModal(); return false;">Connect</a>
+        <button id="lang-toggle" aria-label="Switch language">🇬🇧 EN</button>
       </div>
-      <button id="lang-toggle" aria-label="Switch language"><span style="font-size:14px;line-height:1">🇬🇧</span> ENGLISH</button>
       <div class="hamburger" onclick="toggleMobileMenu()">
         <span></span>
         <span></span>
@@ -711,13 +722,17 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#" onclick="toggleLangMobile(); return false;" id="mobile-lang-toggle" data-tr="🇬🇧 Switch to English" data-en="🇹🇷 Türkçe'ye Geç">🇬🇧 Switch to English</a>
+    <a href="/hr" onclick="closeMobileMenu()">Human Resource</a>
+    <a href="/topfloor" onclick="closeMobileMenu()">Top Floor</a>
     <div class="mobile-divider"></div>
-    <a href="#projeler" onclick="closeMobileMenu()" data-tr="Projeler" data-en="Projects">Projeler</a>
-    <a href="#hakkimda" onclick="closeMobileMenu()" data-tr="Hakkımda" data-en="About Me">Hakk&#305;mda</a>
-    <a href="#" onclick="closeMobileMenu(); openConnectModal(); return false;" data-tr="İletişim" data-en="Contact">&#304;leti&#351;im</a>
+    <a href="/turkiye" onclick="closeMobileMenu()">T&uuml;rk Projeleri</a>
     <div class="mobile-divider"></div>
-    <a href="/" onclick="closeMobileMenu()" data-tr="← Ana Sayfa" data-en="← Home">&#8592; Ana Sayfa</a>
+    <a href="/about" onclick="closeMobileMenu()">About</a>
+    <a href="#" onclick="closeMobileMenu(); openConnectModal(); return false;">Connect</a>
+    <div class="mobile-divider"></div>
+    <a href="#" onclick="toggleLangMobile(); return false;" id="mobile-lang-toggle">🇬🇧 EN</a>
+    <div class="mobile-divider"></div>
+    <a href="/" onclick="closeMobileMenu()">&larr; Home</a>
   </div>
 
   <!-- 1. HERO -->
@@ -894,6 +909,11 @@
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">G&ouml;m&uuml;ld&uuml;</span>
               </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="interest" value="General meeting with Max">
+                <span class="checkbox-box"></span>
+                <span class="checkbox-label" data-tr="Max ile genel g&ouml;r&uuml;&#351;me" data-en="General meeting with Max">Max ile genel g&ouml;r&uuml;&#351;me</span>
+              </label>
             </div>
           </div>
 
@@ -924,11 +944,11 @@
     <input name="email">
     <input name="interest" type="checkbox" value="Human Resource">
     <input name="interest" type="checkbox" value="Top Floor">
-    <input name="interest" type="checkbox" value="Kan Vatan">
     <input name="interest" type="checkbox" value="Memory Docs">
-    <input name="interest" type="checkbox" value="Kan Vatan (TR)">
+    <input name="interest" type="checkbox" value="Kan Vatan">
     <input name="interest" type="checkbox" value="Alt&#305;n Damarlar&#305;">
     <input name="interest" type="checkbox" value="G&ouml;m&uuml;ld&uuml;">
+    <input name="interest" type="checkbox" value="General meeting with Max">
     <textarea name="message"></textarea>
     <input name="bot-field">
   </form>
@@ -964,10 +984,12 @@
           if (ph !== null) el.placeholder = ph;
         });
         document.documentElement.lang = lang;
+        document.documentElement.classList.add('notranslate');
+        document.documentElement.setAttribute('translate', 'no');
         var btn = document.getElementById('lang-toggle');
-        if (btn) btn.innerHTML = lang === 'tr'
-          ? '<span style="font-size:14px;line-height:1">🇬🇧</span> ENGLISH'
-          : '<span style="font-size:14px;line-height:1">🇹🇷</span> TÜRKÇE';
+        if (btn) btn.textContent = lang === 'tr' ? '🇬🇧 EN' : '🇹🇷 TR';
+        var mobileBtn = document.getElementById('mobile-lang-toggle');
+        if (mobileBtn) mobileBtn.textContent = lang === 'tr' ? '🇬🇧 EN' : '🇹🇷 TR';
         var heroTitle = document.querySelector('.hero-title');
         if (heroTitle) heroTitle.style.color = lang === 'tr' ? '#c8bea8' : '#e4e4e4';
         document.title = lang === 'tr'

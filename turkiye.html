@@ -734,11 +734,7 @@
           <div class="dropdown" style="min-width:200px;">
             <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
-            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
-            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Art&ccedil;&#305;</a>
-            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -758,11 +754,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="/hr" onclick="closeMobileMenu()">Human Resource</a>
     <a href="/topfloor" onclick="closeMobileMenu()">Top Floor</a>
-    <div class="mobile-divider"></div>
     <a href="/turkiye" onclick="closeMobileMenu()">T&uuml;rk Projeleri</a>
-    <a href="/kanvatan" onclick="closeMobileMenu()" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
-    <a href="/artci" onclick="closeMobileMenu()" style="padding-left:24px;font-size:0.85em;">Art&ccedil;&#305;</a>
-    <a href="/altindamarlari" onclick="closeMobileMenu()" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
     <div class="mobile-divider"></div>
     <a href="/about" onclick="closeMobileMenu()">About</a>
     <a href="#" onclick="closeMobileMenu(); openConnectModal(); return false;">Connect</a>
@@ -900,8 +892,7 @@
   <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
     <div class="modal">
       <div id="connectFormState">
-        <h2 data-tr="İletişim" data-en="Contact">&#304;LET&#304;&#350;&#304;M</h2>
-        <p class="modal-subtitle" data-tr="Bir proje hakkında konuşalım." data-en="Let&rsquo;s talk about a project.">Bir proje hakk&#305;nda konu&#351;al&#305;m.</p>
+        <h2>CONNECT</h2>
 
         <form id="connectForm" name="turkiye-contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="turkiye-contact">
@@ -926,30 +917,26 @@
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">Top Floor</span>
               </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Memory Docs">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Memory Docs</span>
-              </label>
+              <div style="border-top: 1px solid rgba(228,228,228,0.15); margin: 4px 0;"></div>
               <label class="checkbox-item">
                 <input type="checkbox" name="interest" value="Kan Vatan">
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">Kan Vatan</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Alt&#305;n Damarlar&#305;">
+                <input type="checkbox" name="interest" value="Altın Damarları">
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label">Alt&#305;n Damarlar&#305;</span>
+                <span class="checkbox-label">Altın Damarları</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Art&ccedil;&#305;">
+                <input type="checkbox" name="interest" value="Artçı">
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label">Art&ccedil;&#305;</span>
+                <span class="checkbox-label">Artçı</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="General meeting with Max">
+                <input type="checkbox" name="interest" value="General meeting">
                 <span class="checkbox-box"></span>
-                <span class="checkbox-label" data-tr="Max ile genel g&ouml;r&uuml;&#351;me" data-en="General meeting with Max">Max ile genel g&ouml;r&uuml;&#351;me</span>
+                <span class="checkbox-label" data-tr="Genel görüşme" data-en="General meeting">Genel görüşme</span>
               </label>
             </div>
           </div>
@@ -969,7 +956,7 @@
 
       <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
         <h2 data-tr="Gönderildi" data-en="Sent">G&Ouml;NDER&#304;LD&#304;</h2>
-        <p class="modal-subtitle" style="margin-bottom: 32px;" data-tr="Teşekkürler. En kısa sürede döneceğim." data-en="Thank you. I&rsquo;ll be in touch soon.">Te&#351;ekk&uuml;rler. En k&#305;sa s&uuml;rede d&ouml;nece&#287;im.</p>
+        <p class="modal-subtitle" style="margin-bottom: 32px;" data-tr="Teşekkürler. En kısa sürede döneceğim." data-en="Thank you. I'll be in touch soon.">Te&#351;ekk&uuml;rler. En k&#305;sa s&uuml;rede d&ouml;nece&#287;im.</p>
         <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;" data-tr="Kapat" data-en="Close">Kapat</button>
       </div>
     </div>
@@ -981,11 +968,10 @@
     <input name="email">
     <input name="interest" type="checkbox" value="Human Resource">
     <input name="interest" type="checkbox" value="Top Floor">
-    <input name="interest" type="checkbox" value="Memory Docs">
     <input name="interest" type="checkbox" value="Kan Vatan">
-    <input name="interest" type="checkbox" value="Alt&#305;n Damarlar&#305;">
-    <input name="interest" type="checkbox" value="Art&ccedil;&#305;">
-    <input name="interest" type="checkbox" value="General meeting with Max">
+    <input name="interest" type="checkbox" value="Altın Damarları">
+    <input name="interest" type="checkbox" value="Artçı">
+    <input name="interest" type="checkbox" value="General meeting">
     <textarea name="message"></textarea>
     <input name="bot-field">
   </form>

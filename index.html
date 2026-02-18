@@ -2778,10 +2778,7 @@
           <div class="dropdown" style="min-width:200px;">
             <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
-            <a href="/turkiye" style="border-top:1px solid var(--border);margin-top:4px;">T&uuml;rk Projeleri</a>
-            <a href="/kanvatan" style="padding-left:24px;font-size:0.85em;">Kan Vatan</a>
-            <a href="/artci" style="padding-left:24px;font-size:0.85em;">Artçı</a>
-            <a href="/altindamarlari" style="padding-left:24px;font-size:0.85em;">Altın Damarları</a>
+            <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
         <a href="/about">About</a>
@@ -3362,14 +3359,12 @@
       document.getElementById('connectRequest').value = '';
 
       const heading = document.getElementById('connectHeading');
-      const subtitle = document.getElementById('connectSubtitle');
       const message = document.getElementById('connectMessage');
 
       if (preset) {
         // Context-aware mode: came from a specific request button
-        heading.textContent = preset.heading || "LET&rsquo;S CONNECT";
-        subtitle.textContent = preset.subtitle || "What brings you here?";
-        message.placeholder = preset.placeholder || "Tell me a bit about yourself or what you'd like to discuss...";
+        heading.textContent = preset.heading || "CONNECT";
+        message.placeholder = preset.placeholder || "Optional message";
         document.getElementById('connectRequest').value = preset.request || '';
         // Pre-check the relevant interest
         if (preset.interest) {
@@ -3378,9 +3373,8 @@
         }
       } else {
         // Default mode: general connect
-        heading.textContent = "LET&rsquo;S CONNECT";
-        subtitle.textContent = "What brings you here?";
-        message.placeholder = "Tell me a bit about yourself or what you'd like to discuss...";
+        heading.textContent = "CONNECT";
+        message.placeholder = "Optional message";
       }
 
       document.getElementById('connectFormState').style.display = '';
@@ -3422,8 +3416,8 @@
       const connectVal = params.get('connect');
       if (connectVal) {
         const presets = {
-          'topfloor-script': {heading:'REQUEST SCRIPT',subtitle:'Top Floor — Feature Film',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'},
-          'hr-script': {heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'},
+          'topfloor-script': {heading:'REQUEST SCRIPT',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'},
+          'hr-script': {heading:'REQUEST SCRIPT',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'},
           'script': null // legacy fallback — use path
         };
         let preset = presets[connectVal];
@@ -3470,7 +3464,6 @@
     <input name="human-resource" type="checkbox" value="human-resource">
     <input name="top-floor" type="checkbox" value="top-floor">
     <input name="turkish-projects" type="checkbox" value="turkish-projects">
-    <input name="collaborating-on-new-concepts" type="checkbox" value="collaborating-on-new-concepts">
     <input name="general-meeting" type="checkbox" value="general-meeting">
     <input name="other" type="checkbox" value="other">
     <textarea name="message"></textarea>
@@ -3482,8 +3475,7 @@
     <div class="modal">
       <!-- Form State -->
       <div id="connectFormState">
-        <h2 id="connectHeading">LET&rsquo;S CONNECT</h2>
-        <p class="modal-subtitle" id="connectSubtitle">What brings you here?</p>
+        <h2 id="connectHeading">CONNECT</h2>
 
         <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="connect">
@@ -3515,11 +3507,6 @@
                 <span class="checkbox-label">Turkish Projects</span>
               </label>
               <label class="checkbox-item">
-                <input type="checkbox" name="collaborating-on-new-concepts" value="collaborating-on-new-concepts">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Collaborating on new concepts</span>
-              </label>
-              <label class="checkbox-item">
                 <input type="checkbox" name="general-meeting" value="general-meeting">
                 <span class="checkbox-box"></span>
                 <span class="checkbox-label">General meeting</span>
@@ -3534,7 +3521,7 @@
 
           <div class="modal-section">
             <div class="modal-section-label">Anything else? (optional)</div>
-            <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Tell me a bit about yourself or what you'd like to discuss..."></textarea>
+            <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Optional message"></textarea>
           </div>
 
           <div class="modal-buttons">

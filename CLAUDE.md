@@ -22,7 +22,7 @@
 | /hr/characters | hr-slideshow.html | HR character slideshow |
 | /tfgame | tfgame.html | Top Floor interactive game (hidden) |
 | /meatspace | meatspace.html | Meatspace project page |
-| /gomuldu | gomuldu.html | Gömüldü project page |
+| /artci | artci.html | Artçı project page |
 | /altindamarlari | altindamarlari.html | Altın Damarları project page |
 | /losingreality | losingreality.html | Losing Reality project page |
 | /turkiye | turkiye.html | Turkish-language portfolio |
@@ -43,7 +43,7 @@ index.html contains old `#topfloor` and `#kanvatan` SPA sections. These are lega
 These define patterns that must be identical across all pages. When editing ANY page, check that these haven't drifted.
 
 **Nav dropdown (all pages):**
-- HR, Top Floor, ─────, Türk Projeleri (→/turkiye), Kan Vatan (indented), Gömüldü (indented), Altın Damarları (indented)
+- HR, Top Floor, ─────, Türk Projeleri (→/turkiye), Kan Vatan (indented), Artçı (indented), Altın Damarları (indented)
 - About → /about
 - Connect → local modal
 - Türk Projeleri is a clickable `<a>`, not a dim label
@@ -96,12 +96,12 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 
 These patterns are identical across all pages. When editing one, verify others match.
 
-- **Nav dropdown:** HR, Top Floor, divider, Türk Projeleri → /turkiye (dimmed label, clickable), then indented: Kan Vatan, Gömüldü, Altın Damarları. No Losing Reality or Meatspace.
+- **Nav dropdown:** HR, Top Floor, divider, Türk Projeleri → /turkiye (dimmed label, clickable), then indented: Kan Vatan, Artçı, Altın Damarları. No Losing Reality or Meatspace.
 - **Connect modal checkboxes:** Human Resource, Top Floor, Turkish Projects, Collaborating on new concepts, General meeting, Other. turkiye.html has its own Turkish modal (unchanged).
 - **OG tags:** Every page has unique og:title, og:description, og:image, og:url. All use twitter:card = summary_large_image.
 - **Footer:** .copyright-footer class. Two paragraphs: © line + full IP protection. turkiye.html has Turkish translation.
 - **Fonts:** Bebas Neue (headings), EB Garamond (body). No exceptions except tfgame.html game UI.
-- **Colors:** Base #0a0d10, gold #b8a472, text #e4e4e4, muted #6b7a88, border #1a1f28. Page-specific accents: turkiye #c47a5a, gomuldu #8B7355, altindamarlari #B8860B, losingreality #2A7B9B.
+- **Colors:** Base #0a0d10, gold #b8a472, text #e4e4e4, muted #6b7a88, border #1a1f28. Page-specific accents: turkiye #c47a5a, artci #8B7355, altindamarlari #B8860B, losingreality #2A7B9B.
 - **Image-baked text:** Always check if background images contain text before adding HTML text that could duplicate.
 
 ## Active Pages (12)
@@ -116,7 +116,7 @@ These patterns are identical across all pages. When editing one, verify others m
 | `/hr/characters` | hr-slideshow.html |
 | `/tfgame` | tfgame.html |
 | `/meatspace` | meatspace.html |
-| `/gomuldu` | gomuldu.html |
+| `/artci` | artci.html |
 | `/altindamarlari` | altindamarlari.html |
 | `/losingreality` | losingreality.html |
 | `/turkiye` | turkiye.html |
@@ -141,7 +141,7 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 - 9th festival laurel (Downtown Film Fest — no image yet)
 - Laurel images or festival counts (managed separately)
 - HR SPA extraction (deferred)
-- turkiye.html copy (pending wife review)
+- turkiye.html copy (wife review applied 2026-02-17)
 - Top Floor game content (tfgame.html — separate workflow)
 - `Live/backups-*` folders
 

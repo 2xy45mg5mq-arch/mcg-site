@@ -44,16 +44,16 @@ index.html contains old `#topfloor` and `#kanvatan` SPA sections. These are lega
 These define patterns that must be identical across all pages. When editing ANY page, check that these haven't drifted.
 
 **Nav dropdown (all pages):**
-- HR, Top Floor, ─────, Türk Projeleri (→/turkiye), Kan Vatan (indented), Artçı (indented), Altın Damarları (indented)
+- HR, Top Floor, divider, Türk Projeleri (→/turkiye). NO individual Turkish project sub-items in dropdown.
 - About → /about
 - Connect → local modal
-- Türk Projeleri is a clickable `<a>`, not a dim label
 - NO Losing Reality or Meatspace in nav
 - turkiye.html has additional Turkish left-nav (Projeler, Hakkımda, İletişim) but same Work dropdown
 
-**Connect modal checkboxes (all pages with modals):**
-- Human Resource, Top Floor, Turkish Projects, Collaborating on new concepts, General meeting, Other
-- turkiye.html has its own Turkish modal with both English and Turkish project groups (no LR or Meatspace in either)
+**Connect modal checkboxes (English pages):**
+- Human Resource, Top Floor, Turkish Projects, General meeting, Other. NO "Collaborating on new concepts."
+- All modals titled "CONNECT" with no subtitles.
+- turkiye.html has its own Turkish modal with individual Turkish project checkboxes (no LR or Meatspace)
 
 **OG tag pattern (every page):**
 - og:title — page-specific (not generic site title)
@@ -97,8 +97,8 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 
 These patterns are identical across all pages. When editing one, verify others match.
 
-- **Nav dropdown:** HR, Top Floor, divider, Türk Projeleri → /turkiye (dimmed label, clickable), then indented: Kan Vatan, Artçı, Altın Damarları. No Losing Reality or Meatspace.
-- **Connect modal checkboxes:** Human Resource, Top Floor, Turkish Projects, Collaborating on new concepts, General meeting, Other. turkiye.html has its own Turkish modal (unchanged).
+- **Nav dropdown:** HR, Top Floor, divider, Türk Projeleri → /turkiye. NO individual Turkish project sub-items. No Losing Reality or Meatspace.
+- **Connect modal checkboxes:** Human Resource, Top Floor, Turkish Projects, General meeting, Other. NO "Collaborating on new concepts." All modals titled "CONNECT" with no subtitles. turkiye.html has its own Turkish modal.
 - **OG tags:** Every page has unique og:title, og:description, og:image, og:url. All use twitter:card = summary_large_image.
 - **Footer:** .copyright-footer class. Two paragraphs: © line + full IP protection. turkiye.html has Turkish translation.
 - **Fonts:** Bebas Neue (headings), EB Garamond (body). No exceptions except tfgame.html game UI.

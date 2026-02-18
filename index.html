@@ -2820,7 +2820,7 @@
         <div class="nav-item">
           <a href="#" onclick="return false;">Work</a>
           <div class="dropdown" style="min-width:200px;">
-            <a href="/hr" onclick="showPage('hr'); return false;">Human Resource</a>
+            <a href="/hr">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
@@ -2862,17 +2862,17 @@
     <section class="featured" id="work">
       <div class="container">
         <div class="featured-grid">
-          <div class="poster-wrap" onclick="showPage('hr')" id="featured-poster">
+          <a href="/hr" class="poster-wrap" id="featured-poster" style="text-decoration:none;color:inherit;">
             <img src="/images/Website_v5_Peering_C_Spread.webp" alt="Human Resource - Nothing Is Free" class="poster-rotate active">
             <img src="/images/Website_v5_Desktop_Top.webp?v=3" alt="Human Resource - Desktop" class="poster-rotate">
-          </div>
+          </a>
           <div class="featured-info">
             <div class="featured-top">
               <h2>HUMAN RESOURCE</h2>
               <p class="featured-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she&nbsp;thought.</p>
               <div class="featured-buttons">
-                <a href="#" class="text-link" onclick="showPage('hr'); return false;">View Project</a>
-                <a href="#" class="text-link" onclick="showPage('hr'); setTimeout(() => document.querySelector('.video-container video').scrollIntoView({behavior:'smooth'}), 200); return false;">Watch Trailer</a>
+                <a href="/hr" class="text-link">View Project</a>
+                <a href="/hr" class="text-link">Watch Trailer</a>
               </div>
             </div>
             <div class="featured-bottom">
@@ -3262,12 +3262,9 @@
       }
     });
 
-    // Initialize history state on page load (preserve path-based URLs)
+    // Initialize history state on page load
     (function() {
-      const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
-      const routes = { 'hr': 'hr', 'humanresource': 'hr', 'human-resource': 'hr' };
-      const page = routes[path] || 'home';
-      history.replaceState({ page: page }, '', page === 'home' ? '/' : '/' + page);
+      history.replaceState({ page: 'home' }, '', '/');
     })();
 
     // Keyboard navigation: Escape closes modal first, then goes back to home
@@ -3432,27 +3429,19 @@
       document.body.style.overflow = '';
     }
 
-    // URL ROUTING — read pathname to show the correct page on direct load
-    function handleRoute() {
+    // URL ROUTING — redirect legacy routes to standalone pages
+    (function() {
       const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
-      const routes = {
-        'hr': 'hr',
-        'humanresource': 'hr',
-        'human-resource': 'hr'
-      };
-
-      // Redirect kanvatan routes to standalone page
+      // Redirect legacy SPA routes to standalone pages
+      if (['hr', 'humanresource', 'human-resource'].includes(path)) {
+        window.location.replace('/hr');
+        return;
+      }
       if (['kanvatan', 'kan-vatan', 'kv'].includes(path)) {
         window.location.replace('/kanvatan');
         return;
       }
-      if (routes[path]) {
-        showPage(routes[path], false);
-      }
-    }
-
-    // Run routing on page load
-    handleRoute();
+    })();
 
     // Auto-open connect modal if ?connect= param is present (from deep dive pages)
     (function() {

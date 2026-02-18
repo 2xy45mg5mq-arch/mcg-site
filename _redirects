@@ -20,8 +20,8 @@
 # Hidden game page
 /tfgame           /tfgame.html         200
 
-# SPA section anchors
-/hr               /index.html          200
+# Standalone project pages
+/hr               /hr.html             200
 /topfloor         /topfloor.html       200
 /kanvatan         /kanvatan.html       200
 

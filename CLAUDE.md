@@ -14,7 +14,8 @@
 
 | URL | File | Notes |
 |-----|------|-------|
-| / | index.html | SPA: homepage + HR section |
+| / | index.html | Homepage (HR featured section inline) |
+| /hr | hr.html | Standalone HR project page |
 | /topfloor | topfloor.html | Standalone producer pitch |
 | /kanvatan | kanvatan.html | Standalone cinematic pitch |
 | /about | about.html | Horizontal-scroll career timeline |
@@ -27,7 +28,7 @@
 | /losingreality | losingreality.html | Losing Reality project page |
 | /turkiye | turkiye.html | Turkish-language portfolio |
 
-When a prompt says "all pages," it means ALL 12 of these.
+When a prompt says "all pages," it means ALL 13 of these.
 
 ## Legacy SPA Routes (DO NOT EDIT unless explicitly told)
 
@@ -104,11 +105,12 @@ These patterns are identical across all pages. When editing one, verify others m
 - **Colors:** Base #0a0d10, gold #b8a472, text #e4e4e4, muted #6b7a88, border #1a1f28. Page-specific accents: turkiye #c47a5a, artci #8B7355, altindamarlari #B8860B, losingreality #2A7B9B.
 - **Image-baked text:** Always check if background images contain text before adding HTML text that could duplicate.
 
-## Active Pages (12)
+## Active Pages (13)
 
 | URL | File |
 |-----|------|
 | `/` | index.html |
+| `/hr` | hr.html |
 | `/topfloor` | topfloor.html |
 | `/kanvatan` | kanvatan.html |
 | `/about` | about.html |
@@ -140,7 +142,6 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 - Top Floor hero redesign (sandbox in topfloor-art-deco-test.html)
 - 9th festival laurel (Downtown Film Fest — no image yet)
 - Laurel images or festival counts (managed separately)
-- HR SPA extraction (deferred)
 - turkiye.html copy (wife review applied 2026-02-17)
 - Top Floor game content (tfgame.html — separate workflow)
 - `Live/backups-*` folders
@@ -161,6 +162,5 @@ These items are in progress or blocked. Do not modify unless a prompt explicitly
 
 - Port 8878, threaded Python server
 
-
 ## File Opening
-NEVER use the `open` command. NEVER open files, folders, or applications. When done, print the filepath as text — the user will open it themselves.
+Do NOT automatically open files, folders, or Finder windows during work. Only use the `open` command when the user explicitly asks to open or view something. When finishing a task, print the filepath as text — do not open it unless asked.

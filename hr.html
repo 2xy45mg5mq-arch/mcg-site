@@ -127,7 +127,7 @@
 
     .detail-header {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 16px;
     }
     .detail-header h1 {
       font-family: 'Bebas Neue', sans-serif;
@@ -141,17 +141,19 @@
 
     /* ── HR LAURELS ── */
     .hr-laurels {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px 18px;
       align-items: center;
-      gap: 24px;
-      margin: 10px auto 50px;
-      flex-wrap: nowrap;
+      justify-items: center;
+      margin: 0 auto 24px;
+      max-width: 560px;
     }
     .hr-laurels img {
-      height: 56px;
+      height: 50px;
       width: auto;
-      flex-shrink: 0;
+      max-width: 100%;
+      object-fit: contain;
       opacity: 0.9;
       filter: brightness(1.1);
     }
@@ -162,7 +164,7 @@
       font-size: clamp(1.15rem, 2.2vw, 1.45rem);
       color: rgba(228, 228, 228, 0.7);
       text-align: center;
-      margin: 0 auto 48px;
+      margin: 0 auto 20px;
       max-width: 560px;
       line-height: 1.5;
       letter-spacing: 0.01em;
@@ -423,13 +425,17 @@
       .nav-links a { font-size: 0.7rem; letter-spacing: 1px; }
       .detail-page { padding: 60px 0 60px; }
       .detail-page .container { padding: 0 20px; }
-      .detail-header { margin-bottom: 24px; }
+      .detail-header { margin-bottom: 12px; }
       .detail-header h1 {
         font-size: clamp(3.5rem, 14vw, 5.5rem);
         letter-spacing: 0.06em;
         word-break: break-word;
         line-height: 0.85;
         margin-bottom: 16px;
+      }
+      .hr-laurels {
+        max-width: 340px;
+        gap: 10px 12px;
       }
       .hr-laurels img { height: 36px !important; }
       .stills-slideshow {
@@ -478,7 +484,9 @@
         <h1>HUMAN RESOURCE</h1>
       </div>
 
-      <!-- 1b. Laurels — single row desktop, 2-row wrap on mobile -->
+      <p class="hr-comp-line"><em>Severance</em> meets <em>Margin Call</em> in this financial horror story about the future of&nbsp;work.</p>
+
+      <!-- 1b. Laurels — two rows of 4 -->
       <div class="hr-laurels">
         <img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy">
         <img src="/images/img_5.webp" alt="Dances With Films NY 2026" loading="lazy">
@@ -489,8 +497,6 @@
         <img src="/images/img_venice.webp" alt="Venice Shorts Film Festival" loading="lazy">
         <img src="/images/img_4.webp" alt="Malibu Film Festival 2025" loading="lazy">
       </div>
-
-      <p class="hr-comp-line"><em>Severance</em> meets <em>Margin Call</em> in this financial horror story about the future of&nbsp;work.</p>
 
       <!-- 2. Slideshow -->
       <div class="stills-slideshow" id="hr-stills">
@@ -531,12 +537,6 @@
         <p>Lacking hard skills needed in the new economy, Shae learns she&rsquo;s not as valuable as she thought. But Ellsie disagrees. In fact, she could really use a dedicated person to deal with all the&hellip;people. So when she finds Shae at her lowest, Ellsie spots a distressed asset opportunity. And offers to invest in her. Literally.</p>
         <p>With Ellsie&rsquo;s backing, Shae rises quickly&hellip;even as she descends into a dark financialized world with a terrifying understanding of human&nbsp;value.</p>
       </div>
-
-      <!-- 5. Comps -->
-      <p class="comps" style="text-align: center; margin: 48px 0 20px; font-style: italic; color: rgba(228, 228, 228, 0.55); letter-spacing: 0.02em; line-height: 1.6; text-wrap: balance;"><em>Severance</em> meets <em>Margin Call</em> in this financial horror story about the future of work.</p>
-
-      <!-- 5b. Story credit -->
-      <p style="text-align: center; font-size: 0.78rem; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin: 0 0 56px 0;">Story by Max Coyne-Green & Mia Blake Vallet</p>
 
       <!-- 6. Request Feature Script -->
       <div class="detail-actions" style="justify-content: center; margin-bottom: 48px;">

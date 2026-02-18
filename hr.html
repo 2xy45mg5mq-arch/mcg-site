@@ -139,20 +139,27 @@
       line-height: 0.9;
     }
 
-    /* ── HR LAURELS ── */
-    .hr-laurels {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px 18px;
+    /* ── LAURELS ── */
+    .laurels-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
-      justify-items: center;
+      max-width: 750px;
       margin: 0 auto 24px;
-      max-width: 560px;
+      gap: 8px;
     }
-    .hr-laurels img {
-      height: 50px;
-      width: auto;
+    .laurel-item {
+      width: 80px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .laurel-item img {
       max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
       opacity: 0.9;
       filter: brightness(1.1);
@@ -433,11 +440,14 @@
         line-height: 0.85;
         margin-bottom: 16px;
       }
-      .hr-laurels {
+      .laurels-container {
         max-width: 340px;
-        gap: 10px 12px;
+        gap: 6px 4px;
       }
-      .hr-laurels img { height: 36px !important; }
+      .laurel-item {
+        width: 72px;
+        height: 36px;
+      }
       .stills-slideshow {
         min-height: 180px;
         margin-left: -20px;
@@ -486,16 +496,16 @@
 
       <p class="hr-comp-line"><em>Severance</em> meets <em>Margin Call</em> in this financial horror story about the future of&nbsp;work.</p>
 
-      <!-- 1b. Laurels — two rows of 4 -->
-      <div class="hr-laurels">
-        <img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy">
-        <img src="/images/img_5.webp" alt="Dances With Films NY 2026" loading="lazy">
-        <img src="/images/img_55.webp" alt="Screamfest NOLA 2025" loading="lazy">
-        <img src="/images/img_3.webp" alt="Beloit International Film Festival 2026" loading="lazy">
-        <img src="/images/img_54.webp" alt="Big Bear Film Summit 2025" loading="lazy">
-        <img src="/images/img_montreal.webp" alt="Montreal Independent Film Festival" loading="lazy">
-        <img src="/images/img_venice.webp" alt="Venice Shorts Film Festival" loading="lazy">
-        <img src="/images/img_4.webp" alt="Malibu Film Festival 2025" loading="lazy">
+      <!-- 1b. Laurels -->
+      <div class="laurels-container">
+        <div class="laurel-item"><img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_5.webp" alt="Dances With Films NY 2026" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_55.webp" alt="Screamfest NOLA 2025" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_3.webp" alt="Beloit International Film Festival 2026" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_54.webp" alt="Big Bear Film Summit 2025" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_montreal.webp" alt="Montreal Independent Film Festival" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_venice.webp" alt="Venice Shorts Film Festival" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_4.webp" alt="Malibu Film Festival 2025" loading="lazy"></div>
       </div>
 
       <!-- 2. Slideshow -->

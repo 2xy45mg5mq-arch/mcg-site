@@ -4000,24 +4000,17 @@ function showEnding() {
         if (GAME.instruments) GAME.instruments.impact.triggerAttackRelease('C1', '2n');
         setTimeout(() => { document.getElementById('game-wrap').style.animation = ''; }, 400);
 
-        // Brief pause after impact, then fade to black
-        setTimeout(() => {
+        // Fade to black immediately after impact
+        let fadeStart2 = performance.now();
+        function fadeAnim(now2) {
           if (GAME.gen !== gen) return;
-          // Fade to black
-          let fadeStart2 = performance.now();
-          function fadeAnim(now2) {
-            if (GAME.gen !== gen) return;
-            const p = Math.min((now2 - fadeStart2) / 550, 1);
-            fadeOpacity = p;
-            drawEndingNightScene();
-            if (p < 1) requestAnimationFrame(fadeAnim);
-            else {
-              // Show title card + CTA
-              showEndingTitleAndCTA(gen);
-            }
-          }
-          requestAnimationFrame(fadeAnim);
-        }, 100);
+          const p = Math.min((now2 - fadeStart2) / 200, 1);
+          fadeOpacity = p;
+          drawEndingNightScene();
+          if (p < 1) requestAnimationFrame(fadeAnim);
+          else showEndingTitleAndCTA(gen);
+        }
+        requestAnimationFrame(fadeAnim);
       }
     }
     requestAnimationFrame(dropAnim);
@@ -4028,10 +4021,8 @@ function showEndingTitleAndCTA(gen) {
   if (GAME.gen !== gen) return;
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
 
-  // Brief pause then show Screen 1 with sequential reveals
-  setTimeout(() => {
-    if (GAME.gen !== gen) return;
-    const cta = document.getElementById('cta-overlay');
+  // Show Screen 1 immediately
+  const cta = document.getElementById('cta-overlay');
     const screen1 = document.getElementById('cta-screen-1');
     const children = Array.from(screen1.children);
 
@@ -4142,7 +4133,6 @@ function showEndingTitleAndCTA(gen) {
         });
       });
     }
-  }, 200);
 }
 
 // ============================================================

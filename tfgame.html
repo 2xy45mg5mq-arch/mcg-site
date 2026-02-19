@@ -1635,44 +1635,59 @@ function drawComicScene(scene) {
     }
     case 'basement': {
       // Basement — cheap bottles, concrete, pullout bed
+      // Ground plane at 60% so figures sit mid-frame (bottom 35% reserved for text)
+      const groundY = Math.round(ch * 0.6);
       comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
+      // Low concrete ceiling
+      comicCtx.fillStyle = '#131316'; comicCtx.fillRect(0, 0, cw, 35);
+      comicCtx.fillStyle = '#1a1a1e'; comicCtx.fillRect(0, 33, cw, 3);
+      // Exposed pipe along ceiling
+      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(40, 16, cw - 80, 5);
+      comicCtx.fillStyle = '#333'; comicCtx.fillRect(40, 16, cw - 80, 2);
       // Concrete walls — visible texture
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 50; i++) {
         const bx = (i * 67 + 23) % cw;
-        const by = (i * 43 + 11) % (ch - 80);
+        const by = 36 + (i * 43 + 11) % (groundY - 36);
         comicCtx.fillStyle = `rgba(40,40,45,${0.2 + (i % 3) * 0.1})`;
         comicCtx.fillRect(bx, by, 3, 2);
       }
       // Concrete floor
-      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
-      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
-      // Small high window (dim daylight)
-      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(60, 50, 80, 35);
-      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(60, 50, 80, 35);
-      comicCtx.fillStyle = 'rgba(80,100,120,0.1)'; comicCtx.fillRect(62, 52, 76, 31);
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, groundY, cw, 3);
+      // Small high window (dim daylight) — with crossbars
+      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(55, 50, 90, 45);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(55, 50, 90, 45);
+      comicCtx.fillStyle = 'rgba(80,100,120,0.12)'; comicCtx.fillRect(57, 52, 86, 41);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 1.5;
+      comicCtx.beginPath(); comicCtx.moveTo(100, 50); comicCtx.lineTo(100, 95); comicCtx.stroke();
+      comicCtx.beginPath(); comicCtx.moveTo(55, 72); comicCtx.lineTo(145, 72); comicCtx.stroke();
+      // Light spill from window
+      const winGlow = comicCtx.createRadialGradient(100, 72, 15, 100, 72, 140);
+      winGlow.addColorStop(0, 'rgba(80,100,120,0.06)'); winGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      comicCtx.fillStyle = winGlow; comicCtx.fillRect(0, 0, 250, 220);
       // Pull-out bed
-      comicCtx.fillStyle = '#2a2a3a'; comicCtx.fillRect(30, ch - 115, 130, 35);
-      comicCtx.fillStyle = '#3a3a4a'; comicCtx.fillRect(30, ch - 120, 130, 8);
+      comicCtx.fillStyle = '#2a2a3a'; comicCtx.fillRect(30, groundY - 38, 140, 38);
+      comicCtx.fillStyle = '#3a3a4a'; comicCtx.fillRect(30, groundY - 43, 140, 8);
       // Pillow
-      comicCtx.fillStyle = '#4a4a55'; comicCtx.fillRect(35, ch - 118, 35, 12);
+      comicCtx.fillStyle = '#4a4a55'; comicCtx.fillRect(35, groundY - 41, 40, 14);
       // Cologne bottles on shelf
-      comicCtx.fillStyle = '#1a1a1a'; comicCtx.fillRect(260, ch - 160, 120, 6); // shelf
+      comicCtx.fillStyle = '#1a1a1a'; comicCtx.fillRect(260, groundY - 100, 130, 6);
       for (let i = 0; i < 6; i++) {
         comicCtx.fillStyle = ['#4a3a2a','#3a4a5a','#5a3a4a','#3a5a3a','#4a4a2a','#3a3a5a'][i];
-        comicCtx.fillRect(268 + i * 18, ch - 190, 10, 28);
-        comicCtx.fillStyle = '#777'; comicCtx.fillRect(270 + i * 18, ch - 196, 6, 8);
+        comicCtx.fillRect(268 + i * 20, groundY - 132, 12, 30);
+        comicCtx.fillStyle = '#777'; comicCtx.fillRect(270 + i * 20, groundY - 138, 8, 10);
       }
       // Staircase right side
       comicCtx.fillStyle = '#1a1a1a';
-      for (let i = 0; i < 7; i++) {
-        comicCtx.fillRect(cw - 90 + i * 10, ch - 80 - i * 28, 60, 28);
+      for (let i = 0; i < 8; i++) {
+        comicCtx.fillRect(cw - 100 + i * 10, groundY - i * 30, 65, 30);
       }
       // Sera on the stairs — arms crossed, watching
-      drawComicSeraBig(comicCtx, cw - 55, ch - 220);
+      drawComicSeraBig(comicCtx, cw - 65, groundY - 180);
       // Murry seated on mattress with phone
-      const s = ch * 0.003;
-      const murryX = 95;
-      const murryY = (ch - 115) - 42 * s;
+      const s = ch * 0.0035;
+      const murryX = 100;
+      const murryY = (groundY - 38) - 42 * s;
       drawComicFigure(comicCtx, murryX, murryY, s, {
         body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: false,
         hairColor: '#2a1a0a', armPose: 'seated'
@@ -1681,64 +1696,87 @@ function drawComicScene(scene) {
     }
     case 'sera_intro': {
       // Sera on stairs, arms crossed, looking down at Murry
+      // Ground at 60% — basement layout
+      const groundY = Math.round(ch * 0.6);
       comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
+      // Low ceiling + pipe
+      comicCtx.fillStyle = '#131316'; comicCtx.fillRect(0, 0, cw, 35);
+      comicCtx.fillStyle = '#1a1a1e'; comicCtx.fillRect(0, 33, cw, 3);
+      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(40, 16, cw - 80, 5);
+      comicCtx.fillStyle = '#333'; comicCtx.fillRect(40, 16, cw - 80, 2);
       // Concrete texture
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 40; i++) {
         const bx = (i * 67 + 23) % cw;
-        const by = (i * 43 + 11) % (ch - 80);
+        const by = 36 + (i * 43 + 11) % (groundY - 36);
         comicCtx.fillStyle = `rgba(40,40,45,${0.15 + (i % 3) * 0.08})`;
         comicCtx.fillRect(bx, by, 3, 2);
       }
-      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
-      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, groundY, cw, 3);
       // Staircase — larger, centered
       comicCtx.fillStyle = '#1a1a1a';
       for (let i = 0; i < 8; i++) {
-        comicCtx.fillRect(cw/2 - 20 + i * 12, ch - 80 - i * 32, 70, 32);
+        comicCtx.fillRect(cw/2 - 20 + i * 12, groundY - i * 32, 70, 32);
       }
       // Railing
       comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2;
       comicCtx.beginPath();
-      comicCtx.moveTo(cw/2 - 20, ch - 80);
-      comicCtx.lineTo(cw/2 + 76, ch - 336);
+      comicCtx.moveTo(cw/2 - 20, groundY);
+      comicCtx.lineTo(cw/2 + 76, groundY - 256);
       comicCtx.stroke();
       // Sera on stairs — arms crossed, looking down (higher up)
-      drawComicSeraBig(comicCtx, cw/2 + 20, ch - 280);
-      drawCharLabel(comicCtx, cw/2 + 20, 80, ch - 90, 'SERA');
+      drawComicSeraBig(comicCtx, cw/2 + 20, groundY - 200);
+      drawCharLabel(comicCtx, cw/2 + 20, 80, groundY + 8, 'SERA');
       // Murry below — smaller, looking up
-      drawComicMurry(comicCtx, cw/2 - 80, ch - 130, true, false);
-      drawCharLabel(comicCtx, cw/2 - 80, 30, ch - 85, 'MURRY');
+      drawComicMurry(comicCtx, cw/2 - 80, groundY - 52, true, false);
+      drawCharLabel(comicCtx, cw/2 - 80, 30, groundY + 8, 'MURRY');
       break;
     }
     case 'basement_sera': {
       // Basement with Sera on stairs and Murry
+      // Ground at 60% — matches basement layout
+      const groundY = Math.round(ch * 0.6);
       comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
-      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
-      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
-      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(60, 50, 80, 35);
-      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(60, 50, 80, 35);
-      // Cologne bottles
+      // Low ceiling + pipe
+      comicCtx.fillStyle = '#131316'; comicCtx.fillRect(0, 0, cw, 35);
+      comicCtx.fillStyle = '#1a1a1e'; comicCtx.fillRect(0, 33, cw, 3);
+      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(40, 16, cw - 80, 5);
+      comicCtx.fillStyle = '#333'; comicCtx.fillRect(40, 16, cw - 80, 2);
+      // Concrete texture
+      for (let i = 0; i < 40; i++) {
+        const bx = (i * 67 + 23) % cw;
+        const by = 36 + (i * 43 + 11) % (groundY - 36);
+        comicCtx.fillStyle = `rgba(40,40,45,${0.2 + (i % 3) * 0.1})`;
+        comicCtx.fillRect(bx, by, 3, 2);
+      }
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, groundY, cw, 3);
+      // Window
+      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(55, 50, 90, 45);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(55, 50, 90, 45);
+      // Cologne bottles on shelf
+      comicCtx.fillStyle = '#1a1a1a'; comicCtx.fillRect(240, groundY - 100, 130, 6);
       for (let i = 0; i < 5; i++) {
         comicCtx.fillStyle = i % 2 ? '#4a3a2a' : '#3a4a5a';
-        comicCtx.fillRect(240 + i * 22, ch - 120, 14, 30);
+        comicCtx.fillRect(248 + i * 22, groundY - 130, 14, 28);
       }
       // Staircase
       comicCtx.fillStyle = '#1a1a1a';
-      for (let i = 0; i < 6; i++) {
-        comicCtx.fillRect(cw - 80 + i * 8, ch - 80 - i * 30, 50, 30);
+      for (let i = 0; i < 8; i++) {
+        comicCtx.fillRect(cw - 100 + i * 10, groundY - i * 30, 65, 30);
       }
       // Murry seated on mattress with phone
-      const s = ch * 0.003;
-      const murryX = 95;
-      const murryY = (ch - 115) - 42 * s;
+      const s = ch * 0.0035;
+      const murryX = 100;
+      const murryY = (groundY - 38) - 42 * s;
       drawComicFigure(comicCtx, murryX, murryY, s, {
         body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: false,
         hairColor: '#2a1a0a', armPose: 'seated'
       });
-      drawCharLabel(comicCtx, murryX - 15, 30, ch - 75, 'MURRY');
+      drawCharLabel(comicCtx, murryX - 15, 30, groundY + 8, 'MURRY');
       // Sera on stairs
-      drawComicSera(comicCtx, cw - 60, ch - 200);
-      drawCharLabel(comicCtx, cw - 60, 28, ch - 160, 'SERA');
+      drawComicSera(comicCtx, cw - 70, groundY - 140);
+      drawCharLabel(comicCtx, cw - 70, 28, groundY + 8, 'SERA');
       break;
     }
     case 'building_ext': {
@@ -1807,24 +1845,27 @@ function drawComicScene(scene) {
     }
     case 'nik_intro': {
       // Tight face composition — Murry and Nik side by side, LARGE, showing resemblance
-      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
-      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#3a6a4a');
+      // Ground at 55% for lobby scenes
+      const groundY = Math.round(ch * 0.55);
+      const g = comicCtx.createLinearGradient(0, 0, 0, groundY);
+      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#2a5a3a');
       comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
       // Green marble floor
-      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 60, cw, 60);
-      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 60, cw, 4);
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, groundY, cw, 4);
       // Elevator doors (open, behind characters)
-      comicCtx.fillStyle = '#888'; comicCtx.fillRect(cw/2 - 60, ch - 280, 120, 225);
-      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(cw/2 - 55, ch - 275, 110, 218);
+      const elvH = Math.round(groundY * 0.58);
+      const elvY = groundY - elvH;
+      comicCtx.fillStyle = '#888'; comicCtx.fillRect(cw/2 - 60, elvY, 120, elvH);
+      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(cw/2 - 55, elvY + 5, 110, elvH - 5);
       // Gold indicator above elevator
       comicCtx.fillStyle = '#c4a86b';
       comicCtx.font = '11px "Bebas Neue", sans-serif';
       comicCtx.textAlign = 'center';
-      comicCtx.fillText('PH', cw/2, ch - 286);
+      comicCtx.fillText('PH', cw/2, elvY - 6);
       comicCtx.textAlign = 'left';
       // Full-body characters side by side — resemblance visible
       const s = ch * 0.003;
-      const groundY = ch - 60;
       const figY = groundY - 57 * s;
       // Murry left — doorman uniform
       const murryX = cw / 2 - 75;
@@ -1832,88 +1873,117 @@ function drawComicScene(scene) {
         body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: true,
         capColor: '#1a2744', buttons: true, epaulettes: true
       });
-      drawCharLabel(comicCtx, murryX - 15, 30, ch - 50, 'MURRY');
+      drawCharLabel(comicCtx, murryX - 15, 30, groundY + 8, 'MURRY');
       // Nik right — dark suit, glasses
       const nikX = cw / 2 + 75;
       drawComicFigure(comicCtx, nikX, figY, s, {
         body: '#1a1a3a', skin: '#d4a574', hasBeard: false, hasCap: false,
         hairColor: '#1a0a0a', hasGlasses: true
       });
-      drawCharLabel(comicCtx, nikX - 15, 30, ch - 50, 'NIK');
+      drawCharLabel(comicCtx, nikX - 15, 30, groundY + 8, 'NIK');
       // Snacks at their feet
-      drawComicSnacks(comicCtx, cw/2 - 10, ch - 70);
-      drawCharLabel(comicCtx, cw/2 - 10, 24, ch - 54, 'SNACKS');
+      drawComicSnacks(comicCtx, cw/2 - 10, groundY - 12);
+      drawCharLabel(comicCtx, cw/2 - 10, 24, groundY + 8, 'SNACKS');
       break;
     }
     case 'nik_snacks': {
       // Nik with Snacks — dog wagging tail
-      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
-      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#3a6a4a');
+      // Ground at 55% so figures sit mid-frame
+      const groundY = Math.round(ch * 0.55);
+      const g = comicCtx.createLinearGradient(0, 0, 0, groundY);
+      g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.7, '#101420'); g.addColorStop(1, '#2a5a3a');
       comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
       // Green marble floor
-      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 60, cw, 60);
-      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 60, cw, 4);
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, groundY, cw, 4);
+      // Lobby wall detail — wainscoting line
+      comicCtx.fillStyle = 'rgba(196,168,107,0.04)'; comicCtx.fillRect(0, groundY - 80, cw, 1);
       // Nik crouching with Snacks
-      drawComicNik(comicCtx, cw/2 - 40, ch - 105);
-      drawCharLabel(comicCtx, cw/2 - 40, 30, ch - 59, 'NIK');
+      drawComicNik(comicCtx, cw/2 - 50, groundY - 48);
+      drawCharLabel(comicCtx, cw/2 - 50, 30, groundY + 8, 'NIK');
       // Snacks with wagging tail — slightly bigger
-      drawComicSnacksBig(comicCtx, cw/2 + 20, ch - 80);
-      drawCharLabel(comicCtx, cw/2 + 20, 40, ch - 53, 'SNACKS');
+      drawComicSnacksBig(comicCtx, cw/2 + 10, groundY - 24);
+      drawCharLabel(comicCtx, cw/2 + 10, 40, groundY + 8, 'SNACKS');
       // Murry nearby petting Snacks
-      drawComicMurry(comicCtx, cw/2 + 70, ch - 110, true, false);
-      drawCharLabel(comicCtx, cw/2 + 70, 30, ch - 64, 'MURRY');
+      drawComicMurry(comicCtx, cw/2 + 80, groundY - 52, true, false);
+      drawCharLabel(comicCtx, cw/2 + 80, 30, groundY + 8, 'MURRY');
       break;
     }
     case 'similarity': {
       // Nik and Murry — show the resemblance. Use silhouettes/back view.
+      // Ground at 55% so figures sit mid-frame
+      const groundY = Math.round(ch * 0.55);
       const g = comicCtx.createLinearGradient(0, 0, 0, ch);
       g.addColorStop(0, '#0a0e1a'); g.addColorStop(0.6, '#0e1220'); g.addColorStop(1, '#08080c');
       comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
-      // Elevator doors as backdrop
-      comicCtx.fillStyle = '#1a1a22'; comicCtx.fillRect(cw/2 - 80, ch - 280, 160, 230);
-      comicCtx.fillStyle = '#888'; comicCtx.fillRect(cw/2 - 80, ch - 280, 160, 4);
-      // Warm interior light from elevator
-      const eGlow = comicCtx.createRadialGradient(cw/2, ch - 180, 10, cw/2, ch - 180, 120);
-      eGlow.addColorStop(0, 'rgba(196,168,107,0.06)'); eGlow.addColorStop(1, 'rgba(0,0,0,0)');
-      comicCtx.fillStyle = eGlow; comicCtx.fillRect(cw/2 - 120, ch - 300, 240, 260);
+      // Elevator doors as backdrop — positioned above ground
+      const elvH = Math.round(groundY * 0.65);
+      const elvY = groundY - elvH;
+      comicCtx.fillStyle = '#1e1e2a'; comicCtx.fillRect(cw/2 - 80, elvY, 160, elvH);
+      comicCtx.fillStyle = '#888'; comicCtx.fillRect(cw/2 - 80, elvY, 160, 4);
+      // Warm interior light from elevator — stronger for silhouette contrast
+      const eGlow = comicCtx.createRadialGradient(cw/2, groundY - elvH/2, 10, cw/2, groundY - elvH/2, 140);
+      eGlow.addColorStop(0, 'rgba(196,168,107,0.14)'); eGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      comicCtx.fillStyle = eGlow; comicCtx.fillRect(cw/2 - 140, elvY - 20, 280, elvH + 40);
       // TWO SILHOUETTES — from behind, same build, same posture
+      const silY = groundY - 100;
       // Left: Murry (with beard shadow)
-      drawSilhouette(comicCtx, cw/2 - 60, ch - 200, true);  // with beard
-      drawCharLabel(comicCtx, cw/2 - 60, 30, ch - 55, 'MURRY');
+      drawSilhouette(comicCtx, cw/2 - 60, silY, true);
+      drawCharLabel(comicCtx, cw/2 - 60, 30, groundY + 8, 'MURRY');
       // Right: Nik (no beard)
-      drawSilhouette(comicCtx, cw/2 + 20, ch - 200, false); // no beard
-      drawCharLabel(comicCtx, cw/2 + 20, 30, ch - 55, 'NIK');
+      drawSilhouette(comicCtx, cw/2 + 20, silY, false);
+      drawCharLabel(comicCtx, cw/2 + 20, 30, groundY + 8, 'NIK');
       // Floor
-      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, ch - 50, cw, 50);
-      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, ch - 50, cw, 3);
+      comicCtx.fillStyle = '#4a7a5a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#5a8a6a'; comicCtx.fillRect(0, groundY, cw, 3);
       break;
     }
     case 'basement_pushups': {
       // Murry doing pushups in basement
+      // Ground at 60% — matches basement scene layout
+      const groundY = Math.round(ch * 0.6);
       comicCtx.fillStyle = '#0a0a10'; comicCtx.fillRect(0, 0, cw, ch);
-      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, ch - 80, cw, 80);
-      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, ch - 80, cw, 3);
-      // Dim light from window
-      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(60, 50, 80, 35);
-      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(60, 50, 80, 35);
-      // Murry on ground (pushup pose)
+      // Low ceiling + pipe
+      comicCtx.fillStyle = '#131316'; comicCtx.fillRect(0, 0, cw, 35);
+      comicCtx.fillStyle = '#1a1a1e'; comicCtx.fillRect(0, 33, cw, 3);
+      comicCtx.fillStyle = '#2a2a30'; comicCtx.fillRect(40, 16, cw - 80, 5);
+      comicCtx.fillStyle = '#333'; comicCtx.fillRect(40, 16, cw - 80, 2);
+      // Concrete walls texture
+      for (let i = 0; i < 40; i++) {
+        const bx = (i * 67 + 23) % cw;
+        const by = 36 + (i * 43 + 11) % (groundY - 36);
+        comicCtx.fillStyle = `rgba(40,40,45,${0.2 + (i % 3) * 0.1})`;
+        comicCtx.fillRect(bx, by, 3, 2);
+      }
+      // Concrete floor
+      comicCtx.fillStyle = '#2a2a2a'; comicCtx.fillRect(0, groundY, cw, ch - groundY);
+      comicCtx.fillStyle = '#3a3a3a'; comicCtx.fillRect(0, groundY, cw, 3);
+      // Window with crossbars
+      comicCtx.fillStyle = '#1a2030'; comicCtx.fillRect(55, 50, 90, 45);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 2; comicCtx.strokeRect(55, 50, 90, 45);
+      comicCtx.fillStyle = 'rgba(80,100,120,0.12)'; comicCtx.fillRect(57, 52, 86, 41);
+      comicCtx.strokeStyle = '#333'; comicCtx.lineWidth = 1.5;
+      comicCtx.beginPath(); comicCtx.moveTo(100, 50); comicCtx.lineTo(100, 95); comicCtx.stroke();
+      comicCtx.beginPath(); comicCtx.moveTo(55, 72); comicCtx.lineTo(145, 72); comicCtx.stroke();
+      // Murry on ground (pushup pose) — bigger, centered on floor
+      const puY = groundY - 6;
       comicCtx.fillStyle = '#d4a574';
-      comicCtx.fillRect(cw/2 - 20, ch - 115, 40, 12);
+      comicCtx.fillRect(cw/2 - 25, puY - 38, 52, 16);
       comicCtx.fillStyle = '#1a2744';
-      comicCtx.fillRect(cw/2 - 25, ch - 105, 50, 16);
+      comicCtx.fillRect(cw/2 - 30, puY - 24, 64, 20);
       comicCtx.fillStyle = '#d4a574';
-      comicCtx.beginPath(); comicCtx.arc(cw/2 - 28, ch - 108, 10, 0, Math.PI * 2); comicCtx.fill();
+      comicCtx.beginPath(); comicCtx.arc(cw/2 - 36, puY - 30, 14, 0, Math.PI * 2); comicCtx.fill();
       // Beard
       comicCtx.fillStyle = 'rgba(50,35,25,0.5)';
-      comicCtx.beginPath(); comicCtx.ellipse(cw/2 - 28, ch - 102, 7, 4, 0, 0, Math.PI); comicCtx.fill();
+      comicCtx.beginPath(); comicCtx.ellipse(cw/2 - 36, puY - 22, 9, 5, 0, 0, Math.PI); comicCtx.fill();
       // Arms
       comicCtx.fillStyle = '#d4a574';
-      comicCtx.fillRect(cw/2 - 30, ch - 92, 6, 14);
-      comicCtx.fillRect(cw/2 + 24, ch - 92, 6, 14);
+      comicCtx.fillRect(cw/2 - 40, puY - 8, 8, 18);
+      comicCtx.fillRect(cw/2 + 32, puY - 8, 8, 18);
       // Staircase
       comicCtx.fillStyle = '#1a1a1a';
-      for (let i = 0; i < 6; i++) {
-        comicCtx.fillRect(cw - 80 + i * 8, ch - 80 - i * 30, 50, 30);
+      for (let i = 0; i < 8; i++) {
+        comicCtx.fillRect(cw - 100 + i * 10, groundY - i * 30, 65, 30);
       }
       break;
     }

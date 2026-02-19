@@ -1614,7 +1614,7 @@ function drawComicScene(scene) {
       // Murry in doorman uniform — standing at entrance
       const s = ch * 0.003;
       const murryX = cw / 2 + 10;
-      const murryY = (ch - 50) - 57 * s - 35; // raised to clear text gradient
+      const murryY = ch * 0.45;
       drawComicFigure(comicCtx, murryX, murryY, s, {
         body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: true,
         capColor: '#1a2744', buttons: true, epaulettes: true
@@ -4017,7 +4017,7 @@ function showEnding() {
             }
           }
           requestAnimationFrame(fadeAnim);
-        }, 280);
+        }, 100);
       }
     }
     requestAnimationFrame(dropAnim);
@@ -4142,7 +4142,7 @@ function showEndingTitleAndCTA(gen) {
         });
       });
     }
-  }, 500);
+  }, 200);
 }
 
 // ============================================================

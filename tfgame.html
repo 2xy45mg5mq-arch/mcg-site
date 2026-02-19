@@ -30,7 +30,7 @@
 <link rel="canonical" href="https://coyne-green.com/tfgame">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; overflow: hidden; background: #08080c; }
@@ -143,16 +143,15 @@ canvas {
   overflow: hidden;
 }
 
-/* Scene canvas sits in upper portion with nav arrows */
+/* Full-screen scene canvas — covers entire comic overlay */
 #comic-canvas-wrap {
-  position: relative;
-  width: 100%;
-  flex: 0 0 auto;
-  max-height: 58%;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
 }
 #comic-canvas {
   width: 100%;
+  height: 100%;
   image-rendering: pixelated;
   display: block;
 }
@@ -163,22 +162,26 @@ canvas {
   overflow: visible;
 }
 
-/* Narration panel sits RIGHT BELOW the scene — no gap */
+/* Narration panel: absolute overlay at bottom 28% of scene */
 #comic-narration-panel {
-  flex: 1 1 auto;
-  width: 100%;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  min-height: 28%;
   display: flex; flex-direction: column;
-  align-items: flex-start; justify-content: flex-start;
-  padding: 14px 48px 16px;
+  align-items: flex-start; justify-content: flex-end;
+  padding: 0 32px 32px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.88));
+  pointer-events: none;
+  z-index: 3;
   overflow: hidden;
-  position: relative;
 }
 
-/* Text-only: hide canvas, expand panel, center text */
-#comic-overlay.text-only-mode #comic-canvas-wrap { display: none; }
+/* Text-only: keep canvas, expand panel to full-screen, center text */
 #comic-overlay.text-only-mode #comic-narration-panel {
+  min-height: 100%;
   justify-content: center;
   align-items: center;
+  background: rgba(6,8,16,0.92);
 }
 
 /* Legacy text area kept for compatibility but hidden */
@@ -716,7 +719,7 @@ canvas {
   <!-- COMIC SEQUENCE — External Narration Layout -->
   <div id="comic-overlay">
     <div id="comic-canvas-wrap">
-      <canvas id="comic-canvas" width="420" height="432"></canvas>
+      <canvas id="comic-canvas" width="420" height="720"></canvas>
       <div id="comic-bubble-layer"></div>
     </div>
     <div id="comic-narration-panel"></div>
@@ -1180,7 +1183,13 @@ const COMIC_BEATS = [
     narration: 'But unlike the other tenants, the suave investor in the penthouse doesn\u2019t look down on Murry. He looks him right in the\u00a0face.<br><br>Not just because Murry helps him with his diabetic dog <b>Snacks</b>\u2026<br><br><b>\u2026but because the two look strikingly\u00a0similar.</b>',
     sound: 'ding' },
 
-  // Beat 8: Title card — "PLAY THE GAME" animated text
+  // Beat 8: Rooftop — flash-forward confrontation
+  { scene: 'rooftop_conf' },
+
+  // Beat 9: The Push — flash-forward climax
+  { scene: 'push' },
+
+  // Beat 10: Title card — "PLAY THE GAME" animated text
   { scene: 'title_card' },
 
   // Beat 9: Basement pushups — auto-advance to gameplay
@@ -1306,33 +1315,7 @@ function renderComicBeat(idx) {
   if (beat.sound === 'ding' && GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
   if (beat.sound === 'bark' && GAME.instruments) GAME.instruments.ding.triggerAttackRelease('8n');
 
-  // Nav arrows — in the canvas wrap area (bottom of scene), not in narration panel
-  // Remove old arrows first
-  document.querySelectorAll('#comic-canvas-wrap .nav-arrow').forEach(el => el.remove());
-  if (beat.scene !== 'text_only') {
-    const leftArrow = document.createElement('div');
-    leftArrow.className = 'nav-arrow left' + (isFirst ? ' hidden' : '');
-    leftArrow.textContent = '\u25C0';
-    leftArrow.style.cssText = 'position:absolute;bottom:20px;left:10px;top:auto;transform:none;z-index:4;';
-    document.getElementById('comic-canvas-wrap').appendChild(leftArrow);
-
-    const rightArrow = document.createElement('div');
-    rightArrow.className = 'nav-arrow right';
-    rightArrow.textContent = '\u25B6';
-    rightArrow.style.cssText = 'position:absolute;bottom:20px;right:10px;top:auto;transform:none;z-index:4;';
-    document.getElementById('comic-canvas-wrap').appendChild(rightArrow);
-  } else {
-    // Text-only: arrows at sides of text
-    const leftArrow = document.createElement('div');
-    leftArrow.className = 'nav-arrow left' + (isFirst ? ' hidden' : '');
-    leftArrow.textContent = '\u25C0';
-    comicNarrationPanel.appendChild(leftArrow);
-
-    const rightArrow = document.createElement('div');
-    rightArrow.className = 'nav-arrow right';
-    rightArrow.textContent = '\u25B6';
-    comicNarrationPanel.appendChild(rightArrow);
-  }
+  // Nav arrows removed from comic beats — tap anywhere to advance (full-screen tap UX)
 
   // Swipe hint on first beat for touch devices
   if (isFirst && 'ontouchstart' in window) {
@@ -1424,6 +1407,167 @@ function showControlHint(text) {
   setTimeout(() => { controlHint.style.display = 'none'; }, 6000);
 }
 
+// --- PURPOSE-BUILT COMIC CHARACTER ART ---
+// x = horizontal center, y = head center, s = scale (ch*0.003 ≈ 2.16 at ch=720)
+// Figure height: y-11s (head top) → y+57s (feet) ≈ 147px at s=2.16
+function drawComicFigure(ctx, x, y, s, opts) {
+  const {
+    body = '#1a2744', skin = '#d4a574', hasBeard = false,
+    hasCap = false, capColor = '#1a2744', hairColor = '#2a1a0a',
+    hasGlasses = false, buttons = false, epaulettes = false,
+    blood = false, armPose = null, legColor = null, shadow = true
+  } = (opts || {});
+  const lc = legColor || body;
+
+  // Ground shadow
+  if (shadow) {
+    ctx.save(); ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.beginPath(); ctx.ellipse(x, y + 60*s, 16*s, 3.5*s, 0, 0, Math.PI*2); ctx.fill(); ctx.restore();
+  }
+
+  // Shoes (behind legs/arms)
+  ctx.fillStyle = '#1a1212';
+  ctx.beginPath(); ctx.ellipse(x - 7*s, y + 57*s, 8*s, 3*s, 0.1, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(x + 7*s, y + 57*s, 8*s, 3*s, -0.1, 0, Math.PI*2); ctx.fill();
+
+  // Legs
+  if (armPose !== 'seated') {
+    ctx.fillStyle = lc;
+    ctx.fillRect(x - 11*s, y + 44*s, 8*s, 14*s);
+    ctx.fillRect(x + 3*s, y + 44*s, 8*s, 14*s);
+    ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(x - 0.5*s, y + 44*s, s, 14*s);
+  }
+
+  // Arms (drawn before torso so torso overlaps)
+  if (armPose === null) {
+    ctx.fillStyle = body;
+    ctx.fillRect(x - 18*s, y + 19*s, 5*s, 24*s);
+    ctx.fillRect(x + 13*s, y + 19*s, 5*s, 24*s);
+    ctx.fillStyle = skin;
+    ctx.beginPath(); ctx.arc(x - 15.5*s, y + 44*s, 3.5*s, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 15.5*s, y + 44*s, 3.5*s, 0, Math.PI*2); ctx.fill();
+  } else if (armPose === 'push') {
+    ctx.fillStyle = body;
+    ctx.fillRect(x - 18*s, y + 19*s, 5*s, 24*s);
+    ctx.save(); ctx.translate(x + 15*s, y + 23*s); ctx.rotate(-0.25);
+    ctx.fillRect(0, -2.5*s, 24*s, 5*s); ctx.restore();
+    ctx.fillStyle = skin;
+    ctx.beginPath(); ctx.arc(x - 15.5*s, y + 44*s, 3.5*s, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 38*s, y + 17*s, 3.5*s, 0, Math.PI*2); ctx.fill();
+  } else if (armPose === 'falling') {
+    ctx.fillStyle = body;
+    ctx.save(); ctx.translate(x - 13*s, y + 21*s); ctx.rotate(0.6);
+    ctx.fillRect(-20*s, -2.5*s, 20*s, 5*s); ctx.restore();
+    ctx.save(); ctx.translate(x + 13*s, y + 21*s); ctx.rotate(-0.6);
+    ctx.fillRect(0, -2.5*s, 20*s, 5*s); ctx.restore();
+    ctx.fillStyle = skin;
+    ctx.beginPath(); ctx.arc(x - 31*s, y + 13*s, 3.5*s, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 31*s, y + 13*s, 3.5*s, 0, Math.PI*2); ctx.fill();
+  } else if (armPose === 'seated') {
+    ctx.fillStyle = lc;
+    ctx.fillRect(x - 16*s, y + 42*s, 14*s, 7*s);  // left thigh
+    ctx.fillRect(x + 2*s, y + 42*s, 14*s, 7*s);   // right thigh
+    ctx.fillRect(x - 13*s, y + 49*s, 7*s, 12*s);  // left calf
+    ctx.fillRect(x + 6*s, y + 49*s, 7*s, 12*s);   // right calf
+    ctx.fillStyle = '#1a1212';
+    ctx.beginPath(); ctx.ellipse(x - 9*s, y + 62*s, 6*s, 2.5*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x + 9*s, y + 62*s, 6*s, 2.5*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = body;
+    ctx.fillRect(x - 18*s, y + 19*s, 5*s, 14*s);
+    ctx.fillRect(x - 18*s, y + 30*s, 13*s, 4*s);
+    ctx.fillRect(x + 13*s, y + 19*s, 5*s, 14*s);
+    ctx.fillRect(x + 5*s, y + 30*s, 13*s, 4*s);
+    ctx.fillStyle = '#0d0f1a';
+    ctx.fillRect(x - 6*s, y + 27*s, 12*s, 16*s);
+    ctx.fillStyle = 'rgba(150,195,255,0.3)';
+    ctx.fillRect(x - 4*s, y + 29*s, 8*s, 12*s);
+    ctx.fillStyle = skin;
+    ctx.beginPath(); ctx.arc(x - 13*s, y + 34*s, 3*s, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 13*s, y + 34*s, 3*s, 0, Math.PI*2); ctx.fill();
+  }
+
+  // Torso
+  ctx.fillStyle = body;
+  ctx.fillRect(x - 13*s, y + 19*s, 26*s, 26*s);
+  ctx.beginPath(); ctx.moveTo(x - 10*s, y + 19*s); ctx.lineTo(x + 10*s, y + 19*s);
+  ctx.lineTo(x + 14*s, y + 25*s); ctx.lineTo(x - 14*s, y + 25*s); ctx.closePath(); ctx.fill();
+
+  if (epaulettes) {
+    ctx.fillStyle = '#c4a86b';
+    ctx.fillRect(x - 16*s, y + 19*s, 6*s, 3.5*s);
+    ctx.fillRect(x + 10*s, y + 19*s, 6*s, 3.5*s);
+  }
+  if (buttons) {
+    ctx.fillStyle = '#c4a86b';
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath(); ctx.arc(x, y + 24*s + i * 5*s, 1.3*s, 0, Math.PI*2); ctx.fill();
+    }
+  }
+  if (blood) {
+    ctx.fillStyle = 'rgba(140,15,15,0.65)';
+    ctx.beginPath(); ctx.ellipse(x + 5*s, y + 30*s, 4*s, 6*s, 0.3, 0, Math.PI*2); ctx.fill();
+    ctx.fillRect(x + 6*s, y + 36*s, 2*s, 5*s);
+  }
+
+  // Neck
+  ctx.fillStyle = skin; ctx.fillRect(x - 4*s, y + 11*s, 8*s, 9*s);
+
+  // Head
+  ctx.fillStyle = skin;
+  ctx.beginPath(); ctx.arc(x, y, 11*s, 0, Math.PI*2); ctx.fill();
+
+  // Hair (no cap)
+  if (!hasCap) {
+    ctx.fillStyle = hairColor;
+    ctx.beginPath(); ctx.ellipse(x, y - 5*s, 11*s, 8*s, 0, Math.PI, 0); ctx.fill();
+    ctx.fillRect(x - 11*s, y - 4*s, 3*s, 8*s);
+    ctx.fillRect(x + 8*s, y - 4*s, 3*s, 8*s);
+  }
+
+  // Cap
+  if (hasCap) {
+    ctx.fillStyle = capColor;
+    ctx.fillRect(x - 11*s, y - 3*s, 22*s, 5*s);
+    ctx.beginPath(); ctx.ellipse(x, y - 9*s, 10*s, 7*s, 0, Math.PI, 0); ctx.fill();
+    ctx.fillRect(x - 14*s, y - 3*s, 28*s, 2.5*s);
+    ctx.fillStyle = '#c4a86b'; ctx.fillRect(x - 11*s, y - 3*s, 22*s, 2*s);
+    ctx.fillStyle = hairColor;
+    ctx.fillRect(x - 11*s, y, 3*s, 6*s); ctx.fillRect(x + 8*s, y, 3*s, 6*s);
+  }
+
+  // Ears
+  ctx.fillStyle = skin;
+  ctx.beginPath(); ctx.ellipse(x - 11*s, y + 2*s, 2.5*s, 3.5*s, 0, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(x + 11*s, y + 2*s, 2.5*s, 3.5*s, 0, 0, Math.PI*2); ctx.fill();
+
+  // Eyes
+  ctx.fillStyle = '#1a1a1a';
+  ctx.beginPath(); ctx.arc(x - 4*s, y + 2*s, 2*s, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 4*s, y + 2*s, 2*s, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.beginPath(); ctx.arc(x - 3.5*s, y + 1.5*s, s, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 4.5*s, y + 1.5*s, s, 0, Math.PI*2); ctx.fill();
+
+  // Glasses
+  if (hasGlasses) {
+    ctx.strokeStyle = '#999'; ctx.lineWidth = 1.5*s;
+    ctx.beginPath(); ctx.arc(x - 4*s, y + 2*s, 4*s, 0, Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x + 4*s, y + 2*s, 4*s, 0, Math.PI*2); ctx.stroke();
+    ctx.lineWidth = 1.2*s;
+    ctx.beginPath(); ctx.moveTo(x - 0.5*s, y + 2*s); ctx.lineTo(x + 0.5*s, y + 2*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x - 8*s, y + 2*s); ctx.lineTo(x - 11*s, y + 3*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + 8*s, y + 2*s); ctx.lineTo(x + 11*s, y + 3*s); ctx.stroke();
+  }
+
+  // Beard
+  if (hasBeard) {
+    ctx.fillStyle = 'rgba(45,28,18,0.62)';
+    ctx.beginPath(); ctx.ellipse(x, y + 7*s, 8*s, 5*s, 0, 0, Math.PI); ctx.fill();
+    ctx.fillStyle = 'rgba(45,28,18,0.4)';
+    ctx.beginPath(); ctx.ellipse(x, y + 4*s, 4*s, 2*s, 0, 0, Math.PI); ctx.fill();
+  }
+}
+
 // --- COMIC SCENE RENDERING ---
 function drawCharLabel(pc, x, centerW, bottomY, name) {
   pc.save();
@@ -1435,7 +1579,7 @@ function drawCharLabel(pc, x, centerW, bottomY, name) {
 }
 
 function drawComicScene(scene) {
-  const cw = 420, ch = 432;
+  const cw = 420, ch = 720;
   comicCtx.clearRect(0, 0, cw, ch);
 
   switch(scene) {
@@ -1495,8 +1639,14 @@ function drawComicScene(scene) {
       // Door frame
       comicCtx.fillStyle = '#c4a86b'; comicCtx.fillRect(cw/2 - 40, ch - 100, 80, 55);
       comicCtx.fillStyle = '#0a0a14'; comicCtx.fillRect(cw/2 - 36, ch - 96, 72, 48);
-      // Murry holding door open
-      drawComicMurry(comicCtx, cw/2 - 70, ch - 95, true, false);
+      // Murry in doorman uniform — standing at entrance
+      const s = ch * 0.003;
+      const murryX = cw / 2 + 10;
+      const murryY = (ch - 50) - 57 * s;
+      drawComicFigure(comicCtx, murryX, murryY, s, {
+        body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: true,
+        capColor: '#1a2744', buttons: true, epaulettes: true
+      });
       break;
     }
     case 'lobby': {
@@ -1548,9 +1698,15 @@ function drawComicScene(scene) {
       // Sera on the stairs — arms crossed, watching
       drawComicSeraBig(comicCtx, cw - 55, ch - 220);
       drawCharLabel(comicCtx, cw - 55, 80, ch - 30, 'SERA');
-      // Murry working on cologne
-      drawComicMurry(comicCtx, 280, ch - 140, true, false);
-      drawCharLabel(comicCtx, 280, 30, ch - 95, 'MURRY');
+      // Murry seated on mattress with phone
+      const s = ch * 0.003;
+      const murryX = 95;
+      const murryY = (ch - 115) - 42 * s;
+      drawComicFigure(comicCtx, murryX, murryY, s, {
+        body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: false,
+        hairColor: '#2a1a0a', armPose: 'seated'
+      });
+      drawCharLabel(comicCtx, murryX - 15, 30, ch - 75, 'MURRY');
       break;
     }
     case 'sera_intro': {
@@ -1601,9 +1757,15 @@ function drawComicScene(scene) {
       for (let i = 0; i < 6; i++) {
         comicCtx.fillRect(cw - 80 + i * 8, ch - 80 - i * 30, 50, 30);
       }
-      // Murry
-      drawComicMurry(comicCtx, 180, ch - 140, true, false);
-      drawCharLabel(comicCtx, 180, 30, ch - 95, 'MURRY');
+      // Murry seated on mattress with phone
+      const s = ch * 0.003;
+      const murryX = 95;
+      const murryY = (ch - 115) - 42 * s;
+      drawComicFigure(comicCtx, murryX, murryY, s, {
+        body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: false,
+        hairColor: '#2a1a0a', armPose: 'seated'
+      });
+      drawCharLabel(comicCtx, murryX - 15, 30, ch - 75, 'MURRY');
       // Sera on stairs
       drawComicSera(comicCtx, cw - 60, ch - 200);
       drawCharLabel(comicCtx, cw - 60, 28, ch - 160, 'SERA');
@@ -1690,11 +1852,24 @@ function drawComicScene(scene) {
       comicCtx.textAlign = 'center';
       comicCtx.fillText('PH', cw/2, ch - 286);
       comicCtx.textAlign = 'left';
-      // Draw characters LARGE and CLOSE — tight composition for resemblance
-      drawComicMurryLarge(comicCtx, cw/2 - 110, ch - 200, true);
-      drawCharLabel(comicCtx, cw/2 - 110, 80, ch - 64, 'MURRY');
-      drawComicNikLarge(comicCtx, cw/2 + 30, ch - 200);
-      drawCharLabel(comicCtx, cw/2 + 30, 80, ch - 64, 'NIK');
+      // Full-body characters side by side — resemblance visible
+      const s = ch * 0.003;
+      const groundY = ch - 60;
+      const figY = groundY - 57 * s;
+      // Murry left — doorman uniform
+      const murryX = cw / 2 - 75;
+      drawComicFigure(comicCtx, murryX, figY, s, {
+        body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: true,
+        capColor: '#1a2744', buttons: true, epaulettes: true
+      });
+      drawCharLabel(comicCtx, murryX - 15, 30, ch - 50, 'MURRY');
+      // Nik right — dark suit, glasses
+      const nikX = cw / 2 + 75;
+      drawComicFigure(comicCtx, nikX, figY, s, {
+        body: '#1a1a3a', skin: '#d4a574', hasBeard: false, hasCap: false,
+        hairColor: '#1a0a0a', hasGlasses: true
+      });
+      drawCharLabel(comicCtx, nikX - 15, 30, ch - 50, 'NIK');
       // Snacks at their feet
       drawComicSnacks(comicCtx, cw/2 - 10, ch - 70);
       drawCharLabel(comicCtx, cw/2 - 10, 24, ch - 54, 'SNACKS');
@@ -1770,6 +1945,119 @@ function drawComicScene(scene) {
       for (let i = 0; i < 6; i++) {
         comicCtx.fillRect(cw - 80 + i * 8, ch - 80 - i * 30, 50, 30);
       }
+      break;
+    }
+    case 'rooftop_conf': {
+      // NYC ROOFTOP CONFRONTATION — flash-forward
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#0b0e1f'); g.addColorStop(0.6, '#0f1225'); g.addColorStop(1, '#1a1a20');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Stars (sparse, cold)
+      comicCtx.fillStyle = 'rgba(200,220,255,0.3)';
+      [[30,20],[90,15],[160,30],[240,10],[320,25],[380,18],[70,45],[200,40],[350,38]].forEach(([sx,sy]) => {
+        comicCtx.fillRect(sx, sy, 1.2, 1.2);
+      });
+      // NYC skyline silhouette — Empire State center-left
+      comicCtx.fillStyle = '#080a14';
+      comicCtx.fillRect(100, 200, 22, 280); comicCtx.fillRect(107, 160, 8, 40); comicCtx.fillRect(110, 120, 2, 40);
+      // Chrysler Building — center
+      comicCtx.fillRect(195, 240, 20, 240);
+      for (let i = 0; i < 5; i++) { comicCtx.fillRect(195 + i*4, 200 + i*8, 20 - i*4, 40); }
+      // One WTC — far left
+      comicCtx.fillStyle = '#060810';
+      comicCtx.fillRect(20, 160, 18, 320); comicCtx.fillRect(24, 100, 10, 60); comicCtx.fillRect(27, 60, 4, 40);
+      // Water towers
+      [[255, 355], [305, 335], [345, 365]].forEach(([tx, ty]) => {
+        comicCtx.fillStyle = '#0c0e18';
+        comicCtx.fillRect(tx, ty, 14, 20);
+        comicCtx.beginPath(); comicCtx.arc(tx + 7, ty, 8, Math.PI, 0); comicCtx.fill();
+      });
+      // Dim windows in skyline
+      comicCtx.fillStyle = 'rgba(196,168,107,0.07)';
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 3; c++) {
+          if ((r + c) % 3 !== 0) {
+            comicCtx.fillRect(103 + c*6, 220 + r*28, 4, 6);
+            comicCtx.fillRect(198 + c*5, 260 + r*22, 3, 5);
+          }
+        }
+      }
+      // Rooftop parapet
+      comicCtx.fillStyle = '#1a1a22'; comicCtx.fillRect(0, ch - 100, cw, 100);
+      comicCtx.fillStyle = '#222230'; comicCtx.fillRect(0, ch - 100, cw, 4);
+      for (let i = 0; i < 14; i++) {
+        comicCtx.fillStyle = i % 2 === 0 ? '#1e1e28' : '#181820';
+        comicCtx.fillRect(i * 30, ch - 100, 30, 20);
+      }
+      // Cold overhead light bloom
+      const lightGlow = comicCtx.createRadialGradient(cw/2, ch - 220, 10, cw/2, ch - 220, 260);
+      lightGlow.addColorStop(0, 'rgba(180,200,255,0.07)'); lightGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      comicCtx.fillStyle = lightGlow; comicCtx.fillRect(0, ch - 480, cw, 480);
+      // Characters on rooftop
+      const s = ch * 0.003;
+      const groundY = ch - 100;
+      const figY = groundY - 57 * s;
+      // Murry TRANSFORMED — left, pushing
+      const murryX = Math.round(cw * 0.32);
+      drawComicFigure(comicCtx, murryX, figY, s, {
+        body: '#1a1a3a', skin: '#d4a574', hasBeard: false, hasCap: false,
+        hairColor: '#1a0a0a', armPose: 'push'
+      });
+      drawCharLabel(comicCtx, murryX - 15, 30, ch - 90, 'MURRY');
+      // Nik in doorman uniform — right, falling
+      const nikX = Math.round(cw * 0.68);
+      drawComicFigure(comicCtx, nikX, figY, s, {
+        body: '#1c2040', skin: '#d4a574', hasBeard: false, hasCap: true,
+        capColor: '#1c2040', buttons: true, epaulettes: true, blood: true,
+        hairColor: '#1a0a0a', armPose: 'falling'
+      });
+      drawCharLabel(comicCtx, nikX - 15, 30, ch - 90, 'NIK');
+      break;
+    }
+    case 'push': {
+      // THE PUSH — climax. Darker sky, Murry large foreground.
+      const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+      g.addColorStop(0, '#060810'); g.addColorStop(0.7, '#0a0a18'); g.addColorStop(1, '#08080e');
+      comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
+      // Sparse stars
+      comicCtx.fillStyle = 'rgba(180,200,255,0.18)';
+      [[45,25],[130,15],[285,30],[375,20]].forEach(([sx,sy]) => { comicCtx.fillRect(sx, sy, 1, 1); });
+      // Distant skyline silhouettes
+      comicCtx.fillStyle = '#050710';
+      comicCtx.fillRect(80, 280, 20, 200); comicCtx.fillRect(87, 250, 6, 30);
+      comicCtx.fillRect(185, 310, 18, 170); comicCtx.fillRect(310, 290, 16, 190);
+      comicCtx.fillRect(350, 330, 20, 150);
+      // Rooftop edge
+      comicCtx.fillStyle = '#0a0a18'; comicCtx.fillRect(0, ch - 80, cw, 80);
+      comicCtx.fillStyle = '#181820'; comicCtx.fillRect(0, ch - 80, cw, 5);
+      // Scattered city lights below
+      comicCtx.fillStyle = 'rgba(196,168,107,0.1)';
+      [[60, ch - 50], [140, ch - 60], [220, ch - 45], [300, ch - 55], [380, ch - 48]].forEach(([wx, wy]) => {
+        comicCtx.fillRect(wx, wy, 4, 6);
+      });
+      // Motion blur lines toward Nik
+      comicCtx.strokeStyle = 'rgba(255,255,255,0.04)'; comicCtx.lineWidth = 1;
+      for (let i = 0; i < 8; i++) {
+        const ly = ch - 210 + i * 18;
+        comicCtx.beginPath(); comicCtx.moveTo(cw * 0.35, ly); comicCtx.lineTo(cw * 0.78, ly); comicCtx.stroke();
+      }
+      // Characters — Murry large, Nik slightly smaller
+      const sMurry = ch * 0.25 / 60;   // ≈ 3.0 at ch=720
+      const sNik = ch * 0.003;          // ≈ 2.16
+      const parapet = ch - 80;
+      const murryFeetY = parapet;
+      const nikFeetY = parapet + 8;
+      const murryX = Math.round(cw * 0.28);
+      const nikX = Math.round(cw * 0.72);
+      drawComicFigure(comicCtx, murryX, murryFeetY - 57 * sMurry, sMurry, {
+        body: '#1a1a3a', skin: '#d4a574', hasBeard: false, hasCap: false,
+        hairColor: '#1a0a0a', armPose: 'push', shadow: true
+      });
+      drawComicFigure(comicCtx, nikX, nikFeetY - 57 * sNik, sNik, {
+        body: '#1c2040', skin: '#d4a574', hasBeard: false, hasCap: true,
+        capColor: '#1c2040', buttons: true, epaulettes: true, blood: true,
+        hairColor: '#1a0a0a', armPose: 'falling', shadow: false
+      });
       break;
     }
     case 'text_only': {

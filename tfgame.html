@@ -4185,8 +4185,8 @@ function showEndingTitleAndCTA(gen) {
           if (!response.ok) throw new Error('Submit failed');
           // Success — navigate the already-opened tab to screenplay
           teardownAudio();
-          if (pdfWin) pdfWin.location.href = '/topfloor/screenplay';
-          else window.location.href = '/topfloor/screenplay';
+          if (pdfWin) pdfWin.location.href = '/top-floor.pdf';
+          else window.location.href = '/top-floor.pdf';
           transitionToScreen1(gen);
         })
         .catch(err => {

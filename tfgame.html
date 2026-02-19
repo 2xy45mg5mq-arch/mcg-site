@@ -1177,56 +1177,36 @@ function seededRandom() {
 let comicBeatIndex = 0;
 
 const COMIC_BEATS = [
-  // Beat 0: LOBBY narration
+  // Beat 0: LOBBY narration (canvas text via drawComicNarration)
   { scene: 'lobby_ext',
-    narration: 'Murry opens the door. Six days a week, sometimes nights, at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t call himself a&nbsp;doorman.',
-    textPosition: 'lower' },
+    narrationItems: [
+      'Murry opens the door. Six days a week, sometimes nights, at the storied uptown PYRAMID HOUSE.',
+      '',
+      {text: "But if you asked him, he wouldn\u2019t call himself a doorman.", dim: true}
+    ]},
 
-  // Beat 1: LOBBY dialogue
-  { scene: 'lobby_ext', dialogue: true, speaker: 'MURRY', text: '\u201CI\u2019m an entrepreneur who opens&nbsp;doors.\u201D',
-    keepNarration: 'Murry opens the door. Six days a week, sometimes nights, at the storied uptown <b>PYRAMID&nbsp;HOUSE</b>.<br><br>But if you asked him, he wouldn\u2019t call himself a&nbsp;doorman.',
-    bubblePos: { top: '48%', left: '28%', tail: 'down-left' } },
+  // Beat 1: LOBBY dialogue — Murry speaks (left side)
+  { scene: 'lobby_ext',
+    canvasDialogue: { name: 'MURRY', text: '\u201CI\u2019m an entrepreneur who opens doors.\u201D', side: 'left' } },
 
   // Beat 2: Basement — nonfungible fragrances
-  { scene: 'basement', location: 'JERSEY \u2014 BASEMENT',
-    narration: 'Still, he\u2019s living in his sister\u2019s basement, where he\u2019s cooking up a new business he calls <em>nonfungible&nbsp;fragrances.</em>' },
+  { scene: 'basement',
+    narrationItems: [
+      "Still, he\u2019s living in his sister\u2019s basement, where he\u2019s cooking up a new business he calls nonfungible fragrances."
+    ]},
 
-  // Beat 3: Sera reacts with speech bubble only. No repeated narration.
-  { scene: 'basement', location: 'JERSEY \u2014 BASEMENT',
-    dialogue: true, speaker: 'SERA', text: 'It smells like bullshit.',
-    bubblePos: { top: '30%', right: '8%', tail: 'down-right' } },
+  // Beat 3: Elevator — the resemblance
+  { scene: 'elevator',
+    narrationItems: [
+      "Besides Murry\u2019s beard,",
+      {text: "the two look strikingly similar.", bold: true}
+    ], sound: 'ding' },
 
-  // Beat 4: Sera narration + Murry's YouTube line
-  { scene: 'basement_sera', location: 'JERSEY \u2014 BASEMENT',
-    narration: 'His sister Sera has seen it all before. The schemes. The pitches. The cologne. She wishes he could be happy with who he&nbsp;is.<br><br>But Murry\u2019s watched enough YouTube to believe he can be <em>anyone he wants to&nbsp;be</em>.' },
-
-  // Beat 5: Over black. Text only, no scene.
-  { scene: 'text_only',
-    narration: '\u2026and there is someone he\u2019s always looked up&nbsp;to\u2026' },
-
-  // Beat 6: "Nik lives at the top" positioned near top of building
-  { scene: 'building_ext',
-    narration: '<b>NIK</b> lives at the top.',
-    textPosition: 'upper' },
-
-  // Beat 7: Nik intro — paragraph break after Snacks, characters drawn larger/closer
-  { scene: 'nik_intro',
-    narration: 'But unlike the other tenants, the suave investor in the penthouse doesn\u2019t look down on Murry. He looks him right in the\u00a0face.<br><br>Not just because Murry helps him with his diabetic dog <b>Snacks</b>\u2026<br><br><b>\u2026but because the two look strikingly\u00a0similar.</b>',
-    sound: 'ding' },
-
-  // Beat 8: Rooftop — flash-forward confrontation
-  { scene: 'rooftop_conf' },
-
-  // Beat 9: The Push — flash-forward climax
-  { scene: 'push' },
-
-  // Beat 10: Title card — "PLAY THE GAME" animated text
+  // Beat 4: Title card
   { scene: 'title_card' },
 
-  // Beat 9: Basement pushups — auto-advance to gameplay
-  { scene: 'basement_pushups', location: 'JERSEY \u2014 BASEMENT',
-    narration: null, dialogue: true, speaker: 'SERA', text: '\u201CMurry! Get up!\u201D',
-    bubblePos: { top: '25%', left: '52%', tail: 'down-right' },
+  // Beat 5: Basement pushups — auto-advance to gameplay
+  { scene: 'basement_pushups',
     autoAdvance: 2500 },
 ];
 
@@ -1282,64 +1262,38 @@ function renderComicBeat(idx) {
     return;
   }
 
-  // EXPERIMENTAL: External narration layout
-  // Scene canvas stays clean; narration goes in panel below
+  // V11: Canvas text system — art + text drawn together on comicCtx
+  // HTML narration panel and bubble layer are cleared (canvas handles text)
 
   // Remove any existing swipe hints
   document.querySelectorAll('.swipe-hint').forEach(el => el.remove());
 
-  // Toggle text-only mode (hides canvas)
-  if (beat.scene === 'text_only') {
-    comicOverlay.classList.add('text-only-mode');
-  } else {
-    comicOverlay.classList.remove('text-only-mode');
-    drawComicScene(beat.scene);
-  }
-
-  // Clear layers
+  // Clear HTML layers (no longer used for text)
+  comicOverlay.classList.remove('text-only-mode');
   comicNarrationPanel.innerHTML = '';
   comicBubbleLayer.innerHTML = '';
 
-  // Location label — rendered ON the scene (top of canvas wrap), not in narration
-  // Remove any existing location label first
+  // Remove any existing location label
   const oldLoc = document.querySelector('#comic-canvas-wrap .comic-location');
   if (oldLoc) oldLoc.remove();
-  if (beat.location) {
-    const loc = document.createElement('div');
-    loc.className = 'comic-location';
-    loc.style.cssText = 'position:absolute;top:0;left:0;right:0;z-index:3;padding-top:10px;';
-    loc.textContent = beat.location;
-    document.getElementById('comic-canvas-wrap').appendChild(loc);
+
+  // Draw scene on canvas
+  if (beat.scene !== 'text_only') {
+    drawComicScene(beat.scene);
+  } else {
+    const cw = 420, ch = 720;
+    const g = comicCtx.createLinearGradient(0, 0, 0, ch);
+    g.addColorStop(0, '#060810'); g.addColorStop(0.5, '#0a0e18'); g.addColorStop(1, '#060810');
+    comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
   }
 
-  if (beat.dialogue) {
-    // Speech bubble — floats on the bubble layer (over canvas)
-    const wrap = document.createElement('div');
-    wrap.className = 'comic-bubble-wrap';
-    const pos = beat.bubblePos || { top: '40%', left: '30%', tail: 'down-center' };
-    wrap.style.top = pos.top;
-    wrap.style.left = pos.left;
-    if (pos.right) { wrap.style.left = 'auto'; wrap.style.right = pos.right; }
-
-    const bubble = document.createElement('div');
-    let bubbleClass = 'comic-bubble';
-    if (pos.tail === 'down-left') bubbleClass += ' tail-down-left';
-    else if (pos.tail === 'down-right') bubbleClass += ' tail-down-right';
-    bubble.className = bubbleClass;
-    bubble.innerHTML = beat.text;
-    wrap.appendChild(bubble);
-    comicBubbleLayer.appendChild(wrap);
-    setTimeout(() => wrap.classList.add('visible'), 150);
-    // No speaker attribution below — bubble speaks for itself
-  } else if (beat.narration) {
-    // Narration text — goes in the panel below the scene
-    const nr = document.createElement('div');
-    let nrClass = 'comic-narration';
-    if (beat.scene === 'text_only') nrClass += ' narration-text-only';
-    nr.className = nrClass;
-    nr.innerHTML = beat.narration;
-    comicNarrationPanel.appendChild(nr);
-    setTimeout(() => nr.classList.add('visible'), 150);
+  // Draw canvas text (narration or dialogue) on top of scene
+  const cw = 420, ch = 720;
+  if (beat.narrationItems) {
+    drawComicNarration(comicCtx, cw, ch, beat.narrationItems);
+  } else if (beat.canvasDialogue) {
+    const d = beat.canvasDialogue;
+    drawComicDialogue(comicCtx, cw, ch, d.name, d.text, d.side);
   }
 
   // Play beat sounds
@@ -1571,31 +1525,22 @@ function drawComicFigure(ctx, x, y, s, opts) {
   ctx.beginPath(); ctx.ellipse(x - 11*s, y + 2*s, 2.5*s, 3.5*s, 0, 0, Math.PI*2); ctx.fill();
   ctx.beginPath(); ctx.ellipse(x + 11*s, y + 2*s, 2.5*s, 3.5*s, 0, 0, Math.PI*2); ctx.fill();
 
-  // Eyes
-  ctx.fillStyle = '#1a1a1a';
-  ctx.beginPath(); ctx.arc(x - 4*s, y + 2*s, 2*s, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(x + 4*s, y + 2*s, 2*s, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.3)';
-  ctx.beginPath(); ctx.arc(x - 3.5*s, y + 1.5*s, s, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(x + 4.5*s, y + 1.5*s, s, 0, Math.PI*2); ctx.fill();
+  // Face: Style C — two tiny dots only
+  ctx.fillStyle = 'rgba(20,10,5,0.6)';
+  ctx.beginPath();
+  ctx.arc(x - 4*s, y + 4*s, 1.2*s, 0, Math.PI*2);
+  ctx.arc(x + 4*s, y + 4*s, 1.2*s, 0, Math.PI*2);
+  ctx.fill();
 
-  // Glasses
+  // Glasses (character identifier — kept)
   if (hasGlasses) {
     ctx.strokeStyle = '#999'; ctx.lineWidth = 1.5*s;
-    ctx.beginPath(); ctx.arc(x - 4*s, y + 2*s, 4*s, 0, Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(x + 4*s, y + 2*s, 4*s, 0, Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x - 4*s, y + 4*s, 4*s, 0, Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x + 4*s, y + 4*s, 4*s, 0, Math.PI*2); ctx.stroke();
     ctx.lineWidth = 1.2*s;
-    ctx.beginPath(); ctx.moveTo(x - 0.5*s, y + 2*s); ctx.lineTo(x + 0.5*s, y + 2*s); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x - 8*s, y + 2*s); ctx.lineTo(x - 11*s, y + 3*s); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x + 8*s, y + 2*s); ctx.lineTo(x + 11*s, y + 3*s); ctx.stroke();
-  }
-
-  // Beard
-  if (hasBeard) {
-    ctx.fillStyle = 'rgba(45,28,18,0.62)';
-    ctx.beginPath(); ctx.ellipse(x, y + 7*s, 8*s, 5*s, 0, 0, Math.PI); ctx.fill();
-    ctx.fillStyle = 'rgba(45,28,18,0.4)';
-    ctx.beginPath(); ctx.ellipse(x, y + 4*s, 4*s, 2*s, 0, 0, Math.PI); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(x - 0.5*s, y + 4*s); ctx.lineTo(x + 0.5*s, y + 4*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x - 8*s, y + 4*s); ctx.lineTo(x - 11*s, y + 5*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + 8*s, y + 4*s); ctx.lineTo(x + 11*s, y + 5*s); ctx.stroke();
   }
 }
 
@@ -2098,7 +2043,231 @@ function drawComicScene(scene) {
       comicCtx.fillStyle = g; comicCtx.fillRect(0, 0, cw, ch);
       break;
     }
+    case 'elevator': {
+      // ART fills top 65% of screen (0 to ch*0.65)
+      const artH = ch * 0.65;
+      // Background — dark hallway
+      comicCtx.fillStyle = '#06040a';
+      comicCtx.fillRect(0, 0, cw, ch);
+      // Hallway walls — dark wood paneling
+      comicCtx.fillStyle = '#0e0c14';
+      comicCtx.fillRect(0, 0, cw * 0.13, artH);
+      comicCtx.fillRect(cw * 0.87, 0, cw * 0.13, artH);
+      // Elevator cab — centered, warm interior
+      const elvW = Math.round(cw * 0.74);
+      const elvH = Math.round(artH * 0.72);
+      const elvX = Math.round((cw - elvW) / 2);
+      const elvY = Math.round((artH - elvH) / 2);
+      // Warm interior gradient
+      const elvGrad = comicCtx.createLinearGradient(elvX, elvY, elvX, elvY + elvH);
+      elvGrad.addColorStop(0, '#302820'); elvGrad.addColorStop(1, '#201a12');
+      comicCtx.fillStyle = elvGrad;
+      comicCtx.fillRect(elvX, elvY, elvW, elvH);
+      // Metal frame — 5px
+      comicCtx.strokeStyle = 'rgba(196,168,107,0.55)';
+      comicCtx.lineWidth = 5;
+      comicCtx.strokeRect(elvX, elvY, elvW, elvH);
+      // Center seam
+      comicCtx.strokeStyle = 'rgba(196,168,107,0.25)';
+      comicCtx.lineWidth = 1.5;
+      comicCtx.beginPath(); comicCtx.moveTo(cw/2, elvY); comicCtx.lineTo(cw/2, elvY + elvH); comicCtx.stroke();
+      // Brass rail
+      comicCtx.fillStyle = 'rgba(196,168,107,0.45)';
+      comicCtx.fillRect(elvX + 8, Math.round(elvY + elvH * 0.55), elvW - 16, 4);
+      // Ceiling light
+      comicCtx.fillStyle = 'rgba(255,240,200,0.18)';
+      comicCtx.fillRect(elvX + elvW/2 - 20, elvY + 6, 40, 8);
+      comicCtx.shadowColor = '#ffd080'; comicCtx.shadowBlur = 18;
+      comicCtx.fillStyle = 'rgba(255,230,170,0.55)';
+      comicCtx.fillRect(elvX + elvW/2 - 10, elvY + 7, 20, 5);
+      comicCtx.shadowBlur = 0;
+      // Warm light spill inside elevator
+      const warmGlow = comicCtx.createRadialGradient(cw/2, elvY + elvH*0.3, 10, cw/2, elvY + elvH*0.3, elvW*0.5);
+      warmGlow.addColorStop(0, 'rgba(196,168,107,0.08)'); warmGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      comicCtx.fillStyle = warmGlow; comicCtx.fillRect(elvX, elvY, elvW, elvH);
+      // Floor indicator panel — above elevator, centered, 54% width, 24px tall
+      const indW = Math.round(cw * 0.54);
+      const indX = Math.round((cw - indW) / 2);
+      const indY = elvY - 30;
+      comicCtx.fillStyle = '#1a1410';
+      comicCtx.fillRect(indX, indY, indW, 24);
+      comicCtx.strokeStyle = 'rgba(196,168,107,0.3)'; comicCtx.lineWidth = 1;
+      comicCtx.strokeRect(indX, indY, indW, 24);
+      // Floor numbers: 1, 7, PH — with 5 glowing
+      const nums = ['1', '2', '3', '4', '5', '6', '7', 'PH'];
+      const numW = indW / nums.length;
+      comicCtx.font = "bold 10px 'Bebas Neue', sans-serif";
+      comicCtx.textAlign = 'center';
+      nums.forEach((n, i) => {
+        const nx = indX + numW * i + numW / 2;
+        const ny = indY + 16;
+        if (n === '5') {
+          comicCtx.shadowColor = '#c4a86b'; comicCtx.shadowBlur = 8;
+          comicCtx.fillStyle = '#c4a86b';
+        } else {
+          comicCtx.shadowBlur = 0;
+          comicCtx.fillStyle = 'rgba(196,168,107,0.22)';
+        }
+        comicCtx.fillText(n, nx, ny);
+      });
+      comicCtx.shadowBlur = 0; comicCtx.textAlign = 'left';
+      // Figures inside elevator — Murry left, Nik right with Snacks
+      const s = ch * 0.0014;
+      const groundY = elvY + elvH - 2;
+      const figY = groundY - 57 * s;
+      // Murry — left of center, doorman uniform with beard
+      const mX = Math.round(elvX + elvW * 0.3);
+      drawComicFigure(comicCtx, mX, figY, s, {
+        body: '#1a2744', skin: '#d4a574', hasCap: true,
+        capColor: '#1a2744', buttons: true, epaulettes: true
+      });
+      // Nik — right of center, suit + glasses
+      const nX = Math.round(elvX + elvW * 0.7);
+      drawComicFigure(comicCtx, nX, figY, s, {
+        body: '#1a1a3a', skin: '#d4a574', hasCap: false,
+        hairColor: '#1a0a0a', hasGlasses: true
+      });
+      // Snacks (golden retriever) between them
+      const snX = Math.round((mX + nX) / 2);
+      const snY = groundY - 6;
+      // Body
+      comicCtx.fillStyle = '#c4a060'; comicCtx.fillRect(snX - 12, snY - 10, 20, 10);
+      // Head
+      comicCtx.beginPath(); comicCtx.arc(snX + 10, snY - 7, 7, 0, Math.PI*2); comicCtx.fill();
+      // Ear
+      comicCtx.fillStyle = '#a88040';
+      comicCtx.beginPath(); comicCtx.ellipse(snX + 14, snY - 12, 3, 5, 0.3, 0, Math.PI*2); comicCtx.fill();
+      // Snout
+      comicCtx.fillStyle = '#b89050';
+      comicCtx.fillRect(snX + 14, snY - 5, 6, 4);
+      // Legs
+      comicCtx.fillStyle = '#c4a060';
+      comicCtx.fillRect(snX - 10, snY, 4, 6); comicCtx.fillRect(snX - 4, snY, 4, 6);
+      comicCtx.fillRect(snX + 6, snY, 4, 6); comicCtx.fillRect(snX + 12, snY, 4, 6);
+      // Gold collar
+      comicCtx.fillStyle = '#ffd700'; comicCtx.fillRect(snX + 4, snY - 4, 8, 2);
+      // Eye — style C dot
+      comicCtx.fillStyle = 'rgba(20,10,5,0.7)';
+      comicCtx.beginPath(); comicCtx.arc(snX + 12, snY - 7, 1.2, 0, Math.PI*2); comicCtx.fill();
+      break;
+    }
   }
+}
+
+// ============================================================
+// CANVAS TEXT SYSTEM (V11)
+// ============================================================
+
+// Smart wrap — no orphan words on last line
+function wrapText(ctx, text, maxW) {
+  const words = text.split(' '), lines = []; let cur = '';
+  for (const w of words) {
+    const t = cur ? cur+' '+w : w;
+    if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; }
+    else cur = t;
+  }
+  if (cur) lines.push(cur);
+  if (lines.length > 1) {
+    const last = lines[lines.length-1].split(' ');
+    if (last.length === 1) {
+      const prev = lines[lines.length-2].split(' ');
+      if (prev.length > 2) {
+        const bump = prev.pop();
+        lines[lines.length-2] = prev.join(' ');
+        lines[lines.length-1] = bump + ' ' + lines[lines.length-1];
+      }
+    }
+  }
+  return lines;
+}
+
+// NARRATION: full-width, left-aligned, bottom-anchored, dot indicator
+function drawComicNarration(ctx, w, h, textItems) {
+  const PAD = 24, TEXT_BOTTOM = 0.93;
+  const fs = Math.min(22, w*0.057);
+  const lh = fs * 1.6;
+  const maxW = w - PAD*2;
+  ctx.font = fs+'px "EB Garamond",serif';
+  let allLines = [];
+  textItems.forEach(item => {
+    if (typeof item === 'string') {
+      if (item === '') { allLines.push({text:'',gap:true}); return; }
+      ctx.font = fs+'px "EB Garamond",serif';
+      allLines.push(...wrapText(ctx,item,maxW).map(l=>({text:l,bold:false,dim:false})));
+    } else {
+      ctx.font = (item.bold?'bold ':'')+fs+'px "EB Garamond",serif';
+      allLines.push(...wrapText(ctx,item.text,maxW).map(l=>({text:l,bold:!!item.bold,dim:!!item.dim})));
+    }
+  });
+  let blockH = 0;
+  allLines.forEach(l => blockH += l.gap ? lh*0.6 : lh);
+  const lastY = h * TEXT_BOTTOM;
+  const firstY = lastY - blockH + lh;
+  const gradTop = firstY - lh*1.5;
+  const grad = ctx.createLinearGradient(0, gradTop, 0, h);
+  grad.addColorStop(0, 'transparent');
+  grad.addColorStop(0.06, 'rgba(0,0,0,0.5)');
+  grad.addColorStop(0.15, 'rgba(0,0,0,0.9)');
+  grad.addColorStop(0.35, 'rgba(0,0,0,0.97)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.98)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, gradTop, w, h-gradTop);
+  let y = firstY;
+  allLines.forEach(line => {
+    if (line.gap) { y += lh*0.6; return; }
+    ctx.font = (line.bold?'bold ':'')+fs+'px "EB Garamond",serif';
+    ctx.fillStyle = line.dim ? 'rgba(232,224,212,0.58)' : 'rgba(232,224,212,0.9)';
+    ctx.fillText(line.text, PAD, y);
+    y += lh;
+  });
+  ctx.fillStyle='rgba(196,168,107,0.3)';
+  ctx.beginPath();ctx.arc(w*0.5,h*0.97,2.5,0,Math.PI*2);ctx.fill();
+}
+
+// DIALOGUE: speaker name + gold bar + side positioning, bottom-anchored, chevron
+function drawComicDialogue(ctx, w, h, name, text, side) {
+  const PAD = 24, TEXT_BOTTOM = 0.93;
+  const nameFs = Math.min(12, w*0.03);
+  const fs = Math.min(22, w*0.058);
+  const lh = fs * 1.55;
+  const maxW = w - PAD*2;
+  ctx.font = fs+'px "EB Garamond",serif';
+  const lines = wrapText(ctx, text, maxW);
+  const textH = lines.length * lh;
+  const nameGap = nameFs + lh*0.35;
+  const totalH = nameGap + textH;
+  const lastY = h * TEXT_BOTTOM;
+  const nameY = lastY - totalH + nameFs;
+  const textStartY = nameY + nameGap;
+  const gradTop = nameY - lh*1.5;
+  const grad = ctx.createLinearGradient(0, gradTop, 0, h);
+  grad.addColorStop(0, 'transparent');
+  grad.addColorStop(0.06, 'rgba(0,0,0,0.5)');
+  grad.addColorStop(0.15, 'rgba(0,0,0,0.9)');
+  grad.addColorStop(0.35, 'rgba(0,0,0,0.97)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.98)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, gradTop, w, h-gradTop);
+  // Gold bar
+  ctx.fillStyle='rgba(196,168,107,0.18)';
+  if(side==='left') ctx.fillRect(PAD-8,nameY-6,2,totalH+8);
+  else ctx.fillRect(w-PAD+6,nameY-6,2,totalH+8);
+  // Name
+  ctx.font=nameFs+'px "Cinzel",serif';
+  ctx.fillStyle='rgba(196,168,107,0.55)';
+  if(side==='left') ctx.fillText(name,PAD,nameY);
+  else ctx.fillText(name,w-PAD-ctx.measureText(name).width,nameY);
+  // Text
+  ctx.font=fs+'px "EB Garamond",serif';
+  lines.forEach((line,i) => {
+    ctx.fillStyle='rgba(232,224,212,0.92)';
+    if(side==='left') ctx.fillText(line,PAD,textStartY+i*lh);
+    else ctx.fillText(line,w-PAD-ctx.measureText(line).width,textStartY+i*lh);
+  });
+  // Chevron
+  ctx.strokeStyle='rgba(196,168,107,0.28)';ctx.lineWidth=1.5;ctx.lineCap='round';
+  const cx=w*0.5,cy=h*0.97;
+  ctx.beginPath();ctx.moveTo(cx-4,cy-4);ctx.lineTo(cx+2,cy);ctx.lineTo(cx-4,cy+4);ctx.stroke();
 }
 
 // Bigger Sera — arms crossed, looking down
@@ -2117,12 +2286,9 @@ function drawComicSeraBig(pc, x, y) {
   // Hair sides
   pc.fillRect(x - 1, y + 4, 4, 20);
   pc.fillRect(x + 27, y + 4, 4, 20);
-  // Eyes — looking downward
-  pc.fillStyle = '#222';
-  pc.beginPath(); pc.arc(x + 10, y + 14, 2.5, 0, Math.PI * 2); pc.arc(x + 20, y + 14, 2.5, 0, Math.PI * 2); pc.fill();
-  // Slight frown
-  pc.strokeStyle = '#8a6a5a'; pc.lineWidth = 1;
-  pc.beginPath(); pc.moveTo(x + 9, y + 20); pc.lineTo(x + 21, y + 20); pc.stroke();
+  // Style C face: two tiny dots
+  pc.fillStyle = 'rgba(20,10,5,0.6)';
+  pc.beginPath(); pc.arc(x + 10, y + 15, 1.2, 0, Math.PI * 2); pc.arc(x + 20, y + 15, 1.2, 0, Math.PI * 2); pc.fill();
 }
 
 // Bigger Snacks — with wagging tail
@@ -2716,10 +2882,11 @@ function drawMurry(x, y, facing, tLevel) {
     ctx.fillStyle = 'rgba(50,35,25,0.5)';
     ctx.beginPath(); ctx.ellipse(x + 15, y + 12, 6, 4, 0, 0, Math.PI); ctx.fill();
   }
-  ctx.fillStyle = '#222';
+  // Style C face: two tiny dots
+  ctx.fillStyle = 'rgba(20,10,5,0.6)';
   ctx.beginPath();
-  ctx.arc(x + 12 + (facing > 0 ? 2 : 0), y + 6, 1.8, 0, Math.PI * 2);
-  ctx.arc(x + 18 + (facing > 0 ? 2 : 0), y + 6, 1.8, 0, Math.PI * 2);
+  ctx.arc(x + 12 + (facing > 0 ? 2 : 0), y + 7, 1.2, 0, Math.PI * 2);
+  ctx.arc(x + 18 + (facing > 0 ? 2 : 0), y + 7, 1.2, 0, Math.PI * 2);
   ctx.fill();
   if (hasGleam) {
     ctx.fillStyle = 'rgba(255,255,255,0.35)';
@@ -3360,9 +3527,9 @@ function drawNikDoorman(x, y) {
   // Hair (dark, barely visible under cap)
   ctx.fillStyle = '#1a0a0a';
   ctx.beginPath(); ctx.ellipse(x + 15, y, 8, 4, 0, 0.3, Math.PI - 0.3); ctx.fill();
-  // Eyes
-  ctx.fillStyle = '#222';
-  ctx.beginPath(); ctx.arc(x + 12, y + 4, 1.8, 0, Math.PI * 2); ctx.arc(x + 18, y + 4, 1.8, 0, Math.PI * 2); ctx.fill();
+  // Face: Style C — two tiny dots
+  ctx.fillStyle = 'rgba(20,10,5,0.6)';
+  ctx.beginPath(); ctx.arc(x + 12, y + 5, 1.2, 0, Math.PI * 2); ctx.arc(x + 18, y + 5, 1.2, 0, Math.PI * 2); ctx.fill();
   // MURRY nametag — LARGER, white background, clearly readable
   ctx.fillStyle = '#f0f0f0';
   ctx.fillRect(x + 4, y + 13, 22, 10);
@@ -3469,77 +3636,84 @@ function triggerRooftop() {
 }
 
 function executeRooftopScene(gen) {
-  const RTSCALE = 1.8;
-  const floorY = 460, spriteY = floorY - 30;
-  // Positions adjusted for scaled sprites — characters anchor at foot level
-  const murryX = 220, nikX = 100, snacksX = 170;
+  // V11: drawComicFigure characters, blue-black skyline, side-positioned dialogue
+  const s = H * 0.0022; // ~1.584
+  const floorY = Math.round(H * 0.48); // 346
+  const figY = floorY - Math.round(57 * s);
+  const murryX = Math.round(W * 0.32);
+  const nikX = Math.round(W * 0.68);
+  const snacksX = Math.round(W * 0.5);
   let rtStep = 0;
   let bubbleText = '', bubbleWho = '', bubbleOpacity = 0;
   let fadeToBlack = 0;
   let animating = false;
   let struggleFrame = 0;
 
-  // Scale sprites around their foot position so feet stay on the floor
-  function drawScaled(fn, footX, footY) {
-    ctx.save();
-    ctx.translate(footX, footY);
-    ctx.scale(RTSCALE, RTSCALE);
-    ctx.translate(-footX, -footY);
-    fn();
-    ctx.restore();
-  }
-
   function drawRooftopBg() {
-    ctx.fillStyle = '#0a0808'; ctx.fillRect(0, 0, W, H);
-    // Stars
-    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    // Blue-black sky
+    ctx.fillStyle = '#141828'; ctx.fillRect(0, 0, W, H);
+    // Stars (cold blue-white)
+    ctx.fillStyle = 'rgba(200,220,255,0.25)';
     [[30,30],[95,55],[180,20],[310,40],[370,18],[250,65],[140,45],[60,12],[350,42],[200,8]].forEach(([sx,sy]) => {
       ctx.beginPath(); ctx.arc(sx, sy, 0.7, 0, Math.PI * 2); ctx.fill();
     });
-    // City skyline silhouettes — make it OBVIOUS this is a rooftop
-    ctx.fillStyle = '#0e0c0c';
-    ctx.fillRect(10, 340, 35, 120); ctx.fillRect(55, 320, 25, 140);
-    ctx.fillRect(90, 350, 40, 110); ctx.fillRect(330, 330, 30, 130);
-    ctx.fillRect(370, 310, 40, 150); ctx.fillRect(280, 360, 25, 100);
-    // More buildings for depth
-    ctx.fillStyle = '#0c0a0a';
-    ctx.fillRect(150, 370, 20, 90); ctx.fillRect(200, 380, 30, 80);
-    // Window lights on buildings
-    ctx.fillStyle = 'rgba(196,168,107,0.08)';
-    ctx.fillRect(20, 355, 4, 3); ctx.fillRect(65, 335, 3, 3);
-    ctx.fillRect(345, 345, 4, 3); ctx.fillRect(385, 325, 3, 3);
-    ctx.fillRect(160, 385, 3, 3); ctx.fillRect(210, 395, 3, 3);
-    // City glow on horizon
-    const horizonGlow = ctx.createLinearGradient(0, 380, 0, 460);
-    horizonGlow.addColorStop(0, 'rgba(196,168,107,0.03)');
-    horizonGlow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = horizonGlow; ctx.fillRect(0, 380, W, 80);
-    // Rooftop surface — visually different from interior floors
+    // NYC skyline — blue-black buildings
+    // Empire State (center-left)
+    ctx.fillStyle = '#161a2c';
+    ctx.fillRect(100, floorY - 260, 22, 260); ctx.fillRect(107, floorY - 300, 8, 40); ctx.fillRect(110, floorY - 340, 2, 40);
+    // Chrysler (center)
+    ctx.fillRect(190, floorY - 240, 20, 240);
+    for (let i = 0; i < 5; i++) { ctx.fillRect(190+i*4, floorY-280+i*8, 20-i*4, 40); }
+    // One WTC (far left)
+    ctx.fillStyle = '#141828';
+    ctx.fillRect(20, floorY - 320, 18, 320); ctx.fillRect(24, floorY - 360, 10, 40); ctx.fillRect(27, floorY - 400, 4, 40);
+    // Water towers
+    [[255,floorY-125],[305,floorY-105],[345,floorY-135]].forEach(([tx,ty]) => {
+      ctx.fillStyle = '#161a2c';
+      ctx.fillRect(tx, ty, 14, 20);
+      ctx.beginPath(); ctx.arc(tx+7, ty, 8, Math.PI, 0); ctx.fill();
+    });
+    // Lit windows (warm)
+    ctx.fillStyle = 'rgba(220,200,140,0.22)';
+    [[108,floorY-230,4,3],[108,floorY-200,4,3],[112,floorY-170,4,3],[192,floorY-200,3,3],[196,floorY-160,3,3],[25,floorY-280,4,3],[25,floorY-240,4,3]].forEach(([wx,wy,ww,wh]) => {
+      ctx.fillRect(wx,wy,ww,wh);
+    });
+    // Parapet wall below skyline
+    ctx.fillStyle = '#1a1a22'; ctx.fillRect(0, floorY - 30, W, 30);
+    ctx.fillStyle = '#222230'; ctx.fillRect(0, floorY - 30, W, 4);
+    for (let i = 0; i < 14; i++) {
+      ctx.fillStyle = i % 2 === 0 ? '#1e1e28' : '#181820';
+      ctx.fillRect(i * 30, floorY - 30, 30, 20);
+    }
+    // Rooftop surface
     const roofGrad = ctx.createLinearGradient(0, floorY, 0, floorY + 30);
-    roofGrad.addColorStop(0, '#2a2018'); roofGrad.addColorStop(1, '#1a1210');
+    roofGrad.addColorStop(0, '#1a1a28'); roofGrad.addColorStop(1, '#12121e');
     ctx.fillStyle = roofGrad; ctx.fillRect(0, floorY, W, H - floorY);
-    ctx.fillStyle = GOLD; ctx.fillRect(0, floorY, W, 2);
-    // Rooftop railing at right edge
-    ctx.fillStyle = '#3a3028';
-    ctx.fillRect(W - 8, floorY - 40, 4, 40); // post
-    ctx.fillRect(W - 12, floorY - 40, 12, 3); // top rail
-    ctx.fillRect(W - 12, floorY - 22, 12, 2); // mid rail
-    // Moon/ambient glow
-    ctx.fillStyle = 'rgba(196,168,107,0.03)'; ctx.fillRect(0, 0, W, 100);
+    ctx.fillStyle = 'rgba(196,168,107,0.3)'; ctx.fillRect(0, floorY, W, 1);
   }
 
   function drawRooftopScene() {
     drawRooftopBg();
-    drawScaled(() => drawSnacks(snacksX, spriteY + 2), snacksX + 8, floorY);
-    drawScaled(() => drawMurry(murryX, spriteY, 1, GAME.murry.transformLevel), murryX + 15, floorY);
-    drawScaled(() => drawNikDoorman(nikX, spriteY), nikX + 15, floorY);
-    if (bubbleOpacity > 0) {
-      // Bubble above scaled sprites — visual top is spriteY - (spriteY to floorY) * (RTSCALE-1)
-      const charX = bubbleWho === 'murry' ? murryX : nikX;
-      const visualTopY = floorY - (floorY - spriteY) * RTSCALE;
-      drawCanvasBubble(charX + 15, visualTopY - 10, bubbleText, bubbleOpacity);
+    // Snacks at feet between characters
+    drawSnacks(snacksX - 8, floorY - 16);
+    // Murry (transformed — dark suit, no cap) on left
+    drawComicFigure(ctx, murryX, figY, s, {
+      body: '#1a1a3a', skin: '#d4a574', hasCap: false, hairColor: '#1a0a0a'
+    });
+    // Nik (in doorman uniform) on right
+    drawComicFigure(ctx, nikX, figY, s, {
+      body: '#1c2040', skin: '#d4a574', hasCap: true, capColor: '#1c2040',
+      buttons: true, epaulettes: true, hairColor: '#1a0a0a'
+    });
+    // Dialogue overlay
+    if (bubbleOpacity > 0 && bubbleText) {
+      ctx.save();
+      ctx.globalAlpha = bubbleOpacity;
+      const side = bubbleWho === 'murry' ? 'left' : 'right';
+      const name = bubbleWho === 'murry' ? 'MURRY' : 'NIK';
+      drawComicDialogue(ctx, W, H, name, bubbleText, side);
+      ctx.restore();
     }
-    // No navigation arrows — rooftop is fully automatic
     if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
   }
 
@@ -3576,6 +3750,7 @@ function executeRooftopScene(gen) {
   function runStep() {
     if (GAME.gen !== gen) return;
     bubbleOpacity = 0; bubbleText = '';
+    // V11: pacing ~40% slower (×1.4)
     switch (rtStep) {
       case 0: // Pause, then show "Nik?", hold, advance
         drawRooftopScene();
@@ -3590,9 +3765,9 @@ function executeRooftopScene(gen) {
               animating = false;
               rtStep = 1;
               runStep();
-            }, 850);
+            }, 1190); // 850 × 1.4
           });
-        }, 350);
+        }, 490); // 350 × 1.4
         break;
       case 1: // "Is that my uniform? Why is it covered in blood?"
         showBubble('murry', '\u201CIs that my uniform? Why is it covered in blood?\u201D', () => {
@@ -3603,7 +3778,7 @@ function executeRooftopScene(gen) {
             animating = false;
             rtStep = 2;
             runStep();
-          }, 1700);
+          }, 2380); // 1700 × 1.4
         });
         break;
       case 2: // "It's nothing personal, it's just Manhattan."
@@ -3614,7 +3789,7 @@ function executeRooftopScene(gen) {
             if (GAME.gen !== gen) return;
             rtStep = 3;
             runStep();
-          }, 850);
+          }, 1190); // 850 × 1.4
         });
         break;
       case 3: // Struggle — Nik attacks (auto-animated)
@@ -3625,21 +3800,26 @@ function executeRooftopScene(gen) {
           if (GAME.gen !== gen) return;
           struggleFrame++;
           if (struggleFrame < 30) {
-            sNikX += 3;
+            sNikX -= 3; // Nik moves left toward Murry
           } else if (struggleFrame < 80) {
             const osc = Math.sin(struggleFrame * 0.3) * 3;
-            sNikX = murryX - 30 + osc;
+            sNikX = murryX + 40 + osc;
             sMurryX = murryX + osc;
             if (struggleFrame % 8 === 0) GAME.shakeTimer = 4;
           } else if (struggleFrame < 110) {
-            sNikX += 2; sMurryX += 2;
+            sNikX += 2; sMurryX -= 2;
           } else {
             fadeToBlack = Math.min(fadeToBlack + 0.05, 1);
           }
           drawRooftopBg();
-          drawScaled(() => drawSnacks(snacksX, spriteY + 2), snacksX + 8, floorY);
-          drawScaled(() => drawMurry(sMurryX, spriteY, -1, GAME.murry.transformLevel), sMurryX + 15, floorY);
-          drawScaled(() => drawNikDoorman(sNikX, spriteY), sNikX + 15, floorY);
+          drawSnacks(snacksX - 8, floorY - 16);
+          drawComicFigure(ctx, sMurryX, figY, s, {
+            body: '#1a1a3a', skin: '#d4a574', hasCap: false, hairColor: '#1a0a0a', armPose: 'push'
+          });
+          drawComicFigure(ctx, sNikX, figY, s, {
+            body: '#1c2040', skin: '#d4a574', hasCap: true, capColor: '#1c2040',
+            buttons: true, epaulettes: true, hairColor: '#1a0a0a', armPose: 'falling'
+          });
           if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
           if (fadeToBlack >= 1) {
             ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
@@ -3667,7 +3847,7 @@ function renderRooftop() {
 }
 
 // ============================================================
-// DROP + ENDING (Sera POV)
+// DROP + ENDING (Windshield POV)
 // ============================================================
 
 function showEnding() {
@@ -3676,180 +3856,112 @@ function showEnding() {
   document.getElementById('mobile-controls').style.display = 'none';
   document.getElementById('control-hint').style.display = 'none';
 
-  let bodyY = -50;
-  let bodyFalling = false;
-  let bodyLanded = false;
   let fadeOpacity = 0;
+  const cx = W / 2;
 
-  // Building geometry
-  const peakX = W / 2, peakY = 60, baseY = 540;
-  const topHalfW = 20, baseHalfW = 80;
-  const carX = 250;
+  // Windshield POV — looking up at the Pyramid from street level
+  function drawWindshield() {
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
 
-  function drawEndingNightScene() {
-    // Sky
-    const sky = ctx.createLinearGradient(0, 0, 0, H * 0.7);
-    sky.addColorStop(0, '#060812'); sky.addColorStop(1, '#0a0e1a');
-    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+    // Night sky through windshield
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, H * 0.72);
+    skyGrad.addColorStop(0, '#060812'); skyGrad.addColorStop(1, '#0a0e1a');
+    ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, W, H * 0.72);
+
     // Stars
     ctx.fillStyle = 'rgba(255,255,255,0.15)';
-    [[30,40],[90,25],[180,55],[310,30],[370,60],[250,15],[140,70],[60,12],[350,42]].forEach(([sx, sy]) => {
-      ctx.beginPath(); ctx.arc(sx, sy, 0.8, 0, Math.PI * 2); ctx.fill();
+    [[35,38],[95,22],[185,52],[308,28],[368,58],[252,13],[145,68],[65,10],[348,44]].forEach(([sx,sy]) => {
+      ctx.beginPath(); ctx.arc(sx, sy, 0.8, 0, Math.PI*2); ctx.fill();
     });
-    // Pyramid silhouette
+
+    // Pyramid building — large, looming, fills upper viewport
+    const peakY = H * 0.04, baseY = H * 0.68;
+    const topHW = W * 0.045, baseHW = W * 0.24;
+
     ctx.fillStyle = '#0c0e14';
     ctx.beginPath();
-    ctx.moveTo(peakX - topHalfW, peakY); ctx.lineTo(peakX + topHalfW, peakY);
-    ctx.lineTo(peakX + baseHalfW, baseY); ctx.lineTo(peakX - baseHalfW, baseY);
+    ctx.moveTo(cx - topHW, peakY); ctx.lineTo(cx + topHW, peakY);
+    ctx.lineTo(cx + baseHW, baseY); ctx.lineTo(cx - baseHW, baseY);
     ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = 'rgba(196,168,107,0.06)'; ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(peakX - topHalfW, peakY); ctx.lineTo(peakX + topHalfW, peakY);
-    ctx.lineTo(peakX + baseHalfW, baseY); ctx.lineTo(peakX - baseHalfW, baseY);
-    ctx.closePath(); ctx.stroke();
-    // Windows — dense, warm, alive
-    for (let row = 0; row < 28; row++) {
-      const t = row / 28;
-      const wy = peakY + 20 + t * (baseY - peakY - 30);
-      const halfW = topHalfW + t * (baseHalfW - topHalfW);
-      const winCount = Math.floor(3 + t * 7);
-      const rowLeft = peakX - halfW * 0.8, rowRight = peakX + halfW * 0.8;
-      const spacing = (rowRight - rowLeft) / (winCount + 1);
+    ctx.strokeStyle = 'rgba(196,168,107,0.05)'; ctx.lineWidth = 1; ctx.stroke();
+
+    // Windows
+    for (let row = 0; row < 26; row++) {
+      const t = row / 26;
+      const wy = peakY + 14 + t * (baseY - peakY - 18);
+      const halfW = topHW + t * (baseHW - topHW);
+      const winCount = Math.floor(2 + t * 6);
+      const rowL = cx - halfW * 0.82, rowR = cx + halfW * 0.82;
+      const sp = (rowR - rowL) / (winCount + 1);
       for (let col = 1; col <= winCount; col++) {
-        const wx = rowLeft + col * spacing;
+        const wx = rowL + col * sp;
         const isLit = (row * 7 + col * 13) % 11 < 3;
-        const isBright = (row * 3 + col * 7) % 19 < 2 && row < 8;
-        if (isBright) {
-          ctx.shadowColor = '#c4a86b'; ctx.shadowBlur = 6;
-          ctx.fillStyle = 'rgba(196,168,107,0.2)';
-        } else {
-          ctx.shadowBlur = 0;
-          ctx.fillStyle = `rgba(196,168,107,${isLit ? 0.12 : 0.04})`;
-        }
-        ctx.fillRect(wx - 2, wy, 5 + t * 2, 4);
+        const isBright = (row * 3 + col * 7) % 19 < 2 && row < 7;
+        if (isBright) { ctx.shadowColor = '#c4a86b'; ctx.shadowBlur = 6; ctx.fillStyle = 'rgba(196,168,107,0.2)'; }
+        else { ctx.shadowBlur = 0; ctx.fillStyle = `rgba(196,168,107,${isLit ? 0.12 : 0.04})`; }
+        ctx.fillRect(wx - 2, wy, 4 + t * 2, 3);
       }
       ctx.shadowBlur = 0;
     }
+
     // Penthouse glow
-    const winX = peakX-6, winY = peakY+10, winW = 12, winH = 8;
-    ctx.shadowColor = '#c4a86b'; ctx.shadowBlur = 20;
-    ctx.fillStyle = '#c4a86b'; ctx.fillRect(winX, winY, winW, winH);
+    const phY = peakY + 5;
+    ctx.shadowColor = '#c4a86b'; ctx.shadowBlur = 28;
+    ctx.fillStyle = '#c4a86b'; ctx.fillRect(cx - 9, phY, 18, 9);
     ctx.shadowBlur = 0;
-    ctx.fillStyle = '#e8d4a0'; ctx.fillRect(winX+1, winY+1, winW-2, winH-2);
-    // Street
-    const streetY = baseY;
-    ctx.fillStyle = '#111114'; ctx.fillRect(0, streetY, W, H-streetY);
-    ctx.fillStyle = '#1e1e22'; ctx.fillRect(0, streetY, W, 8);
-    ctx.fillStyle = '#2a2a2e'; ctx.fillRect(0, streetY, W, 2);
-    // Faint yellow lane marking
-    ctx.fillStyle = 'rgba(180,160,60,0.08)'; ctx.fillRect(20, streetY+50, 40, 2); ctx.fillRect(100, streetY+50, 40, 2); ctx.fillRect(340, streetY+50, 40, 2);
-    // Streetlamp pool of light
-    const lampGlow = ctx.createRadialGradient(carX+55, streetY+10, 5, carX+55, streetY+10, 100);
-    lampGlow.addColorStop(0, 'rgba(255,240,200,0.04)');
-    lampGlow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = lampGlow; ctx.fillRect(carX-50, streetY-20, 210, 120);
-    // Car
-    const carY = streetY + 18;
-    ctx.fillStyle = '#2e2e38';
-    ctx.fillRect(carX, carY+10, 110, 22);
-    ctx.fillRect(carX+14, carY-2, 74, 16);
-    ctx.strokeStyle = 'rgba(120,120,140,0.2)'; ctx.lineWidth = 0.5;
-    ctx.strokeRect(carX, carY+10, 110, 22);
-    ctx.fillStyle = '#3a3a48';
-    ctx.fillRect(carX+18, carY, 26, 9);
-    ctx.fillRect(carX+48, carY, 32, 9);
-    ctx.fillStyle = 'rgba(200,180,140,0.1)';
-    ctx.fillRect(carX+20, carY+1, 22, 7);
-    ctx.fillStyle = '#0a0a0a';
-    ctx.beginPath(); ctx.arc(carX+24, carY+32, 7, 0, Math.PI*2); ctx.arc(carX+86, carY+32, 7, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#1a1a1a';
-    ctx.beginPath(); ctx.arc(carX+24, carY+32, 4, 0, Math.PI*2); ctx.arc(carX+86, carY+32, 4, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = 'rgba(200,40,40,0.3)'; ctx.fillRect(carX, carY+14, 3, 6);
-    ctx.fillStyle = 'rgba(255,255,200,0.2)'; ctx.fillRect(carX+108, carY+14, 4, 7);
-    ctx.fillStyle = 'rgba(255,255,200,0.03)';
-    ctx.beginPath(); ctx.moveTo(carX+112, carY+14); ctx.lineTo(carX+170, carY+5); ctx.lineTo(carX+170, carY+30); ctx.lineTo(carX+112, carY+22); ctx.closePath(); ctx.fill();
-    // Sera silhouette in car
-    const sx = carX+30, sy = carY - 1;
-    ctx.fillStyle = '#1a1a26';
-    ctx.beginPath(); ctx.arc(sx, sy, 5, 0, Math.PI*2); ctx.fill();
-    ctx.fillRect(sx-5, sy+4, 10, 6);
+    ctx.fillStyle = '#e8d4a0'; ctx.fillRect(cx - 8, phY + 1, 16, 7);
 
-    // Falling body
-    if (bodyFalling && bodyY >= 0) {
-      const dropX = carX + 20;
-      ctx.fillStyle = 'rgba(70,65,80,0.9)';
-      ctx.beginPath(); ctx.arc(dropX, bodyY-2, 3, 0, Math.PI*2); ctx.fill();
-      ctx.fillRect(dropX-2, bodyY+1, 4, 10);
-      ctx.fillRect(dropX-4, bodyY+4, 3, 6); ctx.fillRect(dropX+1, bodyY+4, 3, 6);
-      ctx.fillRect(dropX-3, bodyY+11, 3, 7); ctx.fillRect(dropX, bodyY+11, 3, 7);
-    }
+    // Windshield frame — A-pillars angled inward toward roof
+    ctx.fillStyle = '#141418';
+    ctx.beginPath();
+    ctx.moveTo(0, H); ctx.lineTo(W * 0.08, H * 0.26);
+    ctx.lineTo(W * 0.12, 0); ctx.lineTo(0, 0);
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(W, H); ctx.lineTo(W * 0.92, H * 0.26);
+    ctx.lineTo(W * 0.88, 0); ctx.lineTo(W, 0);
+    ctx.closePath(); ctx.fill();
 
-    // Landed body
-    if (bodyLanded) {
-      const dropX = carX + 20;
-      ctx.fillStyle = 'rgba(50,45,55,0.9)';
-      ctx.fillRect(dropX-7, streetY+2, 14, 5);
-      ctx.beginPath(); ctx.arc(dropX-5, streetY+2, 3, 0, Math.PI*2); ctx.fill();
-    }
+    // Pillar inner edge highlight
+    ctx.strokeStyle = 'rgba(50,50,60,0.6)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W * 0.08, H * 0.26); ctx.lineTo(W * 0.12, 0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(W * 0.92, H * 0.26); ctx.lineTo(W * 0.88, 0); ctx.stroke();
 
-    // Fade
+    // Rearview mirror
+    ctx.fillStyle = '#111116'; ctx.fillRect(cx - 24, 0, 48, 14);
+    ctx.fillStyle = 'rgba(80,80,90,0.2)'; ctx.fillRect(cx - 22, 1, 44, 12);
+
+    // Dashboard band
+    const dashY = H * 0.72;
+    const dashGrad = ctx.createLinearGradient(0, dashY, 0, H);
+    dashGrad.addColorStop(0, '#1e1e24'); dashGrad.addColorStop(0.4, '#181820'); dashGrad.addColorStop(1, '#0c0c10');
+    ctx.fillStyle = dashGrad; ctx.fillRect(0, dashY, W, H - dashY);
+    ctx.fillStyle = 'rgba(255,255,255,0.03)'; ctx.fillRect(cx - 50, dashY + 12, 100, 1);
+    ctx.fillStyle = 'rgba(196,168,107,0.06)';
+    ctx.beginPath(); ctx.arc(cx, dashY + 28, 16, 0, Math.PI*2); ctx.fill();
+
+    // Fade overlay
     if (fadeOpacity > 0) {
-      ctx.fillStyle = `rgba(0,0,0,${fadeOpacity})`; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = `rgba(0,0,0,${fadeOpacity})`; ctx.fillRect(0, 0, W, H);
     }
-
-    return { streetY, winY: winY + winH };
   }
 
-  // AUTOMATIC SEQUENCE — no touch required
-  // Step 1: Show the night scene briefly
-  drawEndingNightScene();
+  drawWindshield();
 
-  // Step 2: Body drops AUTOMATICALLY after brief pause
+  // Auto-advance: hold on scene, then fade to black
   setTimeout(() => {
     if (GAME.gen !== gen) return;
-    bodyFalling = true;
-    const scene = drawEndingNightScene();
-    const startDropY = scene.winY;
-    const endDropY = scene.streetY;
-    bodyY = startDropY;
-    const dropStart = performance.now();
-
-    function dropAnim(now) {
+    const fadeStart = performance.now();
+    function fadeAnim(now) {
       if (GAME.gen !== gen) return;
-      const elapsed = now - dropStart;
-      const progress = Math.min(elapsed / 500, 1);
-      bodyY = startDropY + (endDropY - startDropY) * progress * progress;
-      drawEndingNightScene();
-      if (progress < 1) requestAnimationFrame(dropAnim);
-      else {
-        bodyLanded = true; bodyFalling = false;
-        // Impact shake
-        document.getElementById('game-wrap').style.animation = 'shake 0.35s ease-out';
-        if (GAME.instruments) GAME.instruments.impact.triggerAttackRelease('C1', '2n');
-        setTimeout(() => { document.getElementById('game-wrap').style.animation = ''; }, 400);
-
-        // Brief pause after impact, then fade to black
-        setTimeout(() => {
-          if (GAME.gen !== gen) return;
-          // Fade to black
-          let fadeStart2 = performance.now();
-          function fadeAnim(now2) {
-            if (GAME.gen !== gen) return;
-            const p = Math.min((now2 - fadeStart2) / 550, 1);
-            fadeOpacity = p;
-            drawEndingNightScene();
-            if (p < 1) requestAnimationFrame(fadeAnim);
-            else {
-              // Show title card + CTA
-              showEndingTitleAndCTA(gen);
-            }
-          }
-          requestAnimationFrame(fadeAnim);
-        }, 280);
-      }
+      const p = Math.min((now - fadeStart) / 700, 1);
+      fadeOpacity = p;
+      drawWindshield();
+      if (p < 1) requestAnimationFrame(fadeAnim);
+      else showEndingTitleAndCTA(gen);
     }
-    requestAnimationFrame(dropAnim);
-  }, 550);
+    requestAnimationFrame(fadeAnim);
+  }, 3000);
 }
 
 function showEndingTitleAndCTA(gen) {
@@ -3863,101 +3975,75 @@ function showEndingTitleAndCTA(gen) {
     }
   } catch(e) {}
 
-  // Brief pause then show Screen 1 with sequential reveals
+  // 2-second black gap, then canvas-drawn CTA
   setTimeout(() => {
     if (GAME.gen !== gen) return;
     try { if (GAME.instruments && GAME.instruments.pad) GAME.instruments.pad.triggerRelease(); } catch(e) {}
-    const cta = document.getElementById('cta-overlay');
-    const screen1 = document.getElementById('cta-screen-1');
-    const children = Array.from(screen1.children);
 
-    // Hide all screen 1 children initially
-    children.forEach(ch => { ch.style.opacity = '0'; ch.style.transition = 'opacity 1.2s ease'; });
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
 
-    cta.style.display = 'flex';
-    cta.classList.add('visible');
-    screen1.classList.add('active');
+    // TOP FLOOR title
+    const titleSize = Math.round(H * 0.056);
+    ctx.fillStyle = '#e4e4e4';
+    ctx.font = `${titleSize}px 'Bebas Neue', sans-serif`;
+    ctx.letterSpacing = '0.08em';
+    ctx.textAlign = 'center';
+    ctx.fillText('TOP FLOOR', W / 2, H * 0.42);
+    ctx.letterSpacing = '0px';
 
-    // Two-phase reveal: title card first, then CTAs after a breath
-    // Phase 1: title + "A FEATURE FILM" + tagline (first 3 children)
-    const titleGroup = children.slice(0, 3);
-    const buttonGroup = children.slice(3);
-    titleGroup.forEach((ch, i) => {
-      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, i * 400);
-    });
-    // Phase 2: body text + buttons stagger in after breath
-    const phase2Start = 1050;
-    buttonGroup.forEach((ch, i) => {
-      setTimeout(() => { if (GAME.gen === gen) ch.style.opacity = '1'; }, phase2Start + i * 500);
-    });
+    // Gold line
+    ctx.strokeStyle = '#b8a472'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W * 0.22, Math.round(H * 0.44));
+    ctx.lineTo(W * 0.78, Math.round(H * 0.44));
+    ctx.stroke();
 
-    // After all reveals, mark screen visible for transitions
-    const totalRevealTime = phase2Start + buttonGroup.length * 600;
-    setTimeout(() => { screen1.classList.add('visible'); }, totalRevealTime);
+    // Tagline
+    ctx.fillStyle = 'rgba(228,228,228,0.72)';
+    const tagSize = Math.round(H * 0.022);
+    ctx.font = `italic ${tagSize}px 'EB Garamond', Georgia, serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('An ambitious Manhattan doorman moves into his', W / 2, H * 0.49);
+    ctx.fillText('doppelg\u00e4nger\u2019s penthouse.', W / 2, H * 0.49 + tagSize * 1.45);
 
-    // Screen 1 buttons
-    const readBtn = document.getElementById('read-screenplay-btn');
-    if (readBtn) readBtn.addEventListener('click', e => { e.preventDefault(); transitionToScreen2(gen); });
+    // REQUEST THE SCRIPT button
+    const btnW = Math.round(W * 0.62), btnH = Math.round(H * 0.066);
+    const btnX = Math.round((W - btnW) / 2), btnY = Math.round(H * 0.57);
+    ctx.fillStyle = 'rgba(184,164,114,0.1)';
+    ctx.fillRect(btnX, btnY, btnW, btnH);
+    ctx.strokeStyle = '#b8a472'; ctx.lineWidth = 1;
+    ctx.strokeRect(btnX, btnY, btnW, btnH);
 
-    const replayBtn1 = document.getElementById('replay-btn-1');
-    if (replayBtn1) replayBtn1.addEventListener('click', e => { e.preventDefault(); restartGame(); });
+    const lblSize = Math.round(H * 0.021);
+    ctx.fillStyle = '#b8a472';
+    ctx.font = `${lblSize}px 'Bebas Neue', sans-serif`;
+    ctx.letterSpacing = '0.1em';
+    ctx.textAlign = 'center';
+    ctx.fillText('REQUEST THE SCRIPT', W / 2, btnY + btnH / 2 + Math.round(lblSize * 0.38));
+    ctx.letterSpacing = '0px';
 
-    // Explore button (Screen 1)
-    const exploreBtn1 = document.getElementById('explore-btn-1');
-    if (exploreBtn1) exploreBtn1.addEventListener('click', function(e) {
-      e.preventDefault(); teardownAudio();
-      window.location.href = '/';
-    });
+    // Secondary URL hint
+    ctx.fillStyle = 'rgba(184,164,114,0.35)';
+    const hintSize = Math.round(H * 0.016);
+    ctx.font = `${hintSize}px 'EB Garamond', Georgia, serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('coyne-green.com/topfloor', W / 2, H * 0.70);
 
-    // Screen 2 buttons
-    const backBtn = document.getElementById('back-btn');
-    if (backBtn) backBtn.addEventListener('click', e => { e.preventDefault(); transitionToScreen1(gen); });
-
-    // Screenplay form submission
-    const screenplayForm = document.getElementById('screenplay-form');
-    const formError = document.getElementById('form-error');
-
-    if (screenplayForm) {
-      screenplayForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const claimBtn = document.getElementById('claim-btn');
-        claimBtn.disabled = true;
-        claimBtn.textContent = 'SENDING...';
-        formError.style.display = 'none';
-
-        // Open window NOW (user gesture context) \u2014 mobile blocks window.open inside async callbacks
-        const pdfWin = window.open('about:blank', '_blank');
-
-        const formData = new FormData(screenplayForm);
-
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        })
-        .then(response => {
-          if (!response.ok) throw new Error('Submit failed');
-          // Success — navigate the already-opened tab to screenplay
-          teardownAudio();
-          if (pdfWin) pdfWin.location.href = '/topfloor/screenplay';
-          else window.location.href = '/topfloor/screenplay';
-          transitionToScreen1(gen);
-        })
-        .catch(err => {
-          if (pdfWin) try { pdfWin.close(); } catch(e2) {}
-          claimBtn.disabled = false;
-          claimBtn.textContent = 'READ THE SCREENPLAY';
-          formError.innerHTML = 'Something went wrong. Email <a href="#" id="fallback-mailto" style="color:#c4a86b;text-decoration:underline;">mcoynegreen' + '@gmail.com</a> directly.';
-          formError.style.display = 'block';
-          const fb = document.getElementById('fallback-mailto');
-          if (fb) fb.addEventListener('click', function(ev) {
-            ev.preventDefault(); teardownAudio();
-            window.location.href = 'mai' + 'lto:mcoynegreen' + '@gmail.com?subject=Top%20Floor%20-%20Screenplay%20Request';
-          });
-        });
-      });
+    // Canvas click → /topfloor
+    function ctaClick(e) {
+      if (GAME.gen !== gen) { ctx.canvas.removeEventListener('click', ctaClick); return; }
+      const rect = ctx.canvas.getBoundingClientRect();
+      const cx2 = (e.clientX - rect.left) * (W / rect.width);
+      const cy2 = (e.clientY - rect.top) * (H / rect.height);
+      if (cx2 >= btnX && cx2 <= btnX + btnW && cy2 >= btnY && cy2 <= btnY + btnH) {
+        ctx.canvas.removeEventListener('click', ctaClick);
+        teardownAudio();
+        window.location.href = '/topfloor';
+      }
     }
-  }, 1050);
+    ctx.canvas.addEventListener('click', ctaClick);
+
+  }, 2000);
 }
 
 // ============================================================

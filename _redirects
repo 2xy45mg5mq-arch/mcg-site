@@ -5,8 +5,11 @@
 /topfloor/deep    /topfloor            301
 /top-floor        /topfloor.html       200
 /topfloor/screenplay /files/TOP%20FLOOR.pdf 200
+/topfloor/top-floor.pdf         /files/TOP%20FLOOR.pdf         200
 /hr/screenplay     /files/HUMAN%20RESOURCE.pdf 200
+/hr/human-resource.pdf          /files/HUMAN%20RESOURCE.pdf    200
 /kanvatan/pilot     /files/Kan%20Vatan.pdf 200
+/kanvatan/kan-vatan.pdf         /files/Kan%20Vatan.pdf         200
 /memorydocs/pilot  /files/Memory%20Docs.pdf 200
 /memorydocs/pitch  /files/Memory%20Docs%20-%20Pitchdeck.pdf 200
 /chosen/pilot       /files/CHOSEN%20(pilot).pdf 200

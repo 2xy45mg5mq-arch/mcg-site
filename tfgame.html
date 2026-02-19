@@ -725,7 +725,7 @@ canvas {
 </head>
 <body>
 
-<a href="/topfloor" id="back-to-topfloor" style="position:fixed;top:12px;left:16px;z-index:9999;font-family:'Bebas Neue',sans-serif;font-size:0.55rem;letter-spacing:3px;color:rgba(196,168,107,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#c4a86b'" onmouseout="this.style.color='rgba(196,168,107,0.5)'">&larr; TOP FLOOR</a>
+<a href="/topfloor" id="back-to-topfloor" style="position:fixed;top:10px;left:12px;z-index:9999;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:3px;color:rgba(196,168,107,0.5);text-decoration:none;transition:color 0.2s;padding:6px 8px;" onmouseover="this.style.color='#c4a86b'" onmouseout="this.style.color='rgba(196,168,107,0.5)'">&larr; TOP FLOOR</a>
 
 <div id="game-wrap">
   <canvas id="canvas" width="420" height="720"></canvas>
@@ -783,6 +783,7 @@ canvas {
       <div class="cta-body-text">Discover the full story</div>
       <a class="cta-link primary" href="#" id="read-screenplay-btn">READ THE SCRIPT</a>
       <a class="cta-link" href="/" id="explore-btn-1">EXPLORE MORE STORIES</a>
+      <a class="cta-link" href="#" id="share-btn-1">SHARE</a>
       <a class="cta-replay" href="#" id="replay-btn-1">PLAY AGAIN</a>
     </div>
 
@@ -1205,9 +1206,6 @@ const COMIC_BEATS = [
   // Beat 4: Title card
   { scene: 'title_card' },
 
-  // Beat 5: Basement pushups — auto-advance to gameplay
-  { scene: 'basement_pushups',
-    autoAdvance: 2500 },
 ];
 
 function startComic() {
@@ -1516,8 +1514,6 @@ function drawComicFigure(ctx, x, y, s, opts) {
     ctx.beginPath(); ctx.ellipse(x, y - 9*s, 10*s, 7*s, 0, Math.PI, 0); ctx.fill();
     ctx.fillRect(x - 14*s, y - 3*s, 28*s, 2.5*s);
     ctx.fillStyle = '#c4a86b'; ctx.fillRect(x - 11*s, y - 3*s, 22*s, 2*s);
-    ctx.fillStyle = hairColor;
-    ctx.fillRect(x - 11*s, y, 3*s, 6*s); ctx.fillRect(x + 8*s, y, 3*s, 6*s);
   }
 
   // Ears
@@ -1618,7 +1614,7 @@ function drawComicScene(scene) {
       // Murry in doorman uniform — standing at entrance
       const s = ch * 0.003;
       const murryX = cw / 2 + 10;
-      const murryY = (ch - 50) - 57 * s;
+      const murryY = (ch - 50) - 57 * s - 35; // raised to clear text gradient
       drawComicFigure(comicCtx, murryX, murryY, s, {
         body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: true,
         capColor: '#1a2744', buttons: true, epaulettes: true
@@ -1673,7 +1669,6 @@ function drawComicScene(scene) {
       }
       // Sera on the stairs — arms crossed, watching
       drawComicSeraBig(comicCtx, cw - 55, ch - 220);
-      drawCharLabel(comicCtx, cw - 55, 80, ch - 30, 'SERA');
       // Murry seated on mattress with phone
       const s = ch * 0.003;
       const murryX = 95;
@@ -1682,7 +1677,6 @@ function drawComicScene(scene) {
         body: '#1a2744', skin: '#d4a574', hasBeard: true, hasCap: false,
         hairColor: '#2a1a0a', armPose: 'seated'
       });
-      drawCharLabel(comicCtx, murryX - 15, 30, ch - 75, 'MURRY');
       break;
     }
     case 'sera_intro': {
@@ -2057,7 +2051,7 @@ function drawComicScene(scene) {
       const elvW = Math.round(cw * 0.74);
       const elvH = Math.round(artH * 0.72);
       const elvX = Math.round((cw - elvW) / 2);
-      const elvY = Math.round((artH - elvH) / 2);
+      const elvY = Math.round((artH - elvH) / 2 + 15); // +15 to center with indicator panel above
       // Warm interior gradient
       const elvGrad = comicCtx.createLinearGradient(elvX, elvY, elvX, elvY + elvH);
       elvGrad.addColorStop(0, '#302820'); elvGrad.addColorStop(1, '#201a12');
@@ -2206,10 +2200,10 @@ function drawComicNarration(ctx, w, h, textItems) {
   const gradTop = firstY - lh*1.5;
   const grad = ctx.createLinearGradient(0, gradTop, 0, h);
   grad.addColorStop(0, 'transparent');
-  grad.addColorStop(0.06, 'rgba(0,0,0,0.5)');
-  grad.addColorStop(0.15, 'rgba(0,0,0,0.9)');
-  grad.addColorStop(0.35, 'rgba(0,0,0,0.97)');
-  grad.addColorStop(1, 'rgba(0,0,0,0.98)');
+  grad.addColorStop(0.06, 'rgba(0,0,0,0.7)');
+  grad.addColorStop(0.15, 'rgba(0,0,0,0.95)');
+  grad.addColorStop(0.35, 'rgba(0,0,0,0.99)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.99)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, gradTop, w, h-gradTop);
   let y = firstY;
@@ -2242,10 +2236,10 @@ function drawComicDialogue(ctx, w, h, name, text, side) {
   const gradTop = nameY - lh*1.5;
   const grad = ctx.createLinearGradient(0, gradTop, 0, h);
   grad.addColorStop(0, 'transparent');
-  grad.addColorStop(0.06, 'rgba(0,0,0,0.5)');
-  grad.addColorStop(0.15, 'rgba(0,0,0,0.9)');
-  grad.addColorStop(0.35, 'rgba(0,0,0,0.97)');
-  grad.addColorStop(1, 'rgba(0,0,0,0.98)');
+  grad.addColorStop(0.06, 'rgba(0,0,0,0.7)');
+  grad.addColorStop(0.15, 'rgba(0,0,0,0.95)');
+  grad.addColorStop(0.35, 'rgba(0,0,0,0.99)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.99)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, gradTop, w, h-gradTop);
   // Gold bar
@@ -3700,10 +3694,10 @@ function executeRooftopScene(gen) {
     drawComicFigure(ctx, murryX, figY, s, {
       body: '#1a1a3a', skin: '#d4a574', hasCap: false, hairColor: '#1a0a0a'
     });
-    // Nik (in doorman uniform) on right
+    // Nik (in doorman uniform) on right — blood visible
     drawComicFigure(ctx, nikX, figY, s, {
       body: '#1c2040', skin: '#d4a574', hasCap: true, capColor: '#1c2040',
-      buttons: true, epaulettes: true, hairColor: '#1a0a0a'
+      buttons: true, epaulettes: true, hairColor: '#1a0a0a', blood: true
     });
     // Dialogue overlay
     if (bubbleOpacity > 0 && bubbleText) {
@@ -3818,7 +3812,7 @@ function executeRooftopScene(gen) {
           });
           drawComicFigure(ctx, sNikX, figY, s, {
             body: '#1c2040', skin: '#d4a574', hasCap: true, capColor: '#1c2040',
-            buttons: true, epaulettes: true, hairColor: '#1a0a0a', armPose: 'falling'
+            buttons: true, epaulettes: true, hairColor: '#1a0a0a', armPose: 'falling', blood: true
           });
           if (fadeToBlack > 0) { ctx.fillStyle = `rgba(0,0,0,${fadeToBlack})`; ctx.fillRect(0, 0, W, H); }
           if (fadeToBlack >= 1) {
@@ -4036,17 +4030,9 @@ function showEndingTitleAndCTA(gen) {
   if (GAME.gen !== gen) return;
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
 
-  // Play minor pad for ending
-  try {
-    if (GAME.instruments && GAME.instruments.pad) {
-      GAME.instruments.pad.triggerAttack(['A2', 'C3', 'E3']);
-    }
-  } catch(e) {}
-
   // Brief pause then show Screen 1 with sequential reveals
   setTimeout(() => {
     if (GAME.gen !== gen) return;
-    try { if (GAME.instruments && GAME.instruments.pad) GAME.instruments.pad.triggerRelease(); } catch(e) {}
     const cta = document.getElementById('cta-overlay');
     const screen1 = document.getElementById('cta-screen-1');
     const children = Array.from(screen1.children);
@@ -4087,6 +4073,21 @@ function showEndingTitleAndCTA(gen) {
     if (exploreBtn1) exploreBtn1.addEventListener('click', function(e) {
       e.preventDefault(); teardownAudio();
       window.location.href = '/';
+    });
+
+    // Share button (Screen 1)
+    const shareBtn1 = document.getElementById('share-btn-1');
+    if (shareBtn1) shareBtn1.addEventListener('click', function(e) {
+      e.preventDefault();
+      const url = 'https://coyne-green.com/tfgame';
+      if (navigator.share) {
+        navigator.share({ title: 'Top Floor', url }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          shareBtn1.textContent = 'LINK COPIED!';
+          setTimeout(() => { shareBtn1.textContent = 'SHARE'; }, 2000);
+        }).catch(() => {});
+      }
     });
 
     // Screen 2 buttons
@@ -4137,7 +4138,7 @@ function showEndingTitleAndCTA(gen) {
         });
       });
     }
-  }, 1050);
+  }, 525);
 }
 
 // ============================================================

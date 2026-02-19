@@ -418,38 +418,50 @@ canvas {
   position: absolute; inset: 0;
   z-index: 22;
   display: none; flex-direction: column; justify-content: flex-end;
-  padding: 14px 16px 18px;
-  background: rgba(0,0,0,0.82);
+  padding: 0 0 18px;
+  background: linear-gradient(to bottom,
+    transparent 58%,
+    rgba(0,0,0,0.72) 68%,
+    rgba(0,0,0,0.87) 75%,
+    rgba(0,0,0,0.94) 100%
+  );
   pointer-events: auto; cursor: pointer;
 }
 #mission-card-overlay.has-choices { cursor: default; }
 
 #mission-card {
-  display: flex; gap: 12px; align-items: flex-start;
+  display: flex; gap: 14px; align-items: center;
+  padding: 0 16px;
 }
 @media (max-width: 420px) {
   #mission-card { flex-wrap: nowrap !important; }
-  .mc-portrait-wrap { width: 48px; height: 48px; }
+  .mc-portrait-wrap { width: 44px; height: 44px; }
   .mc-content { min-width: 0; }
 }
 
 .mc-portrait-wrap {
-  flex-shrink: 0; width: 64px; height: 64px;
-  border: 2px solid rgba(196,168,107,0.35); border-radius: 4px;
-  overflow: hidden; background: rgba(0,0,0,0.4);
+  flex-shrink: 0; width: 44px; height: 44px;
+  border: 1px solid rgba(196,168,107,0.18); border-radius: 50%;
+  overflow: hidden; background: #0a0c14;
 }
 #mc-portrait { width: 100%; height: 100%; image-rendering: pixelated; }
+
+.mc-sep {
+  width: 100%; height: 1px;
+  background: rgba(196,168,107,0.08);
+  margin-bottom: 6px;
+}
 
 .mc-content { flex: 1; min-width: 0; }
 
 .mc-name {
-  font-family: 'Bebas Neue', sans-serif; color: #c4a86b;
-  font-size: 15px; letter-spacing: 3px; margin-bottom: 3px;
+  font-family: 'Cinzel', Georgia, serif; color: rgba(196,168,107,0.6);
+  font-size: 10px; letter-spacing: 2px; margin-bottom: 5px; text-transform: uppercase;
 }
 .mc-text {
   font-family: 'EB Garamond', Georgia, serif;
-  color: rgba(255,255,255,0.88); font-size: clamp(15px, 3.5vw, 17px);
-  line-height: 1.65;
+  color: rgba(232,224,212,0.9); font-size: clamp(15px, 3.5vw, 17px);
+  line-height: 1.55; font-style: normal;
 }
 .mc-text.mission-style {
   color: rgba(196,168,107,0.7); font-style: italic;
@@ -470,10 +482,28 @@ canvas {
   90% { transform: translateX(2px); }
 }
 
+/* Advance chevron — right side for dialogue */
 .mc-advance {
-  color: rgba(196,168,107,0.35); font-family: 'Bebas Neue', sans-serif;
-  font-size: 10px; letter-spacing: 3px; margin-top: 10px;
+  position: absolute; right: 18px; bottom: 22px;
+  color: rgba(196,168,107,0.28);
+  font-size: 20px; line-height: 1;
   animation: mc-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+/* Narration mode: no portrait, centered text, dot indicator */
+#mission-card-overlay.no-portrait #mission-card {
+  justify-content: center;
+  padding: 0 28px;
+}
+#mission-card-overlay.no-portrait .mc-content {
+  text-align: center;
+}
+#mission-card-overlay.no-portrait .mc-sep {
+  display: none;
+}
+#mission-card-overlay.no-portrait .mc-advance {
+  right: auto; left: 50%; transform: translateX(-50%);
+  bottom: 12px; font-size: 8px;
 }
 .mc-back {
   position: absolute; left: 16px; bottom: 18px;
@@ -781,10 +811,11 @@ canvas {
       </div>
       <div class="mc-content">
         <div class="mc-name"></div>
+        <div class="mc-sep"></div>
         <div class="mc-text"></div>
       </div>
     </div>
-    <div class="mc-advance">TAP ▶</div>
+    <div class="mc-advance">›</div>
     <div id="mc-choices">
       <button class="mc-choice" data-choice="0"></button>
       <button class="mc-choice" data-choice="1"></button>
@@ -2313,9 +2344,13 @@ function renderMissionCard(index) {
     const portraitWrap = document.querySelector('.mc-portrait-wrap');
     if (card.portrait) {
       portraitWrap.style.display = 'block';
+      mcOverlay.classList.remove('no-portrait');
+      mcAdvance.textContent = '›';
       drawPortrait(card.portrait);
     } else {
       portraitWrap.style.display = 'none';
+      mcOverlay.classList.add('no-portrait');
+      mcAdvance.textContent = '●';
     }
     // Alternating sides: if this speaker is different from the first speaker in the queue, flip to right
     const firstSpeaker = GAME.missionCards.queue.find(c => c.portrait && !c.choice);
@@ -2325,7 +2360,7 @@ function renderMissionCard(index) {
       mcCard.querySelector('.mc-content').style.textAlign = 'right';
     } else {
       mcCard.style.flexDirection = 'row';
-      mcCard.querySelector('.mc-content').style.textAlign = 'left';
+      mcCard.querySelector('.mc-content').style.textAlign = card.portrait ? 'left' : 'center';
     }
     // Phone icon for phone calls
     const phoneLabel = card.phone ? '\u260E ' : '';
@@ -2421,6 +2456,9 @@ function drawPortrait(characterId) {
     case 'sera': drawSeraPortrait(mcPortraitCtx); break;
     case 'board': drawBoardPortrait(mcPortraitCtx); break;
     case 'cynthia': drawCynthiaPortrait(mcPortraitCtx); break;
+    case 'barry': drawBarryPortrait(mcPortraitCtx); break;
+    case 'valerie': drawValeriePortrait(mcPortraitCtx); break;
+    case 'gerald': drawGeraldPortrait(mcPortraitCtx); break;
   }
   mcPortraitCtx.restore();
 }
@@ -2498,6 +2536,49 @@ function drawCynthiaPortrait(pc) {
   pc.fillStyle = '#222'; pc.beginPath(); pc.arc(25, 20, 2, 0, Math.PI * 2); pc.arc(39, 20, 2, 0, Math.PI * 2); pc.fill();
   pc.strokeStyle = '#8b7355'; pc.lineWidth = 3;
   pc.beginPath(); pc.moveTo(52, 40); pc.lineTo(56, 62); pc.stroke();
+}
+
+function drawBarryPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  // Body — doorman uniform
+  pc.fillStyle = '#1a1a2e'; pc.fillRect(14, 36, 36, 28);
+  // Buttons
+  pc.fillStyle = '#d4b87a'; pc.fillRect(30, 40, 4, 4); pc.fillRect(30, 48, 4, 4);
+  // Face
+  pc.fillStyle = '#c4a080'; pc.beginPath(); pc.arc(32, 22, 13, 0, Math.PI * 2); pc.fill();
+  // Doorman cap
+  pc.fillStyle = '#1a1a2e'; pc.fillRect(16, 6, 32, 10);
+  pc.fillStyle = '#0e0e1a'; pc.fillRect(14, 14, 36, 4);
+  // Eyes
+  pc.fillStyle = '#111'; pc.beginPath(); pc.arc(27, 20, 2.5, 0, Math.PI * 2); pc.arc(37, 20, 2.5, 0, Math.PI * 2); pc.fill();
+}
+function drawValeriePortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  // Body — cream sweater
+  pc.fillStyle = '#c8bca0'; pc.fillRect(14, 36, 36, 28);
+  // Face
+  pc.fillStyle = '#d4a882'; pc.beginPath(); pc.arc(32, 22, 13, 0, Math.PI * 2); pc.fill();
+  // Brown hair — top + sides
+  pc.fillStyle = '#5a3828'; pc.beginPath(); pc.ellipse(32, 14, 14, 9, 0, Math.PI, 0); pc.fill();
+  pc.fillRect(16, 14, 5, 12); pc.fillRect(43, 14, 5, 12);
+  // Eyes
+  pc.fillStyle = '#2a1a10'; pc.beginPath(); pc.arc(27, 21, 2.5, 0, Math.PI * 2); pc.arc(37, 21, 2.5, 0, Math.PI * 2); pc.fill();
+  // Smile
+  pc.strokeStyle = 'rgba(160,100,70,0.35)'; pc.lineWidth = 1.5;
+  pc.beginPath(); pc.arc(32, 28, 5, 0.1, Math.PI - 0.1); pc.stroke();
+}
+function drawGeraldPortrait(pc) {
+  pc.fillStyle = '#0a0e1a'; pc.fillRect(0, 0, 64, 64);
+  // Body — navy suit
+  pc.fillStyle = '#1a1a3a'; pc.fillRect(14, 36, 36, 28);
+  // Red tie
+  pc.fillStyle = '#aa3333'; pc.fillRect(30, 36, 4, 14);
+  // Face
+  pc.fillStyle = '#d4a574'; pc.beginPath(); pc.arc(32, 22, 13, 0, Math.PI * 2); pc.fill();
+  // Dark hair
+  pc.fillStyle = '#1a0a0a'; pc.beginPath(); pc.ellipse(32, 13, 14, 8, 0, Math.PI, 0); pc.fill();
+  // Eyes
+  pc.fillStyle = '#111'; pc.beginPath(); pc.arc(27, 20, 2.5, 0, Math.PI * 2); pc.arc(37, 20, 2.5, 0, Math.PI * 2); pc.fill();
 }
 
 // ============================================================

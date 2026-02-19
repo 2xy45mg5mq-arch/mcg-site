@@ -193,7 +193,7 @@
     
     .dropdown a {
       display: block;
-      padding: 10px 20px;
+      padding: 12px 20px;
       color: rgba(255,255,255,0.6);
       text-decoration: none;
       font-size: 0.75rem;
@@ -2304,6 +2304,14 @@
       width: 100%;
     }
 
+    /* Nav hit areas — invisible extended click targets */
+    .nav-links > a::before,
+    .nav-item > a::before {
+      content: '';
+      position: absolute;
+      inset: -12px -8px;
+    }
+
     /* SECTION DIVIDERS — editorial legend-on-line */
     .section-divider {
       display: flex;
@@ -2860,6 +2868,13 @@
 
       .turk-featured { order: -1; }
     }
+
+    /* ── VARIED SECTION SPACING ── */
+    section#work { padding-bottom: 64px; }
+    #coming-up-section { padding-top: 48px; padding-bottom: 80px; }
+    section.portfolio-section { padding: 80px 0; }
+    section.about { padding: 80px 0 60px; }
+    section.contact { padding: 60px 0 80px; }
 
   </style>
 </head>

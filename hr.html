@@ -82,7 +82,7 @@
     }
     .nav-item:hover .dropdown, .nav-item .dropdown.open { opacity: 1; visibility: visible; }
     .dropdown a {
-      display: block; padding: 10px 20px; color: rgba(255,255,255,0.6);
+      display: block; padding: 12px 20px; color: rgba(255,255,255,0.6);
       text-decoration: none; font-size: 0.75rem; letter-spacing: 1px;
       text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
     }
@@ -94,6 +94,8 @@
       width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
     }
     .nav-links > a:hover::after, .nav-item > a:hover::after { width: 100%; }
+    /* Nav hit areas — invisible extended click targets */
+    .nav-links > a::before, .nav-item > a::before { content: ''; position: absolute; inset: -12px -8px; }
 
     /* ── BACK LINK ── */
     .back-float {

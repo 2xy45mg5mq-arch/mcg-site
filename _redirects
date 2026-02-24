@@ -26,6 +26,11 @@
 # Hidden game page
 /tfgame           /tfgame.html         200
 
+# Kinnikuman treatment — secret pages
+/secret           /secret.html         200
+/secret2          /secret2.html        200
+/secret/pdf       /files/kinnikuman-treatment.pdf 200
+
 # Standalone project pages
 /hr               /hr.html             200
 /topfloor         /topfloor.html       200

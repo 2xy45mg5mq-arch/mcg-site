@@ -1,0 +1,17 @@
+[[headers]]
+  for = "/hr/screenplay"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline; filename=\"Human Resource.pdf\""
+
+[[headers]]
+  for = "/topfloor/screenplay"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline; filename=\"Top Floor.pdf\""
+
+[[headers]]
+  for = "/kanvatan/pilot"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline; filename=\"Kan Vatan.pdf\""

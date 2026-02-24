@@ -1,8 +1,23 @@
-/topfloor/screenplay
-  Content-Disposition: inline; filename="Top-Floor-Screenplay.pdf"
-
 /hr/screenplay
-  Content-Disposition: inline; filename="Human-Resource-Screenplay.pdf"
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Human Resource.pdf"
+
+/topfloor/screenplay
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Top Floor.pdf"
 
 /kanvatan/pilot
-  Content-Disposition: inline; filename="Kan-Vatan-Pilot.pdf"
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Kan Vatan.pdf"
+
+/files/HUMAN RESOURCE.pdf
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Human Resource.pdf"
+
+/files/TOP FLOOR.pdf
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Top Floor.pdf"
+
+/files/Kan Vatan.pdf
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Kan Vatan.pdf"

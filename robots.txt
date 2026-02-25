@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /files/
+Disallow: /secret
 Disallow: /topfloor/screenplay
 Disallow: /hr/screenplay
 Disallow: /kanvatan/

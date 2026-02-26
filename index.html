@@ -3704,13 +3704,13 @@
       var link = e.target.closest('a[href^="/about"]');
       if (!link) return;
 
-      e.preventDefault();
       var href = link.getAttribute('href');
 
       // Check if we're near the hero (name click) or further down (Full Story click)
       var isNearTop = window.scrollY < 200;
 
       if (isNearTop) {
+        e.preventDefault();
         // Near hero: do the cinematic fade transition
         var slideshow = document.querySelector('.hero-slideshow');
         var overlay = document.querySelector('.hero-overlay');
@@ -3746,20 +3746,6 @@
           var hash = href.indexOf('#') !== -1 ? '#' + href.split('#')[1] : '';
           window.location.href = base + hash;
         }, 500);
-      } else {
-        // Scrolled down: simple fade-out of whole page, then navigate normally
-        document.body.style.transition = 'opacity 0.3s ease-out';
-        document.body.style.opacity = '0';
-
-        if (href.indexOf('#') !== -1) {
-          sessionStorage.setItem('about-hash', href.split('#')[1]);
-        }
-
-        setTimeout(function() {
-          var base = window.location.hostname === 'localhost' ? '/Live/about.html' : '/about';
-          var hash = href.indexOf('#') !== -1 ? '#' + href.split('#')[1] : '';
-          window.location.href = base + hash;
-        }, 300);
       }
     });
   })();

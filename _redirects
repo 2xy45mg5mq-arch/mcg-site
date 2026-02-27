@@ -1,6 +1,7 @@
 # Sub-page clean URLs
 /hr/deep          /hr-deep.html       200
 /hr/characters    /hr-slideshow.html   200
+/hr/watch         /hr-watch.html       200
 /about            /about.html          200
 /topfloor/deep    /topfloor            301
 /top-floor        /topfloor.html       200

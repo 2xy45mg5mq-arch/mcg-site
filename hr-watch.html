@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4XQR4QCNZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V4XQR4QCNZ');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Human Resource — Watch the Film | Max Coyne-Green</title>
+  <meta name="description" content="A short film by Max Coyne-Green. Screened at 9 international festivals.">
+  <meta property="og:title" content="Human Resource — Watch the Film">
+  <meta property="og:description" content="A short film by Max Coyne-Green. Screened at 9 international festivals.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://coyne-green.com/images/Website_v5_Peering_C_Spread.webp">
+  <meta property="og:url" content="https://coyne-green.com/hr/watch">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Human Resource — Watch the Film">
+  <meta name="twitter:description" content="A short film by Max Coyne-Green. Screened at 9 international festivals.">
+  <meta name="twitter:image" content="https://coyne-green.com/images/Website_v5_Peering_C_Spread.webp">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="canonical" href="https://coyne-green.com/hr/watch">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d10;
+      --card: #12171d;
+      --accent: #ffffff;
+      --text: #e4e4e4;
+      --muted: #6b7a88;
+      --border: #1f2933;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 24px 0; background: transparent; transition: all 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(10, 13, 16, 0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 16px 0;
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif; font-weight: 600; font-size: 1.1rem;
+      letter-spacing: 4px; color: var(--text); text-decoration: none;
+      opacity: 1; transition: opacity 0.3s;
+    }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem;
+      font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-item { display: flex; align-items: center; position: relative; }
+    .nav-item > a { cursor: pointer; }
+    .dropdown {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 160px; background: rgba(10, 13, 16, 0.98);
+      border: 1px solid var(--border); border-radius: 4px; padding: 8px 0;
+      opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; margin-top: 12px;
+    }
+    .nav-item:hover .dropdown, .nav-item .dropdown.open { opacity: 1; visibility: visible; }
+    .dropdown a {
+      display: block; padding: 12px 20px; color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 0.75rem; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
+    }
+    .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
+    .nav-links > a, .nav-item > a { position: relative; }
+    .nav-links > a::after, .nav-item > a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
+    }
+    .nav-links > a:hover::after, .nav-item > a:hover::after { width: 100%; }
+    .nav-links > a::before, .nav-item > a::before { content: ''; position: absolute; inset: -12px -8px; }
+
+    /* ── BACK LINK ── */
+    .back-float {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 101;
+      background: rgba(10, 13, 16, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .back-float:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateX(-3px);
+    }
+
+    /* ── WATCH PAGE ── */
+    .watch-page { padding: 120px 0 80px; }
+
+    .watch-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .watch-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 9rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      font-weight: 400;
+      text-transform: uppercase;
+      line-height: 0.9;
+    }
+
+    /* ── LAURELS ── */
+    .laurels-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      max-width: 750px;
+      margin: 0 auto 48px;
+      gap: 8px;
+    }
+    .laurel-item {
+      width: 80px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .laurel-item img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      opacity: 0.9;
+      filter: brightness(1.1);
+    }
+
+    /* ── VIMEO EMBED ── */
+    .video-wrap {
+      max-width: 860px;
+      margin: 0 auto 48px;
+    }
+    .vimeo-responsive {
+      padding: 56.25% 0 0 0;
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .vimeo-responsive iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── SCREENPLAY BUTTON ── */
+    .screenplay-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 13px 26px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.25);
+      color: var(--text);
+    }
+
+    /* ── COPYRIGHT FOOTER ── */
+    .copyright-footer {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+    .copyright-footer p {
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      opacity: 0.5;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .copyright-footer p:first-child {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    /* ── CONNECT MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 40px;
+      max-width: 480px; width: 90%;
+      max-height: 90vh; overflow-y: auto;
+      transform: translateY(20px); transition: transform 0.3s;
+    }
+    .modal-overlay.active .modal { transform: translateY(0); }
+    @media (max-width: 768px) {
+      .modal-overlay { align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 60px 16px 24px; }
+      .modal { max-height: none; }
+    }
+    .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 8px; }
+    .modal-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+    .modal-section { margin-bottom: 24px; }
+    .modal-section-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+    .checkbox-item { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .checkbox-item input { display: none; }
+    .checkbox-box {
+      width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 3px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .checkbox-item input:checked + .checkbox-box { background: var(--text); border-color: var(--text); }
+    .checkbox-box::after { content: '\2713'; color: var(--bg); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
+    .checkbox-item input:checked + .checkbox-box::after { opacity: 1; }
+    .checkbox-label { font-size: 0.95rem; }
+    .modal-input {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 12px; color: var(--text);
+      font-family: inherit; font-size: 0.95rem; margin-bottom: 10px;
+    }
+    .modal-input:focus { outline: none; border-color: var(--muted); }
+    .modal-input::placeholder { color: var(--muted); }
+    .modal-textarea {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 12px; color: var(--text);
+      font-family: inherit; font-size: 0.95rem; resize: vertical; min-height: 80px;
+    }
+    .modal-textarea:focus { outline: none; border-color: var(--muted); }
+    .modal-textarea::placeholder { color: var(--muted); }
+    .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
+    .modal-btn {
+      flex: 1; padding: 14px 24px; border: none; border-radius: 4px;
+      font-family: inherit; font-size: 0.8rem; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    }
+    .modal-btn-primary { background: var(--text); color: var(--bg); }
+    .modal-btn-primary:hover { background: #fff; }
+    .modal-btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 0.7rem; letter-spacing: 1px; }
+      .watch-page { padding: 60px 0 60px; }
+      .watch-page .container { padding: 0 20px; }
+      .watch-header { margin-bottom: 12px; }
+      .watch-header h1 {
+        font-size: clamp(3.5rem, 14vw, 5.5rem);
+        letter-spacing: 0.06em;
+        word-break: break-word;
+        line-height: 0.85;
+        margin-bottom: 16px;
+      }
+      .laurels-container {
+        max-width: 340px;
+        gap: 6px 4px;
+      }
+      .laurel-item {
+        width: 72px;
+        height: 36px;
+      }
+      .back-float { padding: 10px 14px; font-size: 0.75rem; }
+      .back-float .back-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">MCG</a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="#" onclick="return false;">Work</a>
+          <div class="dropdown" style="min-width:200px;">
+            <a href="/hr">Human Resource</a>
+            <a href="/topfloor">Top Floor</a>
+            <div class="dropdown-divider"></div>
+            <a href="/turkiye">T&uuml;rk Projeleri</a>
+          </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="#" onclick="openConnectModal(); return false;">Connect</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Back to HR -->
+  <a href="/hr" class="back-float">&larr;<span class="back-text"> Back</span></a>
+
+  <div class="watch-page">
+    <div class="container">
+
+      <!-- Title -->
+      <div class="watch-header">
+        <h1>HUMAN RESOURCE</h1>
+      </div>
+
+      <!-- Laurels -->
+      <div class="laurels-container">
+        <div class="laurel-item"><img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_5.webp" alt="Dances With Films NY 2026" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_55.webp" alt="Screamfest NOLA 2025" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_3.webp" alt="Beloit International Film Festival 2026" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_54.webp" alt="Big Bear Film Summit 2025" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_montreal.webp" alt="Montreal Independent Film Festival" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_venice.webp" alt="Venice Shorts Film Festival" loading="lazy"></div>
+        <div class="laurel-item"><img src="/images/img_4.webp" alt="Malibu Film Festival 2025" loading="lazy"></div>
+      </div>
+
+      <!-- Vimeo embed -->
+      <div class="video-wrap">
+        <div class="vimeo-responsive">
+          <iframe src="https://player.vimeo.com/video/1162246962?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="HUMAN RESOURCE"></iframe>
+        </div>
+      </div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
+
+      <!-- Read the Feature Screenplay -->
+      <div class="screenplay-cta">
+        <a href="#" class="btn" style="padding: 16px 40px; font-size: 0.75rem; letter-spacing: 3px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: #fff;" onclick="openConnectModal({heading:'REQUEST SCRIPT',subtitle:'Human Resource — Feature Film',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'}); return false;">Read the Feature Screenplay</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COPYRIGHT FOOTER -->
+  <footer class="copyright-footer">
+    <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
+    <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
+  </footer>
+
+  <!-- ═══ CONNECT MODAL ═══ -->
+  <form name="connect" netlify netlify-honeypot="bot-field" hidden>
+    <input name="name"><input name="email"><input name="request">
+    <input name="human-resource" type="checkbox" value="human-resource">
+    <input name="top-floor" type="checkbox" value="top-floor">
+    <input name="turkish-projects" type="checkbox" value="turkish-projects">
+    <input name="general-meeting" type="checkbox" value="general-meeting">
+    <input name="other" type="checkbox" value="other">
+    <textarea name="message"></textarea><input name="bot-field">
+  </form>
+
+  <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
+    <div class="modal">
+      <div id="connectFormState">
+        <h2 id="connectHeading">CONNECT</h2>
+        <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="connect">
+          <input type="hidden" name="request" id="connectRequest" value="">
+          <p style="display:none;"><input name="bot-field"></p>
+          <div class="modal-section">
+            <div class="modal-section-label">Your info</div>
+            <input type="text" name="name" class="modal-input" placeholder="Name" required>
+            <input type="email" name="email" class="modal-input" placeholder="Email" required>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-label">I'm interested in</div>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="human-resource" value="human-resource"><span class="checkbox-box"></span><span class="checkbox-label">Human Resource</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="top-floor" value="top-floor"><span class="checkbox-box"></span><span class="checkbox-label">Top Floor</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="turkish-projects" value="turkish-projects"><span class="checkbox-box"></span><span class="checkbox-label">Turkish Projects</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="general-meeting" value="general-meeting"><span class="checkbox-box"></span><span class="checkbox-label">General meeting</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="other" value="other"><span class="checkbox-box"></span><span class="checkbox-label">Other</span></label>
+            </div>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-label">Anything else? (optional)</div>
+            <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Optional message"></textarea>
+          </div>
+          <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
+            <button type="submit" class="modal-btn modal-btn-primary">Send</button>
+          </div>
+        </form>
+        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
+      </div>
+      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
+        <h2>SENT</h2>
+        <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
+        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Nav scroll ──
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // ── Mobile dropdown toggle ──
+    (function() {
+      const navItem = document.querySelector('.nav-item');
+      const dropdown = document.querySelector('.dropdown');
+      if (!navItem || !dropdown) return;
+      const workLink = navItem.querySelector(':scope > a');
+      workLink.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+        }
+      });
+      document.addEventListener('click', function(e) {
+        if (!navItem.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    })();
+
+    // ── Connect modal ──
+    function openConnectModal(preset) {
+      var form = document.getElementById('connectForm');
+      if (form) form.reset();
+      document.getElementById('connectRequest').value = '';
+
+      var heading = document.getElementById('connectHeading');
+      var message = document.getElementById('connectMessage');
+
+      if (preset) {
+        heading.textContent = preset.heading || "CONNECT";
+        message.placeholder = preset.placeholder || "Optional message";
+        document.getElementById('connectRequest').value = preset.request || '';
+        if (preset.interest) {
+          var cb = form.querySelector('input[name="interest"][value="' + preset.interest + '"]');
+          if (cb) cb.checked = true;
+        }
+      } else {
+        heading.textContent = "CONNECT";
+        message.placeholder = "Optional message";
+      }
+
+      document.getElementById('connectFormState').style.display = '';
+      document.getElementById('connectSuccessState').style.display = 'none';
+      document.getElementById('connectModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeConnectModal() {
+      document.getElementById('connectModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeConnectModal();
+    });
+
+    // ── Form submission ──
+    (function() {
+      var form = document.getElementById('connectForm');
+      if (!form) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
+
+        if (!isNetlify) {
+          setTimeout(function() {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          }, 400);
+          return;
+        }
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        })
+        .then(function(res) {
+          if (res.ok) {
+            document.getElementById('connectFormState').style.display = 'none';
+            document.getElementById('connectSuccessState').style.display = '';
+          } else { throw new Error('fail'); }
+        })
+        .catch(function() {
+          btn.textContent = 'Send';
+          btn.disabled = false;
+          alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,3 +1,6 @@
+# External redirects
+/vibecode https://vibecodeaseries.com 301
+
 # Sub-page clean URLs
 /hr/deep          /hr-deep.html       200
 /hr/characters    /hr-slideshow.html   200

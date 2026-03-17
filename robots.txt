@@ -9,3 +9,5 @@ Disallow: /memorydocs/
 Disallow: /chosen/
 
 Sitemap: https://coyne-green.com/sitemap.xml
+
+# path consolidation test

@@ -1,6 +1,6 @@
 # Website Codebase — Claude Code Instructions
 
-**Repo:** ~/Projects/mcg-site/ → GitHub → Netlify auto-deploy
+**Repo:** ~/websites/mcg-site/ → GitHub → Netlify auto-deploy
 **Site:** coyne-green.com
 
 ---
@@ -13,10 +13,11 @@
 4. **3-strike rule:** If the same fix fails 3 times, stop. The approach is wrong.
 5. **Screenshot after visual changes:** Playwright at 390, 768, 1440 after any visual edit.
 6. **No file opening:** Do NOT open files, folders, or Finder windows. Print filepaths as text.
+7. **No autonomous actions:** Present the plan, wait for approval, then execute. Never make changes without explicit go-ahead.
 
 ---
 
-## ACTIVE PAGES (13)
+## ACTIVE PAGES (14)
 
 | URL | File | Notes |
 |-----|------|-------|
@@ -27,6 +28,7 @@
 | `/about` | about.html | Career timeline |
 | `/hr/deep` | hr-deep.html | HR deep dive |
 | `/hr/characters` | hr-slideshow.html | HR characters |
+| `/hr-short` | hr-watch.html | HR festival screener (hidden, Vimeo embed) |
 | `/tfgame` | tfgame.html | Top Floor game (hidden) |
 | `/meatspace` | meatspace.html | Meatspace |
 | `/artci` | artci.html | Artçı |

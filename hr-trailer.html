@@ -11,21 +11,18 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Human Resource | Max Coyne-Green</title>
-  <meta name="description" content="An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.">
-  <meta property="og:title" content="Human Resource | Max Coyne-Green">
-  <meta property="og:description" content="An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.">
+  <title>Human Resource — Trailer | Max Coyne-Green</title>
+  <meta property="og:title" content="Human Resource — Trailer | Max Coyne-Green">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://coyne-green.com/images/Website_v5_Peering_C_Spread.webp">
-  <meta property="og:url" content="https://coyne-green.com/hr">
+  <meta property="og:image" content="https://coyne-green.com/images/img_52.webp">
+  <meta property="og:url" content="https://coyne-green.com/hr-trailer">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Human Resource | Max Coyne-Green">
-  <meta name="twitter:description" content="An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.">
-  <meta name="twitter:image" content="https://coyne-green.com/images/Website_v5_Peering_C_Spread.webp">
+  <meta name="twitter:title" content="Human Resource — Trailer | Max Coyne-Green">
+  <meta name="twitter:image" content="https://coyne-green.com/images/img_52.webp">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
   <link rel="apple-touch-icon" href="/favicon.png">
-  <link rel="canonical" href="https://coyne-green.com/hr">
+  <link rel="canonical" href="https://coyne-green.com/hr-trailer">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -94,7 +91,6 @@
       width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
     }
     .nav-links > a:hover::after, .nav-item > a:hover::after { width: 100%; }
-    /* Nav hit areas — invisible extended click targets */
     .nav-links > a::before, .nav-item > a::before { content: ''; position: absolute; inset: -12px -8px; }
 
     /* ── BACK LINK ── */
@@ -167,131 +163,6 @@
       filter: brightness(1.1);
     }
 
-    /* ── HR COMP LINE ── */
-    .hr-comp-line {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
-      color: rgba(228, 228, 228, 0.7);
-      text-align: center;
-      margin: 0 auto 20px;
-      max-width: 560px;
-      line-height: 1.5;
-      letter-spacing: 0.01em;
-      text-wrap: balance;
-    }
-    .hr-comp-line em {
-      color: var(--accent);
-      font-style: italic;
-    }
-
-    /* ── TEXT LINK ── */
-    .text-link {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 24px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: all 0.3s;
-      background: rgba(255,255,255,0.03);
-    }
-    .text-link:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.08);
-      gap: 16px;
-    }
-
-    /* ── STILLS SLIDESHOW ── */
-    .stills-slideshow {
-      position: relative;
-      margin-bottom: 60px;
-      border-radius: 8px;
-      overflow: hidden;
-      aspect-ratio: 16/9;
-      min-height: 400px;
-    }
-    .stills-slideshow img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
-    .stills-slideshow img.active { opacity: 1; }
-    .stills-nav {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 2;
-    }
-    .stills-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-      cursor: pointer; transition: background 0.2s;
-    }
-    .stills-dot.active { background: rgba(255,255,255,0.9); }
-    .stills-dot:hover { background: rgba(255,255,255,0.7); }
-    .stills-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      z-index: 3; width: 48px; height: 48px;
-      background: rgba(10, 13, 16, 0.7);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      color: rgba(255,255,255,0.8);
-      font-size: 18px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; opacity: 0;
-    }
-    .stills-slideshow:hover .stills-arrow { opacity: 1; }
-    .stills-arrow:hover {
-      background: rgba(94, 180, 176, 0.8);
-      border-color: var(--accent);
-      color: white;
-    }
-    .stills-arrow.prev { left: 16px; }
-    .stills-arrow.next { right: 16px; }
-    .stills-counter {
-      position: absolute; top: 16px; right: 16px; z-index: 2;
-      background: rgba(10, 13, 16, 0.7);
-      padding: 6px 12px; border-radius: 4px;
-      font-size: 0.75rem; color: rgba(255,255,255,0.7); letter-spacing: 1px;
-    }
-
-    /* ── TREATMENT / SYNOPSIS ── */
-    .treatment {
-      max-width: 680px;
-      margin: 0 auto 60px;
-    }
-    .treatment p {
-      color: rgba(228, 228, 228, 0.85);
-      font-size: 1.1rem;
-      line-height: 1.75;
-      margin-bottom: 20px;
-      text-wrap: pretty;
-    }
-    .treatment p strong {
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    .treatment p em {
-      font-style: italic;
-      color: rgba(228, 228, 228, 0.65);
-    }
-    .comps, .tagline-big { text-wrap: balance; }
-
     /* ── POC SECTION ── */
     .poc-section {
       margin-bottom: 60px;
@@ -328,16 +199,6 @@
       background: rgba(255,255,255,0.06);
       border-color: rgba(255,255,255,0.25);
       color: var(--text);
-    }
-    .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--bg);
-      font-weight: 500;
-    }
-    .btn-primary:hover {
-      background: rgba(255,255,255,0.85);
-      border-color: rgba(255,255,255,0.85);
     }
     .detail-actions {
       display: flex;
@@ -455,16 +316,6 @@
         width: 60px;
         height: 34px;
       }
-      .stills-slideshow {
-        min-height: 180px;
-        margin-left: -20px;
-        margin-right: -20px;
-        margin-bottom: 24px;
-        border-radius: 0;
-      }
-      .stills-arrow { opacity: 0.7; width: 40px; height: 40px; }
-      .stills-arrow.prev { left: 8px; }
-      .stills-arrow.next { right: 8px; }
       .back-float { padding: 10px 14px; font-size: 0.75rem; }
       .back-float .back-text { display: none; }
     }
@@ -491,8 +342,8 @@
     </div>
   </nav>
 
-  <!-- Back to homepage -->
-  <a href="/" class="back-float">&larr;<span class="back-text"> Back</span></a>
+  <!-- Back to HR page -->
+  <a href="/hr" class="back-float">&larr;<span class="back-text"> Human Resource</span></a>
 
   <div class="detail-page">
     <div class="container">
@@ -501,9 +352,7 @@
         <h1>HUMAN RESOURCE</h1>
       </div>
 
-      <p class="hr-comp-line"><em>Severance</em> meets <em>Margin Call</em> in this financial horror story about the future of&nbsp;work.</p>
-
-      <!-- 1b. Laurels -->
+      <!-- Laurels -->
       <div class="laurels-container">
         <div class="laurel-item"><img src="/images/img_1.webp" alt="Chattanooga Film Festival 2025" loading="lazy"></div>
         <div class="laurel-item"><img src="/images/img_5.webp" alt="Dances With Films NY 2026" loading="lazy"></div>
@@ -516,53 +365,43 @@
         <div class="laurel-item"><img src="/images/img_buff.webp" alt="Boston Underground Film Festival 2026 Official Selection" loading="lazy"></div>
       </div>
 
-      <!-- 2. Slideshow -->
-      <div class="stills-slideshow" id="hr-stills">
-        <img src="/images/img_9.webp" alt="Human Resource — still from the short film" class="active" loading="lazy">
-        <img src="/images/img_10.webp" alt="Human Resource — still 2" loading="lazy">
-        <img src="/images/img_11.webp" alt="Human Resource — still 3" loading="lazy">
-        <img src="/images/img_12.webp" alt="Human Resource — still 4" loading="lazy">
-        <img src="/images/img_13.webp" alt="Human Resource — still 5" loading="lazy">
-        <img src="/images/img_14.webp" alt="Human Resource — still 6" loading="lazy">
-        <img src="/images/img_15.webp" alt="Human Resource — still 7" loading="lazy">
-        <img src="/images/img_16.webp" alt="Human Resource — still 8" loading="lazy">
-        <img src="/images/img_17.webp" alt="Human Resource — still 9" loading="lazy">
-        <img src="/images/img_18.webp" alt="Human Resource — still 10" loading="lazy">
-        <img src="/images/img_19.webp" alt="Human Resource — still 11" loading="lazy">
-        <img src="/images/img_20.webp" alt="Human Resource — still 12" loading="lazy">
-        <img src="/images/img_21.webp" alt="Human Resource — still 13" loading="lazy">
-        <img src="/images/img_22.webp" alt="Human Resource — still 14" loading="lazy">
-        <img src="/images/img_23.webp" alt="Human Resource — still 15" loading="lazy">
-        <img src="/images/img_24.webp" alt="Human Resource — still 16" loading="lazy">
-        <img src="/images/img_25.webp" alt="Human Resource — still 17" loading="lazy">
-        <img src="/images/img_26.webp" alt="Human Resource — still 18" loading="lazy">
-        <img src="/images/img_27.webp" alt="Human Resource — still 19" loading="lazy">
-        <button class="stills-arrow prev" onclick="hrSlideshow.prev()">&lsaquo;</button>
-        <button class="stills-arrow next" onclick="hrSlideshow.next()">&rsaquo;</button>
-        <div class="stills-counter" id="hr-counter">1 / 19</div>
-        <div class="stills-nav" id="hr-stills-nav"></div>
+      <!-- POC Heading -->
+      <div style="text-align: center; margin-bottom: 44px;">
+        <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.5rem, 3.8vw, 2.1rem); letter-spacing: 0.22em; color: var(--text); font-weight: 400; margin: 0 0 6px 0;">PROOF OF CONCEPT</h2>
+        <p style="font-family: 'EB Garamond', Georgia, serif; font-size: 1.3rem; font-weight: 500; color: var(--muted); letter-spacing: 0.25em; text-transform: uppercase; margin: 0;">Short Film</p>
       </div>
 
-      <!-- 3. Tagline -->
-      <div style="text-align: center; margin: 60px 0 56px;">
-        <p style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.4rem, 3.5vw, 2.4rem); letter-spacing: 0.5em; margin: 0; color: rgba(255,255,255,0.4);">NOTHING IS FREE</p>
+      <!-- Trailer -->
+      <div class="video-container">
+        <video controls poster="/images/img_52.webp">
+          <source src="/images/video.mp4" type="video/mp4">
+        </video>
       </div>
 
-      <!-- 4. Synopsis -->
-      <div class="treatment" style="margin-bottom: 12px;">
-        <p><strong>SHAE</strong> is a people person. As Head of HR, she&rsquo;s given her life to her company. And in exchange, she&rsquo;s been given a family, a career path, and all the luxury perks of a booming tech sector.</p>
-        <p>But when the market crashes and rapacious investor, <strong>ELLSIE</strong>, arrives for restructuring, Shae&rsquo;s life is restructured in the process.</p>
-        <p>Lacking hard skills needed in the new economy, Shae learns she&rsquo;s not as valuable as she thought. But Ellsie disagrees. In fact, she could really use a dedicated person to deal with all the&hellip;people. So when she finds Shae at her lowest, Ellsie spots a distressed asset opportunity. And offers to invest in her. Literally.</p>
-        <p>With Ellsie&rsquo;s backing, Shae rises quickly&hellip;even as she descends into a dark financialized world with a terrifying understanding of human&nbsp;value.</p>
+      <!-- Credits + IMDb -->
+      <div style="text-align: center; margin-top: 50px; font-size: 0.95rem; line-height: 2;">
+        <p style="margin-bottom: 4px;">Starring <strong>Veanne Cox</strong> <span style="color: var(--muted);">(You've Got Mail, Erin Brockovich)</span></p>
+        <p style="margin-bottom: 28px;">and <strong>Mia Vallet</strong> <span style="color: var(--muted);">(Hightown, Blindspot)</span></p>
+
+        <p style="color: var(--muted);">Directed by <strong style="color: var(--text);">Henry Chaisson</strong> <span style="opacity: 0.5;">(Antlers, Servant)</span></p>
+        <p style="color: var(--muted);">Cinematography by <strong style="color: var(--text);">Justin Derry</strong> <span style="opacity: 0.5;">(Bruiser, Blood for Dust)</span></p>
+        <p style="color: var(--muted);">Written & Produced by <strong style="color: var(--text);">Max Coyne-Green</strong></p>
+        <p style="color: var(--muted);">Produced by <strong style="color: var(--text);">Mia Vallet</strong></p>
+        <p style="color: var(--muted);">Filmed at <a href="https://clay.com" target="_blank" rel="noopener noreferrer" style="color: var(--text); text-decoration: none;"><strong>Clay</strong></a></p>
       </div>
 
-      <div style="text-align: center; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border);">
-        <a href="/hr-trailer" class="btn" style="padding: 16px 40px; font-size: 0.75rem; letter-spacing: 3px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: #fff;">Watch Trailer</a>
-        <div style="display: flex; justify-content: center; gap: 32px; margin-top: 32px;">
-          <a href="/hr/deep" style="color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s;">Deep Dive</a>
-          <a href="/hr/characters" style="color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s;">Characters</a>
-          <a href="#" onclick="openConnectModal({heading:'REQUEST SCRIPT',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'}); return false;" style="color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s;">Request Script</a>
-        </div>
+      <div style="text-align: center; margin: 36px 0;">
+        <a href="https://www.imdb.com/title/tt30252183/" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s;">IMDb &rarr;</a>
+      </div>
+
+      <!-- Request Screener -->
+      <div class="detail-actions" style="justify-content: center; margin-top: 50px;">
+        <a href="#" class="btn" style="padding: 14px 32px; font-size: 0.7rem; letter-spacing: 2px;" onclick="openConnectModal({heading:'REQUEST SCREENER',subtitle:'Human Resource — Short Film',interest:'Human Resource',request:'Human Resource - Screener',placeholder:'Introduce yourself briefly...'}); return false;">Request Screener</a>
+      </div>
+
+      <!-- Back to full project -->
+      <div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border);">
+        <a href="/hr" style="color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s;">Full Project Page &rarr;</a>
       </div>
     </div>
   </div>
@@ -652,55 +491,6 @@
       });
     })();
 
-    // ── Slideshow ──
-    function createSlideshow(containerId, navId, counterId, autoAdvance) {
-      var container = document.getElementById(containerId);
-      if (!container) return null;
-      var imgs = Array.from(container.querySelectorAll('img'));
-      var nav = document.getElementById(navId);
-      var counter = document.getElementById(counterId);
-      var autoTimer = null;
-      var idx = imgs.findIndex(function(img) { return img.classList.contains('active'); });
-      if (idx === -1) idx = 0;
-
-      imgs.forEach(function(_, i) {
-        var dot = document.createElement('span');
-        dot.className = 'stills-dot' + (i === idx ? ' active' : '');
-        dot.onclick = function() { goTo(i); resetAuto(); };
-        nav.appendChild(dot);
-      });
-
-      var dots = nav.querySelectorAll('.stills-dot');
-
-      function updateCounter() {
-        if (counter) counter.textContent = (idx + 1) + ' / ' + imgs.length;
-      }
-
-      function goTo(i) {
-        imgs[idx].classList.remove('active');
-        dots[idx].classList.remove('active');
-        idx = ((i % imgs.length) + imgs.length) % imgs.length;
-        imgs[idx].classList.add('active');
-        dots[idx].classList.add('active');
-        updateCounter();
-      }
-
-      function next() { goTo(idx + 1); resetAuto(); }
-      function prev() { goTo(idx - 1); resetAuto(); }
-
-      function resetAuto() {
-        if (autoTimer) clearInterval(autoTimer);
-        if (autoAdvance) autoTimer = setInterval(function() { goTo(idx + 1); }, autoAdvance);
-      }
-
-      if (autoAdvance) autoTimer = setInterval(function() { goTo(idx + 1); }, autoAdvance);
-      updateCounter();
-
-      return { next: next, prev: prev, goTo: goTo };
-    }
-
-    var hrSlideshow = createSlideshow('hr-stills', 'hr-stills-nav', 'hr-counter', 4000);
-
     // ── Connect modal ──
     function openConnectModal(preset) {
       var form = document.getElementById('connectForm');
@@ -777,6 +567,5 @@
       });
     })();
   </script>
-
 </body>
 </html>

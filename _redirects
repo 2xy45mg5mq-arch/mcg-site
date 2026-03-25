@@ -38,6 +38,8 @@
 
 # Standalone project pages
 /hr               /hr.html             200
+/hr-trailer       /hr-trailer.html     200
+/HR-trailer       /hr-trailer           301
 /topfloor         /topfloor.html       200
 /kanvatan         /kanvatan.html       200
 

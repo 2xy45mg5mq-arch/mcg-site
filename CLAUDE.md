@@ -17,12 +17,13 @@
 
 ---
 
-## ACTIVE PAGES (14)
+## ACTIVE PAGES (15)
 
 | URL | File | Notes |
 |-----|------|-------|
 | `/` | index.html | Homepage |
 | `/hr` | hr.html | HR standalone |
+| `/hr-trailer` | hr-trailer.html | HR trailer standalone page |
 | `/topfloor` | topfloor.html | Top Floor pitch |
 | `/kanvatan` | kanvatan.html | Kan Vatan pitch |
 | `/about` | about.html | Career timeline |
@@ -104,7 +105,6 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 
 ## PENDING / DO NOT TOUCH
 
-- 9th festival laurel (Downtown Film Fest — no image yet)
 - Laurel images or festival counts (managed separately)
 - Top Floor game content (tfgame.html — separate workflow)
 

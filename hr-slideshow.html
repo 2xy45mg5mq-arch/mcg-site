@@ -508,6 +508,7 @@
       color: var(--accent) !important;
       opacity: 0.7;
       cursor: default;
+      display: none;
     }
     /* ── CONNECT MODAL ── */
     .modal-overlay {
@@ -579,6 +580,23 @@
       .nav-links a { font-size: 0.7rem; letter-spacing: 1px; }
       .ss-breadcrumb { top: 44px; padding: 0 24px; }
       .ss-breadcrumb a, .ss-breadcrumb span { font-size: 0.45rem; letter-spacing: 2px; }
+    }
+
+    /* CLICK ZONES */
+    .slide-click-zone {
+      position: fixed;
+      top: 0;
+      bottom: 44px; /* above the nav bar */
+      z-index: 10;
+      cursor: none;
+    }
+    .slide-click-prev {
+      left: 0;
+      width: 50%;
+    }
+    .slide-click-next {
+      right: 0;
+      width: 50%;
     }
 
     /* COPYRIGHT FOOTER */
@@ -729,6 +747,9 @@
 
   </div>
 
+  <div class="slide-click-zone slide-click-prev" id="clickPrev"></div>
+  <div class="slide-click-zone slide-click-next" id="clickNext"></div>
+
   <!-- NAV BAR -->
   <div class="nav-bar" id="navBar"></div>
 
@@ -825,6 +846,9 @@
       else if (e.key === ' ') { e.preventDefault(); paused = !paused; }
     });
 
+    document.getElementById('clickPrev').addEventListener('click', () => { elapsed = 0; prev(); });
+    document.getElementById('clickNext').addEventListener('click', () => { elapsed = 0; next(); });
+
     // Pause on hover content
     document.querySelectorAll('.slide-content').forEach(el => {
       el.addEventListener('mouseenter', () => paused = true);
@@ -837,7 +861,7 @@
       cursor.style.top = e.clientY + 'px';
     });
 
-    document.querySelectorAll('.slide-nav-item, a, .slide-arrow').forEach(el => {
+    document.querySelectorAll('.slide-nav-item, a, .slide-arrow, .slide-click-zone').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });

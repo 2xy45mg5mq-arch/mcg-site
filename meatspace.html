@@ -16,12 +16,12 @@
 <meta property="og:title" content="MEATSPACE">
 <meta property="og:description" content="A movie about a guy locked out of paradise. Written by Max Coyne-Green.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://coyne-green.com/images/meatspace-landscape.webp">
+<meta property="og:image" content="https://coyne-green.com/images/meatspace-hero.png">
 <meta property="og:url" content="https://coyne-green.com/meatspace">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MEATSPACE">
 <meta name="twitter:description" content="A movie about a guy locked out of paradise.">
-<meta name="twitter:image" content="https://coyne-green.com/images/meatspace-landscape.webp">
+<meta name="twitter:image" content="https://coyne-green.com/images/meatspace-hero.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -47,6 +47,34 @@
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at center, transparent 0%, transparent 35%, rgba(0,0,0,0.45) 100%),
+      radial-gradient(circle, rgba(255,255,255,0.085) 1px, transparent 1.5px),
+      radial-gradient(circle, rgba(192,57,43,0.05) 1px, transparent 1.5px);
+    background-size: 100% 100%, 22px 22px, 44px 44px;
+    background-position: center, 0 0, 11px 11px;
+    background-attachment: fixed, scroll, scroll;
+  }
+
+  /* Film grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    animation: grain 0.8s steps(4) infinite;
+  }
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-3%, 2%); }
+    40% { transform: translate(2%, -2%); }
+    60% { transform: translate(-2%, 3%); }
+    80% { transform: translate(3%, -1%); }
   }
 
   /* --- NAV --- */
@@ -88,15 +116,6 @@
   }
   .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
   .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
-  .dropdown .dropdown-group-label {
-    display: block; padding: 10px 20px 4px; font-size: 0.6rem; letter-spacing: 2px;
-    text-transform: uppercase; color: rgba(255,255,255,0.18);
-    border-top: 1px solid var(--border); margin-top: 4px; cursor: default;
-  }
-  .dropdown .dropdown-group-label:first-child { border-top: none; margin-top: 0; }
-  .dropdown a.dropdown-group-label { text-decoration: none; cursor: pointer; transition: color 0.2s; }
-  .dropdown a.dropdown-group-label:hover { color: rgba(255,255,255,0.4); background: transparent; }
-  .dropdown a.dropdown-sub { padding-left: 32px; }
   .nav-links > a, .nav-item > a { position: relative; }
   .nav-links > a::after, .nav-item > a::after {
     content: ''; position: absolute; bottom: -4px; left: 0;
@@ -104,90 +123,237 @@
   }
   .nav-links > a:hover::after, .nav-item > a:hover::after { width: 100%; }
 
-  .container {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 100px 40px 80px;
+  /* --- HERO --- */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: #0a0d10;
+  }
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,13,16,0.1) 0%, rgba(10,13,16,0) 30%, rgba(10,13,16,0.5) 70%, rgba(10,13,16,1) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero-intro {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    padding: 0 40px 60px;
+    text-align: center;
+    pointer-events: none;
+  }
+  .hero-intro p {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    color: #fff;
+    margin: 0 0 14px;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .hero-intro p:nth-child(1) {
+    display: inline-block;
+    max-width: 100%;
+  }
+  .hero-intro .typewriter {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid rgba(255,255,255,0.7);
+    width: 0;
+    animation: typing 6.5s steps(46, end) 0.6s forwards, caret 0.8s step-end 0.6s 9, caretFade 0.3s ease 8.7s forwards;
+  }
+  .hero-intro p:nth-child(2) {
+    opacity: 0;
+    animation: fadeUp 1s ease-out 7.5s forwards;
+  }
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  @keyframes caret {
+    50% { border-color: transparent; }
+  }
+  @keyframes caretFade {
+    to { border-color: transparent; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .scroll-arrow {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    z-index: 4;
+    color: rgba(255,255,255,0.6);
+    font-size: 1.4rem;
+    line-height: 1;
+    text-decoration: none;
+    pointer-events: auto;
+    opacity: 0;
+    animation: arrowIn 1s ease-out 8.7s forwards, bob 2.4s ease-in-out 8.7s infinite;
+  }
+  .scroll-arrow:hover { color: #fff; }
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+  @keyframes arrowIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(0); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
 
-  /* Body paragraphs */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 40px 80px;
+  }
+
+  .body-text + .body-text::before {
+    content: '\00B7';
+    display: block;
+    text-align: center;
+    color: var(--red);
+    font-size: 1.4rem;
+    line-height: 1;
+    margin: 4px 0 12px;
+    opacity: 0.7;
+  }
+
   .body-text {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
+    text-wrap: pretty;
+  }
+
+  .body-text.lead {
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.05rem;
+    margin-bottom: 36px;
   }
 
   .body-text .bold {
-    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    color: var(--red);
+    letter-spacing: 2px;
+    font-size: 1.1em;
+  }
+
+  .body-text .term {
+    font-style: italic;
     color: #fff;
   }
 
-  /* Title card — centered in middle of page */
+  /* Title card */
   .title-card {
     text-align: center;
-    padding: 48px 0 40px;
-    margin: 32px 0;
+    padding: 60px 0 50px;
+    margin: 48px 0 24px;
   }
 
   .title-card h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 14vw, 7.5rem);
-    letter-spacing: 18px;
+    font-size: clamp(4.5rem, 13vw, 10rem);
+    letter-spacing: clamp(2px, 0.6vw, 6px);
     color: var(--red);
-    line-height: 1;
-    margin-bottom: 16px;
+    line-height: 0.9;
+    margin-bottom: 28px;
+    text-indent: clamp(2px, 0.6vw, 6px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-shadow: 0 0 60px rgba(192, 57, 43, 0.25);
   }
 
   .title-card .rule {
-    width: 60px;
-    height: 3px;
+    width: 80px;
+    height: 2px;
     background: var(--red);
-    margin: 0 auto 20px;
+    margin: 0 auto 32px;
   }
 
-  .title-card .subtitle {
+  .title-card .pullquote {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 1.1rem;
     font-style: italic;
-    color: var(--muted);
-    margin-bottom: 32px;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+    color: var(--text);
+    line-height: 1.3;
+    max-width: 620px;
+    margin: 0 auto;
+    letter-spacing: 0.2px;
+    text-wrap: balance;
   }
 
-  .title-card .subtitle .accent {
-    color: var(--red);
+  .title-card .pullquote .red {
+    color: #fff;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: 0;
+    font-size: 1em;
   }
 
-  .title-card .byline-label {
+  .end-tagline {
+    display: block;
+    text-align: center;
+    margin: 48px 0 60px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 3px;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    letter-spacing: clamp(2px, 0.6vw, 6px);
+    line-height: 1;
+    color: #fff;
+    text-indent: clamp(2px, 0.6vw, 6px);
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .end-tagline:hover { opacity: 0.75; }
+  .end-tagline .accent { color: var(--red); }
+
+  .end-byline {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 36px;
+  }
+  .end-byline .byline-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
     color: var(--muted);
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
-
-  .title-card .byline-name {
+  .end-byline .byline-name {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     color: var(--text);
   }
 
-  /* Horizontal rule separator */
   .separator {
     border: none;
     border-top: 1px solid rgba(255,255,255,0.12);
-    margin: 36px 0;
+    margin: 48px 0;
   }
 
-  /* Bottom tagline */
-  .tagline {
-    font-family: 'EB Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: var(--muted);
-    margin-top: 36px;
-    margin-bottom: 48px;
-  }
 
-  /* CTA — centered */
+
   .cta-wrap {
     text-align: center;
     margin-top: 0;
@@ -291,15 +457,28 @@
   @media (max-width: 600px) {
     .nav-links { gap: 20px; }
     .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
-  }
-
-  @media (max-width: 600px) {
-    .container { padding: 80px 20px 60px; }
-    .title-card h1 { letter-spacing: 8px; }
+    .container { padding: 50px 20px 50px; max-width: 100%; }
     .modal { padding: 28px 20px; }
+    .hero { height: 70vh; min-height: 420px; }
+    body {
+      background-size: 100% 100%, 16px 16px, 32px 32px;
+    }
+    .body-text.lead { font-size: 1rem; }
+    .title-card { padding: 40px 0 32px; margin: 32px 0 16px; }
+    .title-card .rule { margin: 0 auto 22px; }
+    .title-card .pullquote { font-size: 1.2rem; max-width: 100%; }
+    .separator { margin: 32px 0; }
+    .end-tagline { font-size: clamp(2rem, 9vw, 3rem); margin: 36px 0 48px; white-space: nowrap; }
+    .end-byline { margin-top: 50px; }
+    .body-text + .body-text::before { font-size: 1.2rem; margin: 2px 0 8px; }
   }
 
-  /* COPYRIGHT FOOTER */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-media[data-video] { display: none; }
+    .hero-scroll-cue { animation: none; }
+    body::before { animation: none; }
+  }
+
   .copyright-footer {
     text-align: center;
     padding: 60px 20px 40px;
@@ -344,55 +523,55 @@
   </div>
 </nav>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-media" data-video autoplay muted playsinline poster="/images/meatspace-hero.png?v=1" id="heroVideo">
+    <source src="/images/meatspace-hero.mp4?v=1" type="video/mp4">
+  </video>
+  <img class="hero-media" src="/images/meatspace-hero.png?v=1" alt="MEATSPACE" style="display:none;" id="heroFallback">
+  <div class="hero-overlay"></div>
+</section>
 
-  <p class="body-text">It&rsquo;s like 2060. And things are pretty good.</p>
+<div class="container" id="story">
 
-  <p class="body-text">Dystopia never arrived. Instead, AI is aligned. Food is plentiful. Hardship is a memory.</p>
+  <p class="body-text lead">It&rsquo;s like 2050. And things are pretty good. Dystopia never arrived. AI is aligned, food is plentiful, hardship is a memory.</p>
 
-  <p class="body-text">Even the violent problem of male boredom has been solved. At Activity, Purpose, &amp; Education centers across the country, young APEs like <span class="bold">COBY</span> hang from ceilings in fully immersive Sensory Simulation Sacks. Indulging any VR fantasy or adventure they can imagine. Hunting lions on the moon and racing pirate ships with his bros.</p>
+  <p class="body-text">Even the violent problem of male boredom has been solved. At <span class="term">Activity, Purpose, &amp; Education</span> centers across the country, young APEs like <span class="bold">Coby</span> hang from ceilings in fully immersive <span class="term">Sensory Simulation Sacks</span> &mdash; indulging any VR fantasy they can imagine. Hunting lions on the moon. Racing pirate ships with the bros.</p>
 
-  <p class="body-text">But one day, Coby's sack malfunctions.</p>
-
-  <p class="body-text">And he gets stuck in a world he never wanted to explore:</p>
+  <p class="body-text">But one day, Coby&rsquo;s sack malfunctions. And he gets stuck in a world he never wanted to explore:</p>
 
   <div class="title-card">
     <h1>MEATSPACE</h1>
     <div class="rule"></div>
-    <p class="subtitle"><span class="accent">a movie</span> about a guy locked out of paradise</p>
-    <p class="byline-label">Written by</p>
-    <p class="byline-name">Max Coyne-Green</p>
+    <p class="pullquote">It&rsquo;s like <span class="red">The Matrix</span>. But backwards.</p>
   </div>
 
   <hr class="separator">
 
-  <p class="body-text">Trapped in actual reality, Coby will do anything to get back in the sack.</p>
+  <p class="body-text">Trapped in actual reality, Coby will do anything to get back in the sack. But the AI assistants can&rsquo;t fix the glitch &mdash; so he seeks out the only human tuner working on campus, <span class="bold">Mira</span>.</p>
 
-  <p class="body-text">But the AI assistants can&rsquo;t fix the glitch. So he seeks out the only human tuner working on campus, <span class="bold">MIRA</span>. But she has bad news: Coby's account is locked&mdash;he needs a DNA match from a family member to create a new one.</p>
+  <p class="body-text">Mira has bad news: Coby&rsquo;s account is locked. He&rsquo;ll need a DNA match from a family member to create a new one. Which means finding his brother, <span class="bold">Eli</span> &mdash; who lives on a technophobic compound in the woods, holding onto an older way of living.</p>
 
-  <p class="body-text">Which means finding his brother, <span class="bold">ELI</span>. And that&rsquo;s a big problem. Because Eli lives on a technophobic compound in the woods holding onto an older way of living.</p>
-
-  <p class="body-text">Mira agrees to take him. And along the way, Coby learns how useless he is in &ldquo;the real world.&rdquo; But he also starts to understand what it means to be human.</p>
+  <p class="body-text">Mira agrees to take him. Along the way, Coby learns how useless he is in &ldquo;the real world.&rdquo; But he also starts to understand what it might mean to be human.</p>
 
   <p class="body-text">When they reach the compound, Eli teaches his brother the meaning of struggle. Still, he agrees to take Coby back to his virtual heaven&hellip;</p>
 
   <p class="body-text">&hellip;with a secret plan to burn the sacks and free the APEs from their prison of endless comfort and stimulation.</p>
 
-  <p class="tagline">It&rsquo;s like The Matrix. But backwards.</p>
-
-  <div class="cta-wrap">
-    <a href="#" class="cta-btn" onclick="openConnectModal(); return false;">Connect</a>
+  <div class="end-byline">
+    <p class="byline-label">Written by</p>
+    <p class="byline-name">Max Coyne-Green</p>
   </div>
+
+  <a href="#" class="end-tagline" onclick="openConnectModal(); return false;">Get back in the <span class="accent">sack</span></a>
 
 </div>
 
-<!-- COPYRIGHT FOOTER -->
 <footer class="copyright-footer">
   <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
   <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
 </footer>
 
-<!-- CONNECT MODAL -->
 <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
   <div class="modal">
     <div id="connectFormState">
@@ -412,6 +591,11 @@
         <div class="modal-section">
           <div class="modal-section-label">I'm interested in</div>
           <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="meatspace" value="meatspace" checked>
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">Meatspace</span>
+            </label>
             <label class="checkbox-item">
               <input type="checkbox" name="human-resource" value="human-resource">
               <span class="checkbox-box"></span>
@@ -461,11 +645,11 @@
   </div>
 </div>
 
-<!-- Hidden Netlify form for build-time detection -->
 <form name="connect" netlify netlify-honeypot="bot-field" hidden>
   <input name="name">
   <input name="email">
   <input name="request">
+  <input name="meatspace" type="checkbox" value="meatspace">
   <input name="human-resource" type="checkbox" value="human-resource">
   <input name="top-floor" type="checkbox" value="top-floor">
   <input name="turkish-projects" type="checkbox" value="turkish-projects">
@@ -476,16 +660,41 @@
 </form>
 
 <script>
-  // Nav scroll
   window.addEventListener('scroll', function() {
     document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 80);
   });
 
-  // Connect modal
+  (function() {
+    var v = document.getElementById('heroVideo');
+    var img = document.getElementById('heroFallback');
+    if (!v) return;
+    v.addEventListener('error', function() {
+      v.style.display = 'none';
+      if (img) img.style.display = 'block';
+    });
+    v.addEventListener('ended', function() {
+      var target = document.getElementById('story');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Reset video when scrolled back to top
+    var hasEnded = false;
+    v.addEventListener('ended', function() { hasEnded = true; });
+    window.addEventListener('scroll', function() {
+      if (hasEnded && window.scrollY < 50) {
+        v.currentTime = 0;
+        v.play();
+        hasEnded = false;
+      }
+    });
+  })();
+
   function openConnectModal(preset) {
     var form = document.getElementById('connectForm');
     if (form) form.reset();
     document.getElementById('connectRequest').value = '';
+    var meatCb = form.querySelector('input[name="meatspace"]');
+    if (meatCb) meatCb.checked = true;
 
     var heading = document.getElementById('connectHeading');
     var message = document.getElementById('connectMessage');
@@ -494,10 +703,6 @@
       heading.textContent = preset.heading || "CONNECT";
       message.placeholder = preset.placeholder || "Optional message";
       document.getElementById('connectRequest').value = preset.request || '';
-      if (preset.interest) {
-        var cb = form.querySelector('input[name="interest"][value="' + preset.interest + '"]');
-        if (cb) cb.checked = true;
-      }
     } else {
       heading.textContent = "CONNECT";
       message.placeholder = "Optional message";
@@ -514,7 +719,6 @@
     document.body.style.overflow = '';
   }
 
-  // Form submission
   (function() {
     var form = document.getElementById('connectForm');
     if (!form) return;
@@ -555,7 +759,6 @@
     });
   })();
 
-  // Keyboard: Escape closes modal
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeConnectModal();
   });

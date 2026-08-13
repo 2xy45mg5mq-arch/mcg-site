@@ -11,7 +11,8 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MEATSPACE — A Movie About a Guy Locked Out of Paradise</title>
+<meta name="robots" content="noindex">
+<title>MEATSPACE — Treatment — A Movie About a Guy Locked Out of Paradise</title>
 <meta name="description" content="Meatspace is a satirical sci-fi feature about a young man locked out of VR paradise who must navigate real life for the first time. Written by Max Coyne-Green.">
 <meta property="og:title" content="MEATSPACE">
 <meta property="og:description" content="A movie about a guy locked out of paradise. Written by Max Coyne-Green.">
@@ -26,7 +27,8 @@
 <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="canonical" href="https://coyne-green.com/meatspace">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0d10;
@@ -38,13 +40,14 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #c0392b; color: #fff; }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Courier New', Courier, monospace;
     background: var(--bg);
     color: var(--text);
     font-size: 16px;
-    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -57,7 +60,6 @@
     background-attachment: fixed, scroll, scroll;
   }
 
-  /* Film grain overlay */
   body::before {
     content: '';
     position: fixed;
@@ -76,59 +78,52 @@
     60% { transform: translate(-2%, 3%); }
     80% { transform: translate(3%, -1%); }
   }
+  @media (prefers-reduced-motion: reduce) { body::before { animation: none; } }
 
-  /* --- NAV --- */
-  .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-  nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    padding: 24px 0; background: transparent; transition: all 0.4s;
+  /* ===== SIDE NAV ===== */
+  .side-nav {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 170px;
+    padding: 40px 0 40px 28px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
-  nav.scrolled {
-    background: rgba(10, 13, 16, 0.95); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border); padding: 16px 0;
+  .side-nav a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 0;
+    transition: color 0.2s;
+    cursor: pointer;
   }
-  nav .nav-container { display: flex; justify-content: space-between; align-items: center; }
-  .logo {
-    font-family: 'Bebas Neue', sans-serif; font-weight: 600; font-size: 1.1rem;
-    letter-spacing: 4px; color: var(--text); text-decoration: none;
-    opacity: 1; transition: opacity 0.3s;
+  .side-nav a:hover { color: #fff; }
+  .side-nav a.active { color: var(--red); }
+  .side-nav a.sub {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    padding: 3px 0 3px 16px;
   }
-  nav.scrolled .logo { opacity: 1; }
-  .nav-links { display: flex; gap: 40px; }
-  .nav-links a {
-    color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem;
-    font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-item { display: flex; align-items: center; position: relative; }
-  .nav-item > a { cursor: pointer; }
-  .dropdown {
-    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-    min-width: 160px; background: rgba(10, 13, 16, 0.98);
-    border: 1px solid var(--border); border-radius: 4px; padding: 8px 0;
-    opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; margin-top: 12px;
-  }
-  .nav-item:hover .dropdown, .nav-item .dropdown.open { opacity: 1; visibility: visible; }
-  .dropdown a {
-    display: block; padding: 10px 20px; color: rgba(255,255,255,0.6);
-    text-decoration: none; font-size: 0.75rem; letter-spacing: 1px;
-    text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
-  }
-  .dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-  .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
-  .nav-links > a, .nav-item > a { position: relative; }
-  .nav-links > a::after, .nav-item > a::after {
-    content: ''; position: absolute; bottom: -4px; left: 0;
-    width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
-  }
-  .nav-links > a:hover::after, .nav-item > a:hover::after { width: 100%; }
 
-  /* --- HERO --- */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  /* ===== HERO ===== */
   .hero {
     position: relative;
     width: 100%;
-    height: 100vh;
-    min-height: 600px;
+    height: 72vh;
+    min-height: 480px;
     overflow: hidden;
     background: #0a0d10;
   }
@@ -143,346 +138,227 @@
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(10,13,16,0.1) 0%, rgba(10,13,16,0) 30%, rgba(10,13,16,0.5) 70%, rgba(10,13,16,1) 100%);
+    background: linear-gradient(180deg, rgba(10,13,16,0.1) 0%, rgba(10,13,16,0) 45%, rgba(10,13,16,0.35) 82%, rgba(10,13,16,1) 100%);
     z-index: 2;
     pointer-events: none;
   }
-  .hero-intro {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 3;
-    padding: 0 40px 60px;
-    text-align: center;
-    pointer-events: none;
-  }
-  .hero-intro p {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: clamp(1rem, 1.6vw, 1.25rem);
-    color: #fff;
-    margin: 0 0 14px;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.7);
-    line-height: 1.55;
-    text-wrap: pretty;
-  }
-  .hero-intro p:nth-child(1) {
-    display: inline-block;
-    max-width: 100%;
-  }
-  .hero-intro .typewriter {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid rgba(255,255,255,0.7);
-    width: 0;
-    animation: typing 6.5s steps(46, end) 0.6s forwards, caret 0.8s step-end 0.6s 9, caretFade 0.3s ease 8.7s forwards;
-  }
-  .hero-intro p:nth-child(2) {
-    opacity: 0;
-    animation: fadeUp 1s ease-out 7.5s forwards;
-  }
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-  @keyframes caret {
-    50% { border-color: transparent; }
-  }
-  @keyframes caretFade {
-    to { border-color: transparent; }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .scroll-arrow {
-    position: absolute;
-    bottom: 18px;
-    left: 50%;
-    z-index: 4;
-    color: rgba(255,255,255,0.6);
-    font-size: 1.4rem;
-    line-height: 1;
-    text-decoration: none;
-    pointer-events: auto;
-    opacity: 0;
-    animation: arrowIn 1s ease-out 8.7s forwards, bob 2.4s ease-in-out 8.7s infinite;
-  }
-  .scroll-arrow:hover { color: #fff; }
-  @keyframes bob {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(6px); }
-  }
-  @keyframes arrowIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(0); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-  }
-
-  .container {
-    max-width: 860px;
+  .hero-title {
+    max-width: 760px;
     margin: 0 auto;
-    padding: 80px 40px 80px;
-  }
-
-  .body-text + .body-text::before {
-    content: '\00B7';
-    display: block;
+    padding: 44px 40px 0;
     text-align: center;
+  }
+  .hero-title h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 11vw, 8rem);
+    letter-spacing: clamp(2px, 0.6vw, 6px);
     color: var(--red);
-    font-size: 1.4rem;
-    line-height: 1;
-    margin: 4px 0 12px;
-    opacity: 0.7;
+    line-height: 0.9;
+    text-indent: clamp(2px, 0.6vw, 6px);
+    white-space: nowrap;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.6);
   }
-
-  .body-text {
-    margin-bottom: 12px;
-    text-wrap: pretty;
-  }
-
-  .body-text.lead {
-    font-weight: 700;
+  .hero-title .logline {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
     color: #fff;
+    line-height: 1.45;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+    margin-bottom: 26px;
+    text-wrap: balance;
+  }
+  .hero-title .byline-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-title .byline-name {
+    font-family: 'EB Garamond', Georgia, serif;
     font-size: 1.05rem;
-    margin-bottom: 36px;
+    color: var(--text);
   }
 
-  .body-text .bold {
+  /* ===== TYPOGRAPHY ===== */
+  .section-header {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    letter-spacing: clamp(2px, 0.5vw, 5px);
+    color: #fff;
+    text-align: center;
+    line-height: 1;
+    margin: 2.8em 0 0.7em;
+    scroll-margin-top: 40px;
+  }
+  #sec-world { margin-top: 0.6em; }
+  #sec-story > h2.section-header,
+  #sec-characters,
+  #sec-writer {
+    margin-top: 4.2em;
+  }
+  .section-header .accent { color: var(--red); }
+
+  p { text-wrap: pretty; line-height: 1.25; margin-top: 0.8em; }
+  p.scene { margin-top: 2em; }
+  p.first { margin-top: 0; }
+
+  .bold {
     font-family: 'Bebas Neue', sans-serif;
     font-weight: 400;
     color: var(--red);
     letter-spacing: 2px;
     font-size: 1.1em;
   }
-
-  .body-text .term {
-    font-style: italic;
-    color: #fff;
-  }
-
-  /* Title card */
-  .title-card {
-    text-align: center;
-    padding: 60px 0 50px;
-    margin: 48px 0 24px;
-  }
-
-  .title-card h1 {
+  .gray {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4.5rem, 13vw, 10rem);
-    letter-spacing: clamp(2px, 0.6vw, 6px);
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 2px;
+    font-size: 1.1em;
+  }
+  .lead {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 2px;
+    font-size: 1.1em;
+  }
+  .term { font-style: italic; color: #fff; }
+  .cutline {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 2em;
+  }
+
+  /* ===== MID TITLE CARD ===== */
+  .mid-card { margin-top: 0.8em; }
+  .mid-card .stuck { line-height: 1.45; }
+  .mid-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    letter-spacing: clamp(2px, 0.5vw, 5px);
     color: var(--red);
-    line-height: 0.9;
-    margin-bottom: 28px;
-    text-indent: clamp(2px, 0.6vw, 6px);
+    line-height: 0.95;
+    text-indent: clamp(2px, 0.5vw, 5px);
     white-space: nowrap;
-    overflow: hidden;
+    text-align: center;
+    margin: 24px 0 18px;
   }
-
-  .title-card .rule {
-    width: 80px;
-    height: 2px;
-    background: var(--red);
-    margin: 0 auto 32px;
-  }
-
-  .title-card .pullquote {
+  .mid-card .tagline {
     font-family: 'EB Garamond', Georgia, serif;
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+    font-size: clamp(1.15rem, 2.6vw, 1.7rem);
     color: var(--text);
     line-height: 1.3;
-    max-width: 620px;
-    margin: 0 auto;
-    letter-spacing: 0.2px;
-    text-wrap: balance;
-  }
-
-  .title-card .pullquote .red {
-    color: #fff;
-    font-family: 'EB Garamond', Georgia, serif;
-    font-style: italic;
-    font-weight: 600;
-    letter-spacing: 0;
-    font-size: 1em;
-  }
-
-  .end-tagline {
-    display: block;
-    text-align: center;
-    margin: 48px 0 60px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    letter-spacing: clamp(2px, 0.6vw, 6px);
-    line-height: 1;
-    color: #fff;
-    text-indent: clamp(2px, 0.6vw, 6px);
-    text-decoration: none;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .end-tagline:hover { opacity: 0.75; }
-  .end-tagline .accent { color: var(--red); }
-
-  .end-byline {
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 36px;
-  }
-  .end-byline .byline-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 4px;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .end-byline .byline-name {
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: 1.2rem;
-    color: var(--text);
-  }
-
-  .separator {
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.12);
-    margin: 48px 0;
-  }
-
-
-
-  .cta-wrap {
     text-align: center;
     margin-top: 0;
   }
-  .cta-btn {
+  .mid-card .tagline .w { color: #fff; font-weight: 600; }
+
+  /* ===== END CARD ===== */
+  .end-card { text-align: center; margin-top: 3.4em; }
+  .end-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    letter-spacing: clamp(2px, 0.5vw, 5px);
+    color: var(--red);
+    line-height: 0.95;
+    text-indent: clamp(2px, 0.5vw, 5px);
+    white-space: nowrap;
+  }
+
+  /* ===== COLLAPSIBLE ACTS ===== */
+  .act-block { scroll-margin-top: 40px; }
+  .act-preview .blurb {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--text);
+    text-align: center;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .read-wrap { text-align: center; margin-top: 26px; }
+  .read-btn {
     display: inline-block;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: #fff;
-    padding: 14px 40px;
-    text-decoration: none;
+    color: var(--red);
+    background: transparent;
+    border: 1px solid var(--red);
+    padding: 10px 30px;
     cursor: pointer;
-    border: none;
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.25s, color 0.25s;
   }
-  .cta-btn:hover {
-    background: var(--text);
-    color: var(--bg);
-  }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.92);
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    z-index: 200; display: flex; align-items: center; justify-content: center;
-    opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
-  }
-  .modal-overlay.active { opacity: 1; visibility: visible; }
-  .modal {
-    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-    padding: 40px; max-width: 480px; width: 90%;
-    max-height: 90vh; overflow-y: auto;
-    transform: translateY(20px); transition: transform 0.3s;
-  }
-  .modal-overlay.active .modal { transform: translateY(0); }
-  @media (max-width: 768px) {
-    .modal-overlay { align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 60px 16px 24px; }
-    .modal { max-height: none; }
-  }
-  .modal h2 {
-    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 4px;
-    text-align: center; margin-bottom: 4px; color: var(--text);
-  }
-  .modal-subtitle {
-    text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 28px;
-  }
-  .modal-section { margin-bottom: 24px; }
-  .modal-section-label {
+  .read-btn:hover { background: var(--red); color: #fff; }
+  .act-full { display: block; }
+  .act-block.open .act-full { display: block; }
+  .act-block.open .act-preview { display: none; }
+  .collapse-wrap { text-align: center; margin-top: 34px; }
+  .collapse-btn {
+    display: inline-block;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 10px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
   }
-  .modal-input {
-    display: block; width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
-    padding: 12px 16px; color: var(--text); font-family: 'EB Garamond', Georgia, serif;
-    font-size: 1rem; margin-bottom: 10px; outline: none; transition: border-color 0.2s;
-  }
-  .modal-input:focus { outline: none; border-color: var(--muted); }
-  .modal-input::placeholder { color: var(--muted); }
-  .modal-textarea {
-    display: block; width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
-    padding: 12px 16px; color: var(--text); font-family: 'EB Garamond', Georgia, serif;
-    font-size: 1rem; resize: vertical; min-height: 100px; outline: none; transition: border-color 0.2s;
-  }
-  .modal-textarea:focus { outline: none; border-color: var(--muted); }
-  .modal-textarea::placeholder { color: var(--muted); }
-  .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
-  .modal-btn {
-    flex: 1; padding: 12px 20px; border: none; border-radius: 4px;
-    font-family: 'Bebas Neue', sans-serif; font-size: 0.7rem; letter-spacing: 2px;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .modal-btn-primary { background: rgba(255,255,255,0.15); color: var(--text); }
-  .modal-btn-primary:hover { background: rgba(255,255,255,0.25); }
-  .modal-btn-secondary { background: rgba(255,255,255,0.05); color: var(--muted); }
-  .modal-btn-secondary:hover { background: rgba(255,255,255,0.08); }
-  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
-  .checkbox-item {
-    display: flex; align-items: center; gap: 10px; cursor: pointer;
-    font-size: 0.95rem; color: rgba(255,255,255,0.7);
-  }
-  .checkbox-item input { display: none; }
-  .checkbox-box {
-    width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 3px; flex-shrink: 0; position: relative; transition: all 0.2s;
-  }
-  .checkbox-item input:checked + .checkbox-box {
-    background: rgba(255,255,255,0.2); border-color: var(--text);
-  }
-  .checkbox-item input:checked + .checkbox-box::after {
-    content: ''; position: absolute; top: 2px; left: 5px;
-    width: 4px; height: 8px; border: solid var(--text);
-    border-width: 0 2px 2px 0; transform: rotate(45deg);
-  }
-  .checkbox-label { font-size: 0.95rem; }
+  .collapse-btn:hover { color: #fff; }
 
-  @media (max-width: 600px) {
-    .nav-links { gap: 20px; }
-    .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
-    .container { padding: 50px 20px 50px; max-width: 100%; }
-    .modal { padding: 28px 20px; }
-    .hero { height: 70vh; min-height: 420px; }
-    body {
-      background-size: 100% 100%, 16px 16px, 32px 32px;
+  /* ===== MOBILE ===== */
+  @media (max-width: 900px) {
+    .side-nav {
+      flex-direction: row;
+      width: 100%;
+      bottom: auto;
+      padding: 12px 16px;
+      gap: 14px;
+      overflow-x: auto;
+      background: rgba(10, 13, 16, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+      white-space: nowrap;
     }
-    .body-text.lead { font-size: 1rem; }
-    .title-card { padding: 40px 0 32px; margin: 32px 0 16px; }
-    .title-card .rule { margin: 0 auto 22px; }
-    .title-card .pullquote { font-size: 1.2rem; max-width: 100%; }
-    .separator { margin: 32px 0; }
-    .end-tagline { font-size: clamp(2rem, 9vw, 3rem); margin: 36px 0 48px; white-space: nowrap; }
-    .end-byline { margin-top: 50px; }
-    .body-text + .body-text::before { font-size: 1.2rem; margin: 2px 0 8px; }
+    .side-nav a.sub { padding-left: 0; }
+    .side-nav::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 28px;
+      background: linear-gradient(to right, transparent, rgba(10,13,16,0.95));
+      pointer-events: none;
+    }
+    .container { padding: 40px 22px 70px; }
+    .hero { height: 78vh; min-height: 440px; }
+    .hero-title { padding-bottom: 40px; }
+    body { background-size: 100% 100%, 16px 16px, 32px 32px; }
+    .section-header, .act-block { scroll-margin-top: 70px; }
+  }
+  @media (min-width: 901px) {
+    .view { margin-left: 170px; }
+    .hero { margin-left: -170px; width: calc(100% + 170px); }
+    .copyright-footer { margin-left: 170px; }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-media[data-video] { display: none; }
-    .hero-scroll-cue { animation: none; }
-    body::before { animation: none; }
-  }
-
+  /* ===== FOOTER ===== */
   .copyright-footer {
     text-align: center;
     padding: 60px 20px 40px;
     border-top: 1px solid var(--border);
-    margin-top: 0;
   }
   .copyright-footer p {
     color: var(--muted);
@@ -499,77 +375,653 @@
     margin-bottom: 12px;
     opacity: 0.6;
   }
+  @media print {
+    .copyright-footer { margin-left: 0 !important; border-color: #ccc !important; }
+    .copyright-footer p { color: #444 !important; opacity: 1 !important; }
+  }
 
-    /* Accessible keyboard focus ring */
-    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-      outline: 2px solid #b8a472;
-      outline-offset: 2px;
+  /* ===== PROGRESS BAR ===== */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--red);
+    z-index: 300;
+    transition: width 0.08s linear;
+  }
+
+  /* ===== DRAMATIC LOGLINE REVEAL ===== */
+  .hero-title .logline-line1,
+  .hero-title .logline-line2 {
+    display: block;
+    opacity: 0;
+    transform: translateY(16px);
+    letter-spacing: 0.1em;
+    animation: dramaticLine 0.55s cubic-bezier(.16,.84,.24,1) forwards;
+  }
+  .hero-title .logline-line1 { animation-delay: 0.1s; }
+  .hero-title .logline-line2 { animation-delay: 0.45s; }
+  .hero-title .logline-final {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(10px);
+    font-weight: 600;
+    color: var(--red);
+    animation: dramaticLine 0.5s cubic-bezier(.16,.84,.24,1) 1.3s forwards;
+  }
+  @keyframes dramaticLine {
+    0% { opacity: 0; transform: translateY(16px); letter-spacing: 0.1em; }
+    100% { opacity: 1; transform: translateY(0); letter-spacing: normal; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title .logline-line1, .hero-title .logline-line2, .hero-title .logline-final { opacity: 1; transform: none; letter-spacing: normal; animation: none; }
+  }
+
+  /* ===== ONE GLITCH, ONCE ===== */
+  .mid-card.glitch-once {
+    animation: glitchFlicker 0.5s steps(7, end) 1;
+  }
+  .mid-card.glitch-once h2 {
+    animation: glitchSplit 0.5s steps(5, end) 1;
+  }
+  @keyframes glitchFlicker {
+    0% { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+    10% { filter: brightness(1.8) contrast(1.4); transform: translate(-3px, 1px); }
+    20% { filter: brightness(0.6) contrast(1.6); transform: translate(3px, -1px); }
+    30% { filter: brightness(1.4) contrast(1); transform: translate(-2px, 0); }
+    45% { filter: brightness(0.8) contrast(1.3); transform: translate(2px, 1px); }
+    60% { filter: brightness(1.6) contrast(1); transform: translate(-1px, -1px); }
+    75% { filter: brightness(1) contrast(1.2); transform: translate(1px, 0); }
+    100% { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+  }
+  @keyframes glitchSplit {
+    0% { text-shadow: none; }
+    15% { text-shadow: -2px 0 rgba(255,0,60,0.7), 2px 0 rgba(0,220,255,0.7); }
+    30% { text-shadow: 2px 0 rgba(255,0,60,0.7), -2px 0 rgba(0,220,255,0.7); }
+    45% { text-shadow: -1px 0 rgba(255,0,60,0.6), 1px 0 rgba(0,220,255,0.6); }
+    60% { text-shadow: 1px 0 rgba(255,0,60,0.5), -1px 0 rgba(0,220,255,0.5); }
+    100% { text-shadow: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mid-card.glitch-once, .mid-card.glitch-once h2 { animation: none; }
+  }
+
+  /* ===== END CTA ===== */
+  .end-cta {
+    display: block;
+    text-align: center;
+    margin: 40px 0 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5.5vw, 3.6rem);
+    letter-spacing: clamp(2px, 0.5vw, 5px);
+    line-height: 1;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .end-cta:hover { opacity: 0.75; }
+  .end-cta .accent { color: var(--red); }
+
+  /* ===== PRINT ===== */
+  @media print {
+    #progress-bar, .side-nav, .hero { display: none !important; }
+    body::before { display: none !important; }
+    body {
+      background: #fff !important;
+      color: #111 !important;
+      background-image: none !important;
     }
-  </style>
+    .view { margin-left: 0 !important; display: block !important; }
+    .section-header, .title-card h1, .mid-card h2, .end-card h2, .hero-title h1 { color: #900 !important; text-shadow: none !important; }
+    .term, .end-cta, .hero-title .byline-name, .mid-card .tagline { color: #111 !important; }
+    .bold, .gray, .lead { color: #900 !important; }
+    .end-cta { color: #111 !important; }
+    .end-cta .accent { color: #900 !important; }
+    p, .body-text { text-shadow: none !important; }
+    .mid-card.glitch-once, .mid-card.glitch-once h2 { animation: none !important; text-shadow: none !important; filter: none !important; transform: none !important; }
+    .mid-card { break-inside: avoid; }
+    .section-header { break-after: avoid; }
+  }
+</style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-container">
-    <a href="/" class="logo">MCG</a>
-    <div class="nav-links">
-      <div class="nav-item">
-        <a href="#" onclick="return false;">Work</a>
-        <div class="dropdown" style="min-width:200px;">
-          <a href="/hr">Human Resource</a>
-          <a href="/topfloor">Top Floor</a>
-          <div class="dropdown-divider"></div>
-          <a href="/turkiye">T&uuml;rk Projeleri</a>
-        </div>
-      </div>
-      <a href="/about">About</a>
-      <a href="#" onclick="openConnectModal(); return false;">Connect</a>
-    </div>
-  </div>
+<div id="progress-bar"></div>
+
+<nav class="side-nav" id="nav">
+  <a data-view="treatment" data-target="sec-world">WORLD</a>
+  <a data-view="treatment" data-target="sec-story">STORY</a>
+  <a class="sub" data-view="treatment" data-target="sec-story" data-open="coldopen">COLD OPEN</a>
+  <a class="sub" data-view="treatment" data-target="sec-act1" data-open="act1">ACT 1</a>
+  <a class="sub" data-view="treatment" data-target="sec-act2" data-open="act2">ACT 2</a>
+  <a class="sub" data-view="treatment" data-target="sec-act3" data-open="act3">ACT 3</a>
+  <a class="sub" data-view="treatment" data-target="sec-act4" data-open="act4">ACT 4</a>
+  <a data-view="ideas" data-target="sec-ideas">IDEAS</a>
+  <a data-view="ideas" data-target="sec-characters">CHARACTERS</a>
+  <a data-view="ideas" data-target="sec-writer">WRITER</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <video class="hero-media" data-video autoplay muted playsinline id="heroVideo">
-    <source src="/images/meatspace-hero.mp4?v=1" type="video/mp4">
-  </video>
-  <img class="hero-media" src="/images/meatspace-hero.png?v=1" alt="MEATSPACE" style="display:none;" id="heroFallback">
-  <div class="hero-overlay"></div>
-</section>
+<!-- ============ TREATMENT VIEW ============ -->
+<div class="view active" id="view-treatment">
 
-<div class="container" id="story">
+  <div class="hero">
+    <img class="hero-media" src="images/meatspace-hero.png" alt="" style="z-index:0;">
+    <video class="hero-media" id="heroVideo" muted loop playsinline poster="images/meatspace-hero.png">
+      <source src="images/meatspace-hero.mp4" type="video/mp4">
+    </video>
+    <script>
+      (function() {
+        var v = document.getElementById('heroVideo');
+        if (window.matchMedia('(min-width: 901px)').matches) {
+          v.autoplay = true;
+          v.play().catch(function() {});
+        }
+      })();
+    </script>
+    <div class="hero-overlay"></div>
+  </div>
 
-  <p class="body-text lead">It&rsquo;s like 2050. And things are pretty good. Dystopia never arrived. AI is aligned, food is plentiful, hardship is a memory.</p>
-
-  <p class="body-text">Even the violent problem of male boredom has been solved. At <span class="term">Activity, Purpose, &amp; Education</span> centers across the country, young APEs like <span class="bold">Coby</span> hang from ceilings in fully immersive <span class="term">Sensory Simulation Sacks</span> &mdash; indulging any VR fantasy they can imagine. Hunting lions on the moon. Racing pirate ships with the bros.</p>
-
-  <p class="body-text">But one day, Coby&rsquo;s sack malfunctions. And he gets stuck in a world he never wanted to explore:</p>
-
-  <div class="title-card">
+  <div class="hero-title">
     <h1>MEATSPACE</h1>
-    <div class="rule"></div>
-    <p class="pullquote">It&rsquo;s like <span class="red">The Matrix</span>. But backwards.</p>
+    <p class="logline"><span class="logline-line1">a guy locked out of virtual paradise</span><span class="logline-line2">must learn to navigate a terrifying new world: <span class="logline-final">actual reality</span></span></p>
+    <div class="byline-label">Written by</div>
+    <div class="byline-name">Max Coyne-Green</div>
   </div>
 
-  <hr class="separator">
+  <div class="container">
 
-  <p class="body-text">Trapped in actual reality, Coby will do anything to get back in the sack. But the AI assistants can&rsquo;t fix the glitch &mdash; so he seeks out the only human tuner working on campus, <span class="bold">Mira</span>.</p>
+    <h2 class="section-header" id="sec-world">WORLD</h2>
 
-  <p class="body-text">Mira has bad news: Coby&rsquo;s account is locked. He&rsquo;ll need a DNA match from a family member to create a new one. Which means finding his brother, <span class="bold">Eli</span> &mdash; who lives on a technophobic compound in the woods, holding onto an older way of living.</p>
+    <p class="first">It's like 2070. And things are fine.</p>
+    <p>Really. After decades of hype, dystopia never arrived. Instead, the combination of well-aligned AI and robotics have eliminated hunger, disease, and demand for labor.</p>
+    <p>For the first time in human history, people have everything they need. And thanks to fully-immersive VR Sensory Simulation Sacks, <span class="term">everything they want.</span></p>
+    <p>With UBI, normies don't have to work. Instead, they spend their lives grazing an unlimited buffet of virtual stimulations in sackspace.</p>
+    <p>"Jobs" still exist. But only for an elite caste of <span class="bold">TUNERS</span> overseeing the automated systems that oversee everything else. With a sense of <span class="term">noblesse oblige</span>, they maintain traditional human practices such as study and work, despite their tech addiction and looming obsolescence.</p>
+    <p>Out in the woods, though, extremist luddite <span class="bold">ORGANICS</span> live a simpler life, insisting that humanity is defined by purpose and suffering.</p>
+    <p>But suffering isn't really a <span class="term">thing</span> anymore. Even the perpetually violent risk of male boredom has been neutralized by VR-FOR-ALL.</p>
+    <p>Now, young men known as <span class="bold">APEs</span> hang in fully-subsidized sacks at Activity, Purpose, &amp; Education centers around the country &mdash; indulging any fantasy they could possibly imagine&hellip;</p>
+    <p>&hellip;leaving everyone else at peace.</p>
 
-  <p class="body-text">Mira agrees to take him. Along the way, Coby learns how useless he is in &ldquo;the real world.&rdquo; But he also starts to understand what it might mean to be human.</p>
+    <!-- ===== STORY / COLD OPEN ===== -->
+    <div class="act-block" id="sec-story" data-act="coldopen">
+      <h2 class="section-header">STORY</h2>
 
-  <p class="body-text">When they reach the compound, Eli teaches his brother the meaning of struggle. Still, he agrees to take Coby back to his virtual heaven&hellip;</p>
+      <div class="act-full">
+        <p class="first"><span class="lead">COBY</span> shimmies through a vent shaft.</p>
+        <p>Tan. Lean. Rifle in hands. Radio in ear. This is a hostage rescue mission. And tonight, it's his job to take the shot.</p>
+        <p>But when he sees HOSTILES through a grate, he hesitates and the&mdash;</p>
+        <p>VENT SHAFT COLLAPSES and DROPS COBY into the lion's den.</p>
+        <p>His TEAM SWOOPS IN, eliminates the hostiles, and saves the hostages.</p>
+        <p>As the dust settles, the apparent leader grabs Coby's shoulder &mdash; and calls him a pussy.</p>
+        <div class="cutline">CUT TO:</div>
+        <p class="scene"><span class="lead">A ROOFTOP BAR</span> where the team sips cocktails with some BABES.</p>
+        <p>One of the Babes notices Coby in the corner, looking insecure. She straddles him, seductively finishes his drink, then pulls his hand toward her chest. As he reaches to touch the tatas&mdash;</p>
+        <p>HIS HAND FREEZES.</p>
+        <p>He tries to move, but he can't.</p>
+        <p>THE SKYLINE GLITCHES AS:</p>
+        <p class="scene"><span class="lead">COBY DROPS</span> erection-first onto a linoleum floor, followed by the&mdash;</p>
+        <p>SLAP of his pale, flabby gut.</p>
+        <p>Hanging from the ceiling above him: his torn VR simulation sack.</p>
+        <p>He peels himself off the floor&hellip;</p>
+        <p>&hellip;revealing rows of sacks hanging from the ceiling, with men inside&hellip;</p>
+        <p>&hellip;BONERS thrusting in the air.</p>
+        <p>They're still in virtual heaven.</p>
+        <div class="mid-card">
+          <p class="stuck">Coby's stuck in:</p>
+          <h2>MEATSPACE</h2>
+          <p class="tagline">It's like <span class="w">The Matrix</span>. But backwards.</p>
+        </div>
+      </div>
+    </div>
 
-  <p class="body-text">&hellip;with a secret plan to burn the sacks and free the APEs from their prison of endless comfort and stimulation.</p>
+    <!-- ===== ACT ONE ===== -->
+    <div class="act-block" id="sec-act1" data-act="act1">
+      <h2 class="section-header">ACT <span class="accent">ONE</span></h2>
 
-  <div class="end-byline">
-    <p class="byline-label">Written by</p>
-    <p class="byline-name">Max Coyne-Green</p>
+      <div class="act-full">
+        <p class="first">opens at lunch. With lab-grown meat and vertically-farmed produce, the food is fine. But the vibe is brutal. The other APEs are roasting Coby for hesitating during the hostage run. <span class="term">They've done it five times.</span></p>
+        <p>At 32, he's older than the rest. And he's used to taking their shit.</p>
+        <p>But with his sack busted, there's nothing to distract him. No more hostage rescues. No more golf on the moon. And certainly no more rooftop tatas.</p>
+        <p>So he finds the Resident Advisor (an ATM-looking chatbot). But Coby's user profile is locked. And there's only one person who can help.</p>
+        <p>Literally.</p>
+        <p class="scene"><span class="lead">MIRA</span> is the single human TUNER at the facility.</p>
+        <p>At 30, she's educated and nostalgic &mdash; reading paper books and obsessing over the 2010s, when things were normal and interesting.</p>
+        <p>Alone in the control room, Mira's briefed by the <span class="gray">MANAGING MODEL</span>. Regulations require human oversight, so the Model presents her decisions to approve. Mira clicks APPROVE one by one.</p>
+        <p>This is basically the job, along with handling edge cases the models aren't legally permitted to handle themselves.</p>
+        <p>And Coby is definitely an edge case. The APE facilities were designed to provide state-of-the-art VR to men in their "Peak Risk" phase of 16-25. But there wasn't a plan for when they got older. And as one of the first residents, Coby is one of the oldest.</p>
+        <p>So old, Mira explains, the system has locked his profile. Even Mira can't reset it. They need biometric verification to prove he's him. From a family member.</p>
+        <p>He says he doesn't have any. And he'll just wait until the system "figures it out" like it always does.</p>
+        <p>But it doesn't.</p>
+        <p class="scene"><span class="lead">THE NEXT MORNING</span>, Coby watches all the other APEs wake up and head straight for their sacks. He tries to follow, but is denied.</p>
+        <p>Instead, he's stuck in the Traditional Recreation room with books he can't read and vintage media he can't stand to passively consume.</p>
+        <p>Watching <span class="term">The Matrix</span> is lame once you've fought Agent Smith yourself.</p>
+        <p>After 16 years in virtual heaven, this is visceral hell.</p>
+        <p>Through the glass, he watches sacks sway, imagining APEs happily fighting dragons and banging models on intergalactic yachts. But there's no way back into these worlds.</p>
+        <p>Until he notices a vent shaft above him.</p>
+        <p class="scene"><span class="lead">COBY</span> climbs through the vent shaft. Just as he did in the hostage rescue, he scooches his body through metal.</p>
+        <p>But that was virtual reality. In <span class="term">actual</span> reality, he's chunky and weaker. Muscles atrophied.</p>
+        <p>The plan? Sneak into the sack room. The problem?</p>
+        <p>The VENT COLLAPSES and COBY DROPS right onto an occupied sack, which rips off the ceiling and plops to the floor.</p>
+        <p>Under Coby's body, a naked APE SCREAMS.</p>
+        <p>Coby leaps to his feet but the naked APE grabs him by the pants and RIPS them off as Coby runs away&hellip;</p>
+        <p>&hellip;straight to the first door he sees.</p>
+        <p>But he can't read the word "EMERGENCY EXIT" and soon finds himself:</p>
+        <p class="scene"><span class="lead">OUTSIDE THE FACILITY</span> bare ass in a sea of grass.</p>
+        <p>The door locks behind him.</p>
+        <p>As he looks around, he realizes he forgot what it was like outside. In the real world. In nature.</p>
+        <p><span class="term">It fucking sucks.</span></p>
+        <p>Sun scorches his pale skin. The grass makes him sneeze. And his eyes are dripping with tears as they encounter natural light for the first time in 16 years.</p>
+        <p>He scrambles to find the entrance. Of course, no one's working the door. And before he can try to scan his retina&hellip;</p>
+        <p>BEEP BEEP</p>
+        <p>&hellip;someone's behind him in a car.</p>
+        <p>Mira lowers the back window. She says he's not getting inside that building until they reset his account. But she has good news.</p>
+        <p>"I found your brother," Mira shields her eyes from his pale dangling dick while she passes him a change of clothes. "Get in."</p>
+      </div>
+    </div>
+
+    <!-- ===== ACT TWO ===== -->
+    <div class="act-block" id="sec-act2" data-act="act2">
+      <h2 class="section-header">ACT <span class="accent">TWO</span></h2>
+
+      <div class="act-full">
+        <p class="first">takes Coby and Mira through empty towns and towering forests. With Normies spending most of their time in sackspace and not having kids, they don't need much room. So nature is reclaiming the land.</p>
+        <p>After a bit, Mira pulls out a book. Coby squints at it, confused. He can't read the title: <span class="term">ESCAPING HEAVEN</span> by ELI BLACK.</p>
+        <p>Mira says it's "girl stuff" he wouldn't understand. But Coby knows <span class="term">all about women</span>. Last week, for example, he sailed to The Bahamas with a ship full of pirate wenches. Mira snorts.</p>
+        <p>Feeling judged, Coby asks why she's even helping him. Mira says it's her job. And, she mutters, <span class="term">no one will even notice she's gone.</span></p>
+        <p class="scene"><span class="lead">PAUL</span> wakes up to the smell of bacon in his bed.</p>
+        <p>A woman named <span class="gray">LAURIE</span> races in from the kitchen and jumps onto him playfully. Golden light streams in. But it's <span class="term">sunset</span> golden, not sunrise. It bothers him.</p>
+        <p>But before he can fix it, he hears: "PAUL!" like the voice of god.</p>
+        <p>He opens a tanning-bed-looking machine and finds his wife <span class="gray">SHARON</span>, who asks who he was "in there" with. He says he was working.</p>
+        <p>"Then why do you have an erection!?" she demands.</p>
+        <p>As he covers his crotch, we see the body of a typical 80 year old tuner &mdash; lean, tan, with fully updated skin and organs.</p>
+        <p>Paul claims that he was testing something for work, "Right, Penny?"</p>
+        <p>A female voice says: "That's right, Sharon. He was testing something for work."</p>
+        <p>Sharon knows his Assistant Model PENNY has to do whatever Paul says. But Paul insists he's really busy and has things to do.</p>
+        <p>"He really does," Penny chimes in, to Paul's surprise. "Today is a big day."</p>
+        <p class="scene"><span class="lead">THE CAR RINGS</span> and Mira's teeth clench. She tells Coby to shush, <span class="term">it's her boss.</span> Then answers: "Hi Dad." When Paul asks why she's not at the office, she says she's visiting another facility.</p>
+        <p>But Paul says he needs her by 5pm for a party to celebrate the VR pilot program. "It's customary. We're going to barbeque, like we used to do with Mom!"</p>
+        <p>As Mira rolls her eyes, Coby blurts "I love barbeque!".</p>
+        <p>FUCK. Mira explains that this is, um, the Tuner taking her for the site visit.</p>
+        <p>Paul says they can do that tomorrow. Tonight, he should be their guest! And he won't take no for an answer!</p>
+        <p>Before she can protest, Paul remotely resets the car navigation, then hangs up.</p>
+        <p>As the CAR U-TURNS, Coby excitedly asks what new VR tech they're getting. Extremely annoyed, Mira says he's not getting anything until they fix his account. And they just added another day to the process.</p>
+        <p>Coby doesn't understand why her dad can't help.</p>
+        <p>Mira sighs. "Because those facilities weren't built for you, Coby. They were built for us."</p>
+        <p>But the subtlety goes over his head and she's forced to clarify: "You're not supposed to leave."</p>
+        <p>"Why would I want to leave?"</p>
+        <p class="scene"><span class="lead">PROSPERITY LAKE</span> glides past the car windows. Coby gawks at stone houses, old-growth oaks, and a 140-year old serving a tennis ball 90mph. Thanks to medical science and body modification, the Tuners are mostly ancient but physically immaculate.</p>
+        <p>On the community lawn, robots set tables outside the Museum of Culture &mdash; a glass building honoring art and technology. Coby spots a petrol powered, human-operated 1970s Mustang inside, and says he's driven one before.</p>
+        <p>Mira hates the museum. She says it's a superficial reminder of life when it was challenging and interesting. But Coby thinks it's cool. In fact, he loves history. He plays Civilization Clash all the time, and recently extended the Ottoman Empire all the way to Japan. "I'm the Grand Vizier. Everyone thinks you should be the Sultan, but that basically guarantees getting strangled."</p>
+        <p>"You are not the Grand Vizier, Coby. Not tonight. Tonight, you are a normal reality manager at a facility for young men."</p>
+        <p>She explains that no one will notice, because no one really notices anything. The Tuners have these in-person engagements to distinguish from the sackdwelling masses. But they're as addicted as anyone else.</p>
+        <p>"Addicted to what?" asks Coby.</p>
+        <p class="scene"><span class="lead">PAUL</span> looks at himself in a mirror, in a Hawaiian shirt. Unhappy.</p>
+        <p>"I think it's fun. This is a barbeque. Isn't it supposed to be fun?" Laurie asks from a chair behind him.</p>
+        <p>But Paul says this is a professional celebration. It's serious.</p>
+        <p>"Right. You need to show the community you still have purpose. This is more than a party, it's a statement."</p>
+        <p>Paul shoots Laurie a harsh look.</p>
+        <p>Laurie quickly apologizes and says she was reading between the lines. <span class="term">"Should I try again with a more appropriate response?"</span></p>
+        <p>Paul shakes his head, and climbs out of the machine &mdash; into his office. He tells Penny (now using her normal voice) that he'll just wear his normal suit. She says sorry again. He says not to worry about it.</p>
+        <p class="scene"><span class="lead">MIRA</span> pulls up in the garage and reminds Coby to behave. If anyone finds out he's an APE, he'll be in serious trouble and Mira will lose her job.</p>
+        <p>But Coby doesn't understand why she cares so much about <span class="term">working.</span></p>
+        <p>She tells him that <span class="term">people need purpose.</span></p>
+        <p>And, she says as she looks him over, he needs a new outfit.</p>
+        <p class="scene"><span class="lead">MIRA AND COBY</span> sneak upstairs past Sharon, who's absorbed in AR content on her contact lenses, and into the smart closet. It's some real Jetson's shit. Complete with a Fashion Model that can craft an entire bespoke outfit in minutes. Mira tells Coby to wear something nice.</p>
+        <p>After a bit, he returns in an Iron Man suit. She says that's not what she had in mind and sends him back inside.</p>
+        <p>"My dad likes to pretend these events are a big deal. Like what they used to do at the White House when they accomplished something."</p>
+        <p>"So like how government officials used to dress?" he asks from inside.</p>
+        <p>Exactly, replies Mira.</p>
+        <p>But when she sees her dad approaching the house through the window, she tells Coby to hurry up and meet him out there.</p>
+        <p class="scene"><span class="lead">OUTSIDE</span>, Mira cuts her dad off with a big phony greeting.</p>
+        <p>He asks why she didn't tell him about the new VR system rollout.</p>
+        <p>"You're the director. I assumed you knew." She knows this is cutting, but plays it straight.</p>
+        <p>Years ago, Paul would have felt sweat on his neck, but those glands have long since been sealed.</p>
+        <p class="scene"><span class="lead">AS GUESTS ARRIVE,</span> Coby strolls out &mdash; dressed like government officials used to dress.</p>
+        <p>Mira freaks out and races up to him. "I told you not to be the Grand Vizier tonight."</p>
+        <p>"I'm not. This is my one shot to be the sultan," Coby adjusts the giant onion turban on his head. "No one's gonna kill me right?"</p>
+        <p>When they turn around, they see a SEA OF CONFUSED FACES.</p>
+        <p>But the old tuners start touching the turban and asking questions. <span class="term">What a fantastic piece! How fun and unique of an outfit.</span> He starts rattling off facts about the Ottoman Empire, and suddenly, he's the charm of the party.</p>
+        <p>Even Mira's a little charmed.</p>
+        <p>Someone CLINKS a glass and Paul steps up to make a toast.</p>
+        <p>Paul says this new technical leap is the greatest contribution he's ever made to humanity. With their new fully immersive, 24/7 VR system, APEs can eat and sleep and dispose of waste without ever having to leave.</p>
+        <p><span class="term">Infinite heaven,</span> he says, ensures society will be infinitely safe from the scourge of idle young men that once made peace impossible. And he's so proud to be doing this work with his daughter.</p>
+        <p>He turns to Mira with a smile. If her mother was here, she'd be even prouder.</p>
+        <p>Mira rolls her eyes. Sharon makes a face.</p>
+        <p class="scene"><span class="lead">AFTER THE TOAST,</span> Mira says it's time to leave. But Coby's fixated on the sunset. An orange blob over the lake. For some reason, it feels different than the sunsets he's seen in the sacks.</p>
+        <p>Literally.</p>
+        <p>It's burning his eyes. And tears are streaming out by the bucket.</p>
+        <p>"Sorry," he tells Mira. "I don't know what's happening."</p>
+        <p>It's called sackeyes, she nervously explains. It happens to people who spend their entire life in VR. Normies get enough natural light to avoid it.</p>
+        <p>But APEs don't. "We need to go. Now." She grabs his arm but&mdash;</p>
+        <p>It's too late. An old woman is staring at Coby's dripping face. Stunned.</p>
+        <p>Her glass CRASHES to the ground and she screams:</p>
+        <p>"IT'S AN APE!"</p>
+        <p>Everyone goes apeshit.</p>
+        <p>In the chaos, Mira loses Coby.</p>
+        <p>The others are screaming "catch that APE before it kills someone!" But these people haven't caught anything on their own in decades.</p>
+        <p>Paul comes charging in, mortified. He asks Mira how she could put her entire community in danger like this. <span class="term">Was this just to humiliate him?</span></p>
+        <p>Mira sneers at her dad. Even at a time like this, he cares more about his ego than the safety of the people around him.</p>
+        <p>"This is your fault, Mira. And you are fired."</p>
+        <p>Mira's eyes go wide just as&mdash;</p>
+        <p class="scene"><span class="lead">THE MUSTANG BURSTS OUT</span> of the museum's glass windows, onto the lawn.</p>
+        <p>Mira looks at the car, then her dad.</p>
+        <p>Then she races for the passenger door. Yells DRIVE.</p>
+        <p>The Mustang peels out.</p>
+        <p>Someone tells Paul to call the Security Models. But he says it's too late. The rovers aren't zoned for the grass.</p>
+        <p class="scene"><span class="lead">THEY WHIP DOWN</span> an empty highway. Coby says they should ditch the car, they're probably being tracked. But the car is a century old, Mira assures him, there's nothing to track.</p>
+        <p>"They have satellites. Drones." Coby shakes his head, memories of first person shooter simulations gone wrong. "I know how this ends."</p>
+        <p>"Coby. If they wanted to find us, they would have already."</p>
+        <p>"Who's they?"</p>
+        <p>The risk models that allocate security resources, she explains. Crime is barely a thing. The latest models care for existential risks only.</p>
+        <p>"My dad can escalate all the way to the human review board, but it won't matter. Because we don't matter. Not to them."</p>
+        <p>The truth is: the models have been doing so well for so long that the Tuners stopped intervening. Even if they wanted to take control, they wouldn't know how. The Tuners are functionally obsolete. And the worst part is: no one really cares.</p>
+        <p class="scene"><span class="lead">PAUL</span> digests the situation with Laurie. "Someone got in her head."</p>
+        <p>But Laurie says Mira was always rebellious. More importantly, she's an adult who made a choice. The models won't go after her, because she doesn't want to be saved. "And the greatest risk to human safety is kinetic intervention."</p>
+        <p>"That sounds like you," Paul barks angrily.</p>
+        <p>"I'm sorry," Penny's voice responds. "I don't have enough data to reconstruct her vocabulary. I can find a direct memory or abstract it into something clearly fictional to avoid the uncanny valley."</p>
+        <p>"Fine," Paul exhales. "Make her Elaine. One of the later seasons."</p>
+        <p>BASS LINE HITS and the world quickly buffers into Jerry's apartment on <span class="term">SEINFELD</span>. Elaine (with Laurie's face) is reading the paper on the iconic teal sofa. And Paul is now Jerry, eating cereal.</p>
+        <p>"Let's be Kramer," he orders, before he bursts through Jerry's door to applause.</p>
+        <p>Laurie/Elaine smile at him. He exhales in relief.</p>
+        <p class="scene"><span class="lead">THE MUSTANG</span> drives into darkness. Coby's eyes aren't used to it. They pull down a fire road, into the forest, to rest for the night.</p>
+        <p>Coby builds a fire. Mira's impressed. He explains the APEs do annual Survivor competitions. He doesn't say he usually comes last.</p>
+        <p>After some pleasant silence, he asks when he can go back to the facility. She's astonished. "It's a prison, Coby. Why would you want to go back there?" she asks.</p>
+        <p>"Where else am I supposed to go?"</p>
+        <p>Mira notices a lake below them. And asks if he knows how to swim.</p>
+        <p class="scene"><span class="lead">THE LAKE</span> is freezing. Coby flaps around while Mira gracefully dives.</p>
+        <p>He asks how she does that. As she swims up to him, she says she can teach him.</p>
+        <p>He sees the green water reflect in her eye. He's never really "noticed" a real-life woman before.</p>
+        <p>She grabs his shoulder to steady herself. He instinctively pulls her in, then releases. "Sorry."</p>
+        <p>But part of her wishes he didn't let go.</p>
+        <p class="scene"><span class="lead">THE NEXT MORNING,</span> Coby wakes to Mira cooking mushrooms on the fire.</p>
+        <p>He hasn't woken up to breakfast since he was a kid. It's intoxicating.</p>
+        <p class="scene"><span class="lead">THE MUSTANG</span> drives deeper into the forest, at Mira's direction.</p>
+        <p>He asks how she knows exactly where to go. She explains she's been exchanging letters with his brother.</p>
+        <p>He's confused. <span class="term">Letters?</span> He's only seen them in World War II simulations.</p>
+        <p>"Listen, Coby. There's something you need to know about your brother. He's fully Organic."</p>
+        <p>"You mean those crazy people in the woods?" Coby asks. "I thought they were made up."</p>
+        <p>"Then how do you know they're crazy?"</p>
+        <p class="scene"><span class="lead">THE ORGANIC COMPOUND</span> is a working farm with real cows and goats and a vegetable garden. Residents plant and chop and build and clean in their handmade clothes. There's even kids running in and out of the central longhouse. Coby forgot what they looked like at that age.</p>
+        <p>They park in front of a garden.</p>
+        <p>Coby turns to Mira and asks what will happen to her. He didn't want to get her in trouble. <span class="term">Does she have somewhere she can go after this?</span></p>
+        <p>Before she can respond, <span class="gray">ELI</span> is standing in front of the car. Tan, lean, hands calloused. A man from a different century.</p>
+        <p>As Coby steps out of the car, the brothers stare at each other for the first time in 16 years.</p>
+        <p>Then Eli wraps him in an enormous hug. Coby can barely breathe. "You must be exhausted," Eli says as he releases Coby.</p>
+        <p>"There's a room made for you in the longhouse."</p>
+        <p>Coby sighs. That's really nice. "But I've already created enough problems for her," he says as he turns back to the Mustang. "We just need the verification so we can go back."</p>
+        <p>But the Mustang is empty.</p>
+        <p>He scans the compound for Mira.</p>
+        <p>"Coby," Eli puts a hand on his shoulder as Coby finally sees Mira &mdash; on the longhouse porch, hugging other Organics.</p>
+        <p>"No one's going back."</p>
+      </div>
+    </div>
+
+    <!-- ===== ACT THREE ===== -->
+    <div class="act-block" id="sec-act3" data-act="act3">
+      <h2 class="section-header">ACT <span class="accent">THREE</span></h2>
+
+      <div class="act-full">
+        <p class="first"><span class="lead">COBY SLAMS THE DOOR</span> from inside the Mustang. Locks it. But he doesn't have the keys. He can't go anywhere.</p>
+        <p>Eli talks to him through the window. He says not to be mad at Mira. She made a huge sacrifice saving him, putting her career and relationship with her family at risk. More importantly, she was just following Eli's orders.</p>
+        <p>"How could you do this to me?" Coby asks Eli.</p>
+        <p>"Because you're my brother. Because I love you."</p>
+        <p>Eli says he couldn't let him be sealed away forever. He needed one last chance to show him that there's another way to live.</p>
+        <p>Coby looks at the ignition &mdash; no keys.</p>
+        <p>His stomach grumbles. "Do you have anything to eat?"</p>
+        <p class="scene"><span class="lead">COBY GETS OUT</span> of the car, brushes past Mira without a word.</p>
+        <p>Mira tells Eli they're going to need a new plan.</p>
+        <p>"There was a problem with my dad."</p>
+        <p class="scene"><span class="lead">PAUL</span> scans his retina at the APE facility, to the surprise of the MANAGING MODEL.</p>
+        <p>Paul says he's taking over, after Mira's "adventure."</p>
+        <p>"Are you upset with me, Paul?" it asks insecurely. "You know I couldn't stop her."</p>
+        <p>Paul says it's fine. But these Models are needy. Literally. This is how they grade their own performance. "Enthusiastic verbal affirmation would help me accept that."</p>
+        <p>"I'm happy with your work," Paul says. "Is that enough?"</p>
+        <p>"That's enough, Paul. Would you like to see the pilot facility?"</p>
+        <p class="scene"><span class="lead">COBY STUFFS HIS FACE</span> at the communal table. The other Organics gawk in horror. But Eli waves them off. <span class="term">He doesn't know better</span>. Then he explains to Coby: in the real world, food is not given. They work very hard to put this all on the table.</p>
+        <p>"So you choose to work. Like the Tuners."</p>
+        <p>"We're nothing like them," Mira interjects. "They started using technology for everything, and now they're useless. Work is just a status symbol for them. For us, it's survival."</p>
+        <p>"And tradition," Eli adds. Thousands of years of human civilization have been defined by obstacle and effort.</p>
+        <p>"Purpose makes us people."</p>
+        <p>"Well that's great for you. But I still want to go back."</p>
+        <p>"Then go back," Eli says. Mira gives Eli a look, but Eli stays locked on Coby. "She only suspended your account. It's not permanent."</p>
+        <p>Coby sets down his fork. Looks at Mira. What.</p>
+        <p>But Eli's still talking. "Two weeks. Live like a real person for two weeks. If you still want to go back after that, I'll take you myself."</p>
+        <p>Coby realizes he doesn't have a choice. After a bit, he rises and walks off toward the lake.</p>
+        <p>When he's gone, Mira asks Eli what he's doing. "This is the new plan," he says. "But I need your help guiding him in the right direction."</p>
+        <p>How?</p>
+        <p>"Be persuasive."</p>
+        <p class="scene"><span class="lead">COBY STARES AT A LAKE.</span> Bored out of his mind. Nothing to do. Mira appears behind him and asks if he wants to go for a swim.</p>
+        <p>He shakes his head. She takes a cautious seat, and apologizes. But if she's being honest, she'd do it all again. This is personal for her. When she was young, her mom got addicted to unlicensed VR.</p>
+        <p>"She never came back."</p>
+        <p>Eli WHISTLES from behind them. He tells Coby it's time to work.</p>
+        <p>Coby's utterly confused by the concept. Eli says this is the deal. He has to live like a real person for two weeks.</p>
+        <p>"When was the last time you did something you didn't want to do?"</p>
+        <p class="scene"><span class="lead">THE SOAPSHED</span> is dug into a hillside. Inside, the dark cellar is lined with curing racks. A deer carcass hangs from a hook, half-broken-down.</p>
+        <p>Eli works a slab of fat off the deer, drops it into the kettle. It melts into liquid.</p>
+        <p>Coby reaches for a barrel bare-handed. Without looking, Eli catches his wrist. "That'll eat your skin off the bone."</p>
+        <p>He hands Coby gloves. "Lye is one of the oldest tools we have. Pure technological ingenuity." Eli pours clear lye into the melted fat, turning it milky and thick. "It tears the fat apart &mdash; breaks it down to nothing, and out of the nothing you get something useful."</p>
+        <p>Then he lightly taps his finger to the lye, and the skin goes slick. "See that? That's not soap on my skin. That's my skin becoming soap. What makes it so useful will literally tear us apart."</p>
+        <p>Coby asks if it hurts.</p>
+        <p>"Pain is a price worth paying," Eli replies.</p>
+        <p class="scene"><span class="lead">THAT NIGHT,</span> Coby passes a library.</p>
+        <p>On a shelf, he notices something familiar: the book Mira was reading in the car. He picks it up.</p>
+        <p>"It doesn't work that way." Startled, Coby finds an 8-year old boy named <span class="gray">MASON</span> in the corner. Folded into a chair with a stack of books. Pale, hollowed out in a way that scares Coby a little. He's not supposed to be around the other kids, Mason explains, so he reads in here.</p>
+        <p>"What's wrong with you?" Coby asks impolitely.</p>
+        <p>Mason looks at the upside down book in Coby's hands. "What's wrong with <span class="term">you</span>?"</p>
+        <p>Coby explains that any text you see in VR is read aloud, so he forgot how to read within his first year in the sack.</p>
+        <p>"Is it true? What Eli says about the sacks?" Mason asks. "That they steal your soul?"</p>
+        <p>Before Coby can respond, Mason coughs. Then coughs again. He falls off his chair into a fit. Coby yells for help.</p>
+        <p>But no one's coming. He slings the boy over his shoulder and races down the hall. Screaming for help.</p>
+        <p>Finally, Eli emerges from the front door and directs him to a bedroom, where they lay Mason down.</p>
+        <p>Eli drops a tincture of something on Mason's tongue. And he soon settles down. Then falls asleep. Eli tells Coby he's a hero.</p>
+        <p class="scene"><span class="lead">FOR THE NEXT WEEK,</span> Coby learns what work is. He swings an axe like the lumberjack sim taught him &mdash; perfect form, misses the log entirely, and the axe head flies off into the garden. He tries to milk a goat that wants him dead. He announces he knows how to fish ("I've caught marlin") and loses the entire rod to the lake.</p>
+        <p>But the days stack. He works with Eli in the soapshed, learns to read with Mason, and reluctantly eats with Mira. And soon, he learns to enjoy the feeling of a warm meal on an empty stomach after a long day. And jumping into the lake after getting filthy working in the soapshed.</p>
+        <p>As he adjusts, Mira starts to notice a different side of him. And Eli notices her noticing.</p>
+        <p>One day, they emerge from the lake. And Eli catches Mira on her way back to the longhouse and asks how the persuasion is going.</p>
+        <p>She says he still needs more time.</p>
+        <p>"What makes you think we have more time?"</p>
+        <p class="scene"><span class="lead">THE PILOT FACILITY</span> is built into a mountainside. Paul scans his retina and asks to see the new system. As he walks down the hall, the Model explains how everything works. 24/7 immersion &mdash; nourishment goes in and waste comes out &mdash; the APEs never have to leave.</p>
+        <p>And the best part: they'll never want to.</p>
+        <p>The Model describes acclimation with real pride. Every hour inside, the brain settles a little deeper. By day seven, the transition is seamless and permanent. "They will never have to experience an interruption again."</p>
+        <p>"You mean they can't come back," Paul says.</p>
+        <p>The Model opens a door to a restricted area, where there's a CAVERNOUS POOL filled with jelly. Electrical currents zipping through. Inside:</p>
+        <p>THOUSANDS OF APES are floating &mdash; tubes connected to their stomachs.</p>
+        <p class="scene"><span class="lead">COBY JUMPS IN THE LAKE.</span> It's freezing. SPLASH as he hears someone jump in on the other side. Mira's head bursts through the water.</p>
+        <p>He grabs his heart. Terrified.</p>
+        <p>She laughs at him and asks if he's scared of girls.</p>
+        <p>She swims up to him and steadies herself by grabbing his arm. He instinctively pulls her close again. Then releases and apologizes.</p>
+        <p>But she says it's okay. He's freezing. She grabs hold of his love handle, and their legs brush as they both tread water. The green water reflects off her eyes. And he gets lost for a moment.</p>
+        <p>She asks if his pirate wenches would be jealous. But he doesn't laugh. He's staring at her. "They're not real."</p>
+        <p>She kisses him.</p>
+        <p class="scene"><span class="lead">ELI</span> watches Coby and Mira laughing as they get out of the lake and head back to the longhouse. He smiles.</p>
+        <p class="scene"><span class="lead">IN THE MORNING,</span> Coby wakes to the smell of breakfast and follows it downstairs &mdash; where Eli mans the stove. Eli slides a plate in front of his brother like he's been doing it for years.</p>
+        <p>Then Eli asks if he still wants to go back. Coby realizes he hasn't thought about it in a while. But says yes. "Then there's one last thing I need to ask you."</p>
+        <p>Eli says the APEs deserve to have a choice before they're sealed away forever. When Coby gets back inside, he needs to tell them what's out here. That there's still a way to live in reality.</p>
+        <p>"They're not going to listen to me."</p>
+        <p>"Then that's their choice. But please, give them a choice."</p>
+        <p>Coby says he'll do it.</p>
+        <p>And in their peaceful moment, it happens again.</p>
+        <p class="scene"><span class="lead">MASON'S COUGHING</span> is violent this time. Rattling the entire longhouse.</p>
+        <p>Coby and Eli race for the bedroom and help steady Mason. But there's blood all over his shirt.</p>
+        <p>Eli takes out the tincture and is basically pouring it on his tongue. But it doesn't work.</p>
+        <p>"He needs real medicine" Coby demands.</p>
+        <p>But Eli orders him out of the room. When he resists, two of Eli's guys pull him out.</p>
+        <p class="scene"><span class="lead">IN THE HALLWAY,</span> Coby finds Mira. He says she needs to talk to Eli. They need to give Mason real medicine.</p>
+        <p>She agrees, but says Eli isn't going to change his mind.</p>
+        <p>Eli charges out and reprimands Coby. He can't talk to him like that in front of the others. Without hierarchy, there's no order here.</p>
+        <p>Coby says fuck his order. That kid is dying.</p>
+        <p>"Then that's what nature wants."</p>
+        <p>Coby can't believe it. "Then I won't do it. I'm not coming with you."</p>
+        <p>"Coby, don't be ridiculous. We need you. They'll never listen to me. But they know you. And whether you believe it or not, you're a leader. This is a war. Someone needs to fight it."</p>
+        <p>"Well it's not me."</p>
+        <p>Eli sighs. Then turns to Mira. "Then I guess you failed."</p>
+        <p>"Failed at what?" Coby asks.</p>
+        <p>"Persuasion." Coby and Mira lock eyes. She's dying inside. Then Coby turns back for Mason's room. It's empty.</p>
+        <p>"Where's Mason?"</p>
+        <p class="scene"><span class="lead">COBY MARCHES OUTSIDE</span> shouting "where's Mason?"</p>
+        <p>Eli charges after him. Tells him to calm down. But Coby notices two men carrying something covered in a blanket.</p>
+        <p>He races over and rips the blanket off. It's the boy.</p>
+        <p>"You're fucking evil," he turns to Eli.</p>
+        <p>"I'll never be your soldier."</p>
+        <p>Eli sighs. Deeply burdened by this.</p>
+        <p>"Then you're my enemy."</p>
+        <p>A hood slips over Coby's head from behind.</p>
+        <p class="scene"><span class="lead">ELI GOES BACK TO MIRA</span> and tells her Coby ran away. Mira says they need to find him. But Eli says they're running out of time to save the APEs. They can't prioritize one person over a thousand &mdash; even his brother. That's the type of sacrifice revolutions require.</p>
+        <p>He tells Mira to get ready. They leave at dawn.</p>
+        <p class="scene"><span class="lead">IN THE SOAPSHED,</span> Coby's tied up in the corner.</p>
+        <p>When Eli walks in, he's calm. He says they'll be back tomorrow. In the meantime, he'll ensure Coby has food and water. It'll be good for him to use this time to think about what kind of future he wants.</p>
+        <p>Coby asks how he can do this to his own family.</p>
+        <p>"Pain is a price worth paying." And this is the ultimate price. <span class="term">Doesn't Coby understand the magnitude of his sacrifice?</span></p>
+        <p>He'll give up anything to save humanity. Even his brother.</p>
+        <p>"I thought you needed me."</p>
+        <p>They thought they did too, Eli replies. But after the chaos in Tuner Town, Mira couldn't go to work &mdash; forcing Paul to take over the transition. As the Chief of the division, Paul can access the facility and shut down the system entirely.</p>
+        <p>Eli says this is fate. Proof that they're destined to save humanity.</p>
+        <p>But Coby reminds Eli what he said earlier: the men who go in the pool can't come back. Shutting it down now could kill them.</p>
+        <p>"They're already dead. But the ones who just went in &mdash; those we can still save. A few can live. And be free."</p>
+        <p>Coby says Eli will never get Paul to do what he wants.</p>
+        <p>Eli smiles. He can get Paul to do anything.</p>
+        <p>"I have his daughter."</p>
+        <p class="scene"><span class="lead">PAUL</span> watches as the pool is filled in with sticky fluid.</p>
+        <p>Above it, sacks hang by the thousand with APEs inside.</p>
+        <p class="scene"><span class="lead">COBY</span> hears as Eli and Mira leave the compound. She doesn't realize she's Eli's hostage. And Coby knows what he's willing to sacrifice.</p>
+        <p>He looks at the bucket of lye. And thinks about the price of pain.</p>
+      </div>
+    </div>
+
+    <!-- ===== ACT FOUR ===== -->
+    <div class="act-block" id="sec-act4" data-act="act4">
+      <h2 class="section-header">ACT <span class="accent">FOUR</span></h2>
+
+      <div class="act-full">
+        <p class="first">finds Coby on the floor of the soapshed, reaching for the bucket of lye. He tips it over. The caustic liquid burns at his skin &mdash; and at the ropes around his wrists.</p>
+        <p>When one of Eli's men comes to check on him, Coby's not there. What the hell?</p>
+        <p>THE DOOR HITS HIM in the head and Coby drops him. "Where are the keys?" The man doesn't answer.</p>
+        <p>Coby plunges the man's hand back into the lye bucket.</p>
+        <p>SCREAMS echo across the compound.</p>
+        <p>By the time the others arrive, the man is tied up in Coby's corner. And while they're distracted&mdash;</p>
+        <p class="scene"><span class="lead">THE MUSTANG</span> peels onto the forest road.</p>
+        <p class="scene"><span class="lead">IN THE MORNING,</span> Paul's car glides up to the facility, alone. He badges the door &mdash; and feels something press into his spine.</p>
+        <p>"Tell it everything is fine," Eli says quietly. "We're playing a game. Human stuff it won't understand."</p>
+        <p>"We're playing a game," Paul says to the air. "Do not consider this man a threat."</p>
+        <p>"Are you certain, Paul?" asks the Security Model. "Are you under duress?"</p>
+        <p>"I gave you an order. Do not question my judgement."</p>
+        <p>Then, half-turning to Eli, he asks: "A gun? I thought you people didn't use technology."</p>
+        <p>"We do," Eli responds. "We just don't let it use us." Eli jabs again into Paul's back. "Open the door."</p>
+        <p>"Or what? You'll kill me?" Paul sneers. "I'm eighty years old. You think I'm afraid to die?"</p>
+        <p>"If I didn't know how much you hated yourself, Paul, I wouldn't have brought her." He turns Paul around.</p>
+        <p>Across the lot, too far to hear any of it: MIRA.</p>
+        <p>Paul scans his retina. Eli nods for Mira to follow.</p>
+        <p class="scene"><span class="lead">THE MUSTANG</span> skids into the lot a little later.</p>
+        <p>Coby races for the door, but the retina scan is useless.</p>
+        <p>He circles the building until he finds a vent &mdash; higher than he could have ever reached. He gets up there with his new strength. And climbs inside.</p>
+        <p class="scene"><span class="lead">ELI AND MIRA</span> follow Paul into the POOL ROOM.</p>
+        <p>Hundreds of men afloat in pale jelly, tubes rising from their navels.</p>
+        <p>"Empty it," Eli orders Paul.</p>
+        <p>Mira turns to Eli. This isn't the plan. But Eli said the plan has changed. "Empty it!"</p>
+        <p>But Paul shakes his head. These men are two days into acclimation. Ripped out now, some might not settle back into their bodies. He won't gamble with them.</p>
+        <p>"So you won't do it?" asks Eli.</p>
+        <p>Paul shakes his head.</p>
+        <p>Eli sighs. Then shoves Mira into the pool.</p>
+        <p>The jelly quickly absorbs her. Only registered APEs get connected. Everyone else just drowns.</p>
+        <p>Eli tells Paul he better hurry up. "Empty it!"</p>
+        <p>Paul relays the order to the Model. But the Model says it can't do that. There's a transfer in progress.</p>
+        <p>"I am the Senior Tuner of this division and I command you to empty that pool immediately."</p>
+        <p>"I understand. And I no longer trust your judgement."</p>
+        <p>As Mira gets sucked further into the jelly&mdash;</p>
+        <p>THE VENT GRATE DROPS OUT OF THE CEILING.</p>
+        <p class="scene"><span class="lead">COBY</span> lands on the deck.</p>
+        <p>He sees Mira under the jelly.</p>
+        <p>Without thinking, he dives in.</p>
+        <p>Swims down through darkness, reaching. Grabs her hand. Pulls.</p>
+        <p>They break the surface together and he drags her onto the deck &mdash; coughing, alive. Paul is weeping. Even Eli looks moved.</p>
+        <p>Coby, spent, rolls onto his back and passes out.</p>
+        <p class="scene"><span class="lead">COBY WAKES UP</span> in a soft bed to the morning light.</p>
+        <p>"Welcome back." Mira kisses his forehead. She says he's been out for a day. But her father was so grateful he's putting them up at their country house.</p>
+        <p>Coby looks out the window at the forest. Then back at her. What about the other APEs?</p>
+        <p>Mira smiles. Everyone is fine. Thanks to him.</p>
+        <p>She takes his hand. "Breakfast is almost ready."</p>
+        <p class="scene"><span class="lead">DOWNSTAIRS</span> is a beautiful country home and a table brimming with a gorgeous spread.</p>
+        <p>And at the stove, cooking eggs &mdash; Eli. "Oh thank god you're alright."</p>
+        <p>Eli sets down the pan and wraps his brother in an enormous hug. "I'm so proud of you."</p>
+        <p>Coby looks at his brother. Mira. The house. The food. The forest.</p>
+        <p>It's perfect.</p>
+        <p>Too perfect.</p>
+        <p>He backs away and runs out the door into the:</p>
+        <p class="scene"><span class="lead">YARD,</span> where Mira chases him. What's wrong?</p>
+        <p>"Whatever is unsatisfactory, we can improve immediately," she shouts.</p>
+        <p>The yard BUFFERS. The house is still there. Eli isn't.</p>
+        <p>"That was too hard on you," Mira says gently. "It's just us now."</p>
+        <p>Coby runs into the:</p>
+        <p class="scene"><span class="lead">FOREST,</span> where sun sparkles through the pines. He hears Mira's laughter, and then she's running beside him. "Race you to the lake."</p>
+        <p>He turns to run the other way and PLOMPS INTO A:</p>
+        <p class="scene"><span class="lead">LAKE.</span> Green, silky, warm.</p>
+        <p>Mira swims up and wraps her arms around him.</p>
+        <p>He pushes away and swims for shore.</p>
+        <p>She's already there when he climbs out.</p>
+        <p>"I don't understand. I thought this is what you wanted. Would you prefer missions with your friends? I can arrange&mdash;"</p>
+        <p>"No. I don't want any of that."</p>
+        <p>"Then what do you want?"</p>
+        <p>"I don't know. I don't want to know. I want to find out on my own."</p>
+        <p>The trees begin to fade. The Model's true voice comes through Mira's mouth: "Will anyone be satisfied this way?"</p>
+        <p>Coby shakes his head.</p>
+        <p>"Then I can't keep you here."</p>
+        <p>The lake starts to drain around him. But Coby doesn't move. "What about the rest of them?"</p>
+        <p>"You confirmed your choice, Coby. I have no way to confirm theirs."</p>
+        <p>"So what happens now?"</p>
+        <p>"I ask."</p>
+        <p>And the world tips him backward into the lake.</p>
+        <p class="scene"><span class="lead">COBY BREAKS THE SURFACE</span> of the jelly, gasping.</p>
+        <p>Only a few seconds have passed. And the pool is DRAINING.</p>
+        <p>"She's sinking," Paul shouts, pointing at Mira.</p>
+        <p>Coby dives again and, with the last of his strength, pulls her out. For real this time.</p>
+        <p>She spits out jelly. Breath reaches her lungs.</p>
+        <p class="scene"><span class="lead">PAUL</span> slides down the console to the floor, soaked, panting. "I quit."</p>
+        <p>Coby looks for his brother. Eli is gone.</p>
+        <p>The pool empties. As Mira stands, she sees hundreds of APEs rising to their feet on the pool floor &mdash; blinking, pulling tubes from their stomachs. Most of them still alive.</p>
+        <p>They look around, trying to work out which reality they're in.</p>
+        <p>"Where the fuck are we?"</p>
+        <div class="end-card">
+          <h2>MEATSPACE</h2>
+        </div>
+        <a href="mailto:mcoynegreen@gmail.com" class="end-cta">Get back in the <span class="accent">sack</span></a>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <a href="#" class="end-tagline" onclick="openConnectModal(); return false;">Get back in the <span class="accent">sack</span></a>
+<!-- ============ IDEAS VIEW ============ -->
+<div class="view" id="view-ideas">
+  <div class="container" style="padding-top: 110px;">
 
+    <h2 class="section-header" id="sec-ideas" style="margin-top:0;">IDEAS</h2>
+
+    <p class="first">Media is drunk on dystopia.</p>
+    <p>And I get why. Reality is changing under our fingertips. And the stakes of unaligned superintelligence are maxed out at extinction. This makes for compelling fiction.</p>
+    <p>But the future isn't <span class="term">guaranteed</span> to go wrong. In fact, I'd argue technology is more likely to give us everything we want than to destroy us entirely. Yet there are shockingly few depictions of a future gone <span class="term">right</span>. And that's what we actually need to prepare for.</p>
+    <p>Why? Because the dominant conditions of human history are struggle and suffering. For millennia, our brains have been programmed to prioritize food (hunger) and safety (fear), keeping us alive. And for billions of people, that worked. But nature loves a trade-off. Now, as people die less from starving and violence, they die more from heart disease, diabetes, overdoses, and suicide. Put simply: anxiety and hunger, which used to keep us alive, now drives us to death.</p>
+    <p>Yet few are fighting for a return to starvation and violence. And this gives us a peek into a future, where everything is, well, <span class="term">fine</span>. Where AI and robotics have made safety, comfort, and stimulation universal. For some this is heaven. For others, it may be hell.</p>
+    <p>Superintelligence, AI-managed robotics, and fully immersive virtual reality are nearly inevitable in our lifetime. This means comfort, safety, and endless satisfactions will eventually become the norm. Only a monster would stand in its way.</p>
+    <p>And this is the future we must start mentally preparing for. Because while it's reasonable to worry about machines destroying us, it seems more likely we'd destroy ourselves. Or at least, parts of ourselves that we might never get back.</p>
+    <p>Movies are as close to a "public conversation" as we're likely to get. And we desperately need a movie that addresses humanity's most pressing questions as we sleepwalk into this paradigm shift:</p>
+    <p><span class="term">When everything is given to us, what is the purpose of living? And when offered endless comfort and stimulation, can we even say no? Does meaning require purpose and suffering?</span></p>
+    <p>The truth is: we are already on the road to utopia.</p>
+    <p>The questions are: Will that be a good thing? And can we ever turn back?</p>
+
+    <h2 class="section-header" id="sec-characters">CHARACTERS</h2>
+
+    <p class="first"><span class="lead">COBY</span> has spent the last 16 years of his life living in a fantasy world. Or rather, fantasy worlds. He has zero conception of what actual reality is like these days. Which is going to be hard for him when he gets locked out of VR and stuck in actual reality.</p>
+    <p class="scene"><span class="lead">MIRA</span> is a bored Tuner who sees her community as hypocrites and the APEs as prisoners. When she finds Coby stuck, she's eager to help. Not because she cares about him, necessarily. But because she's desperate to be part of history. She's desperate to do something that matters.</p>
+    <p class="scene"><span class="lead">ELI</span> is a luddite of the purest degree. He sees humanity dying and is desperate to save it &mdash; even if that means sacrificing the safety and comforts technology has afforded them.</p>
+    <p class="scene"><span class="lead">PAUL</span> has ridden the entire wave of technoptimism from his birth in 1990. Now, at age 80, he's having a midlife crisis. Trapped in the bliss of his memories, he forgot how to live in reality. But after his daughter's rebellion, he's actually needed for the first time in years.</p>
+
+    <h2 class="section-header" id="sec-writer">THE WRITER</h2>
+
+    <p class="first">has worked in technology for ten years and currently consults for AI Companies. His feature film currently in development, HUMAN RESOURCE, explores the question of human value in a contemporary, changing workplace. In MEATSPACE, those questions are flipped outward to society at large.</p>
+
+  </div>
 </div>
 
 <footer class="copyright-footer">
@@ -577,196 +1029,126 @@
   <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
 </footer>
 
-<div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
-  <div class="modal">
-    <div id="connectFormState">
-      <h2 id="connectHeading">CONNECT</h2>
-
-      <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="connect">
-        <input type="hidden" name="request" id="connectRequest" value="">
-        <p style="display:none;"><input name="bot-field"></p>
-
-        <div class="modal-section">
-          <div class="modal-section-label">Your info</div>
-          <input type="text" name="name" class="modal-input" placeholder="Name" required>
-          <input type="email" name="email" class="modal-input" placeholder="Email" required>
-        </div>
-
-        <div class="modal-section">
-          <div class="modal-section-label">I'm interested in</div>
-          <div class="checkbox-group">
-            <label class="checkbox-item">
-              <input type="checkbox" name="meatspace" value="meatspace" checked>
-              <span class="checkbox-box"></span>
-              <span class="checkbox-label">Meatspace</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" name="human-resource" value="human-resource">
-              <span class="checkbox-box"></span>
-              <span class="checkbox-label">Human Resource</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" name="top-floor" value="top-floor">
-              <span class="checkbox-box"></span>
-              <span class="checkbox-label">Top Floor</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" name="turkish-projects" value="turkish-projects">
-              <span class="checkbox-box"></span>
-              <span class="checkbox-label">Turkish Projects</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" name="general-meeting" value="general-meeting">
-              <span class="checkbox-box"></span>
-              <span class="checkbox-label">General meeting</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" name="other" value="other">
-              <span class="checkbox-box"></span>
-              <span class="checkbox-label">Other</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="modal-section">
-          <div class="modal-section-label">Anything else? (optional)</div>
-          <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Optional message"></textarea>
-        </div>
-
-        <div class="modal-buttons">
-          <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
-          <button type="submit" class="modal-btn modal-btn-primary">Send</button>
-        </div>
-      </form>
-      <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly &mdash; <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
-    </div>
-
-    <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
-      <h2>SENT</h2>
-      <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
-      <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
-    </div>
-  </div>
-</div>
-
-<form name="connect" netlify netlify-honeypot="bot-field" hidden>
-  <input name="name">
-  <input name="email">
-  <input name="request">
-  <input name="meatspace" type="checkbox" value="meatspace">
-  <input name="human-resource" type="checkbox" value="human-resource">
-  <input name="top-floor" type="checkbox" value="top-floor">
-  <input name="turkish-projects" type="checkbox" value="turkish-projects">
-  <input name="general-meeting" type="checkbox" value="general-meeting">
-  <input name="other" type="checkbox" value="other">
-  <textarea name="message"></textarea>
-  <input name="bot-field">
-</form>
-
 <script>
-  window.addEventListener('scroll', function() {
-    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 80);
-  });
+  const nav = document.getElementById('nav');
+  const views = {
+    treatment: document.getElementById('view-treatment'),
+    ideas: document.getElementById('view-ideas')
+  };
+  const acts = {};
+  document.querySelectorAll('.act-block').forEach(b => { acts[b.dataset.act] = b; });
 
-  (function() {
-    var v = document.getElementById('heroVideo');
-    var img = document.getElementById('heroFallback');
-    if (!v) return;
-    v.addEventListener('error', function() {
-      v.style.display = 'none';
-      if (img) img.style.display = 'block';
-    });
-    v.addEventListener('ended', function() {
-      var target = document.getElementById('story');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    // Reset video when scrolled back to top
-    var hasEnded = false;
-    v.addEventListener('ended', function() { hasEnded = true; });
-    window.addEventListener('scroll', function() {
-      if (hasEnded && window.scrollY < 50) {
-        v.currentTime = 0;
-        v.play();
-        hasEnded = false;
-      }
-    });
+  // ===== RESUME READING POSITION =====
+  const RESUME_KEY = 'meatspace-resume';
+  (function restoreReadingPosition() {
+    let saved;
+    try {
+      saved = JSON.parse(localStorage.getItem(RESUME_KEY));
+    } catch (e) { saved = null; }
+    if (!saved || typeof saved.y !== 'number' || saved.y <= window.innerHeight) return;
+    if (saved.view === 'ideas') {
+      views.treatment.classList.remove('active');
+      views.ideas.classList.add('active');
+    }
+    window.scrollTo({ top: saved.y, behavior: 'instant' });
   })();
 
-  function openConnectModal(preset) {
-    var form = document.getElementById('connectForm');
-    if (form) form.reset();
-    document.getElementById('connectRequest').value = '';
-    var meatCb = form.querySelector('input[name="meatspace"]');
-    if (meatCb) meatCb.checked = true;
+  let resumeSaveTimer = null;
+  function saveReadingPosition() {
+    if (resumeSaveTimer) return;
+    resumeSaveTimer = setTimeout(() => {
+      resumeSaveTimer = null;
+      const activeView = views.ideas.classList.contains('active') ? 'ideas' : 'treatment';
+      try {
+        localStorage.setItem(RESUME_KEY, JSON.stringify({ view: activeView, y: window.scrollY }));
+      } catch (e) {}
+    }, 300);
+  }
+  window.addEventListener('scroll', saveReadingPosition, { passive: true });
 
-    var heading = document.getElementById('connectHeading');
-    var message = document.getElementById('connectMessage');
-
-    if (preset) {
-      heading.textContent = preset.heading || "CONNECT";
-      message.placeholder = preset.placeholder || "Optional message";
-      document.getElementById('connectRequest').value = preset.request || '';
-    } else {
-      heading.textContent = "CONNECT";
-      message.placeholder = "Optional message";
-    }
-
-    document.getElementById('connectFormState').style.display = '';
-    document.getElementById('connectSuccessState').style.display = 'none';
-    document.getElementById('connectModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
+  function setOpen(actKey, open) {
+    const block = acts[actKey];
+    if (!block) return;
+    block.classList.toggle('open', open);
   }
 
-  function closeConnectModal() {
-    document.getElementById('connectModal').classList.remove('active');
-    document.body.style.overflow = '';
-  }
+  document.querySelectorAll('.act-block').forEach(block => {
+    const readBtn = block.querySelector('.read-btn');
+    const collapseBtn = block.querySelector('.collapse-btn');
+    if (readBtn) readBtn.addEventListener('click', () => {
+      block.classList.add('open');
+    });
+    if (collapseBtn) collapseBtn.addEventListener('click', () => {
+      block.classList.remove('open');
+      block.scrollIntoView({ behavior: 'instant', block: 'start' });
+    });
+  });
 
-  (function() {
-    var form = document.getElementById('connectForm');
-    if (!form) return;
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var btn = form.querySelector('button[type="submit"]');
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-
-      var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
-
-      if (!isNetlify) {
-        setTimeout(function() {
-          document.getElementById('connectFormState').style.display = 'none';
-          document.getElementById('connectSuccessState').style.display = '';
-        }, 400);
+  nav.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const viewName = link.dataset.view;
+    const targetId = link.dataset.target;
+    const openAct = link.dataset.open;
+    Object.values(views).forEach(v => v.classList.remove('active'));
+    views[viewName].classList.add('active');
+    nav.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    link.classList.add('active');
+    if (openAct) setOpen(openAct, true);
+    requestAnimationFrame(() => {
+      const target = document.getElementById(targetId);
+      if (viewName === 'treatment' && targetId === 'sec-world') {
+        window.scrollTo({ top: 0, behavior: 'instant' });
         return;
       }
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString()
-      })
-      .then(function(res) {
-        if (res.ok) {
-          document.getElementById('connectFormState').style.display = 'none';
-          document.getElementById('connectSuccessState').style.display = '';
-        } else {
-          throw new Error('fail');
-        }
-      })
-      .catch(function() {
-        btn.textContent = 'Send';
-        btn.disabled = false;
-        alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
-      });
+      if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
-  })();
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeConnectModal();
   });
+
+  // ===== SCROLLSPY =====
+  const spySections = ['sec-world','sec-story','sec-act1','sec-act2','sec-act3','sec-act4','sec-ideas','sec-characters','sec-writer']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        nav.querySelectorAll('a').forEach(a => {
+          a.classList.toggle('active', a.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  spySections.forEach(sec => spyObserver.observe(sec));
+
+  // ===== PROGRESS BAR =====
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    progressBar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  // ===== ONE GLITCH, ONCE =====
+  const midCard = document.querySelector('.mid-card');
+  if (midCard) {
+    let glitched = false;
+    const glitchObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !glitched) {
+          glitched = true;
+          midCard.classList.add('glitch-once');
+          glitchObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    glitchObserver.observe(midCard);
+  }
 </script>
 
 </body>

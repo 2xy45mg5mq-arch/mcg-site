@@ -196,12 +196,22 @@
     scroll-margin-top: 40px;
   }
   #sec-world { margin-top: 0.6em; }
-  #sec-story > h2.section-header,
   #sec-characters,
   #sec-writer {
     margin-top: 4.2em;
   }
   .section-header .accent { color: var(--red); }
+
+  /* ===== CHAPTER TREATMENT (STORY + ACTS) ===== */
+  .act-block > h2.section-header {
+    margin: 12vh 0 18px;
+  }
+  .act-block > .rule {
+    width: 80px;
+    height: 2px;
+    background: var(--red);
+    margin: 0 auto 0.7em;
+  }
 
   p { text-wrap: pretty; line-height: 1.25; margin-top: 0.8em; }
   p.scene { margin-top: 2em; }
@@ -264,6 +274,13 @@
   .mid-card .tagline .w { color: #fff; font-weight: 600; }
 
   /* ===== END CARD ===== */
+  .end-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 55vh;
+  }
   .end-card { text-align: center; margin-top: 3.4em; }
   .end-card h2 {
     font-family: 'Bebas Neue', sans-serif;
@@ -319,34 +336,78 @@
   .collapse-btn:hover { color: #fff; }
 
   /* ===== MOBILE ===== */
+  .mobile-nav-bar { display: none; }
   @media (max-width: 900px) {
-    .side-nav {
-      flex-direction: row;
-      width: 100%;
-      bottom: auto;
-      padding: 12px 16px;
-      gap: 14px;
-      overflow-x: auto;
+    .mobile-nav-bar {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 110;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
       background: rgba(10, 13, 16, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      align-items: center;
-      white-space: nowrap;
     }
-    .side-nav a.sub { padding-left: 0; }
-    .side-nav::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: 28px;
-      background: linear-gradient(to right, transparent, rgba(10,13,16,0.95));
-      pointer-events: none;
+    .mobile-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .mobile-nav-trigger {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--text);
+      cursor: pointer;
+      padding: 4px 0;
+    }
+    .mobile-nav-caret {
+      font-size: 0.6rem;
+      color: var(--muted);
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .mobile-nav-trigger[aria-expanded="true"] .mobile-nav-caret { transform: rotate(180deg); }
+
+    .side-nav {
+      flex-direction: column;
+      position: fixed;
+      top: var(--mobile-bar-h, 49px); left: 0; right: 0; bottom: auto;
+      width: 100%;
+      max-height: calc(100vh - var(--mobile-bar-h, 49px));
+      overflow-y: auto;
+      padding: 8px 20px 20px;
+      gap: 2px;
+      background: rgba(10, 13, 16, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+    }
+    .side-nav.mobile-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
     .container { padding: 40px 22px 70px; }
     .hero { height: 78vh; min-height: 440px; }
     .hero-title { padding-bottom: 40px; }
     body { background-size: 100% 100%, 16px 16px, 32px 32px; }
-    .section-header, .act-block { scroll-margin-top: 70px; }
+    .section-header, .act-block { scroll-margin-top: var(--mobile-bar-h, 49px); }
+    .act-block > h2.section-header { margin-top: 7vh; }
+    .end-frame { min-height: 45vh; }
   }
   @media (min-width: 901px) {
     .view { margin-left: 170px; }
@@ -466,7 +527,8 @@
 
   /* ===== PRINT ===== */
   @media print {
-    #progress-bar, .side-nav, .hero { display: none !important; }
+    #progress-bar, .side-nav, .mobile-nav-bar, .hero { display: none !important; }
+    .end-cta { display: none !important; }
     body::before { display: none !important; }
     body {
       background: #fff !important;
@@ -475,14 +537,13 @@
     }
     .view { margin-left: 0 !important; display: block !important; }
     .section-header, .title-card h1, .mid-card h2, .end-card h2, .hero-title h1 { color: #900 !important; text-shadow: none !important; }
-    .term, .end-cta, .hero-title .byline-name, .mid-card .tagline { color: #111 !important; }
+    .term, .hero-title .byline-name, .mid-card .tagline { color: #111 !important; }
     .bold, .gray, .lead { color: #900 !important; }
-    .end-cta { color: #111 !important; }
-    .end-cta .accent { color: #900 !important; }
     p, .body-text { text-shadow: none !important; }
     .mid-card.glitch-once, .mid-card.glitch-once h2 { animation: none !important; text-shadow: none !important; filter: none !important; transform: none !important; }
     .mid-card { break-inside: avoid; }
     .section-header { break-after: avoid; }
+    #sec-ideas { break-before: page; }
   }
 </style>
 </head>
@@ -490,6 +551,12 @@
 
 <div id="progress-bar"></div>
 
+<div class="mobile-nav-bar" id="mobileNavBar">
+  <a class="mobile-brand" id="mobileBrand">MEATSPACE</a>
+  <button class="mobile-nav-trigger" id="mobileNavTrigger" aria-expanded="false" aria-controls="nav">
+    <span id="mobileNavLabel">WORLD</span><span class="mobile-nav-caret">&#9662;</span>
+  </button>
+</div>
 <nav class="side-nav" id="nav">
   <a data-view="treatment" data-target="sec-world">WORLD</a>
   <a data-view="treatment" data-target="sec-story">STORY</a>
@@ -545,8 +612,9 @@
     <p>&hellip;leaving everyone else at peace.</p>
 
     <!-- ===== STORY / COLD OPEN ===== -->
-    <div class="act-block" id="sec-story" data-act="coldopen">
-      <h2 class="section-header">STORY</h2>
+    <div class="act-block" data-act="coldopen">
+      <h2 class="section-header" id="sec-story">STORY</h2>
+      <div class="rule"></div>
 
       <div class="act-full">
         <p class="first"><span class="lead">COBY</span> shimmies through a vent shaft.</p>
@@ -577,8 +645,9 @@
     </div>
 
     <!-- ===== ACT ONE ===== -->
-    <div class="act-block" id="sec-act1" data-act="act1">
-      <h2 class="section-header">ACT <span class="accent">ONE</span></h2>
+    <div class="act-block" data-act="act1">
+      <h2 class="section-header" id="sec-act1">ACT <span class="accent">ONE</span></h2>
+      <div class="rule"></div>
 
       <div class="act-full">
         <p class="first">opens at lunch. With lab-grown meat and vertically-farmed produce, the food is fine. But the vibe is brutal. The other APEs are roasting Coby for hesitating during the hostage run. <span class="term">They've done it five times.</span></p>
@@ -622,8 +691,9 @@
     </div>
 
     <!-- ===== ACT TWO ===== -->
-    <div class="act-block" id="sec-act2" data-act="act2">
-      <h2 class="section-header">ACT <span class="accent">TWO</span></h2>
+    <div class="act-block" data-act="act2">
+      <h2 class="section-header" id="sec-act2">ACT <span class="accent">TWO</span></h2>
+      <div class="rule"></div>
 
       <div class="act-full">
         <p class="first">takes Coby and Mira through empty towns and towering forests. With Normies spending most of their time in sackspace and not having kids, they don't need much room. So nature is reclaiming the land.</p>
@@ -759,8 +829,9 @@
     </div>
 
     <!-- ===== ACT THREE ===== -->
-    <div class="act-block" id="sec-act3" data-act="act3">
-      <h2 class="section-header">ACT <span class="accent">THREE</span></h2>
+    <div class="act-block" data-act="act3">
+      <h2 class="section-header" id="sec-act3">ACT <span class="accent">THREE</span></h2>
+      <div class="rule"></div>
 
       <div class="act-full">
         <p class="first"><span class="lead">COBY SLAMS THE DOOR</span> from inside the Mustang. Locks it. But he doesn't have the keys. He can't go anywhere.</p>
@@ -891,8 +962,9 @@
     </div>
 
     <!-- ===== ACT FOUR ===== -->
-    <div class="act-block" id="sec-act4" data-act="act4">
-      <h2 class="section-header">ACT <span class="accent">FOUR</span></h2>
+    <div class="act-block" data-act="act4">
+      <h2 class="section-header" id="sec-act4">ACT <span class="accent">FOUR</span></h2>
+      <div class="rule"></div>
 
       <div class="act-full">
         <p class="first">finds Coby on the floor of the soapshed, reaching for the bucket of lye. He tips it over. The caustic liquid burns at his skin &mdash; and at the ropes around his wrists.</p>
@@ -982,10 +1054,12 @@
         <p>The pool empties. As Mira stands, she sees hundreds of APEs rising to their feet on the pool floor &mdash; blinking, pulling tubes from their stomachs. Most of them still alive.</p>
         <p>They look around, trying to work out which reality they're in.</p>
         <p>"Where the fuck are we?"</p>
-        <div class="end-card">
-          <h2>MEATSPACE</h2>
+        <div class="end-frame">
+          <div class="end-card">
+            <h2>MEATSPACE</h2>
+          </div>
+          <a href="mailto:mcoynegreen@gmail.com" class="end-cta">Get back in the <span class="accent">sack</span></a>
         </div>
-        <a href="mailto:mcoynegreen@gmail.com" class="end-cta">Get back in the <span class="accent">sack</span></a>
       </div>
     </div>
 
@@ -1084,8 +1158,7 @@
     });
   });
 
-  nav.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
+  function activateLink(link) {
     if (!link) return;
     const viewName = link.dataset.view;
     const targetId = link.dataset.target;
@@ -1094,6 +1167,7 @@
     views[viewName].classList.add('active');
     nav.querySelectorAll('a').forEach(a => a.classList.remove('active'));
     link.classList.add('active');
+    updateMobileLabel(targetId);
     if (openAct) setOpen(openAct, true);
     requestAnimationFrame(() => {
       const target = document.getElementById(targetId);
@@ -1103,7 +1177,63 @@
       }
       if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
+  }
+
+  nav.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    activateLink(link);
+    closeMobileNav();
   });
+
+  // ===== MOBILE NAV BAR =====
+  const mobileNavBar = document.getElementById('mobileNavBar');
+  const mobileBrand = document.getElementById('mobileBrand');
+  const mobileNavTrigger = document.getElementById('mobileNavTrigger');
+  const mobileNavLabel = document.getElementById('mobileNavLabel');
+
+  function openMobileNav() {
+    nav.classList.add('mobile-open');
+    mobileNavTrigger.setAttribute('aria-expanded', 'true');
+  }
+  function closeMobileNav() {
+    nav.classList.remove('mobile-open');
+    mobileNavTrigger.setAttribute('aria-expanded', 'false');
+  }
+  function toggleMobileNav() {
+    if (nav.classList.contains('mobile-open')) closeMobileNav();
+    else openMobileNav();
+  }
+
+  mobileNavTrigger.addEventListener('click', toggleMobileNav);
+
+  mobileBrand.addEventListener('click', () => {
+    activateLink(nav.querySelector('a[data-target="sec-world"]'));
+    closeMobileNav();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!nav.classList.contains('mobile-open')) return;
+    if (nav.contains(e.target) || mobileNavBar.contains(e.target)) return;
+    closeMobileNav();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileNav();
+  });
+
+  function calibrateMobileBarHeight() {
+    if (window.innerWidth > 900) return;
+    const h = mobileNavBar.getBoundingClientRect().height;
+    if (h > 0) document.documentElement.style.setProperty('--mobile-bar-h', h + 'px');
+  }
+  calibrateMobileBarHeight();
+  window.addEventListener('resize', calibrateMobileBarHeight);
+
+  function updateMobileLabel(id) {
+    const link = nav.querySelector('a:not(.sub)[data-target="' + id + '"]') || nav.querySelector('a[data-target="' + id + '"]');
+    if (link) mobileNavLabel.textContent = link.textContent.trim();
+  }
 
   // ===== SCROLLSPY =====
   const spySections = ['sec-world','sec-story','sec-act1','sec-act2','sec-act3','sec-act4','sec-ideas','sec-characters','sec-writer']
@@ -1117,6 +1247,7 @@
         nav.querySelectorAll('a').forEach(a => {
           a.classList.toggle('active', a.dataset.target === id);
         });
+        updateMobileLabel(id);
       }
     });
   }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });

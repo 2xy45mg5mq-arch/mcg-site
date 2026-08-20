@@ -17,7 +17,7 @@
 
 ---
 
-## ACTIVE PAGES (15)
+## ACTIVE PAGES (16)
 
 | URL | File | Notes |
 |-----|------|-------|
@@ -37,6 +37,7 @@
 | `/losingreality` | losingreality.html | Losing Reality |
 | `/turkiye` | turkiye.html | Turkish portfolio (bilingual) |
 | `/secret` | secret.html | Kinnikuman treatment (hidden) |
+| `/imposter` | imposter.html | Imposter Syndrome one-pager (hidden) |
 
 "All pages" = ALL of these.
 

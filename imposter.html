@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMPOSTER SYNDROME</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#10131a;
+    --ink:#e9e4d8;
+    --body:#cfccc2;
+    --dim:#8f97a6;
+    --amber:#dda04f;
+    --rule:#272e3c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:
+      radial-gradient(1100px 550px at 70% -10%, rgba(221,160,79,.05), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Newsreader', Georgia, serif;
+    font-size:17px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:680px;
+    margin:0 auto;
+    padding:80px 28px 100px;
+  }
+
+  /* ---------- Header ---------- */
+  header{text-align:center; margin-bottom:52px;}
+  .title{
+    font-family:'Archivo', sans-serif;
+    font-weight:800;
+    font-size:clamp(34px, 7vw, 58px);
+    letter-spacing:.04em;
+    line-height:1;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .byline{
+    margin-top:20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  .byline strong{display:inline-block; margin-top:8px; color:var(--ink); font-weight:500;}
+
+  /* ---------- Logline ---------- */
+  .logline{
+    margin:44px auto 0;
+    max-width:620px;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(18px, 3vw, 21px);
+    line-height:1.55;
+    text-align:center;
+    color:var(--ink);
+  }
+
+  .divider{
+    width:56px;
+    height:1px;
+    background:var(--rule);
+    margin:52px auto;
+    position:relative;
+  }
+  .divider::after{
+    content:"";
+    position:absolute;
+    left:50%; top:50%;
+    width:4px; height:4px;
+    transform:translate(-50%,-50%) rotate(45deg);
+    background:var(--amber);
+  }
+
+  /* ---------- Body ---------- */
+  .treatment p{
+    margin-bottom:24px;
+    color:var(--body);
+  }
+  .treatment p:last-child{margin-bottom:0;}
+  .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:.87em;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .caps{
+    font-size:.94em;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  .beat{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:.84em;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--amber);
+  }
+
+  /* ---------- Tagline ---------- */
+  .tagline{
+    margin-top:24px;
+  }
+  .tagline .setup{
+    color:var(--body);
+  }
+  .tagline .payoff{
+    font-style:italic;
+    font-weight:500;
+    color:var(--amber);
+  }
+
+  /* ---------- Motion ---------- */
+  .fade{opacity:0; transform:translateY(12px); animation:rise .8s ease forwards;}
+  .fade.d1{animation-delay:.1s}
+  .fade.d2{animation-delay:.25s}
+  .fade.d3{animation-delay:.4s}
+  @keyframes rise{to{opacity:1; transform:none;}}
+  @media (prefers-reduced-motion: reduce){
+    .fade{animation:none; opacity:1; transform:none;}
+  }
+
+  @media (max-width:520px){
+    .page{padding:60px 22px 76px;}
+    body{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="fade d1">
+    <h1 class="title">Imposter Syndrome</h1>
+    <div class="byline">written by<br><strong>Max Coyne-Green</strong></div>
+  </header>
+
+  <div class="logline fade d2">
+    In a city where everyone is faking it, an uptight tech founder and<br>
+    his broke actor roommate accidentally switch bodies –<br>
+    and finally get their lives together.
+  </div>
+
+  <div class="divider fade d2"></div>
+
+  <div class="treatment fade d3">
+    <p><span class="name">Gus</span> and <span class="name">Wally</span> share a SoHo loft, but nothing in common.</p>
+
+    <p>Gus, a former tech wiz kid who sold his company at 19, owns the place. He grinds 80-hours a week in a big bedroom upstairs, betting everything on his new startup. His only real friend is his turtle, <span class="caps">Snacks</span>.</p>
+
+    <p>Wally, a hot broke actor, isn't on his level — literally. For a fraction of the rent, he stays downstairs in a curtained-off corner of the living room. Still, he seems to be living a lot better. Every weekend, he has big parties on their roof deck while Gus is working inside.</p>
+
+    <p>Gus would never admit it, but he's jealous of Wally's chill lifestyle and the attention he gets from women.</p>
+
+    <p>And Wally, bartending as he struggles to book gigs, secretly wishes he had Gus's stability and future.</p>
+
+    <p><span class="beat">One night,</span> Gus is working on a pitch for bigshot VC investor. But Wally, like usual, is having a party right outside his room. When the party spills into Gus's room and his turtle <span class="caps">Snacks</span> goes missing, Gus reaches his limit and tears into Wally — calling him an immature loser who's ruining his future. Wally says Gus is an uptight loner wasting his youth. He grabs the rescued turtle and holds him overhead, like a playground bully, refusing to hand him over until Gus admits he needs him. Snacks, overwhelmed, bites them both.</p>
+
+    <p>They get dizzy and pass out.</p>
+
+    <p><span class="beat">The next morning,</span> the two of them wake up. As each other.</p>
+
+    <p>Desperate for answers, they dig into ChatGPT. But it recommends seeking psychological help.</p>
+
+    <p>With Gus's VC pitch and Wally's audition coming up, they have no choice but to do their best as the other. It's a major risk. But their biggest flaws surprisingly blow open the opportunities.</p>
+
+    <p>Relaxed, confident, and hesitant to share details, the New Gus attracts excitement from the investors.</p>
+
+    <p>Meanwhile, the New Wally works harder than the original Wally ever did, landing a dream movie role.</p>
+
+    <p>Soon enough, they're becoming the person the other was supposed to be.</p>
+
+    <p class="tagline"><span class="setup">But you can't fake it forever.</span> <span class="payoff">Unless you make it forever.</span></p>
+  </div>
+
+</div>
+</body>
+</html>

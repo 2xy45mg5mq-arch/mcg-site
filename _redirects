@@ -42,6 +42,7 @@
 /HR-trailer       /hr-trailer           301
 /topfloor         /topfloor.html       200
 /kanvatan         /kanvatan.html       200
+/imposter          /imposter.html       200
 
 # SPA fallback — must be last
 /* /index.html 200

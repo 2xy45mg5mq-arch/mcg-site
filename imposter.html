@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IMPOSTER SYNDROME</title>
+<meta name="theme-color" content="#10131a">
+<meta name="description" content="In a city where everyone is faking it, an uptight tech founder and his broke actor roommate accidentally switch bodies – and finally get their lives together.">
+<meta property="og:title" content="Imposter Syndrome">
+<meta property="og:description" content="In a city where everyone is faking it, an uptight tech founder and his broke actor roommate accidentally switch bodies – and finally get their lives together.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://coyne-green.com/imposter">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,6 +24,11 @@
     --rule:#272e3c;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{
+    color-scheme:dark;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
   body{
     background:
       radial-gradient(1100px 550px at 70% -10%, rgba(221,160,79,.05), transparent 60%),
@@ -65,6 +77,11 @@
     text-align:center;
     color:var(--ink);
   }
+  .logline .ll-narrow{display:none;}
+  @media (max-width:600px){
+    .logline .ll-wide{display:none;}
+    .logline .ll-narrow{display:inline;}
+  }
 
   .divider{
     width:56px;
@@ -86,6 +103,7 @@
   .treatment p{
     margin-bottom:24px;
     color:var(--body);
+    text-wrap:pretty;
   }
   .treatment p:last-child{margin-bottom:0;}
   .name{
@@ -137,20 +155,47 @@
     .page{padding:60px 22px 76px;}
     body{font-size:16px;}
   }
+
+  /* ---------- Print ---------- */
+  @media print{
+    html{color-scheme:light;}
+    body{background:#ffffff !important; color:#000000 !important;}
+    .fade{opacity:1 !important; transform:none !important; animation:none !important;}
+    .title{color:#000000 !important;}
+    .byline{color:#333333 !important;}
+    .byline strong{color:#000000 !important;}
+    .logline{color:#000000 !important;}
+    .divider{background:#333333 !important;}
+    .divider::after{background:#333333 !important;}
+    .treatment p{color:#000000 !important;}
+    .name{color:#000000 !important;}
+    .beat{color:#333333 !important;}
+    .tagline .setup{color:#000000 !important;}
+    .tagline .payoff{color:#333333 !important;}
+  }
 </style>
 </head>
 <body>
 <div class="page">
 
   <header class="fade d1">
-    <h1 class="title">Imposter Syndrome</h1>
+    <h1 class="title">Imposter<br> Syndrome</h1>
     <div class="byline">written by<br><strong>Max Coyne-Green</strong></div>
   </header>
 
   <div class="logline fade d2">
+    <span class="ll-wide">
     In a city where everyone is faking it, an uptight tech founder and<br>
     his broke actor roommate accidentally switch bodies –<br>
     and finally get their lives together.
+    </span>
+    <span class="ll-narrow">
+    In a city where everyone is faking it,<br>
+    an uptight tech founder<br>
+    and his broke actor roommate<br>
+    accidentally switch bodies –<br>
+    and finally get their lives together.
+    </span>
   </div>
 
   <div class="divider fade d2"></div>
@@ -174,7 +219,7 @@
 
     <p>Desperate for answers, they dig into ChatGPT. But it recommends seeking psychological help.</p>
 
-    <p>With Gus's VC pitch and Wally's audition coming up, they have no choice but to do their best as the other. It's a major risk. But their biggest flaws surprisingly blow open the opportunities.</p>
+    <p>With Gus's VC pitch and Wally's audition coming up, they have no choice but to do their best as the other. It's a major risk. But their biggest flaws surprisingly blow open the&nbsp;opportunities.</p>
 
     <p>Relaxed, confident, and hesitant to share details, the New Gus attracts excitement from the investors.</p>
 

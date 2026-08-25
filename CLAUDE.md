@@ -126,4 +126,16 @@ Update workflow: User runs "Update Screenplay" Mac Shortcut → copies from Late
 
 ## SERVER
 
-Port 8878, threaded Python server. For local preview only.
+Port 8878, threaded Python server. For local preview only. No start script exists in the repo — launch manually: `python3 -m http.server 8878` from the repo root.
+
+---
+
+## GOTCHAS / LESSONS
+
+- **No shared JS/CSS on this site.** Every page is a fully self-contained file — inline `<style>` and `<script>` only, no shared includes. A few pages (index.html, hr-watch.html, hr-trailer.html) independently copy-paste a mobile-nav-dropdown click listener, but it's per-page, not global, and doesn't exist on pages without that nav. Don't assume a "global" behavior affects a new page without checking that page's own `<script>` tags (or lack thereof).
+- **This section IS "LESSONS."** If a future prompt cites a dated "LESSONS" entry, this section is the only such log in the repo — verify the claim is actually written here before treating it as established fact.
+- **Coupled breakpoints create pinch zones.** If a responsive variant-switch (e.g. showing different markup above/below a width) shares its breakpoint with another rule that also changes available width at that same width (e.g. a padding step), the width just past the shared breakpoint can be *tighter* than the width just before it — because both changes land at once. Give content-switch breakpoints their own value, comfortably clear of any spacing/padding breakpoint, and verify the exact boundary pixels empirically (not just round test widths).
+- **`clamp()` font-size + a `max-width` container can re-wrap a fitted headline at wide viewports.** If a title's font-size keeps scaling with `vw` past the point where its container hits its own `max-width` cap, the available width freezes while the font keeps growing — so a headline that fits at a mid-range viewport can wrap again at 768px/1440px. Check wide breakpoints too, not just mobile, when a heading depends on `clamp()`.
+- **`text-wrap: pretty` doesn't catch every single-word orphan in Chromium**, especially when the last words are split across inline elements (e.g. a `<span>` styled differently from surrounding text). Verify last-line word count directly (Range-based measurement, not just trusting the property); fall back to a manual `&nbsp;` between the last two words when it fails.
+- **Width-measurement scripts must wait on `document.fonts.ready`.** Measuring text width immediately after navigation can silently use the fallback font (e.g. Georgia instead of a webfont) before it finishes loading, giving numbers ~20% off from the real rendered width.
+- **`Element.getClientRects()` on a block element returns one rect for the whole box, not one per visual line.** To detect wrapping/line count inside a block, use a `Range` over its contents (or per-word Ranges) and cluster by `top` with a few px of tolerance — exact-equality clustering breaks when mixed inline elements (different font-size/baseline) land sub-pixel-different tops on the same visual line.

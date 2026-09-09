@@ -458,8 +458,8 @@
     /* HERO */
     .hero {
       position: relative;
-      height: 100vh;
-      min-height: 700px;
+      height: 82vh;
+      min-height: 560px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -578,17 +578,6 @@
     }
 
     section.visible { opacity: 1; transform: translateY(0); }
-
-    section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(184, 164, 114, 0.3), transparent);
-    }
 
     section:first-of-type::before,
     .hero::before { display: none; }
@@ -2885,22 +2874,22 @@
 .hr .btn-feature { background:var(--ivory); border-color:var(--ivory); color:var(--bg); font-weight:600; font-size:.82rem; letter-spacing:.15em; min-height:54px; min-width:220px; padding:16px 30px; gap:20px; border-radius:0; }
 .hr .btn-feature::after { content:"↗"; font-size:1.05rem; }
 .hr .btn-feature:hover { background:#fff; border-color:#fff; color:var(--bg); }
-.proof { margin:44px auto 0; padding-top:26px; border-top:1px solid var(--line); }
+.kv .btn { background:rgba(10,13,16,0.55); border-color:rgba(255,255,255,0.35); }
+.proof { margin:52px auto 0; padding-top:0; border-top:none; }
 .proof-heading { font-family:inherit; font-size:.74rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin:0 0 10px; line-height:1.7; }
 .proof-credit { color:#a0a9b2; font-size:1rem; margin:0; }
 .proof-credit a { color:var(--ivory); text-decoration:none; border-bottom:1px solid rgba(240,236,228,.3); }
 .proof-watch { margin:22px 0 28px; }
 .proof-watch a { display:inline-flex; align-items:center; justify-content:center; gap:20px; min-height:52px; min-width:220px; padding:14px 26px; border:1px solid var(--gold); background:rgba(184,164,114,.08); color:var(--ivory); text-decoration:none; font-weight:600; font-size:.82rem; letter-spacing:.15em; text-transform:uppercase; transition:background .2s,color .2s; }
 .proof-watch a:hover { background:var(--gold); color:var(--bg); }
-.hr .laurels { display:grid; grid-template-columns:repeat(6, 1fr); align-items:center; justify-items:center; gap:20px 16px; margin:0 auto; max-width:580px; }
-.hr .laurel { width:100%; height:auto; max-height:62px; object-fit:contain; opacity:.9; }
-.hr .laurel-wide { max-height:42px; }
+.hr .laurels { display:grid; grid-template-columns:repeat(12, 1fr); align-items:center; justify-items:center; gap:12px 10px; margin:0 auto; max-width:760px; }
+.hr .laurel { width:100%; height:auto; max-height:40px; object-fit:contain; opacity:.8; }
+.hr .laurel-wide { max-height:28px; }
 .proof .press { margin:20px 0 0; font-size:.9rem; color:#a0a9b2; }
 .proof .press a { color:var(--ivory); text-decoration:none; border-bottom:1px solid var(--line); }
 @media (max-width:600px) {
   .hr .laurels { grid-template-columns:repeat(4,1fr); gap:18px 14px; max-width:380px; margin:0 auto; }
   .hr-logline { font-size:1.2rem; }
-  .proof { margin-top:32px; }
 }
 
 /* ---------- 2 · TOP FLOOR (live treatment) ---------- */
@@ -3020,9 +3009,6 @@ footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(
         <a href="/about" style="text-decoration:none;color:inherit;cursor:pointer;"><h1>MAX COYNE-GREEN</h1></a>
         <p class="subtitle">Writer / Producer</p>
         <p class="subtitle location">New York / İstanbul</p>
-      </div>
-      <div class="scroll-indicator">
-        <div class="line"></div>
       </div>
     </section>
 

@@ -19,3 +19,6 @@ backups-*/
 # Test artifacts
 test-results/
 test-nav-fixes.mjs
+
+# Local design source files (not deployed)
+design/

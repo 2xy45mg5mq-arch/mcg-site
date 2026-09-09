@@ -914,29 +914,6 @@
       margin-bottom: 20px;
       text-shadow: 0 3px 30px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1);
     }
-    .tf-pyramid {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      width: 100%;
-    }
-    .tf-pyramid-line {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: clamp(0.95rem, 1.9vw, 1.25rem);
-      color: rgba(228,228,228,0.75);
-      text-align: center;
-      line-height: 1.4;
-      text-shadow:
-        0 2px 25px rgba(0,0,0,1),
-        0 4px 40px rgba(0,0,0,0.9),
-        0 1px 3px rgba(0,0,0,1);
-      text-transform: lowercase;
-    }
-    .tf-pyramid-1 { max-width: 340px; }
-    .tf-pyramid-2 { max-width: 480px; }
-    .tf-pyramid-3 { max-width: 620px; }
-
     .tf-card-buttons {
       display: flex;
       gap: 16px;
@@ -1012,11 +989,6 @@
         font-size: clamp(2rem, 8vw, 3rem);
         margin-bottom: 14px;
       }
-      .tf-pyramid { gap: 4px; }
-      .tf-pyramid-line { font-size: clamp(0.8rem, 3.5vw, 1rem); }
-      .tf-pyramid-1 { max-width: 240px; }
-      .tf-pyramid-2 { max-width: 320px; }
-      .tf-pyramid-3 { max-width: 400px; }
       .kv-card-image .kv-card-title {
         font-size: 1.8rem;
         letter-spacing: 5px;
@@ -1064,11 +1036,6 @@
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.3s, transform 0.3s, color 0.3s;
-    }
-
-    .project-card .view-project::after {
-      content: '→';
-      transition: transform 0.3s;
     }
 
     .project-card:hover .view-project {
@@ -2516,13 +2483,6 @@
         margin-bottom: 16px;
         letter-spacing: 0.08em;
       }
-      .tf-pyramid {
-        gap: 5px;
-        margin-bottom: 8px;
-      }
-      .tf-pyramid-line {
-        font-size: clamp(0.85rem, 3.8vw, 1.05rem);
-      }
       .tf-card-buttons {
         flex-direction: column;
         gap: 12px;
@@ -2846,111 +2806,65 @@
     }
 
 :root { --line:rgba(255,255,255,0.1); --gold:#b8a472; --ivory:#f0ece4; --dim:#55606b; }
-/* ---------- Shared: format line, buttons ---------- */
-.format { display:inline-block; font-size:0.74rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); }
-.btn-row { display:flex; gap:14px; flex-wrap:wrap; }
-.hr-info .btn-row { justify-content:center; margin-top:30px; }
 .ph { outline:1px dashed rgba(233,196,106,0.45); outline-offset:4px; }
 
-/* ---------- 1 · HUMAN RESOURCE ---------- */
-.hr { padding:36px 0 0; }
-.hr-grid { display:block; }
-.hr-info { max-width:720px; margin:0 auto; text-align:center; }
-.hr-info .format { margin-bottom:16px; font-weight:600; }
-.hr-info h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:clamp(3rem, 6.4vw, 4.8rem); letter-spacing:0.09em; line-height:0.95; margin:0 0 22px; }
-.hr-logline { font-size:1.32rem; line-height:1.55; font-style:italic; max-width:560px; margin:0 auto; color:var(--ivory); }
-.hr .btn { color:var(--ivory); border-color:rgba(240,236,228,.35); display:inline-flex; align-items:center; justify-content:center; min-height:46px; }
-.hr .btn-feature { background:var(--ivory); border-color:var(--ivory); color:var(--bg); font-weight:600; font-size:.82rem; letter-spacing:.15em; min-height:54px; min-width:220px; padding:16px 30px; gap:20px; border-radius:0; }
-.hr .btn-feature:hover { background:#fff; border-color:#fff; color:var(--bg); }
-.kv .btn:not(.btn-primary) { background:rgba(10,13,16,0.55); border-color:rgba(255,255,255,0.35); }
-.proof { margin:52px auto 0; padding-top:0; border-top:none; }
-.proof-heading { font-family:inherit; font-size:.74rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin:0 0 10px; line-height:1.7; }
-.proof-credit { color:#a0a9b2; font-size:1rem; margin:0; }
-.proof-credit a { color:var(--ivory); text-decoration:none; border-bottom:1px solid rgba(240,236,228,.3); }
-.proof-watch { margin:22px 0 28px; }
-.proof-watch a { display:inline-flex; align-items:center; justify-content:center; gap:20px; min-height:52px; min-width:220px; padding:14px 26px; border:1px solid var(--gold); background:rgba(184,164,114,.08); color:var(--ivory); text-decoration:none; font-weight:600; font-size:.82rem; letter-spacing:.15em; text-transform:uppercase; transition:background .2s,color .2s; }
-.proof-watch a:hover { background:var(--gold); color:var(--bg); }
-.hr .laurels { display:grid; grid-template-columns:repeat(12, 1fr); align-items:center; justify-items:center; gap:12px 10px; margin:0 auto; max-width:760px; }
-.hr .laurel { width:100%; height:auto; max-height:40px; object-fit:contain; opacity:.8; }
-.hr .laurel-wide { max-height:28px; }
-.proof .press { margin:20px 0 0; font-size:.9rem; color:#a0a9b2; }
-.proof .press a { color:var(--ivory); text-decoration:none; border-bottom:1px solid var(--line); }
-@media (max-width:600px) {
-  .hr .laurels { grid-template-columns:repeat(4,1fr); gap:18px 14px; max-width:380px; margin:0 auto; }
-  .hr-logline { font-size:1.2rem; }
-}
-
-/* ---------- 2 · TOP FLOOR (live treatment) ---------- */
-.tf { position:relative; margin-top:72px; min-height:76vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
-.tf-bg { position:absolute; inset:0; background:url("/images/tf_art_deco_pyramid.webp?v=1") center 22%/cover no-repeat; transform:scale(1.05); opacity:0.9; filter:brightness(1.4) contrast(1.1) drop-shadow(0 0 30px rgba(184,164,114,0.3)); }
-.tf::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center 45%, rgba(10,13,16,0.7) 5%, rgba(10,13,16,0.3) 25%, transparent 55%); }
-.tf::after { content:''; position:absolute; inset:0; background:linear-gradient(to right, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%), linear-gradient(to bottom, var(--bg) 0%, transparent 10%, transparent 76%, var(--bg) 100%); }
-.tf-overlay { position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 30px; }
-.tf-overlay .format { margin-bottom:18px; color:rgba(232,220,184,0.8); text-shadow:0 1px 6px rgba(0,0,0,1); }
-.tf-overlay h2 { font-family:'Cinzel', Georgia, serif; font-weight:700; font-size:clamp(2.5rem, 5vw, 4rem); color:var(--ivory); letter-spacing:0.05em; margin-bottom:22px; text-shadow:0 3px 30px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1); }
-.tf-pyramid { display:flex; flex-direction:column; align-items:center; gap:6px; width:100%; }
-.tf-pyramid-line { font-size:clamp(0.95rem, 1.9vw, 1.25rem); color:rgba(228,228,228,0.78); line-height:1.4; text-shadow:0 2px 25px rgba(0,0,0,1), 0 4px 40px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,1); text-transform:lowercase; }
-.tf-pyramid-1 { max-width:340px; } .tf-pyramid-2 { max-width:480px; } .tf-pyramid-3 { max-width:620px; }
-.tf-overlay .btn-row { margin-top:30px; justify-content:center; }
-
-/* ---------- 3 · KAN VATAN (cinematic, sibling of Top Floor) ---------- */
-.kv { position:relative; min-height:76vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
-.kv-bg { position:absolute; inset:0; z-index:0; background:url("/images/kv_village.webp") center 55%/cover no-repeat; transform:scale(1.04); filter:saturate(0.75) contrast(1.05) brightness(0.55); }
-.kv::before { content:''; position:absolute; inset:0; z-index:1; background:radial-gradient(ellipse at center 50%, rgba(10,13,16,0.72) 0%, rgba(10,13,16,0.35) 40%, transparent 72%); }
-.kv::after { content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(to right, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%), linear-gradient(to bottom, var(--bg) 0%, transparent 12%, transparent 78%, var(--bg) 100%); }
-.kv-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 30px; }
-.kv-inner .format { margin-bottom:18px; color:rgba(232,220,184,0.8); text-shadow:0 1px 6px rgba(0,0,0,1); }
-.kv-inner h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:clamp(3rem, 6.4vw, 4.8rem); letter-spacing:0.1em; line-height:0.95; color:var(--ivory); text-shadow:0 3px 30px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1); }
-.kv-inner .alt { font-style:italic; font-size:1.2rem; color:rgba(228,228,228,0.7); margin:8px 0 22px; text-shadow:0 1px 6px rgba(0,0,0,1); }
-.kv-inner .logline { font-size:clamp(1.05rem, 1.9vw, 1.25rem); line-height:1.5; color:rgba(228,228,228,0.85); max-width:560px; text-shadow:0 2px 25px rgba(0,0,0,1), 0 1px 3px rgba(0,0,0,1); }
-.kv-inner .btn-row { margin-top:30px; justify-content:center; }
-
-/* ---------- ABOUT / CONNECT (unchanged) ---------- */
-.about { padding:80px 0 40px; }
-.about-grid { display:grid; grid-template-columns:160px 1fr; gap:48px; align-items:center; max-width:720px; margin:0 auto; }
-.about-photo { width:100%; border-radius:4px; filter:grayscale(100%); }
-.about-text h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:2.2rem; letter-spacing:3px; margin-bottom:8px; }
-.about-text .bio-subtitle { font-size:0.95rem; letter-spacing:1px; margin-bottom:18px; font-style:italic; }
-.about-text p { color:var(--muted); font-size:1.08rem; line-height:1.85; margin-bottom:16px; max-width:500px; }
-.about-text p a { text-decoration:none; color:var(--ivory); border-bottom:1px solid var(--line); }
-.about-more { font-size:0.76rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; color:var(--text); }
-.connect { text-align:center; padding:56px 0 72px; }
-.connect h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:2.8rem; letter-spacing:4px; margin-bottom:12px; }
-.connect p { color:var(--muted); margin-bottom:36px; }
-.connect-links { display:flex; justify-content:center; gap:48px; }
-.connect-links a { text-decoration:none; font-size:0.85rem; letter-spacing:1px; }
 footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(--dim); }
 
 @media (max-width: 860px) {
   nav .links { display:none; }
-  .wrap { padding:0 22px; }
   .hero h1 { letter-spacing:6px; }
-  .hr .btn-row, .tf-overlay .btn-row, .kv .btn-row { flex-direction:column; align-items:stretch; }
-  .hr .btn-row { max-width:320px; margin-left:auto; margin-right:auto; }
-  .hr { padding:0 0 8px; }
-  .laurels { grid-template-columns:repeat(6, 1fr); gap:14px 10px; max-width:380px; }
-  .tf { min-height:66vh; margin-top:72px; }
-  .tf-overlay h2 { font-size:clamp(2.8rem, 12vw, 4rem); letter-spacing:0.08em; }
-  .tf-pyramid-1 { max-width:240px; } .tf-pyramid-2 { max-width:320px; } .tf-pyramid-3 { max-width:400px; }
-  .tf-overlay .btn-row { width:100%; max-width:320px; }
-  .kv { min-height:66vh; }
-  .kv-inner .btn-row { width:100%; max-width:320px; }
-  .about-grid { grid-template-columns:1fr; gap:24px; justify-items:center; text-align:center; }
-  .about-photo { max-width:150px; }
-  .about-text p { margin-left:auto; margin-right:auto; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
-@media (max-width: 860px) {
-  .hr .btn-row, .tf-overlay .btn-row, .kv .btn-row { flex-direction:column; align-items:stretch; }
-  .hr .btn-row { max-width:320px; margin-left:auto; margin-right:auto; }
-  .hr { padding:0 0 8px; }
-  .laurels { grid-template-columns:repeat(6, 1fr); gap:14px 10px; max-width:380px; }
-  .tf { min-height:66vh; margin-top:72px; }
-  .tf-overlay h2 { font-size:clamp(2.8rem, 12vw, 4rem); letter-spacing:0.08em; }
-  .tf-pyramid-1 { max-width:240px; } .tf-pyramid-2 { max-width:320px; } .tf-pyramid-3 { max-width:400px; }
-  .tf-overlay .btn-row { width:100%; max-width:320px; }
-  .kv { min-height:66vh; }
-  .kv-inner .btn-row { width:100%; max-width:320px; }
+
+/* ===== HOMEPAGE PANELS — 2026-09-09 ===== */
+:root{--hrbg:#0b1219;--tfbg:#0a0c10;--kvbg:#17110c;--ivory:#f0ece4;--gold:#b8a472;--muted:#8a95a0;--line:rgba(255,255,255,.12)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 48px}
+.eyebrow{font-size:.9rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 18px}
+h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,8.5vw,7.8rem);line-height:.9;letter-spacing:.05em;color:var(--ivory);margin:0 0 30px}
+.log{font-family:'EB Garamond',Georgia,serif;font-size:1.85rem;line-height:1.42;color:var(--ivory);max-width:600px;margin:0 0 34px;text-wrap:balance}
+.nw{white-space:nowrap}
+.cta{font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory);opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;margin:8px 0 0}
+.panel-link{position:absolute;inset:0;z-index:5;text-decoration:none}
+.about .over{position:relative;z-index:6}
+.hr,.tf,.kv{padding:0} /* neutralize generic section{padding:100px 0} so these panels stay full-bleed */
+.hr,.tf,.kv,.about{cursor:pointer}
+.hr:hover .cta,.tf:hover .cta,.kv:hover .cta,.about:hover .cta{opacity:1;transform:none}
+.hr-img,.kv-img,.tf-card-img{transition:filter .4s}
+.hr:hover .hr-img,.kv:hover .kv-img,.tf:hover .tf-card-img{filter:brightness(1.08)}
+.hr{background:var(--hrbg);position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hr-img{position:absolute;top:0;right:0;bottom:0;width:64%;background:url("/images/hero_slide_07.webp") 60% center/cover}
+.hr-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--hrbg),rgba(11,18,25,.85) 18%,transparent 48%),linear-gradient(to bottom,rgba(11,18,25,.45),transparent 25%)}
+.hr .wrap{position:relative;z-index:2;width:100%} .hr .txt{max-width:600px}
+.hr .log{font-style:italic;max-width:560px}
+.hr-laurels{position:absolute;left:0;right:0;bottom:36px;z-index:3;padding:0 48px}
+.hr .laurels{display:flex;justify-content:space-between;align-items:center;gap:14px;max-width:1000px;margin:0 auto}
+.hr .laurel{height:44px;width:auto;opacity:.7} .hr .laurel.wide{height:30px}
+.tf{position:relative;height:56.25vw;overflow:hidden;background:var(--tfbg)}
+.tf-card-img{position:absolute;inset:0;background:url("/images/tf_card.webp") center/100% 100% no-repeat}
+.tf-card{position:relative;z-index:2;height:100%}
+.tf-cta{position:absolute;left:48px;bottom:9%;margin:0}
+.kv{background:var(--kvbg);position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.kv-img{position:absolute;inset:0;background:url("/images/kv_keyart.webp") 30% center/cover}
+.kv-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to left,rgba(23,17,12,.97) 0%,rgba(23,17,12,.9) 30%,rgba(23,17,12,.4) 55%,transparent 75%),linear-gradient(to bottom,rgba(23,17,12,.5),transparent 22%,transparent 85%,var(--kvbg))}
+.kv .wrap{position:relative;z-index:2;width:100%;display:flex;justify-content:flex-end} .kv .txt{max-width:640px;text-align:right}
+.kv .log{margin-left:auto}
+.kv h2.t{font-family:'EB Garamond',Georgia,serif;font-weight:500;font-size:clamp(3.6rem,8.5vw,8rem);letter-spacing:.14em;line-height:1;text-transform:uppercase}
+.about{position:relative;padding:120px 0 72px} .about .wrap{display:grid;grid-template-columns:240px 1fr;gap:64px;align-items:start}
+.about img{width:240px;height:300px;object-fit:cover;filter:grayscale(1);display:block}
+.about h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:3rem;letter-spacing:3px;margin:0 0 6px;color:var(--ivory)}
+.about .subt{font-style:italic;font-size:1.1rem;margin:0 0 18px;color:var(--muted)}
+.about p{color:var(--text);font-size:1.2rem;line-height:1.7;margin:0 0 16px;max-width:600px;text-wrap:pretty} .about p a{color:var(--ivory);text-decoration:none;border-bottom:1px solid var(--line)}
+.connect{text-align:center;padding:48px 0 80px} .connect .eyebrow{margin-bottom:22px}
+.connect .links{display:flex;justify-content:center;gap:48px;font-size:.95rem} .connect .links a{text-decoration:none;color:var(--text)}
+@media(max-width:860px){
+ .wrap{padding:0 22px}
+ .cta{opacity:1;transform:none;border-bottom:1px solid rgba(255,255,255,.3);display:inline-block;padding-bottom:3px}
+ .hr,.kv{min-height:0;display:block} .hr-img,.kv-img{position:relative;width:100%;height:56vw;inset:auto}
+ .hr-img::before,.kv-img::before{background:linear-gradient(to bottom,transparent 55%,var(--hrbg))} .kv-img::before{background:linear-gradient(to bottom,transparent 55%,var(--kvbg))}
+ .hr .wrap,.kv .wrap{padding-top:24px;padding-bottom:40px;display:block} .hr .txt,.kv .txt{max-width:none;text-align:center;margin:0 auto} .log{margin-left:auto;margin-right:auto}
+ .hr-laurels{position:static;padding:0 22px 28px} .hr .laurels{flex-wrap:wrap;justify-content:center;gap:14px 12px} .hr .laurel{height:34px} .hr .laurel.wide{height:24px}
+ .tf{height:auto;padding:0 0 28px} .tf-card-img{position:relative;height:56vw;inset:auto;background-size:cover} .tf-card{height:auto;text-align:center;padding-top:18px} .tf-cta{position:static}
+ .about{padding:72px 0 40px} .about .wrap{grid-template-columns:1fr;justify-items:center;text-align:center;gap:28px} .about p{margin-left:auto;margin-right:auto} .about img{width:160px;height:200px}
 }
   </style>
 </head>
@@ -2986,7 +2900,6 @@ footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(
         <div class="hero-slide" style="background-image: url('/images/hero_slide_04.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_05.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_06.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_07.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_08.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_09.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_10.webp')"></div>
@@ -3000,96 +2913,24 @@ footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(
       </div>
     </section>
 
-    <section class="hr">
-      <div class="container">
-        <div class="hr-grid">
-          <div class="hr-info">
-            <p class="format">Feature · Now in development</p>
-            <h2>HUMAN RESOURCE</h2>
-            <p class="hr-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.</p>
-            <div class="btn-row">
-              <a href="https://hrthefilm.com" class="btn btn-feature" target="_blank" rel="noopener noreferrer">View Project</a>
-            </div>
-            <div class="proof">
-              <h3 class="proof-heading">Award-winning proof-of-concept short</h3>
-              <p class="proof-credit">Directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a></p>
-              <p class="proof-watch"><a href="https://hrthefilm.com/trailer" target="_blank" rel="noopener noreferrer">Watch Trailer</a></p>
-              <div class="laurels">
-                <img src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026 — Official Selection" class="laurel laurel-wide" loading="lazy">
-                <img src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival — Official Selection" class="laurel" loading="lazy">
-                <img src="/images/laurels/02_dwf.png" alt="DWF:NY 2026 — Official Selection" class="laurel laurel-wide" loading="lazy">
-                <img src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival 2025 — Official Selection" class="laurel" loading="lazy">
-                <img src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short" class="laurel" loading="lazy">
-                <img src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA — Official Selection" class="laurel" loading="lazy">
-                <img src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival — Official Selection" class="laurel" loading="lazy">
-                <img src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival — Award Winner" class="laurel" loading="lazy">
-                <img src="/images/laurels/07_venice.png" alt="Venice Shorts — Award Winner" class="laurel" loading="lazy">
-                <img src="/images/laurels/04_biff.png" alt="Beloit International Film Festival — Official Selection" class="laurel" loading="lazy">
-                <img src="/images/laurels/10_downtown.png" alt="The Downtown Festival — Official Selection" class="laurel laurel-wide" loading="lazy">
-                <img src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival — Official Selection" class="laurel laurel-wide" loading="lazy">
-              </div>
-              <p class="press">Featured on <a href="https://phl17.com/phl17-news/phl17-segments-shows/local-filmmakers-discuss-latest-project-set-in-philadelphia/" target="_blank" rel="noopener noreferrer">PHL17 (CW Philadelphia)</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="hr"><a class="panel-link" href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer" aria-label="Human Resource"></a><div class="hr-img"></div><div class="wrap"><div class="txt">
+    <p class="eyebrow">Feature · In development</p><h2 class="t">HUMAN<br>RESOURCE</h2>
+    <p class="log">An HR manager makes a dangerous deal to save her <span class="nw">staff—only</span> to discover they're more replaceable than&nbsp;she&nbsp;thought.</p>
+    <p class="cta">View Project</p></div></div><div class="hr-laurels"><div class="laurels"><img class="laurel wide" src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026"><img class="laurel" src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival"><img class="laurel wide" src="/images/laurels/02_dwf.png" alt="DWF:NY 2026"><img class="laurel" src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival"><img class="laurel" src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short"><img class="laurel" src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA"><img class="laurel" src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival"><img class="laurel" src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival"><img class="laurel" src="/images/laurels/07_venice.png" alt="Venice Shorts"><img class="laurel" src="/images/laurels/04_biff.png" alt="Beloit International Film Festival"><img class="laurel wide" src="/images/laurels/10_downtown.png" alt="The Downtown Festival"><img class="laurel wide" src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival"></div></div></section>
 
-    <section class="tf">
-      <div class="tf-bg"></div>
-      <div class="tf-overlay">
-        <p class="format">Feature · Psychological Thriller</p>
-        <h2>TOP FLOOR</h2>
-        <div class="tf-pyramid">
-          <div class="tf-pyramid-line tf-pyramid-1">an ambitious manhattan doorman</div>
-          <div class="tf-pyramid-line tf-pyramid-2">moves into his doppelgänger's penthouse</div>
-          <div class="tf-pyramid-line tf-pyramid-3">only to get trapped in a dangerous new identity</div>
-        </div>
-        <div class="btn-row">
-          <a href="/topfloor" class="btn btn-primary">Explore the Story</a>
-          <a href="#" class="btn" onclick="openConnectModal(); return false;">Request the Script</a>
-        </div>
-      </div>
-    </section>
+    <section class="tf"><a class="panel-link" href="/topfloor" aria-label="Top Floor"></a><div class="tf-card-img"></div><div class="tf-card"><p class="cta tf-cta">View Project</p></div></section>
 
-    <section class="kv">
-      <div class="kv-bg"></div>
-      <div class="kv-inner">
-        <p class="format">Pilot · Turkish-American Thriller</p>
-        <h2>KAN VATAN</h2>
-        <p class="alt">Blood at the Roots</p>
-        <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
-        <div class="btn-row">
-          <a href="/kanvatan" class="btn btn-primary">Explore the Story</a>
-          <a href="#" class="btn" onclick="openConnectModal(); return false;">Request the Script</a>
-        </div>
-      </div>
-    </section>
+    <section class="kv"><a class="panel-link" href="/kanvatan" aria-label="Kan Vatan"></a><div class="kv-img"></div><div class="wrap"><div class="txt">
+    <p class="eyebrow">Pilot · Turkish-American Thriller</p><h2 class="t">KAN VATAN</h2>
+    <p class="log">A family of olive growers finds an American operative hiding out on their dying <span class="nw">grove—just</span> when they need&nbsp;him.</p>
+    <p class="cta">View Project</p></div></div></section>
 
-    <section class="about" id="about">
-      <div class="container">
-        <div class="about-grid">
-          <img src="/images/img_8.webp" alt="Max Coyne-Green" class="about-photo bw" loading="lazy">
-          <div class="about-text">
-            <h2>MAX COYNE-GREEN</h2>
-            <p class="bio-subtitle">Small Language Model · 1990</p>
-            <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://www.linkedin.com/in/mcgwrites/" target="_blank" rel="noopener noreferrer">here</a>.</p>
-            <a href="/about" style="display:inline-block; margin-top:20px; font-family:'Bebas Neue',sans-serif; font-size:0.7rem; letter-spacing:3px; color:var(--muted); text-decoration:none; transition:color 0.3s;">THE FULL STORY &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="about" id="about"><a class="panel-link" href="/about" aria-label="About Max Coyne-Green"></a><div class="wrap"><img src="/images/img_8.webp" alt="Max Coyne-Green"><div>
+    <p class="eyebrow">About</p><h3>MAX COYNE-GREEN</h3><p class="subt">Small Language Model · 1990</p>
+    <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://www.linkedin.com/in/mcgwrites/" target="_blank" rel="noopener noreferrer" class="over">here</a>.</p>
+    <p class="cta">The Full Story</p></div></div></section>
 
-    <section class="contact" id="contact">
-      <div class="container">
-        <div class="label">Contact</div>
-        <div class="contact-links">
-          <a href="#" onclick="openConnectModal(); return false;">Get in Touch</a>
-          <a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">IMDb</a>
-          <a href="https://mcgwrites.substack.com" target="_blank" rel="noopener noreferrer">Essays</a>
-        </div>
-      </div>
-    </section>
+    <section class="connect" id="contact"><p class="eyebrow">Contact</p><div class="links"><a href="#" onclick="openConnectModal(); return false;">Get in Touch</a><a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">IMDb</a><a href="https://mcgwrites.substack.com" target="_blank" rel="noopener noreferrer">Essays</a></div></section>
 
     <!-- COPYRIGHT FOOTER -->
     <footer class="copyright-footer">

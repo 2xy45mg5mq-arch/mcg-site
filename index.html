@@ -2397,19 +2397,6 @@
       opacity: 1;
     }
 
-    /* Coming Up cards — tighter bottom, wider loglines */
-    #coming-up-section .project-card-content {
-      padding: 20px 28px;
-    }
-    #coming-up-section .logline {
-      margin-bottom: 0;
-      font-size: 1.05rem;
-      color: rgba(228,228,228,0.7);
-    }
-    #coming-up-section .lr-card .logline {
-      font-size: 1.1rem;
-    }
-
     /* Meatspace CTA modal inline */
     .meatspace-cta {
       text-align: center;
@@ -2870,9 +2857,6 @@
     }
 
     /* ── VARIED SECTION SPACING ── */
-    section#work { padding-bottom: 64px; }
-    #coming-up-section { padding-top: 48px; padding-bottom: 80px; }
-    section.portfolio-section { padding: 80px 0; }
     section.about { padding: 80px 0 60px; }
     section.contact { padding: 60px 0 80px; }
 
@@ -2882,6 +2866,110 @@
       outline: 2px solid #b8a472;
       outline-offset: 2px;
     }
+
+:root { --line:rgba(255,255,255,0.1); --gold:#b8a472; --ivory:#f0ece4; --dim:#55606b; }
+/* ---------- Shared: format line, buttons ---------- */
+.format { display:inline-block; font-size:0.74rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); }
+.btn-row { display:flex; gap:14px; flex-wrap:wrap; }
+.hr-info .btn-row { justify-content:center; margin-top:30px; }
+.ph { outline:1px dashed rgba(233,196,106,0.45); outline-offset:4px; }
+
+/* ---------- 1 · HUMAN RESOURCE ---------- */
+.hr { padding:0; }
+.hr-grid { display:block; }
+.hr-info { max-width:640px; margin:0 auto; text-align:center; }
+.hr-info .format { margin-bottom:16px; }
+.hr-info h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:clamp(3rem, 6.4vw, 4.8rem); letter-spacing:0.09em; line-height:0.95; margin:0 0 22px; }
+.hr-logline { font-size:1.32rem; line-height:1.55; font-style:italic; max-width:560px; margin:0 auto; color:var(--ivory); }
+.hr-credits { margin-top:18px; font-size:1.02rem; line-height:1.9; color:var(--muted); }
+.hr-credits b { font-weight:500; color:var(--text); }
+.proof { margin:44px auto 0; padding-top:30px; border-top:1px solid var(--line); max-width:640px; }
+.proof-line { font-size:1.05rem; line-height:1.55; color:var(--text); }
+.proof-line a { color:var(--ivory); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.3); }
+.proof-meta { color:var(--muted); font-size:0.95rem; margin-top:6px; }
+.laurels { display:grid; grid-template-columns:repeat(12, 1fr); align-items:center; justify-items:center; gap:10px; margin:22px auto 0; max-width:600px; }
+.laurel { width:100%; height:auto; max-height:46px; object-fit:contain; opacity:0.85; }
+.laurel-wide { max-height:30px; }
+.proof-link { margin-top:10px; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; }
+.proof-link a { border-bottom:none; color:var(--text); }
+.proof-link a::after { content:' →'; }
+.press { margin-top:22px; font-size:0.92rem; color:var(--dim); }
+.press a { color:var(--text); text-decoration:none; border-bottom:1px solid var(--line); }
+.btn-feature { background:var(--ivory); border-color:var(--ivory); color:var(--bg); font-weight:500; }
+.btn-feature:hover { background:#fff; border-color:#fff; }
+
+/* ---------- 2 · TOP FLOOR (live treatment) ---------- */
+.tf { position:relative; margin-top:72px; min-height:76vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.tf-bg { position:absolute; inset:0; background:url("/images/tf_art_deco_pyramid.webp?v=1") center 22%/cover no-repeat; transform:scale(1.05); opacity:0.9; filter:brightness(1.4) contrast(1.1) drop-shadow(0 0 30px rgba(184,164,114,0.3)); }
+.tf::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center 45%, rgba(10,13,16,0.7) 5%, rgba(10,13,16,0.3) 25%, transparent 55%); }
+.tf::after { content:''; position:absolute; inset:0; background:linear-gradient(to right, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%), linear-gradient(to bottom, var(--bg) 0%, transparent 10%, transparent 76%, var(--bg) 100%); }
+.tf-overlay { position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 30px; }
+.tf-overlay .format { margin-bottom:18px; color:rgba(232,220,184,0.8); text-shadow:0 1px 6px rgba(0,0,0,1); }
+.tf-overlay h2 { font-family:'Cinzel', Georgia, serif; font-weight:700; font-size:clamp(2.5rem, 5vw, 4rem); color:var(--ivory); letter-spacing:0.05em; margin-bottom:22px; text-shadow:0 3px 30px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1); }
+.tf-pyramid { display:flex; flex-direction:column; align-items:center; gap:6px; width:100%; }
+.tf-pyramid-line { font-size:clamp(0.95rem, 1.9vw, 1.25rem); color:rgba(228,228,228,0.78); line-height:1.4; text-shadow:0 2px 25px rgba(0,0,0,1), 0 4px 40px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,1); text-transform:lowercase; }
+.tf-pyramid-1 { max-width:340px; } .tf-pyramid-2 { max-width:480px; } .tf-pyramid-3 { max-width:620px; }
+.tf-overlay .btn-row { margin-top:30px; justify-content:center; }
+
+/* ---------- 3 · KAN VATAN (cinematic, sibling of Top Floor) ---------- */
+.kv { position:relative; min-height:76vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.kv-bg { position:absolute; inset:0; z-index:0; background:url("/images/kv_village.webp") center 55%/cover no-repeat; transform:scale(1.04); filter:saturate(0.75) contrast(1.05) brightness(0.55); }
+.kv::before { content:''; position:absolute; inset:0; z-index:1; background:radial-gradient(ellipse at center 50%, rgba(10,13,16,0.72) 0%, rgba(10,13,16,0.35) 40%, transparent 72%); }
+.kv::after { content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(to right, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%), linear-gradient(to bottom, var(--bg) 0%, transparent 12%, transparent 78%, var(--bg) 100%); }
+.kv-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 30px; }
+.kv-inner .format { margin-bottom:18px; color:rgba(232,220,184,0.8); text-shadow:0 1px 6px rgba(0,0,0,1); }
+.kv-inner h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:clamp(3rem, 6.4vw, 4.8rem); letter-spacing:0.1em; line-height:0.95; color:var(--ivory); text-shadow:0 3px 30px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1); }
+.kv-inner .alt { font-style:italic; font-size:1.2rem; color:rgba(228,228,228,0.7); margin:8px 0 22px; text-shadow:0 1px 6px rgba(0,0,0,1); }
+.kv-inner .logline { font-size:clamp(1.05rem, 1.9vw, 1.25rem); line-height:1.5; color:rgba(228,228,228,0.85); max-width:560px; text-shadow:0 2px 25px rgba(0,0,0,1), 0 1px 3px rgba(0,0,0,1); }
+.kv-inner .btn-row { margin-top:30px; justify-content:center; }
+
+/* ---------- ABOUT / CONNECT (unchanged) ---------- */
+.about { padding:80px 0 40px; }
+.about-grid { display:grid; grid-template-columns:160px 1fr; gap:48px; align-items:center; max-width:720px; margin:0 auto; }
+.about-photo { width:100%; border-radius:4px; filter:grayscale(100%); }
+.about-text h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:2.2rem; letter-spacing:3px; margin-bottom:8px; }
+.about-text .bio-subtitle { font-size:0.95rem; letter-spacing:1px; margin-bottom:18px; font-style:italic; }
+.about-text p { color:var(--muted); font-size:1.08rem; line-height:1.85; margin-bottom:16px; max-width:500px; }
+.about-text p a { text-decoration:none; color:var(--ivory); border-bottom:1px solid var(--line); }
+.about-more { font-size:0.76rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; color:var(--text); }
+.connect { text-align:center; padding:56px 0 72px; }
+.connect h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:2.8rem; letter-spacing:4px; margin-bottom:12px; }
+.connect p { color:var(--muted); margin-bottom:36px; }
+.connect-links { display:flex; justify-content:center; gap:48px; }
+.connect-links a { text-decoration:none; font-size:0.85rem; letter-spacing:1px; }
+footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(--dim); }
+
+@media (max-width: 860px) {
+  nav .links { display:none; }
+  .wrap { padding:0 22px; }
+  .hero h1 { letter-spacing:6px; }
+  .hr .btn-row, .tf-overlay .btn-row, .kv .btn-row { flex-direction:column; align-items:stretch; }
+  .hr .btn-row { max-width:320px; margin-left:auto; margin-right:auto; }
+  .hr { padding:0 0 8px; }
+  .laurels { grid-template-columns:repeat(6, 1fr); gap:14px 10px; max-width:380px; }
+  .tf { min-height:66vh; margin-top:72px; }
+  .tf-overlay h2 { font-size:clamp(2.8rem, 12vw, 4rem); letter-spacing:0.08em; }
+  .tf-pyramid-1 { max-width:240px; } .tf-pyramid-2 { max-width:320px; } .tf-pyramid-3 { max-width:400px; }
+  .tf-overlay .btn-row { width:100%; max-width:320px; }
+  .kv { min-height:66vh; }
+  .kv-inner .btn-row { width:100%; max-width:320px; }
+  .about-grid { grid-template-columns:1fr; gap:24px; justify-items:center; text-align:center; }
+  .about-photo { max-width:150px; }
+  .about-text p { margin-left:auto; margin-right:auto; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+@media (max-width: 860px) {
+  .hr .btn-row, .tf-overlay .btn-row, .kv .btn-row { flex-direction:column; align-items:stretch; }
+  .hr .btn-row { max-width:320px; margin-left:auto; margin-right:auto; }
+  .hr { padding:0 0 8px; }
+  .laurels { grid-template-columns:repeat(6, 1fr); gap:14px 10px; max-width:380px; }
+  .tf { min-height:66vh; margin-top:72px; }
+  .tf-overlay h2 { font-size:clamp(2.8rem, 12vw, 4rem); letter-spacing:0.08em; }
+  .tf-pyramid-1 { max-width:240px; } .tf-pyramid-2 { max-width:320px; } .tf-pyramid-3 { max-width:400px; }
+  .tf-overlay .btn-row { width:100%; max-width:320px; }
+  .kv { min-height:66vh; }
+  .kv-inner .btn-row { width:100%; max-width:320px; }
+}
   </style>
 </head>
 <body>
@@ -2893,7 +2981,7 @@
         <div class="nav-item">
           <a href="#" onclick="return false;">Work</a>
           <div class="dropdown" style="min-width:200px;">
-            <a href="/hr">Human Resource</a>
+            <a href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
             <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
@@ -2933,177 +3021,69 @@
       </div>
     </section>
 
-    <section class="featured" id="work">
+    <section class="hr">
       <div class="container">
-        <div class="featured-grid">
-          <a href="/hr" class="poster-wrap" id="featured-poster" style="text-decoration:none;color:inherit;">
-            <img src="/images/Website_v5_Peering_C_Spread.webp" alt="Human Resource - Nothing Is Free" class="poster-rotate active">
-            <img src="/images/Website_v5_Desktop_Top.webp?v=3" alt="Human Resource - Desktop" class="poster-rotate">
-          </a>
-          <div class="featured-info">
-            <div class="featured-top">
-              <h2>HUMAN RESOURCE</h2>
-              <p class="featured-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she&nbsp;thought.</p>
-              <div class="featured-buttons">
-                <a href="/hr" class="text-link">View Project</a>
-                <a href="/hr-trailer" class="text-link">Watch Trailer</a>
+        <div class="hr-grid">
+          <div class="hr-info">
+            <p class="format">Feature · Now in development</p>
+            <h2>HUMAN RESOURCE</h2>
+            <p class="hr-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.</p>
+            <div class="btn-row">
+              <a href="https://hrthefilm.com" class="btn btn-feature" target="_blank" rel="noopener noreferrer">Visit hrthefilm.com</a>
+              <a href="https://hrthefilm.com/read" class="btn" target="_blank" rel="noopener noreferrer">Request the Script</a>
+            </div>
+            <div class="proof">
+              <p class="proof-line">Award-winning proof-of-concept short, directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a></p>
+              <p class="proof-meta">Best Horror Short, Jersey City Horror Film Festival &nbsp;·&nbsp; Best Sci-Fi Short, Coney Island Film Festival</p>
+              <p class="proof-link"><a href="/hr-trailer">Watch Trailer</a></p>
+              <div class="laurels">
+                <img src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026 — Official Selection" class="laurel laurel-wide" loading="lazy">
+                <img src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival — Official Selection" class="laurel" loading="lazy">
+                <img src="/images/laurels/02_dwf.png" alt="DWF:NY 2026 — Official Selection" class="laurel laurel-wide" loading="lazy">
+                <img src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival 2025 — Official Selection" class="laurel" loading="lazy">
+                <img src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short" class="laurel" loading="lazy">
+                <img src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA — Official Selection" class="laurel" loading="lazy">
+                <img src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival — Official Selection" class="laurel" loading="lazy">
+                <img src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival — Award Winner" class="laurel" loading="lazy">
+                <img src="/images/laurels/07_venice.png" alt="Venice Shorts — Award Winner" class="laurel" loading="lazy">
+                <img src="/images/laurels/04_biff.png" alt="Beloit International Film Festival — Official Selection" class="laurel" loading="lazy">
+                <img src="/images/laurels/10_downtown.png" alt="The Downtown Festival — Official Selection" class="laurel laurel-wide" loading="lazy">
+                <img src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival — Official Selection" class="laurel laurel-wide" loading="lazy">
               </div>
             </div>
-            <div class="featured-bottom">
-              <div class="featured-credits">
-                Starring <a href="https://www.imdb.com/name/nm3123429/" target="_blank" rel="noopener noreferrer">Mia Vallet</a> &amp; <a href="https://www.imdb.com/name/nm0185274/" target="_blank" rel="noopener noreferrer">Veanne Cox</a><br>
-                Directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a><br>
-                Cinematography by <a href="https://www.imdb.com/name/nm5279424/" target="_blank" rel="noopener noreferrer">Justin Derry</a><br>
-                Written &amp; Produced by <a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">Max Coyne-Green</a><br>
-                Story by Max Coyne-Green &amp; Mia Blake Vallet
-              </div>
-            </div>
+            <p class="press">Featured on <a href="https://phl17.com/phl17-news/phl17-segments-shows/local-filmmakers-discuss-latest-project-set-in-philadelphia/" target="_blank" rel="noopener noreferrer">PHL17 (CW Philadelphia)</a></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ON DECK DIVIDER -->
-    <div class="section-divider"><span>On Deck</span></div>
-
-    <!-- TOP FLOOR — Full-width cinematic banner -->
-    <section class="project-card-section tf-cinematic" id="topfloor-section">
-      <div class="project-card tf-card">
-        <div class="project-card-image">
-          <img src="/images/tf_art_deco_pyramid.webp?v=1" alt="Top Floor" loading="lazy">
-          <div class="tf-card-overlay">
-            <h2>TOP FLOOR</h2>
-            <div class="tf-pyramid">
-              <div class="tf-pyramid-line tf-pyramid-1">an ambitious manhattan doorman</div>
-              <div class="tf-pyramid-line tf-pyramid-2">moves into his doppelgänger's penthouse</div>
-              <div class="tf-pyramid-line tf-pyramid-3">only to get trapped in a dangerous new identity</div>
-            </div>
-            <div class="tf-card-buttons">
-              <a href="/topfloor" class="btn btn-primary">Explore the Story</a>
-              <a href="/tfgame" class="btn">Play the Story</a>
-            </div>
-          </div>
+    <section class="tf">
+      <div class="tf-bg"></div>
+      <div class="tf-overlay">
+        <p class="format">Feature · Psychological Thriller</p>
+        <h2>TOP FLOOR</h2>
+        <div class="tf-pyramid">
+          <div class="tf-pyramid-line tf-pyramid-1">an ambitious manhattan doorman</div>
+          <div class="tf-pyramid-line tf-pyramid-2">moves into his doppelgänger's penthouse</div>
+          <div class="tf-pyramid-line tf-pyramid-3">only to get trapped in a dangerous new identity</div>
+        </div>
+        <div class="btn-row">
+          <a href="/topfloor" class="btn btn-primary">Explore the Story</a>
+          <a href="#" class="btn" onclick="openConnectModal(); return false;">Request the Script</a>
         </div>
       </div>
     </section>
 
-    <!-- TÜRK PROJELERİ DIVIDER -->
-    <div class="section-divider"><a href="/turkiye" style="color:inherit;text-decoration:none;">T&uuml;rk Projeleri</a></div>
-
-    <!-- TÜRK PROJELERİ — Three-column grid -->
-    <section id="turk-projeleri" style="padding:40px 0 80px;">
-      <div class="turk-grid">
-
-        <!-- ARTÇI (LEFT) -->
-        <a href="/artci" class="turk-card">
-          <div class="turk-poster">
-            <img src="/images/gomuldu-hero.webp" alt="Artçı — Aftershock" loading="lazy">
-            <div class="turk-poster-overlay"></div>
-            <div class="turk-poster-text">
-              <h3>ART&Ccedil;I</h3>
-            </div>
-          </div>
-          <div class="turk-info">
-            <p class="turk-logline">After a devastating earthquake, the adopted son of a human trafficker must lead a group of migrant children to the land they were&nbsp;promised.</p>
-          </div>
-        </a>
-
-        <!-- KAN VATAN (CENTER — FEATURED) -->
-        <a href="/kanvatan" class="turk-card turk-featured">
-          <div class="turk-pilot-strip">pilot now available</div>
-          <div class="turk-poster">
-            <img src="/images/img_41.webp" alt="Kan Vatan — Blood Homeland" loading="lazy">
-            <div class="turk-poster-overlay"></div>
-            <div class="turk-poster-text">
-              <h3>KAN VATAN</h3>
-              <p class="turk-poster-subtitle">Blood at the Roots</p>
-            </div>
-          </div>
-          <div class="turk-info">
-            <p class="turk-logline">A family of olive growers finds an American operative hiding out on their dying grove&mdash;just when they need&nbsp;him.</p>
-          </div>
-        </a>
-
-        <!-- ALTIN DAMARLARI (RIGHT) -->
-        <a href="/altindamarlari" class="turk-card">
-          <div class="turk-poster">
-            <img src="/images/AD2.webp" alt="Altın Damarları — Gold Veins" loading="lazy">
-            <div class="turk-poster-overlay"></div>
-            <div class="turk-poster-text">
-              <h3>ALTIN DAMARLARI</h3>
-            </div>
-          </div>
-          <div class="turk-info">
-            <p class="turk-logline">An unprepared heir. His ambitious adopted brother. A foreign woman who changes everything. Inside Turkey&rsquo;s most powerful gold mining dynasty, loyalty is the rarest&nbsp;commodity.</p>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- COMING UP DIVIDER -->
-    <div class="section-divider"><span>Coming Up</span></div>
-
-    <!-- LOSING REALITY + MEATSPACE — Two-column grid -->
-    <section class="project-card-section" id="coming-up-section">
-      <div class="container">
-        <div class="projects-grid">
-
-          <!-- MEATSPACE -->
-          <a href="/meatspace" class="project-card meatspace-card" id="meatspace-card" style="text-decoration:none;color:inherit;">
-            <div class="project-card-image meatspace-title-card">
-              <div class="coming-up-overlay"><span>Explore</span></div>
-            </div>
-            <div class="project-card-content">
-              <div class="type">Feature · Satirical Sci-Fi</div>
-              <p class="logline">In a near perfect future, a young man locked out of VR paradise must navigate real life for the&nbsp;first&nbsp;time.</p>
-            </div>
-          </a>
-
-          <!-- LOSING REALITY -->
-          <a href="/losingreality" class="project-card lr-card" style="text-decoration:none;color:inherit;">
-            <div class="project-card-image lr-title-card">
-              <div class="coming-up-overlay"><span>Explore</span></div>
-            </div>
-            <div class="project-card-content">
-              <div class="type">Feature Film · Psychological Thriller</div>
-              <p class="logline">A disgraced reality star fights for redemption on a dangerous new competition show produced by a mysterious entity with dramatic plans for his&nbsp;story.</p>
-            </div>
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- PORTFOLIO -->
-    <section class="portfolio-section" id="portfolio">
-      <div class="container">
-        <div class="label">Portfolio</div>
-        <div class="portfolio-list">
-          <div class="portfolio-item">
-            <h4>MEMORY DOCS</h4>
-            <div class="type">TV Series · Drama</div>
-            <p class="logline">A beloved but controversial TV doctor pushes the limits of science to save his own mind from advancing&nbsp;dementia.</p>
-            <p class="inspired">Inspired by the life of Dr. Oz</p>
-          </div>
-          <div class="portfolio-item">
-            <h4>WATCH THE KIDS</h4>
-            <div class="type">Feature · Drama/Thriller</div>
-            <p class="logline">A high school intern discovers their district secretly captured 66,000+ webcam images of students in their&nbsp;homes.</p>
-            <p class="inspired">Based on original research into the Lower Merion surveillance scandal</p>
-          </div>
-          <div class="portfolio-item">
-            <h4>EDUCATED GUESS</h4>
-            <div class="type">Feature · Legal Drama</div>
-            <p class="logline">On the eve of retirement, a professor at an elite college must decide how far he&rsquo;ll go to defend an immigrant student from harsh administrative&nbsp;justice.</p>
-            <p class="inspired">Based on original reporting and research into a true story</p>
-          </div>
-          <div class="portfolio-item">
-            <h4>PEOPLE OPERATIONS</h4>
-            <div class="type">Feature · Sci-Fi Dramedy</div>
-            <p class="logline">A desperate Filipino mother manages the digital life of a spoiled New Yorker—who doesn&rsquo;t even know she&nbsp;exists.</p>
-            <p class="inspired">Academy Nicholl Fellowships Top 15%</p>
-          </div>
+    <section class="kv">
+      <div class="kv-bg"></div>
+      <div class="kv-inner">
+        <p class="format">Pilot · Turkish-American Thriller</p>
+        <h2>KAN VATAN</h2>
+        <p class="alt">Blood at the Roots</p>
+        <p class="logline">A family of olive growers finds an American operative hiding out on their dying grove—just when they need him.</p>
+        <div class="btn-row">
+          <a href="/kanvatan" class="btn btn-primary">Explore the Story</a>
+          <a href="#" class="btn" onclick="openConnectModal(); return false;">Request the Script</a>
         </div>
       </div>
     </section>

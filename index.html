@@ -2875,28 +2875,33 @@
 .ph { outline:1px dashed rgba(233,196,106,0.45); outline-offset:4px; }
 
 /* ---------- 1 · HUMAN RESOURCE ---------- */
-.hr { padding:0; }
+.hr { padding:36px 0 0; }
 .hr-grid { display:block; }
-.hr-info { max-width:640px; margin:0 auto; text-align:center; }
-.hr-info .format { margin-bottom:16px; }
+.hr-info { max-width:720px; margin:0 auto; text-align:center; }
+.hr-info .format { margin-bottom:16px; font-weight:600; }
 .hr-info h2 { font-family:'Bebas Neue', sans-serif; font-weight:400; font-size:clamp(3rem, 6.4vw, 4.8rem); letter-spacing:0.09em; line-height:0.95; margin:0 0 22px; }
 .hr-logline { font-size:1.32rem; line-height:1.55; font-style:italic; max-width:560px; margin:0 auto; color:var(--ivory); }
-.hr-credits { margin-top:18px; font-size:1.02rem; line-height:1.9; color:var(--muted); }
-.hr-credits b { font-weight:500; color:var(--text); }
-.proof { margin:44px auto 0; padding-top:30px; border-top:1px solid var(--line); max-width:640px; }
-.proof-line { font-size:1.05rem; line-height:1.55; color:var(--text); }
-.proof-line a { color:var(--ivory); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.3); }
-.proof-meta { color:var(--muted); font-size:0.95rem; margin-top:6px; }
-.laurels { display:grid; grid-template-columns:repeat(12, 1fr); align-items:center; justify-items:center; gap:10px; margin:22px auto 0; max-width:600px; }
-.laurel { width:100%; height:auto; max-height:46px; object-fit:contain; opacity:0.85; }
-.laurel-wide { max-height:30px; }
-.proof-link { margin-top:10px; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; }
-.proof-link a { border-bottom:none; color:var(--text); }
-.proof-link a::after { content:' →'; }
-.press { margin-top:22px; font-size:0.92rem; color:var(--dim); }
-.press a { color:var(--text); text-decoration:none; border-bottom:1px solid var(--line); }
-.btn-feature { background:var(--ivory); border-color:var(--ivory); color:var(--bg); font-weight:500; }
-.btn-feature:hover { background:#fff; border-color:#fff; }
+.hr .btn { color:var(--ivory); border-color:rgba(240,236,228,.35); display:inline-flex; align-items:center; justify-content:center; min-height:46px; }
+.hr .btn-feature { background:var(--ivory); border-color:var(--ivory); color:var(--bg); font-weight:600; font-size:.82rem; letter-spacing:.15em; min-height:54px; min-width:220px; padding:16px 30px; gap:20px; border-radius:0; }
+.hr .btn-feature::after { content:"↗"; font-size:1.05rem; }
+.hr .btn-feature:hover { background:#fff; border-color:#fff; color:var(--bg); }
+.proof { margin:44px auto 0; padding-top:26px; border-top:1px solid var(--line); }
+.proof-heading { font-family:inherit; font-size:.74rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin:0 0 10px; line-height:1.7; }
+.proof-credit { color:#a0a9b2; font-size:1rem; margin:0; }
+.proof-credit a { color:var(--ivory); text-decoration:none; border-bottom:1px solid rgba(240,236,228,.3); }
+.proof-watch { margin:22px 0 28px; }
+.proof-watch a { display:inline-flex; align-items:center; justify-content:center; gap:20px; min-height:52px; min-width:220px; padding:14px 26px; border:1px solid var(--gold); background:rgba(184,164,114,.08); color:var(--ivory); text-decoration:none; font-weight:600; font-size:.82rem; letter-spacing:.15em; text-transform:uppercase; transition:background .2s,color .2s; }
+.proof-watch a:hover { background:var(--gold); color:var(--bg); }
+.hr .laurels { display:grid; grid-template-columns:repeat(6, 1fr); align-items:center; justify-items:center; gap:20px 16px; margin:0 auto; max-width:580px; }
+.hr .laurel { width:100%; height:auto; max-height:62px; object-fit:contain; opacity:.9; }
+.hr .laurel-wide { max-height:42px; }
+.proof .press { margin:20px 0 0; font-size:.9rem; color:#a0a9b2; }
+.proof .press a { color:var(--ivory); text-decoration:none; border-bottom:1px solid var(--line); }
+@media (max-width:600px) {
+  .hr .laurels { grid-template-columns:repeat(4,1fr); gap:18px 14px; max-width:380px; margin:0 auto; }
+  .hr-logline { font-size:1.2rem; }
+  .proof { margin-top:32px; }
+}
 
 /* ---------- 2 · TOP FLOOR (live treatment) ---------- */
 .tf { position:relative; margin-top:72px; min-height:76vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
@@ -3029,13 +3034,12 @@ footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(
             <h2>HUMAN RESOURCE</h2>
             <p class="hr-logline">An HR manager makes a dangerous deal to save her staff—only to discover they're more replaceable than she thought.</p>
             <div class="btn-row">
-              <a href="https://hrthefilm.com" class="btn btn-feature" target="_blank" rel="noopener noreferrer">Visit hrthefilm.com</a>
-              <a href="https://hrthefilm.com/read" class="btn" target="_blank" rel="noopener noreferrer">Request the Script</a>
+              <a href="https://hrthefilm.com" class="btn btn-feature" target="_blank" rel="noopener noreferrer">View Project</a>
             </div>
             <div class="proof">
-              <p class="proof-line">Award-winning proof-of-concept short, directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a></p>
-              <p class="proof-meta">Best Horror Short, Jersey City Horror Film Festival &nbsp;·&nbsp; Best Sci-Fi Short, Coney Island Film Festival</p>
-              <p class="proof-link"><a href="/hr-trailer">Watch Trailer</a></p>
+              <h3 class="proof-heading">Award-winning proof-of-concept short</h3>
+              <p class="proof-credit">Directed by <a href="https://www.imdb.com/name/nm5737776/" target="_blank" rel="noopener noreferrer">Henry Chaisson</a></p>
+              <p class="proof-watch"><a href="https://hrthefilm.com/trailer" target="_blank" rel="noopener noreferrer">Watch Trailer <span aria-hidden="true">↗</span></a></p>
               <div class="laurels">
                 <img src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026 — Official Selection" class="laurel laurel-wide" loading="lazy">
                 <img src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival — Official Selection" class="laurel" loading="lazy">
@@ -3050,8 +3054,8 @@ footer { padding:8px 24px 56px; text-align:center; font-size:0.75rem; color:var(
                 <img src="/images/laurels/10_downtown.png" alt="The Downtown Festival — Official Selection" class="laurel laurel-wide" loading="lazy">
                 <img src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival — Official Selection" class="laurel laurel-wide" loading="lazy">
               </div>
+              <p class="press">Featured on <a href="https://phl17.com/phl17-news/phl17-segments-shows/local-filmmakers-discuss-latest-project-set-in-philadelphia/" target="_blank" rel="noopener noreferrer">PHL17 (CW Philadelphia)</a></p>
             </div>
-            <p class="press">Featured on <a href="https://phl17.com/phl17-news/phl17-segments-shows/local-filmmakers-discuss-latest-project-set-in-philadelphia/" target="_blank" rel="noopener noreferrer">PHL17 (CW Philadelphia)</a></p>
           </div>
         </div>
       </div>

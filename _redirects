@@ -1,21 +1,34 @@
+# Human Resource now lives on its dedicated project site
+/hr https://hrthefilm.com/ 301!
+/hr.html https://hrthefilm.com/ 301!
+/hr/deep https://hrthefilm.com/feature 301!
+/hr-deep https://hrthefilm.com/feature 301!
+/hr-deep.html https://hrthefilm.com/feature 301!
+/hr/characters https://hrthefilm.com/characters 301!
+/hr-slideshow https://hrthefilm.com/characters 301!
+/hr-slideshow.html https://hrthefilm.com/characters 301!
+/hr-short https://hrthefilm.com/screener 301!
+/hr/watch https://hrthefilm.com/screener 301!
+/hr-watch https://hrthefilm.com/screener 301!
+/hr-watch.html https://hrthefilm.com/screener 301!
+/hr-trailer https://hrthefilm.com/trailer 301!
+/HR-trailer https://hrthefilm.com/trailer 301!
+/hr-trailer.html https://hrthefilm.com/trailer 301!
+/hr/screenplay https://hrthefilm.com/read 301!
+/hr/human-resource.pdf https://hrthefilm.com/read 301!
+/human-resource.pdf https://hrthefilm.com/read 301!
+
 # External redirects
 /vibecode https://vibecodeaseries.com 301
 
 # Sub-page clean URLs
-/hr/deep          /hr-deep.html       200
-/hr/characters    /hr-slideshow.html   200
-/hr-short         /hr-watch.html       200
-/hr/watch         /hr-short            301
 /about            /about.html          200
 /topfloor/deep    /topfloor            301
 /top-floor        /topfloor.html       200
 /topfloor/screenplay /files/TOP%20FLOOR.pdf 200
 /topfloor/top-floor.pdf         /files/TOP%20FLOOR.pdf         200
-/hr/screenplay     /files/HUMAN%20RESOURCE.pdf 200
-/hr/human-resource.pdf          /files/HUMAN%20RESOURCE.pdf    200
 /kanvatan/pilot     /files/Kan%20Vatan.pdf 200
 /kanvatan/kan-vatan.pdf         /files/Kan%20Vatan.pdf         200
-/human-resource.pdf             /files/HUMAN%20RESOURCE.pdf    200
 /top-floor.pdf                  /files/TOP%20FLOOR.pdf         200
 /kan-vatan.pdf                  /files/Kan%20Vatan.pdf         200
 /memorydocs/pilot  /files/Memory%20Docs.pdf 200
@@ -37,9 +50,6 @@
 /secret/pdf       /files/kinnikuman-treatment.pdf 200
 
 # Standalone project pages
-/hr               /hr.html             200
-/hr-trailer       /hr-trailer.html     200
-/HR-trailer       /hr-trailer           301
 /topfloor         /topfloor.html       200
 /kanvatan         /kanvatan.html       200
 /imposter          /imposter.html       200

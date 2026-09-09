@@ -43,6 +43,22 @@
 
 ---
 
+## HOMEPAGE STRUCTURE (updated 2026-09-09)
+
+index.html body is: nav → hero → five full-bleed panels → footer. Nothing else lives between hero and footer.
+
+Panel order: `.hr` (Human Resource) → `.tf` (Top Floor) → `.kv` (Kan Vatan) → `.about` → `.connect` (Contact).
+
+- **No buttons.** None of the five panels use `.btn`/`.btn-primary`/`.btn-row`. Each panel is a single full-panel `<a class="panel-link">` (the whole panel is the link) with a `.cta` label ("View Project" / "The Full Story") that's hidden by default and revealed on hover (desktop) — on mobile (`≤860px`) the `.cta` is always visible instead, since there's no hover.
+- **`.hr` and `.kv`:** background image bleeds on one side (`.hr-img` right, `.kv-img` left), text sits in `.wrap .txt` on the other side. `.hr` text is left-aligned, `.kv` text is right-aligned.
+- **`.tf` (Top Floor) is a flat image card, not built from HTML/CSS.** `images/tf_card.webp` is a pre-designed 1920×1080 card (title, tagline, art all baked into the image) — `.tf-card-img` just displays it at 16:9. Don't rebuild the card's title/tagline as HTML text.
+- **`images/hero_slide_07.webp`** is reserved for the `.hr` panel background (`.hr-img`) — it was removed from the hero slideshow rotation to avoid it appearing twice.
+- **`images/kv_keyart.webp`** is a generated crop/grade of `images/img_41.webp` (see git history for the exact Pillow transform) — regenerate from that source if it needs updating, don't hand-edit the webp.
+- A generic `section { padding:100px 0; opacity:0; transform:translateY(30px); }` rule (site-wide scroll-reveal fade-in) still applies to all five panels since they're `<section>` elements. A `.hr,.tf,.kv{padding:0}` override neutralizes the padding specifically for the three full-bleed panels (`.about`/`.connect` already override padding themselves) — don't remove that override without re-checking panel heights.
+- Design source files (sketches, mockup HTML, unconverted PNGs) live in `design/`, which is gitignored — never expect those to be deployed; only the converted `.webp` in `images/` ships.
+
+---
+
 ## LEGACY SPA ROUTES (DO NOT EDIT)
 
 index.html contains old `#topfloor` and `#kanvatan` SPA sections. Never edit these unless explicitly told "edit the SPA version."

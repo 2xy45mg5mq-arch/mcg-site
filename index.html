@@ -593,17 +593,6 @@
       display: inline-block;
     }
 
-    .label::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 0;
-      width: 32px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.4;
-    }
-
     .contact .label::after {
       left: 50%;
       transform: translateX(-50%);
@@ -2874,7 +2863,7 @@
 .hr .btn-feature { background:var(--ivory); border-color:var(--ivory); color:var(--bg); font-weight:600; font-size:.82rem; letter-spacing:.15em; min-height:54px; min-width:220px; padding:16px 30px; gap:20px; border-radius:0; }
 .hr .btn-feature::after { content:"↗"; font-size:1.05rem; }
 .hr .btn-feature:hover { background:#fff; border-color:#fff; color:var(--bg); }
-.kv .btn { background:rgba(10,13,16,0.55); border-color:rgba(255,255,255,0.35); }
+.kv .btn:not(.btn-primary) { background:rgba(10,13,16,0.55); border-color:rgba(255,255,255,0.35); }
 .proof { margin:52px auto 0; padding-top:0; border-top:none; }
 .proof-heading { font-family:inherit; font-size:.74rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin:0 0 10px; line-height:1.7; }
 .proof-credit { color:#a0a9b2; font-size:1rem; margin:0; }

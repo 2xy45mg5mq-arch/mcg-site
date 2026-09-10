@@ -373,75 +373,6 @@
       color: var(--muted);
     }
 
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-block;
-      padding: 16px 52px;
-      border: 1px solid var(--gold-dim);
-      background: transparent;
-      color: var(--text);
-      text-decoration: none;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .btn:hover {
-      background: rgba(184, 164, 114, 0.08);
-      border-color: rgba(184, 164, 114, 0.4);
-    }
-    .btn-gold { border-color: rgba(184, 164, 114, 0.4); color: var(--gold); }
-    .btn-sm { padding: 12px 32px; font-size: 0.75rem; }
-
-    /* ── CTA SECTION ── */
-    .cta-section { text-align: center; padding: 100px 40px; }
-    .cta-section h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      letter-spacing: 4px;
-      margin-bottom: 16px;
-    }
-    .cta-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 32px; }
-    .cta-nav {
-      margin-top: 24px;
-      display: flex; gap: 16px;
-      justify-content: center; align-items: center;
-    }
-    .cta-nav a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.3s; }
-    .cta-nav a:hover { color: var(--text); }
-    .cta-nav-sep { color: rgba(107, 122, 136, 0.4); font-size: 0.8rem; }
-
-    /* ── CINEMATIC FINAL CTA ── */
-    .tf-final-cta { background: #000; padding: 60px 0 80px; }
-    .tf-poster { position: relative; max-width: 940px; margin: 0 auto; }
-    .tf-poster a { display: block; }
-    .tf-poster img { width: 100%; display: block; }
-    .tf-poster::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background:
-        linear-gradient(to top, #000 0%, rgba(0,0,0,0) 42%),
-        linear-gradient(to right, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%);
-    }
-    .tf-cta-actions {
-      margin-top: 52px;
-      display: flex; gap: 16px; justify-content: center; align-items: center;
-      flex-wrap: wrap; padding: 0 24px;
-    }
-    .btn-gold-fill { background: var(--gold); border-color: var(--gold); color: var(--bg); }
-    .btn-gold-fill:hover { background: var(--gold); border-color: var(--gold); filter: brightness(1.08); }
-    .tf-cta-hairline {
-      height: 1px; max-width: 400px; margin: 48px auto 32px;
-      background: linear-gradient(to right, transparent, rgba(184, 164, 114, 0.25) 50%, transparent);
-    }
-    .tf-final-cta .cta-nav { margin-top: 0; }
-    .tf-final-cta .cta-nav a { font-variant: small-caps; letter-spacing: 0.08em; }
-    @media (max-width: 600px) {
-      .tf-final-cta { padding: 40px 0 60px; }
-      .tf-cta-actions { flex-direction: column; }
-      .tf-cta-actions .btn { width: 100%; text-align: center; }
-    }
-
     /* ── WRITER BIO ── */
     .bio-section { border-top: 1px solid var(--border); }
     .bio-links { margin-top: 16px; display: flex; gap: 24px; flex-wrap: wrap; }
@@ -467,82 +398,12 @@
       max-width: 480px;
       margin: 0 auto;
     }
-    .copyright-footer p:first-child {
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      opacity: 0.6;
-    }
-
     /* ── REVEAL ON SCROLL ── */
     .reveal {
       opacity: 0; transform: translateY(20px);
       transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── CONNECT MODAL ── */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 300;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-    }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 8px; padding: 40px;
-      max-width: 480px; width: 90%;
-      max-height: 90vh; overflow-y: auto;
-      transform: translateY(20px); transition: transform 0.3s;
-    }
-    .modal-overlay.active .modal { transform: translateY(0); }
-    @media (max-width: 768px) {
-      .modal-overlay { align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 60px 16px 24px; }
-      .modal { max-height: none; }
-    }
-    .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 8px; }
-    .modal-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
-    .modal-section { margin-bottom: 24px; }
-    .modal-section-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
-    .checkbox-item { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .checkbox-item input { display: none; }
-    .checkbox-box {
-      width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 3px;
-      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-    }
-    .checkbox-item input:checked + .checkbox-box { background: var(--text); border-color: var(--text); }
-    .checkbox-box::after { content: '\2713'; color: var(--bg); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
-    .checkbox-item input:checked + .checkbox-box::after { opacity: 1; }
-    .checkbox-label { font-size: 0.95rem; }
-    .modal-input {
-      width: 100%; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 4px; padding: 12px; color: var(--text);
-      font-family: inherit; font-size: 0.95rem; margin-bottom: 10px;
-    }
-    .modal-input:focus { outline: none; border-color: var(--muted); }
-    .modal-input::placeholder { color: var(--muted); }
-    .modal-textarea {
-      width: 100%; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 4px; padding: 12px; color: var(--text);
-      font-family: inherit; font-size: 0.95rem; resize: vertical; min-height: 80px;
-    }
-    .modal-textarea:focus { outline: none; border-color: var(--muted); }
-    .modal-textarea::placeholder { color: var(--muted); }
-    .modal-buttons { display: flex; gap: 12px; margin-top: 28px; }
-    .modal-btn {
-      flex: 1; padding: 14px 24px; border: none; border-radius: 4px;
-      font-family: inherit; font-size: 0.8rem; letter-spacing: 1px;
-      text-transform: uppercase; cursor: pointer; transition: all 0.2s;
-    }
-    .modal-btn-primary { background: var(--text); color: var(--bg); }
-    .modal-btn-primary:hover { background: #fff; }
-    .modal-btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-    .modal-btn-secondary:hover { color: var(--text); border-color: var(--muted); }
 
     /* ── RESPONSIVE ── */
     /* Mobile adjustments */
@@ -580,6 +441,11 @@
       .pyramid-line-3 .fl-text { font-size: 4.2vw !important; white-space: nowrap !important; }
       .genre-below { font-size: 3.2vw !important; letter-spacing: 0.1em !important; }
     }
+    @media(max-width:480px){
+     .pyramid-line-1 .fl-text{font-size:min(1rem,calc((100vw - 32px)/16.5))!important}
+     .pyramid-line-2 .fl-text{font-size:min(1.2rem,calc((100vw - 32px)/21))!important}
+     .pyramid-line-3 .fl-text{font-size:min(1.35rem,calc((100vw - 32px)/24.5))!important}
+    }
 
     @media (max-width: 768px) {
 
@@ -608,6 +474,59 @@
       outline: 2px solid #b8a472;
       outline-offset: 2px;
     }
+    .copyright-footer p{font-size:.85rem;letter-spacing:0;opacity:.6}
+    .nav-links a{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.14em;font-weight:400}
+    @media(max-width:480px){.nav-links a{font-size:.85rem;letter-spacing:.12em}}
+    .quiet{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.18em;text-transform:uppercase}
+    .quiet a{display:inline-block;padding:15px 34px 13px;border:1px solid rgba(255,255,255,.22);color:rgba(240,236,228,.85);text-decoration:none;transition:all .25s;line-height:1}
+    .quiet a:hover{border-color:rgba(240,236,228,.7);color:#f0ece4}
+    .quiet a:first-child{border-color:rgba(184,164,114,.55);color:#b8a472}
+    .quiet a:first-child:hover{background:#b8a472;color:#0a0d10;border-color:#b8a472}
+    @media(max-width:600px){.quiet{flex-direction:column;align-items:stretch} .quiet a{text-align:center}}
+    .genre-below{font-family:'Bebas Neue',sans-serif;font-style:normal;font-size:1.1rem;letter-spacing:.18em;color:var(--gold);padding:12px 24px 22px}
+    .hero + div{margin:0 auto 4px!important}
+    .section{max-width:688px;padding:36px 24px}
+    .section + .section{padding-top:16px}
+    .story-open{padding:22px 24px 12px!important}
+    .story-open p{font-size:1.9rem!important;line-height:1.3!important;font-weight:500!important}
+    .story-open{padding-bottom:0!important}
+    .tf-doorman{max-height:40vh!important} .tf-doorman img{height:40vh!important}
+    .tf-doorman::before{height:60px}
+    .motif{max-width:688px;margin:0 auto;padding:10px 24px 34px}
+    .motif svg{display:block;width:100%;height:44px}
+    .section p, .story-section p{font-size:1.375rem;line-height:1.5;color:rgba(240,236,228,.9);margin-bottom:22px}
+    .section p em{color:rgba(240,236,228,.8)}
+    .section p.comp{font-weight:500;color:#f0ece4}
+    .section p.comp em{color:#f0ece4}
+    .section h2{font-size:1.625rem;font-weight:500;letter-spacing:.03em;margin-bottom:18px;color:var(--gold)}
+    .section-label{font-family:'EB Garamond',Georgia,serif;font-size:1.625rem;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+    .tagline-beat{padding:36px 24px 44px}
+    .tagline-beat p{font-size:clamp(2rem,4.6vw,3.2rem)}
+    .still img{max-height:56vh}
+    .tower-floor .fl-text{white-space:nowrap}
+    .pyramid-line-1 .fl-text{font-size:min(1.61rem,calc((100vw - 56px)/16.5))}
+    .pyramid-line-2 .fl-text{font-size:min(2.13rem,calc((100vw - 56px)/21))}
+    .pyramid-line-3 .fl-text{font-size:min(2.36rem,calc((100vw - 56px)/24.5))}
+    @media(max-width:768px){
+     .pyramid-line-1 .fl-text{font-size:min(1rem,calc((100vw - 40px)/16.5))}
+     .pyramid-line-2 .fl-text{font-size:min(1.2rem,calc((100vw - 40px)/21))}
+     .pyramid-line-3 .fl-text{font-size:min(1.35rem,calc((100vw - 40px)/24.5))}
+    }
+    .stats-grid{display:flex;gap:44px;margin-top:4px;flex-wrap:wrap}
+    .stat{background:none;border:0;padding:0;text-align:left;display:flex;align-items:baseline;gap:12px}
+    .stat-number{font-size:2.2rem;margin:0}
+    .stat-label{font-size:1.1rem;color:rgba(240,236,228,.65);letter-spacing:0}
+    .tf-quiet-wrap{padding-top:8px;padding-bottom:72px}
+    .copyright-footer{border-top:1px solid var(--border)}
+    @media(max-width:768px){
+     .section p, .story-section p, .story-open p{font-size:1.19rem!important;line-height:1.53!important}
+     .section h2{font-size:1.5rem}
+     .stats-grid{gap:16px;flex-direction:row;justify-content:space-between} .stat{flex-direction:column;gap:2px;flex:1} .stat-label{font-size:.95rem;line-height:1.3}
+    }
+    @media(max-width:768px){
+     .genre-below{padding-bottom:12px!important}
+     .hairline{margin:8px auto!important}
+    }
   </style>
 </head>
 <body>
@@ -619,14 +538,15 @@
         <div class="nav-item">
           <a href="#" onclick="return false;">Work</a>
           <div class="dropdown" style="min-width:200px;">
-            <a href="/hr">Human Resource</a>
+            <a href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
+            <a href="/kanvatan">Kan Vatan</a>
             <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
         <a href="/about">About</a>
-        <a href="#" onclick="openConnectModal(); return false;">Connect</a>
+        <a href="mailto:mcoynegreen@gmail.com?subject=Hello%20from%20coyne-green.com">Connect</a>
       </div>
     </div>
   </nav>
@@ -659,14 +579,14 @@
     </div>
   </header>
   <div class="genre-below">Feature &middot; Psychological Thriller</div>
-  <div style="height: 1px; background: linear-gradient(to right, transparent, rgba(184, 164, 114, 0.2) 50%, transparent); margin: 40px auto; max-width: 400px;"></div>
+  <div class="hairline" style="height: 1px; background: linear-gradient(to right, transparent, rgba(184, 164, 114, 0.2) 50%, transparent); margin: 40px auto; max-width: 400px;"></div>
 
   <!-- ═══ CHAPTER OPEN ═══ -->
   <section class="section story-open reveal" style="padding: 70px 40px 16px;">
     <p style="font-size: 1.6rem; font-weight: 500; line-height: 1.4;"><strong>MURRY</strong> opens the door.</p>
   </section>
 
-  <div class="still" style="max-height: 55vh; overflow: hidden;">
+  <div class="still tf-doorman" style="max-height: 55vh; overflow: hidden;">
     <img src="/images/img_33.webp" alt="Murry the doorman" loading="lazy" style="object-fit: cover; width: 100%; height: 55vh; object-position: center 30%;">
   </div>
 
@@ -678,12 +598,15 @@
     <p><strong>SERA</strong> is trying to keep him&nbsp;grounded.</p>
     <p>Their whole lives, her little brother has been getting stuck in holes, leaving her to dig him out. She just wishes he would be happy with <em>who he&nbsp;is</em>. But Murry&rsquo;s listened to enough hustle culture podcasts to know he can be <em>anyone he wants to&nbsp;be</em>.</p>
     <p>And there is someone he&rsquo;s always wanted to&nbsp;be.</p>
+  </section>
+  <div class="motif"><svg class="skyline" style="width:100%;height:44px;display:block" viewBox="0 0 640 44" preserveAspectRatio="none" fill="none" stroke="rgba(184,164,114,.55)" stroke-width="1" vector-effect="non-scaling-stroke"><path vector-effect="non-scaling-stroke" d="M0 43H640"/><path vector-effect="non-scaling-stroke" d="M4 43V35h3v-3h9V43 M19 43V29h5v-3h7V43 M34 43V31h8V43 M50 43V35h8V43 M61 43V31h5v-3h11V43 M81 43V27h3v-6h15V43 M107 43V35h8V43 M118 43V23h4v-3h12V43 M137 43V33h5v-3h11V43 M156 43V29h16V43 M178 43V29h8V43 M189 43V37h16V43 M213 43V29h4v-4h14V43 M239 43V33h3v-6h9V43 M255 43V29h8V43 M269 43V31h16V43 M293 43V29h12V43 M304 43V25l16-20 16 20V43 M346 43V31h4v-3h12V43 M370 43V37h14V43 M387 43V29h16V43 M409 43V27h4v-6h8V43 M429 43V23h8V43 M440 43V31h12V43 M455 43V27h8V43 M469 43V29h18V43 M495 43V27h5v-4h7V43 M510 43V33h3v-4h11V43 M527 43V23h10V43 M543 43V27h10V43 M557 43V31h14V43 M579 43V35h8V43 M595 43V29h3v-4h11V43 M615 43V31h18V43"/></svg></div>
+  <section class="section story-section reveal" style="padding-top:0">
     <p><strong>NIK</strong> lives at the top.</p>
     <p>But unlike the other tenants at the Pyramid, the suave investor in Penthouse B never looks down on Murry. He looks him right in the face. Not just because Murry helps him out with his diabetic dog, Snacks. But because, besides Murry&rsquo;s&nbsp;beard&hellip;</p>
     <p><strong>&hellip;the two look strikingly&nbsp;similar.</strong></p>
     <p>So when Nik has a work emergency out of town, he turns to Murry with an offer: stay with Snacks in the penthouse. It&rsquo;s a dream come true — with a catch. If someone sees him, he&rsquo;ll get&nbsp;fired.</p>
     <p>He&rsquo;ll need to make sure everyone sees&nbsp;Nik.</p>
-    <p>Murry shaves his beard and puts on Nik&rsquo;s sweater, and no one seems to notice. But once he makes it to the top, he discovers the man he&rsquo;s pretending to be isn&rsquo;t who he thought he&nbsp;was.</p>
+    <p>Murry shaves his beard and puts on Nik&rsquo;s sweater, and no one seems to notice. But soon, he discovers the man he&rsquo;s pretending to be isn&rsquo;t who he thought he&nbsp;was.</p>
   </section>
 
   <!-- ═══ TAGLINE ═══ -->
@@ -705,13 +628,10 @@
   <!-- ═══ TONE ═══ -->
   <section class="section reveal">
     <div class="section-label">Tone & Influences</div>
+    <p class="comp"><em>Parasite</em> meets <em>The Talented Mr. Ripley</em></p>
     <p>A breathless, twisted climb into the darkness of New York's true high&nbsp;society.</p>
     <p>The identity games of RIPLEY. The physical metaphors of PARASITE. The delusions and paranoia of ROSEMARY'S BABY. Infusing classic doppelg&auml;nger and identity swap arcs with modern hustle culture, financial schemes, and a new type of villain ruling from above, it&rsquo;s a quintessential Manhattan story about the rise of ambition — and the predation up&nbsp;top.</p>
   </section>
-
-  <div class="still" style="max-height: none;">
-    <img src="/images/tf_4acts_full.webp?v=1" alt="Four-act narrative structure" loading="lazy" style="width: 100%; height: auto; max-height: none; object-fit: contain;">
-  </div>
 
   <!-- ═══ PRODUCTION ═══ -->
   <section class="section reveal">
@@ -736,81 +656,12 @@
     <img src="/images/tf_penthouse_meeting.webp" alt="Meeting in the penthouse" loading="lazy">
   </div>
 
-  <!-- ═══ FINAL CTA ═══ -->
-  <section class="cta-section reveal tf-final-cta">
-    <div class="tf-poster">
-      <a href="/tfgame">
-        <img src="/images/og-topfloor.jpg" alt="Play Top Floor — Interactive Story">
-      </a>
-    </div>
-    <div class="tf-cta-actions">
-      <a href="#" class="btn btn-gold-fill" onclick="openConnectModal(); return false;">Request the Script</a>
-      <a href="/tfgame" class="btn btn-gold">Play the Story</a>
-    </div>
-    <div class="tf-cta-hairline"></div>
-    <div class="cta-nav">
-      <a href="/#work">See Other Work</a>
-    </div>
-  </section>
+  <section class="section tf-quiet-wrap"><div class="quiet"><a href="mailto:mcoynegreen@gmail.com?subject=Script%20request%20%E2%80%94%20Top%20Floor">Request the Script</a><a href="/tfgame">Play the Story</a></div></section>
 
   <!-- COPYRIGHT FOOTER -->
   <footer class="copyright-footer">
     <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
-    <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
   </footer>
-
-  <!-- ═══ CONNECT MODAL ═══ -->
-  <form name="connect" netlify netlify-honeypot="bot-field" hidden>
-    <input name="name"><input name="email"><input name="request">
-    <input name="human-resource" type="checkbox" value="human-resource">
-    <input name="top-floor" type="checkbox" value="top-floor">
-    <input name="turkish-projects" type="checkbox" value="turkish-projects">
-    <input name="general-meeting" type="checkbox" value="general-meeting">
-    <input name="other" type="checkbox" value="other">
-    <textarea name="message"></textarea><input name="bot-field">
-  </form>
-
-  <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
-    <div class="modal">
-      <div id="connectFormState">
-        <h2>CONNECT</h2>
-        <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="connect">
-          <input type="hidden" name="request" id="connectRequest" value="Top Floor - Script">
-          <p style="display:none;"><input name="bot-field"></p>
-          <div class="modal-section">
-            <div class="modal-section-label">Your info</div>
-            <input type="text" name="name" class="modal-input" placeholder="Name" required>
-            <input type="email" name="email" class="modal-input" placeholder="Email" required>
-          </div>
-          <div class="modal-section">
-            <div class="modal-section-label">I'm interested in</div>
-            <div class="checkbox-group">
-              <label class="checkbox-item"><input type="checkbox" name="human-resource" value="human-resource"><span class="checkbox-box"></span><span class="checkbox-label">Human Resource</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="top-floor" value="top-floor"><span class="checkbox-box"></span><span class="checkbox-label">Top Floor</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="turkish-projects" value="turkish-projects"><span class="checkbox-box"></span><span class="checkbox-label">Turkish Projects</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="general-meeting" value="general-meeting"><span class="checkbox-box"></span><span class="checkbox-label">General meeting</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="other" value="other"><span class="checkbox-box"></span><span class="checkbox-label">Other</span></label>
-            </div>
-          </div>
-          <div class="modal-section">
-            <div class="modal-section-label">Anything else? (optional)</div>
-            <textarea class="modal-textarea" name="message" placeholder="Optional message"></textarea>
-          </div>
-          <div class="modal-buttons">
-            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
-            <button type="submit" class="modal-btn modal-btn-primary">Send</button>
-          </div>
-        </form>
-        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
-      </div>
-      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
-        <h2>SENT</h2>
-        <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
-        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
-      </div>
-    </div>
-  </div>
 
   <script>
     // ── Nav scroll ──
@@ -828,68 +679,6 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ── Connect modal ──
-    function openConnectModal() {
-      document.getElementById('connectForm').reset();
-      document.getElementById('connectRequest').value = 'Top Floor - Script';
-      var tfCheckbox = document.querySelector('#connectForm input[value="Top Floor"]');
-      if (tfCheckbox) tfCheckbox.checked = true;
-      document.getElementById('connectFormState').style.display = '';
-      document.getElementById('connectSuccessState').style.display = 'none';
-      document.getElementById('connectModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeConnectModal() {
-      document.getElementById('connectModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeConnectModal();
-      }
-    });
-
-    // ── Form submission ──
-    (function() {
-      var form = document.getElementById('connectForm');
-      if (!form) return;
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var btn = form.querySelector('button[type="submit"]');
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-
-        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
-
-        if (!isNetlify) {
-          setTimeout(function() {
-            document.getElementById('connectFormState').style.display = 'none';
-            document.getElementById('connectSuccessState').style.display = '';
-          }, 400);
-          return;
-        }
-
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString()
-        })
-        .then(function(res) {
-          if (res.ok) {
-            document.getElementById('connectFormState').style.display = 'none';
-            document.getElementById('connectSuccessState').style.display = '';
-          } else { throw new Error('fail'); }
-        })
-        .catch(function() {
-          btn.textContent = 'Send';
-          btn.disabled = false;
-          alert('Something went wrong. Email mcoynegreen@gmail.com directly.');
-        });
-      });
-    })();
   </script>
 
 </body>

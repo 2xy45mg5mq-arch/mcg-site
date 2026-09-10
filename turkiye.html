@@ -514,159 +514,6 @@
       transform: translateY(0);
     }
 
-    /* --- MODAL --- */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .modal {
-      background: #12171d;
-      border: 1px solid #1f2933;
-      border-radius: 8px;
-      max-width: 480px;
-      width: 90%;
-      padding: 40px;
-      max-height: 90vh;
-      overflow-y: auto;
-      transform: translateY(20px);
-      transition: transform 0.3s;
-    }
-    .modal-overlay.active .modal {
-      transform: translateY(0);
-    }
-    @media (max-width: 768px) {
-      .modal-overlay { align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 60px 16px 24px; }
-      .modal { max-height: none; }
-    }
-    .modal h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 3px;
-      color: #e4e4e4;
-      margin-bottom: 8px;
-    }
-    .modal-subtitle {
-      text-align: center;
-      font-size: 0.95rem;
-      color: rgba(228,228,228,0.55);
-      margin-bottom: 28px;
-    }
-    .modal-section {
-      margin-bottom: 24px;
-    }
-    .modal-section-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(228,228,228,0.4);
-      margin-bottom: 10px;
-    }
-    .modal-input {
-      display: block;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px;
-      color: #e4e4e4;
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1rem;
-      margin-bottom: 10px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .modal-input:focus { border-color: rgba(107,122,136,0.5); }
-    .modal-textarea {
-      display: block;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px;
-      color: #e4e4e4;
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1rem;
-      min-height: 100px;
-      resize: vertical;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .modal-textarea:focus { border-color: rgba(107,122,136,0.5); }
-    .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
-    .checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      color: rgba(228,228,228,0.7);
-    }
-    .checkbox-item input { display: none; }
-    .checkbox-box {
-      width: 16px;
-      height: 16px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 3px;
-      flex-shrink: 0;
-      position: relative;
-      transition: all 0.2s;
-    }
-    .checkbox-item input:checked + .checkbox-box {
-      background: #e4e4e4;
-      border-color: #e4e4e4;
-    }
-    .checkbox-item input:checked + .checkbox-box::after {
-      content: '✓';
-      position: absolute;
-      top: -1px; left: 3px;
-      color: #0a0d10;
-      font-size: 12px;
-    }
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 28px;
-    }
-    .modal-btn {
-      flex: 1;
-      padding: 14px 24px;
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-    }
-    .modal-btn-secondary {
-      background: transparent;
-      color: rgba(228,228,228,0.6);
-      border: 1px solid #1f2933;
-    }
-    .modal-btn-secondary:hover { color: #e4e4e4; border-color: rgba(107,122,136,0.5); }
-    .modal-btn-primary {
-      background: #e4e4e4;
-      color: #0a0d10;
-    }
-    .modal-btn-primary:hover { background: #fff; }
-
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
       .hero-title { font-size: clamp(3.5rem, 13vw, 4.5rem); }
@@ -677,7 +524,6 @@
       .proj-card-title { font-size: 2rem; left: 20px; bottom: 16px; }
       .proj-card-body { padding: 20px 0 0; }
       .conn-grid { grid-template-columns: 1fr; gap: 16px; }
-      .modal { padding: 28px 20px; }
       .cta-section { padding: 72px 20px; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
@@ -748,6 +594,8 @@
       outline: 2px solid #b8a472;
       outline-offset: 2px;
     }
+    .nav-links a{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.14em;font-weight:400}
+    @media(max-width:480px){.nav-links a{font-size:.85rem;letter-spacing:.12em}}
   </style>
 </head>
 <body>
@@ -759,14 +607,15 @@
         <div class="nav-item">
           <a href="#" onclick="return false;">Work</a>
           <div class="dropdown" style="min-width:200px;">
-            <a href="/hr">Human Resource</a>
+            <a href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
+            <a href="/kanvatan">Kan Vatan</a>
             <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
         <a href="/about">About</a>
-        <a href="#" onclick="openConnectModal(); return false;">Connect</a>
+        <a href="mailto:mcoynegreen@gmail.com?subject=Hello%20from%20coyne-green.com">Connect</a>
         <button id="lang-toggle" aria-label="Switch language">🇬🇧 EN</button>
       </div>
       <button id="lang-toggle-mobile-nav" aria-label="Switch language">🇬🇧 EN</button>
@@ -780,13 +629,14 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="/hr" onclick="closeMobileMenu()">Human Resource</a>
+    <a href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Human Resource</a>
     <a href="/topfloor" onclick="closeMobileMenu()">Top Floor</a>
+    <a href="/kanvatan" onclick="closeMobileMenu()">Kan Vatan</a>
     <div class="mobile-divider"></div>
     <a href="/turkiye" onclick="closeMobileMenu()">T&uuml;rk Projeleri</a>
     <div class="mobile-divider"></div>
     <a href="/about" onclick="closeMobileMenu()">About</a>
-    <a href="#" onclick="closeMobileMenu(); openConnectModal(); return false;">Connect</a>
+    <a href="mailto:mcoynegreen@gmail.com?subject=Hello%20from%20coyne-green.com">Connect</a>
     <div class="mobile-divider"></div>
     <a href="/" onclick="closeMobileMenu()">&larr; Home</a>
   </div>
@@ -908,83 +758,13 @@
 
   <!-- 5. CTA -->
   <div class="cta-section reveal" id="iletisim" style="padding-top:40px;padding-bottom:40px;">
-    <button class="cta-btn" onclick="openConnectModal()" data-tr="İletişim" data-en="Contact">&#304;leti&#351;im</button>
+    <a class="cta-btn" href="mailto:mcoynegreen@gmail.com?subject=Hello%20from%20coyne-green.com" data-tr="İletişim" data-en="Contact">&#304;leti&#351;im</a>
   </div>
 
   <!-- 6. FOOTER -->
   <footer class="site-footer">
     <p data-tr="© 2026 <a href='/'>Max Coyne-Green</a>. Tüm hakları saklıdır." data-en="© 2026 <a href='/'>Max Coyne-Green</a>. All rights reserved.">&copy; 2026 <a href="/">Max Coyne-Green</a>. T&uuml;m haklar&#305; sakl&#305;d&#305;r.</p>
-    <p class="copyright-legal" data-tr="Bu sayfadaki tüm içerik, konseptler ve proje materyalleri ABD telif hakkı yasalarıyla korunmaktadır. Yazılı izin olmadan kullanılamaz." data-en="All content, concepts, and project materials on this page are protected under U.S. copyright law. No use without written permission.">Bu sayfadaki t&uuml;m i&ccedil;erik, konseptler ve proje materyalleri ABD telif hakk&#305; yasalar&#305;yla korunmaktad&#305;r. Yaz&#305;l&#305; izin olmadan kullan&#305;lamaz.</p>
   </footer>
-
-  <!-- CONNECT MODAL (TURKISH) -->
-  <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
-    <div class="modal">
-      <div id="connectFormState">
-        <h2 data-tr="İLETİŞİM" data-en="CONNECT">&#304;LET&#304;&#350;&#304;M</h2>
-
-        <form id="connectForm" name="turkiye-contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="turkiye-contact">
-          <p style="display:none;"><input name="bot-field"></p>
-
-          <div class="modal-section">
-            <div class="modal-section-label" data-tr="Bilgileriniz" data-en="Your Details">Bilgileriniz</div>
-            <input type="text" name="name" class="modal-input" placeholder="Ad Soyad" data-tr-placeholder="Ad Soyad" data-en-placeholder="Full Name" required>
-            <input type="email" name="email" class="modal-input" placeholder="E-posta" data-tr-placeholder="E-posta" data-en-placeholder="Email" required>
-          </div>
-
-          <div class="modal-section">
-            <div class="modal-section-label" data-tr="İlgimi çeken projeler" data-en="Projects of Interest">&#304;lgimi &ccedil;eken projeler</div>
-            <div class="checkbox-group">
-              <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Kan Vatan">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Kan Vatan</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Altın Damarları">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Alt&#305;n Damarlar&#305;</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="interest" value="Artçı">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Art&ccedil;&#305;</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="modal-section">
-            <div class="modal-section-label" data-tr="Mesaj (isteğe bağlı)" data-en="Message (optional)">Mesaj (iste&#287;e ba&#287;l&#305;)</div>
-            <textarea class="modal-textarea" name="message" placeholder="Kendinizi k&#305;saca tan&#305;t&#305;n..." data-tr-placeholder="Kendinizi kısaca tanıtın..." data-en-placeholder="Tell us briefly about yourself..."></textarea>
-          </div>
-
-          <div class="modal-buttons">
-            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" data-tr="İptal" data-en="Cancel">&#304;ptal</button>
-            <button type="submit" class="modal-btn modal-btn-primary" data-tr="Gönder" data-en="Send">G&ouml;nder</button>
-          </div>
-        </form>
-        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: rgba(228,228,228,0.4);" data-tr="veya doğrudan e-posta — <a href='mailto:mcoynegreen@gmail.com' style='color: #e4e4e4; text-decoration: underline;'>mcoynegreen@gmail.com</a>" data-en="or email directly — <a href='mailto:mcoynegreen@gmail.com' style='color: #e4e4e4; text-decoration: underline;'>mcoynegreen@gmail.com</a>">veya do&#287;rudan e-posta &mdash; <a href="mailto:mcoynegreen@gmail.com" style="color: #e4e4e4; text-decoration: underline;">mcoynegreen@gmail.com</a></p>
-      </div>
-
-      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
-        <h2 data-tr="Gönderildi" data-en="Sent">G&Ouml;NDER&#304;LD&#304;</h2>
-        <p class="modal-subtitle" style="margin-bottom: 32px;" data-tr="Teşekkürler. En kısa sürede döneceğim." data-en="Thank you. I'll be in touch soon.">Te&#351;ekk&uuml;rler. En k&#305;sa s&uuml;rede d&ouml;nece&#287;im.</p>
-        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;" data-tr="Kapat" data-en="Close">Kapat</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hidden Netlify form for build-time detection -->
-  <form name="turkiye-contact" netlify netlify-honeypot="bot-field" hidden>
-    <input name="name">
-    <input name="email">
-    <input name="interest" type="checkbox" value="Kan Vatan">
-    <input name="interest" type="checkbox" value="Altın Damarları">
-    <input name="interest" type="checkbox" value="Artçı">
-    <textarea name="message"></textarea>
-    <input name="bot-field">
-  </form>
 
   <script>
     // Language toggle
@@ -1079,67 +859,9 @@
       document.body.style.overflow = '';
     }
 
-    // Connect modal
-    function openConnectModal() {
-      const form = document.getElementById('connectForm');
-      if (form) form.reset();
-      document.getElementById('connectFormState').style.display = '';
-      document.getElementById('connectSuccessState').style.display = 'none';
-      document.getElementById('connectModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeConnectModal() {
-      document.getElementById('connectModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Form submission
-    (function() {
-      var form = document.getElementById('connectForm');
-      if (!form) return;
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var btn = form.querySelector('button[type="submit"]');
-        var lang = document.documentElement.lang || 'tr';
-        btn.textContent = lang === 'tr' ? 'G\u00f6nderiliyor...' : 'Sending...';
-        btn.disabled = true;
-
-        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
-
-        if (!isNetlify) {
-          setTimeout(function() {
-            document.getElementById('connectFormState').style.display = 'none';
-            document.getElementById('connectSuccessState').style.display = '';
-          }, 400);
-          return;
-        }
-
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString()
-        })
-        .then(function(res) {
-          if (res.ok) {
-            document.getElementById('connectFormState').style.display = 'none';
-            document.getElementById('connectSuccessState').style.display = '';
-          } else {
-            throw new Error('fail');
-          }
-        })
-        .catch(function() {
-          btn.textContent = lang === 'tr' ? 'G\u00f6nder' : 'Send';
-          btn.disabled = false;
-          alert(lang === 'tr' ? 'Bir sorun olu\u015ftu. L\u00fctfen do\u011frudan e-posta g\u00f6nderin: mcoynegreen@gmail.com' : 'Something went wrong. Please email directly: mcoynegreen@gmail.com');
-        });
-      });
-    })();
-
-    // Keyboard: Escape closes modal and mobile menu
+    // Keyboard: Escape closes mobile menu
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
-        closeConnectModal();
         closeMobileMenu();
       }
     });
@@ -1148,8 +870,6 @@
     window.addEventListener('pageshow', function(e) {
       if (e.persisted) {
         document.body.style.overflow = '';
-        var modal = document.querySelector('.modal-overlay');
-        if (modal) modal.classList.remove('active');
       }
     });
   </script>

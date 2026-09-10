@@ -217,244 +217,6 @@
     .dropdown a.dropdown-group-label:hover { color: rgba(255,255,255,0.4); background: transparent; }
     .dropdown-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 12px; }
 
-    /* CONNECT MODAL */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-    }
-    
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .modal {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 40px;
-      max-width: 480px;
-      width: 90%;
-      max-height: 90vh;
-      overflow-y: auto;
-      transform: translateY(20px);
-      transition: transform 0.3s;
-    }
-    
-    .modal-overlay.active .modal {
-      transform: translateY(0);
-    }
-    @media (max-width: 768px) {
-      .modal-overlay { align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 60px 16px 24px; }
-      .modal { max-height: none; }
-    }
-
-    .modal h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
-    }
-    
-    .modal-subtitle {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 28px;
-    }
-    
-    .modal-section {
-      margin-bottom: 24px;
-    }
-    
-    .modal-section-label {
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-    }
-    
-    .checkbox-item input {
-      display: none;
-    }
-    
-    .checkbox-box {
-      width: 20px;
-      height: 20px;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-    
-    .checkbox-item input:checked + .checkbox-box {
-      background: var(--text);
-      border-color: var(--text);
-    }
-    
-    .checkbox-box::after {
-      content: '✓';
-      color: var(--bg);
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    
-    .checkbox-item input:checked + .checkbox-box::after {
-      opacity: 1;
-    }
-    
-    .checkbox-label {
-      font-size: 0.95rem;
-    }
-    
-    .modal-input {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 12px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.95rem;
-      margin-bottom: 10px;
-    }
-
-    .modal-input:focus {
-      outline: none;
-      border-color: var(--muted);
-    }
-
-    .modal-input::placeholder {
-      color: var(--muted);
-    }
-
-    .modal-textarea {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 12px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.95rem;
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .modal-textarea:focus {
-      outline: none;
-      border-color: var(--muted);
-    }
-
-    .modal-textarea::placeholder {
-      color: var(--muted);
-    }
-    
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 28px;
-    }
-    
-    .modal-btn {
-      flex: 1;
-      padding: 14px 24px;
-      border: none;
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .modal-btn-primary {
-      background: var(--text);
-      color: var(--bg);
-    }
-    
-    .modal-btn-primary:hover {
-      background: #fff;
-    }
-    
-    .modal-btn-secondary {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-    
-    .modal-btn-secondary:hover {
-      color: var(--text);
-      border-color: var(--muted);
-    }
-    
-    .modal-divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 24px 0;
-      color: var(--muted);
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    
-    .modal-divider::before,
-    .modal-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    
-    .modal-pro-btn {
-      width: 100%;
-      padding: 14px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--muted);
-      font-family: inherit;
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .modal-pro-btn:hover {
-      color: var(--text);
-      border-color: var(--muted);
-    }
-
-
     /* HERO */
     .hero {
       position: relative;
@@ -614,13 +376,6 @@
       opacity: 0.5;
       max-width: 480px;
       margin: 0 auto;
-    }
-
-    .copyright-footer p:first-child {
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      opacity: 0.6;
     }
 
     /* FEATURED */
@@ -1050,24 +805,6 @@
 
     /* Top Floor game overlay */
     .project-card-image { position: relative; }
-    .tf-game-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(10, 13, 16, 0.82);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      text-decoration: none;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 6px;
-      color: var(--accent);
-      text-shadow: 0 0 30px rgba(184, 164, 114, 0.3);
-    }
-    .tf-card:hover .tf-game-overlay { opacity: 1; }
 
     .project-tags {
       font-size: 0.7rem;
@@ -2829,8 +2566,8 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
 .hr,.tf,.kv{padding:0} /* neutralize generic section{padding:100px 0} so these panels stay full-bleed */
 .hr,.tf,.kv,.about{cursor:pointer}
 .hr:hover .cta,.tf:hover .cta,.kv:hover .cta,.about:hover .cta{opacity:1;transform:none}
-.hr-img,.kv-img,.tf-card-img{transition:filter .4s}
-.hr:hover .hr-img,.kv:hover .kv-img,.tf:hover .tf-card-img{filter:brightness(1.08)}
+.hr-img,.kv-img{transition:filter .4s}
+.hr:hover .hr-img,.kv:hover .kv-img{filter:brightness(1.08)}
 .hr{background:var(--hrbg);position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
 .hr-img{position:absolute;top:0;right:0;bottom:0;width:64%;background:url("/images/hero_slide_07.webp") 60% center/cover}
 .hr-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--hrbg),rgba(11,18,25,.85) 18%,transparent 48%),linear-gradient(to bottom,rgba(11,18,25,.45),transparent 25%)}
@@ -2839,10 +2576,7 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
 .hr-laurels{position:absolute;left:0;right:0;bottom:36px;z-index:3;padding:0 48px}
 .hr .laurels{display:flex;justify-content:space-between;align-items:center;gap:14px;max-width:1000px;margin:0 auto}
 .hr .laurel{height:44px;width:auto;opacity:.7} .hr .laurel.wide{height:30px}
-.tf{position:relative;height:56.25vw;overflow:hidden;background:var(--tfbg)}
-.tf-card-img{position:absolute;inset:0;background:url("/images/tf_card.webp") center/100% 100% no-repeat}
 .tf-card{position:relative;z-index:2;height:100%}
-.tf-cta{position:absolute;left:48px;bottom:9%;margin:0}
 .kv{background:var(--kvbg);position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
 .kv-img{position:absolute;inset:0;background:url("/images/kv_keyart.webp") 30% center/cover}
 .kv-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to left,rgba(23,17,12,.97) 0%,rgba(23,17,12,.9) 30%,rgba(23,17,12,.4) 55%,transparent 75%),linear-gradient(to bottom,rgba(23,17,12,.5),transparent 22%,transparent 85%,var(--kvbg))}
@@ -2863,9 +2597,66 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
  .hr-img::before,.kv-img::before{background:linear-gradient(to bottom,transparent 55%,var(--hrbg))} .kv-img::before{background:linear-gradient(to bottom,transparent 55%,var(--kvbg))}
  .hr .wrap,.kv .wrap{padding-top:24px;padding-bottom:40px;display:block} .hr .txt,.kv .txt{max-width:none;text-align:center;margin:0 auto} .log{margin-left:auto;margin-right:auto}
  .hr-laurels{position:static;padding:0 22px 28px} .hr .laurels{flex-wrap:wrap;justify-content:center;gap:14px 12px} .hr .laurel{height:34px} .hr .laurel.wide{height:24px}
- .tf{height:auto;padding:0 0 28px} .tf-card-img{position:relative;height:56vw;inset:auto;background-size:cover} .tf-card{height:auto;text-align:center;padding-top:18px} .tf-cta{position:static}
+ .tf-card{height:auto;text-align:center;padding-top:18px}
  .about{padding:72px 0 40px} .about .wrap{grid-template-columns:1fr;justify-items:center;text-align:center;gap:28px} .about p{margin-left:auto;margin-right:auto} .about img{width:160px;height:200px}
 }
+.copyright-footer p{font-size:.85rem;letter-spacing:0;opacity:.6}
+.nav-links a{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.14em;font-weight:400}
+@media(max-width:480px){.nav-links a{font-size:.85rem;letter-spacing:.12em}}
+.hero .subtitle{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.3em;color:rgba(255,255,255,.62)}
+.hero .location{font-size:.95rem;color:rgba(255,255,255,.42)}
+.eyebrow{font-family:'Bebas Neue',sans-serif;font-size:1.08rem;letter-spacing:.16em;color:var(--gold)}
+.cta{font-family:'Bebas Neue',sans-serif;font-size:1.08rem;letter-spacing:.16em}
+.hr .log{font-style:normal}
+.about .eyebrow{display:none} .about .cta{display:none}
+.connect .links{font-size:1.1rem}
+footer{font-family:'EB Garamond',Georgia,serif;font-size:.85rem}
+footer p+p{display:none}
+@media(max-width:860px){
+ .hero{min-height:82vh}
+ .hero-slideshow .hero-slide:not(:first-child){display:none!important}
+ .hero-slideshow .hero-slide:first-child{opacity:1!important}
+ .hr{min-height:0;display:block;padding:0;position:relative}
+ .hr-img{position:absolute;inset:0;width:100%;height:100%;background-position:66% 12%;background-size:cover}
+ .hr-img::before{background:linear-gradient(to bottom,rgba(11,18,25,.35) 0%,transparent 20%,rgba(11,18,25,.35) 42%,rgba(11,18,25,.9) 64%,var(--hrbg) 76%)}
+ .hr .wrap{position:relative;z-index:2;padding:0 22px;display:flex;align-items:flex-end;min-height:clamp(560px,118vw,86vh)}
+ .hr .txt{text-align:left;max-width:none;margin:0;width:100%}
+ .hr .eyebrow{margin-bottom:8px}
+ .hr h2.t{margin:0 0 16px;font-size:clamp(3.2rem,12vw,5.6rem)}
+ .hr .log{margin:0 0 16px;font-size:1.3rem;line-height:1.45;max-width:520px}
+ .hr .cta{margin:0}
+ .hr-laurels{position:relative!important;inset:auto!important;z-index:3;padding:24px 22px 34px}
+}
+@media(max-width:600px){
+ .hr-img{position:relative;inset:auto;width:100%;height:104vw;background-position:64% 8%}
+ .hr-img::before{background:linear-gradient(to bottom,rgba(11,18,25,.3) 0%,transparent 18%,transparent 52%,rgba(11,18,25,.85) 80%,var(--hrbg) 100%)}
+ .hr .wrap{min-height:0;margin-top:-30vw;display:block}
+ .hr .log{font-size:1.28rem}
+}
+@media(min-width:861px) and (min-height:700px){
+ html{scroll-snap-type:y proximity}
+ section.hero,section.hr,section.tf,section.kv,section.about{scroll-snap-align:start}
+}
+section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255,255,.07)}
+.tf{position:relative;min-height:100vh;height:auto;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;padding:0}
+.tf-bg{position:absolute;inset:0;background:url("/images/tf_art_deco_pyramid.webp") center 30%/cover no-repeat;transition:filter .4s}
+.tf-bg::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.55),rgba(0,0,0,.15) 35%,rgba(0,0,0,.3) 70%,#000 100%)}
+.tf:hover .tf-bg{filter:brightness(1.08)}
+.tf-card{position:relative;z-index:2;text-align:center;padding:90px 24px 120px;width:100%;height:auto}
+.tf-eyebrow{margin-bottom:18px}
+.tf-title{font-family:'Cinzel',Georgia,serif;font-weight:700;font-size:clamp(4.2rem,11vw,10rem);line-height:.9;letter-spacing:.02em;color:#f0ece4;margin:0 0 34px}
+.tf-log{display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;color:#f0ece4;text-transform:uppercase}
+.tf-log span{white-space:nowrap;line-height:1.15}
+.tf-log span:nth-child(1){font-size:min(1.5rem,calc((100vw - 48px)/16.5));opacity:.8}
+.tf-log span:nth-child(2){font-size:min(1.95rem,calc((100vw - 48px)/21));opacity:.9}
+.tf-log span:nth-child(3){font-size:min(2.4rem,calc((100vw - 48px)/24.5))}
+.tf-cta-wrap{position:absolute;left:0;right:0;bottom:44px;text-align:center}
+.tf-cta{margin:0;display:inline-block;position:static;left:auto}
+@media(max-width:860px){.tf{min-height:0}.tf-card{padding:64px 20px 96px}}
+@media(max-width:480px){.tf-log span:nth-child(1){font-size:calc((100vw - 24px)/28)}.tf-log span:nth-child(2){font-size:calc((100vw - 24px)/26)}.tf-log span:nth-child(3){font-size:calc((100vw - 24px)/24.5)}.tf-eyebrow{font-size:.95rem}}
+.kv .eyebrow{margin-right:-.16em;font-size:1.15rem;opacity:1}
+.kv h2.t{margin-right:-.14em}
+.hero .subtitle .dot{color:var(--gold)}
   </style>
 </head>
 <body>
@@ -2879,12 +2670,13 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
           <div class="dropdown" style="min-width:200px;">
             <a href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer">Human Resource</a>
             <a href="/topfloor">Top Floor</a>
+            <a href="/kanvatan">Kan Vatan</a>
             <div class="dropdown-divider"></div>
             <a href="/turkiye">T&uuml;rk Projeleri</a>
           </div>
         </div>
         <a href="/about">About</a>
-        <a href="#" onclick="openConnectModal(); return false;">Connect</a>
+        <a href="mailto:mcoynegreen@gmail.com?subject=Hello%20from%20coyne-green.com">Connect</a>
       </div>
     </div>
   </nav>
@@ -2897,7 +2689,6 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
         <div class="hero-slide active" style="background-image: url('/images/hr_hero_new.webp?v=2')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_02.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_03.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_04.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_05.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_06.webp')"></div>
         <div class="hero-slide" style="background-image: url('/images/hero_slide_08.webp')"></div>
@@ -2907,18 +2698,18 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <a href="/about" style="text-decoration:none;color:inherit;cursor:pointer;"><h1>MAX COYNE-GREEN</h1></a>
-        <p class="subtitle">Writer / Producer</p>
-        <p class="subtitle location">New York / İstanbul</p>
+        <h1>MAX COYNE-GREEN</h1>
+        <p class="subtitle">Writer <span class="dot">·</span> Producer</p>
+        <p class="subtitle location">New York <span class="dot">·</span> İstanbul</p>
       </div>
     </section>
 
     <section class="hr"><a class="panel-link" href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer" aria-label="Human Resource"></a><div class="hr-img"></div><div class="wrap"><div class="txt">
     <p class="eyebrow">Feature · In development</p><h2 class="t">HUMAN<br>RESOURCE</h2>
     <p class="log">An HR manager makes a dangerous deal to save her <span class="nw">staff—only</span> to discover they're more replaceable than&nbsp;she&nbsp;thought.</p>
-    <p class="cta">View Project</p></div></div><div class="hr-laurels"><div class="laurels"><img class="laurel wide" src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026"><img class="laurel" src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival"><img class="laurel wide" src="/images/laurels/02_dwf.png" alt="DWF:NY 2026"><img class="laurel" src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival"><img class="laurel" src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short"><img class="laurel" src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA"><img class="laurel" src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival"><img class="laurel" src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival"><img class="laurel" src="/images/laurels/07_venice.png" alt="Venice Shorts"><img class="laurel" src="/images/laurels/04_biff.png" alt="Beloit International Film Festival"><img class="laurel wide" src="/images/laurels/10_downtown.png" alt="The Downtown Festival"><img class="laurel wide" src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival"></div></div></section>
+    <p class="cta">View Site</p></div></div><div class="hr-laurels"><div class="laurels"><img class="laurel wide" src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026"><img class="laurel" src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival"><img class="laurel wide" src="/images/laurels/02_dwf.png" alt="DWF:NY 2026"><img class="laurel" src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival"><img class="laurel" src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short"><img class="laurel" src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA"><img class="laurel" src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival"><img class="laurel" src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival"><img class="laurel" src="/images/laurels/07_venice.png" alt="Venice Shorts"><img class="laurel" src="/images/laurels/04_biff.png" alt="Beloit International Film Festival"><img class="laurel wide" src="/images/laurels/10_downtown.png" alt="The Downtown Festival"><img class="laurel wide" src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival"></div></div></section>
 
-    <section class="tf"><a class="panel-link" href="/topfloor" aria-label="Top Floor"></a><div class="tf-card-img"></div><div class="tf-card"><p class="cta tf-cta">View Project</p></div></section>
+    <section class="tf"><a class="panel-link" href="/topfloor" aria-label="Top Floor"></a><div class="tf-bg"></div><div class="tf-card"><p class="eyebrow tf-eyebrow">Feature · Psychological Thriller</p><h2 class="tf-title">TOP<br>FLOOR</h2><div class="tf-log"><span>An ambitious Manhattan doorman</span><span>moves into his doppelgänger's penthouse</span><span>only to get trapped in a dangerous new identity</span></div><div class="tf-cta-wrap"><p class="cta tf-cta">View Project</p></div></div></section>
 
     <section class="kv"><a class="panel-link" href="/kanvatan" aria-label="Kan Vatan"></a><div class="kv-img"></div><div class="wrap"><div class="txt">
     <p class="eyebrow">Pilot · Turkish-American Thriller</p><h2 class="t">KAN VATAN</h2>
@@ -2926,16 +2717,15 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
     <p class="cta">View Project</p></div></div></section>
 
     <section class="about" id="about"><a class="panel-link" href="/about" aria-label="About Max Coyne-Green"></a><div class="wrap"><img src="/images/img_8.webp" alt="Max Coyne-Green"><div>
-    <p class="eyebrow">About</p><h3>MAX COYNE-GREEN</h3><p class="subt">Small Language Model · 1990</p>
-    <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://www.linkedin.com/in/mcgwrites/" target="_blank" rel="noopener noreferrer" class="over">here</a>.</p>
-    <p class="cta">The Full Story</p></div></div></section>
+    <h3>MAX COYNE-GREEN</h3><p class="subt">Small Language Model · 1990</p>
+    <p>Previously considered large. Ten years on hedge fund research and startup operations. Retrained for narrative applications. Six years writing full-time. Business model available <a href="https://vibecodeaseries.com" target="_blank" rel="noopener noreferrer" class="over">here</a>.</p>
+    </div></div></section>
 
-    <section class="connect" id="contact"><p class="eyebrow">Contact</p><div class="links"><a href="#" onclick="openConnectModal(); return false;">Get in Touch</a><a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">IMDb</a><a href="https://mcgwrites.substack.com" target="_blank" rel="noopener noreferrer">Essays</a></div></section>
+    <section class="connect" id="contact"><p class="eyebrow">Contact</p><div class="links"><a href="mailto:mcoynegreen@gmail.com?subject=Hello%20from%20coyne-green.com">Get in Touch</a><a href="https://www.imdb.com/name/nm13065899/" target="_blank" rel="noopener noreferrer">IMDb</a><a href="https://mcgwrites.substack.com" target="_blank" rel="noopener noreferrer">Essays</a></div></section>
 
     <!-- COPYRIGHT FOOTER -->
     <footer class="copyright-footer">
       <p>&copy; 2026 Max Coyne-Green. All rights reserved.</p>
-      <p>All content—including scripts, treatments, concepts, stories, characters, dialogue, and ideas—is the exclusive intellectual property of Max Coyne-Green, protected under U.S. and international copyright law. No portion may be reproduced, adapted, distributed, or used in any form without prior explicit written permission. Unauthorized use may result in legal action.</p>
     </footer>
 
   </div>
@@ -2963,16 +2753,6 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
       entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
     }, { threshold: 0.15 });
     sections.forEach(s => obs.observe(s));
-
-    // Keyboard navigation: Escape closes the connect modal
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        const modal = document.getElementById('connectModal');
-        if (modal && modal.classList.contains('active')) {
-          closeConnectModal();
-        }
-      }
-    });
 
     // Mobile dropdown toggle
     (function() {
@@ -3081,43 +2861,6 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
       return { next, prev, goTo, reset };
     }
 
-    // CONNECT MODAL FUNCTIONS
-    function openConnectModal(preset) {
-      // Reset form first
-      const form = document.getElementById('connectForm');
-      if (form) form.reset();
-      document.getElementById('connectRequest').value = '';
-
-      const heading = document.getElementById('connectHeading');
-      const message = document.getElementById('connectMessage');
-
-      if (preset) {
-        // Context-aware mode: came from a specific request button
-        heading.textContent = preset.heading || "CONNECT";
-        message.placeholder = preset.placeholder || "Optional message";
-        document.getElementById('connectRequest').value = preset.request || '';
-        // Pre-check the relevant interest
-        if (preset.interest) {
-          const cb = form.querySelector('input[name="interest"][value="' + preset.interest + '"]');
-          if (cb) cb.checked = true;
-        }
-      } else {
-        // Default mode: general connect
-        heading.textContent = "CONNECT";
-        message.placeholder = "Optional message";
-      }
-
-      document.getElementById('connectFormState').style.display = '';
-      document.getElementById('connectSuccessState').style.display = 'none';
-      document.getElementById('connectModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeConnectModal() {
-      document.getElementById('connectModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
     // URL ROUTING — redirect legacy routes to standalone pages
     (function() {
       const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
@@ -3129,36 +2872,6 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
       if (['kanvatan', 'kan-vatan', 'kv'].includes(path)) {
         window.location.replace('/kanvatan');
         return;
-      }
-    })();
-
-    // Auto-open connect modal if ?connect= param is present (from deep dive pages)
-    (function() {
-      const params = new URLSearchParams(window.location.search);
-      const connectVal = params.get('connect');
-      if (connectVal) {
-        const presets = {
-          'topfloor-script': {heading:'REQUEST SCRIPT',interest:'Top Floor',request:'Top Floor - Script',placeholder:'Introduce yourself briefly...'},
-          'hr-script': {heading:'REQUEST SCRIPT',interest:'Human Resource',request:'Human Resource - Feature Script',placeholder:'Introduce yourself briefly...'},
-          'script': null // legacy fallback — use path
-        };
-        let preset = presets[connectVal];
-        if (connectVal === 'script') {
-          // Legacy: ?connect=script with path-based lookup
-          const path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
-          const legacyPresets = {
-            'topfloor': presets['topfloor-script'],
-            'hr': presets['hr-script']
-          };
-          preset = legacyPresets[path];
-        }
-        if (preset) {
-          setTimeout(() => openConnectModal(preset), 400);
-        } else if (connectVal === 'true') {
-          setTimeout(() => openConnectModal(), 400);
-        }
-        // Clean URL
-        window.history.replaceState({}, '', window.location.pathname);
       }
     })();
 
@@ -3177,134 +2890,6 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
 
   </script>
 
-
-  <!-- Hidden Netlify form for build-time detection -->
-  <form name="connect" netlify netlify-honeypot="bot-field" hidden>
-    <input name="name">
-    <input name="email">
-    <input name="request">
-    <input name="human-resource" type="checkbox" value="human-resource">
-    <input name="top-floor" type="checkbox" value="top-floor">
-    <input name="turkish-projects" type="checkbox" value="turkish-projects">
-    <input name="general-meeting" type="checkbox" value="general-meeting">
-    <input name="other" type="checkbox" value="other">
-    <textarea name="message"></textarea>
-    <input name="bot-field">
-  </form>
-
-  <!-- CONNECT MODAL -->
-  <div class="modal-overlay" id="connectModal" onclick="if(event.target === this) closeConnectModal()">
-    <div class="modal">
-      <!-- Form State -->
-      <div id="connectFormState">
-        <h2 id="connectHeading">CONNECT</h2>
-
-        <form id="connectForm" name="connect" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="connect">
-          <input type="hidden" name="request" id="connectRequest" value="">
-          <p class="hidden" style="display:none;"><input name="bot-field"></p>
-
-          <div class="modal-section">
-            <div class="modal-section-label">Your info</div>
-            <input type="text" name="name" class="modal-input" placeholder="Name" required>
-            <input type="email" name="email" class="modal-input" placeholder="Email" required>
-          </div>
-
-          <div class="modal-section">
-            <div class="modal-section-label">I'm interested in</div>
-            <div class="checkbox-group">
-              <label class="checkbox-item">
-                <input type="checkbox" name="human-resource" value="human-resource">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Human Resource</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="top-floor" value="top-floor">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Top Floor</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="turkish-projects" value="turkish-projects">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Turkish Projects</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="general-meeting" value="general-meeting">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">General meeting</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="other" value="other">
-                <span class="checkbox-box"></span>
-                <span class="checkbox-label">Other</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="modal-section">
-            <div class="modal-section-label">Anything else? (optional)</div>
-            <textarea class="modal-textarea" name="message" id="connectMessage" placeholder="Optional message"></textarea>
-          </div>
-
-          <div class="modal-buttons">
-            <button type="button" class="modal-btn modal-btn-secondary" onclick="closeConnectModal()">Cancel</button>
-            <button type="submit" class="modal-btn modal-btn-primary">Send</button>
-          </div>
-        </form>
-        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--muted);">or email directly — <a href="mailto:mcoynegreen@gmail.com" style="color: var(--text); text-decoration: underline;">mcoynegreen@gmail.com</a></p>
-      </div>
-
-      <!-- Success State -->
-      <div id="connectSuccessState" style="display: none; text-align: center; padding: 20px 0;">
-        <h2>SENT</h2>
-        <p class="modal-subtitle" style="margin-bottom: 32px;">Thanks for reaching out. I'll get back to you soon.</p>
-        <button class="modal-btn modal-btn-secondary" onclick="closeConnectModal()" style="width: 100%;">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Form submission — must run after the modal HTML exists
-    (function() {
-      var form = document.getElementById('connectForm');
-      if (!form) return;
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var btn = form.querySelector('button[type="submit"]');
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-
-        var isNetlify = window.location.hostname === 'coyne-green.com' || window.location.hostname.includes('netlify');
-
-        if (!isNetlify) {
-          setTimeout(function() {
-            document.getElementById('connectFormState').style.display = 'none';
-            document.getElementById('connectSuccessState').style.display = '';
-          }, 400);
-          return;
-        }
-
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString()
-        })
-        .then(function(res) {
-          if (res.ok) {
-            document.getElementById('connectFormState').style.display = 'none';
-            document.getElementById('connectSuccessState').style.display = '';
-          } else {
-            throw new Error('fail');
-          }
-        })
-        .catch(function() {
-          btn.textContent = 'Send';
-          btn.disabled = false;
-          alert('Something went wrong. Please email mcoynegreen@gmail.com directly.');
-        });
-      });
-    })();
-  </script>
 
   <script>
   // Rotate featured posters

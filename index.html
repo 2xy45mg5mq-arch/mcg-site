@@ -1917,7 +1917,6 @@
       body { -webkit-overflow-scrolling: touch; }
 
       /* Fix 100vh issue on iOS Safari */
-      .hero { min-height: -webkit-fill-available; }
 
       /* Ensure touch targets are large enough */
       .nav-links a, .contact-links a, .btn { min-height: 44px; display: inline-flex; align-items: center; }
@@ -2571,7 +2570,7 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
 .hr:hover .hr-img,.kv:hover .kv-img{filter:brightness(1.08)}
 .hr{background:var(--hrbg);position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
 .hr-img{position:absolute;top:0;right:0;bottom:0;width:64%;background:url("/images/hero_slide_07.webp?v=3") 60% center/cover}
-.hr-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--hrbg),rgba(11,18,25,.85) 18%,transparent 48%),linear-gradient(to bottom,rgba(11,18,25,.45),transparent 25%)}
+.hr-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--hrbg),rgba(11,18,25,.85) 18%,transparent 48%),linear-gradient(to bottom,var(--hrbg) 0%,rgba(11,18,25,.6) 10%,transparent 26%)}
 .hr .wrap{position:relative;z-index:2;width:100%} .hr .txt{max-width:600px}
 .hr .log{font-style:italic;max-width:560px}
 .hr-laurels{position:absolute;left:0;right:0;bottom:36px;z-index:3;padding:0 48px}
@@ -2614,7 +2613,6 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
 footer{font-family:'EB Garamond',Georgia,serif;font-size:.85rem}
 footer p+p{display:none}
 @media(max-width:860px){
- .hero{min-height:82vh}
  .hero-slideshow .hero-slide:not(:first-child){display:none!important}
  .hero-slideshow .hero-slide:first-child{opacity:1!important;transform:none!important;transition:none!important}
  .hr{min-height:0;display:block;padding:0;position:relative}
@@ -2633,10 +2631,6 @@ footer p+p{display:none}
  .hr-img::before{background:linear-gradient(to bottom,rgba(11,18,25,.3) 0%,transparent 18%,transparent 52%,rgba(11,18,25,.85) 80%,var(--hrbg) 100%)}
  .hr .wrap{min-height:0;margin-top:-30vw;display:block}
  .hr .log{font-size:1.28rem}
-}
-@media(min-width:861px) and (min-height:700px){
- html{scroll-snap-type:y proximity}
- section.hero,section.hr,section.tf,section.kv,section.about{scroll-snap-align:start}
 }
 section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255,255,.07)}
 .tf{position:relative;min-height:100vh;height:auto;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;padding:0}
@@ -2658,10 +2652,11 @@ section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255
 .kv .eyebrow{margin-right:-.16em;font-size:1.15rem;opacity:1}
 .kv h2.t{margin-right:-.14em}
 .hero .subtitle .dot{color:var(--gold)}
-section.hero,section.hr,section.tf,section.kv,section.about{transform:none!important;transition:opacity .8s cubic-bezier(.4,0,.2,1)!important}
+
 .nav-item:focus-within .dropdown{opacity:1;visibility:visible}
 @media(prefers-reduced-motion:reduce){html{scroll-snap-type:none;scroll-behavior:auto}*{animation:none!important;transition:none!important}.reveal,section{opacity:1!important;transform:none!important}}
-  </style>
+  .hero{height:100vh;height:100svh;min-height:0}
+</style>
 </head>
 <body>
 

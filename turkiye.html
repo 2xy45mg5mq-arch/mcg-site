@@ -596,6 +596,10 @@
     }
     .nav-links a{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.14em;font-weight:400}
     @media(max-width:480px){.nav-links a{font-size:.85rem;letter-spacing:.12em}}
+    h2.section-heading{margin-top:0;font-weight:inherit}
+    button.hamburger{background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer}
+    .nav-item:focus-within .dropdown{opacity:1;visibility:visible}
+    @media(prefers-reduced-motion:reduce){html{scroll-snap-type:none;scroll-behavior:auto}*{animation:none!important;transition:none!important}.reveal,section{opacity:1!important;transform:none!important}}
   </style>
 </head>
 <body>
@@ -619,11 +623,11 @@
         <button id="lang-toggle" aria-label="Switch language">🇬🇧 EN</button>
       </div>
       <button id="lang-toggle-mobile-nav" aria-label="Switch language">🇬🇧 EN</button>
-      <div class="hamburger" onclick="toggleMobileMenu()">
+      <button type="button" class="hamburger" onclick="toggleMobileMenu()" aria-label="Menü" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
         <span></span>
         <span></span>
-      </div>
+      </button>
     </div>
   </nav>
 
@@ -663,9 +667,9 @@
   <!-- 2. HAKKIMDA (BIO) -->
   <section class="section reveal" id="hakkimda">
     <div class="section-inner">
-      <p class="section-heading" data-tr="Max Hakkında" data-en="About Max">Max Hakk&#305;nda</p>
+      <h2 class="section-heading" data-tr="Max Hakkında" data-en="About Max">Max Hakk&#305;nda</h2>
       <div class="body-text">
-        <p data-tr="Max Coyne-Green, New York merkezli senarist ve yapımcı. Kısa filmi <em>Human Resource</em> — yönetmen <a href='https://www.imdb.com/name/nm5737776/' target='_blank' rel='noopener' class='bio-link'>Henry Chaisson</a> (Guillermo del Toro yapımı <em>Antlers</em>, M. Night Shyamalan’ın <em>Servant</em>’ı), görüntü yönetmeni <a href='https://www.imdb.com/name/nm5279424/' target='_blank' rel='noopener' class='bio-link'>Justin Derry</a> (TIFF, Sundance) ve başrolde <a href='https://www.imdb.com/name/nm0185274/' target='_blank' rel='noopener' class='bio-link'>Veanne Cox</a> (<em>Erin Brockovich</em>, <em>Only Murders in the Building</em>) ile çekildi — şu anda dokuz uluslararası festivalde gösteriliyor. Uzun metraj versiyonu yapım&nbsp;aşamasında." data-en="Max Coyne-Green is a screenwriter and producer based in New York. His short film <em>Human Resource</em> — directed by <a href='https://www.imdb.com/name/nm5737776/' target='_blank' rel='noopener' class='bio-link'>Henry Chaisson</a> (<em>Antlers</em> for Guillermo del Toro, M. Night Shyamalan’s <em>Servant</em>), shot by <a href='https://www.imdb.com/name/nm5279424/' target='_blank' rel='noopener' class='bio-link'>Justin Derry</a> (TIFF, Sundance), and starring <a href='https://www.imdb.com/name/nm0185274/' target='_blank' rel='noopener' class='bio-link'>Veanne Cox</a> (<em>Erin Brockovich</em>, <em>Only Murders in the Building</em>) — is currently screening at nine international festivals. A feature version is now in&nbsp;production.">Max Coyne-Green, New York merkezli senarist ve yapımcı. Kısa filmi <em>Human Resource</em> — yönetmen <a href='https://www.imdb.com/name/nm5737776/' target='_blank' rel='noopener' class='bio-link'>Henry Chaisson</a> (Guillermo del Toro yapımı <em>Antlers</em>, M. Night Shyamalan’ın <em>Servant</em>’ı), görüntü yönetmeni <a href='https://www.imdb.com/name/nm5279424/' target='_blank' rel='noopener' class='bio-link'>Justin Derry</a> (TIFF, Sundance) ve başrolde <a href='https://www.imdb.com/name/nm0185274/' target='_blank' rel='noopener' class='bio-link'>Veanne Cox</a> (<em>Erin Brockovich</em>, <em>Only Murders in the Building</em>) ile çekildi — şu anda dokuz uluslararası festivalde gösteriliyor. Uzun metraj versiyonu yapım&nbsp;aşamasında.</p>
+        <p data-tr="Max Coyne-Green, New York merkezli senarist ve yapımcı. Kısa filmi <em>Human Resource</em> — yönetmen <a href='https://www.imdb.com/name/nm5737776/' target='_blank' rel='noopener' class='bio-link'>Henry Chaisson</a> (Guillermo del Toro yapımı <em>Antlers</em>, M. Night Shyamalan’ın <em>Servant</em>’ı), görüntü yönetmeni <a href='https://www.imdb.com/name/nm5279424/' target='_blank' rel='noopener' class='bio-link'>Justin Derry</a> (TIFF, Sundance) ve başrolde <a href='https://www.imdb.com/name/nm0185274/' target='_blank' rel='noopener' class='bio-link'>Veanne Cox</a> (<em>Erin Brockovich</em>, <em>Only Murders in the Building</em>) ile çekildi — şu anda 15 uluslararası festivalde gösteriliyor. Uzun metraj versiyonu yapım&nbsp;aşamasında." data-en="Max Coyne-Green is a screenwriter and producer based in New York. His short film <em>Human Resource</em> — directed by <a href='https://www.imdb.com/name/nm5737776/' target='_blank' rel='noopener' class='bio-link'>Henry Chaisson</a> (<em>Antlers</em> for Guillermo del Toro, M. Night Shyamalan’s <em>Servant</em>), shot by <a href='https://www.imdb.com/name/nm5279424/' target='_blank' rel='noopener' class='bio-link'>Justin Derry</a> (TIFF, Sundance), and starring <a href='https://www.imdb.com/name/nm0185274/' target='_blank' rel='noopener' class='bio-link'>Veanne Cox</a> (<em>Erin Brockovich</em>, <em>Only Murders in the Building</em>) — is currently screening at 15 international festivals. A feature version is now in&nbsp;production.">Max Coyne-Green, New York merkezli senarist ve yapımcı. Kısa filmi <em>Human Resource</em> — yönetmen <a href='https://www.imdb.com/name/nm5737776/' target='_blank' rel='noopener' class='bio-link'>Henry Chaisson</a> (Guillermo del Toro yapımı <em>Antlers</em>, M. Night Shyamalan’ın <em>Servant</em>’ı), görüntü yönetmeni <a href='https://www.imdb.com/name/nm5279424/' target='_blank' rel='noopener' class='bio-link'>Justin Derry</a> (TIFF, Sundance) ve başrolde <a href='https://www.imdb.com/name/nm0185274/' target='_blank' rel='noopener' class='bio-link'>Veanne Cox</a> (<em>Erin Brockovich</em>, <em>Only Murders in the Building</em>) ile çekildi — şu anda 15 uluslararası festivalde gösteriliyor. Uzun metraj versiyonu yapım&nbsp;aşamasında.</p>
         <p data-tr="Türkiye ile bağı 17 yaşında başladı — Boğaziçi Üniversitesi’nde tarih ve psikoloji üzerine yaz programına katıldı. Colgate Üniversitesi’nde Rus edebiyatı ve ekonomi okudu. Türk eşiyle birlikte zamanının bir kısmını İstanbul’da geçiriyor. Senaryolarını New York, Mexico City ve İstanbul’da yazıyor." data-en="Before film, he spent ten years managing research for hedge funds and Fortune 500 tech companies before working in startups. He now writes for and advises AI founders on narrative strategy and story&nbsp;development.">Türkiye ile bağı 17 yaşında başladı — Boğaziçi Üniversitesi’nde tarih ve psikoloji üzerine yaz programına katıldı. Colgate Üniversitesi’nde Rus edebiyatı ve ekonomi okudu. Türk eşiyle birlikte zamanının bir kısmını İstanbul’da geçiriyor. Senaryolarını New York, Mexico City ve İstanbul’da yazıyor.</p>
         <p data-tr="Sinemadan önce on yıl New York’ta üst düzey finans ve teknoloji sektöründe çalıştı — GLG’de dünyanın en büyük hedge fonları ve Fortune 500 şirketleri için üst düzey araştırma danışmanlığı yürüttü. Ardından startup yöneticisi olarak görev aldı. Ayrıca Genesis Story Coaching’in kurucusu olarak yapay zekâ şirketlerinin CEO’larına ve kurucularına hikâye anlatımı danışmanlığı veriyor. Altı yılda sekiz senaryo tamamladı ve beş ayrı proje&nbsp;geliştirdi." data-en="His connection to Turkey started at 17, studying at Boğaziçi University. Twelve years later, he met his wife, a Turkish woman living in New York, and later married in Istanbul. He now lives in Brooklyn, New York, and also writes in Mexico City and&nbsp;Istanbul.">Sinemadan önce on yıl New York’ta üst düzey finans ve teknoloji sektöründe çalıştı — GLG’de dünyanın en büyük hedge fonları ve Fortune 500 şirketleri için üst düzey araştırma danışmanlığı yürüttü. Ardından startup yöneticisi olarak görev aldı. Ayrıca Genesis Story Coaching’in kurucusu olarak yapay zekâ şirketlerinin CEO’larına ve kurucularına hikâye anlatımı danışmanlığı veriyor. Altı yılda sekiz senaryo tamamladı ve beş ayrı proje&nbsp;geliştirdi.</p>
         <p data-tr="Türk yapım kalitesini Amerikan hikâye anlatımıyla birleştiren Türk-Amerikan ortak yapımlar geliştiriyor. Yeni bir Türk-Amerikan dizisi olan <em>Kan Vatan</em>’ın pilot bölümünü tamamladı — Hatay’da bir zeytinlikte saklanan Amerikan ajanı ve onu keşfeden aileyi anlatan neo-western bir dizi. <em>Narcos</em> ve <em>Shōgun</em> modelinde, karma dilli ve sınırlı altyazılı bir anlatımıyla büyük bir Türk dizisini Amerikan pazarına taşımak üzere tasarlandı. Türk hikâyelerini birlikte anlatmak için <a href=’#iletisim’ style=’color:#c47a5a;text-decoration:underline;’>ulaşın</a>." data-en="Recently, he’s been developing Turkish-American concepts that can penetrate the US market. The goal is to match storytelling precision with the Turkish themes and style that are already so successful in other international&nbsp;markets.">Türk yapım kalitesini Amerikan hikâye anlatımıyla birleştiren Türk-Amerikan ortak yapımlar geliştiriyor. Yeni bir Türk-Amerikan dizisi olan <em>Kan Vatan</em>’ın pilot bölümünü tamamladı — Hatay’da bir zeytinlikte saklanan Amerikan ajanı ve onu keşfeden aileyi anlatan neo-western bir dizi. <em>Narcos</em> ve <em>Shōgun</em> modelinde, karma dilli ve sınırlı altyazılı bir anlatımıyla büyük bir Türk dizisini Amerikan pazarına taşımak üzere tasarlandı. Türk hikâyelerini birlikte anlatmak için <a href="#iletisim" style="color:#c47a5a;text-decoration:underline;">ulaşın</a>.</p>
@@ -684,7 +688,7 @@
   <section class="section reveal" id="projeler">
     <div class="section-inner--wide">
       <!-- TURKEY-SPECIFIC PROJECTS (first) -->
-      <p class="section-heading" data-tr="T&uuml;rkiye'ye &Ouml;zg&uuml; Projeler" data-en="Turkey-Specific Projects">T&uuml;rkiye'ye &Ouml;zg&uuml; Projeler</p>
+      <h2 class="section-heading" data-tr="T&uuml;rkiye'ye &Ouml;zg&uuml; Projeler" data-en="Turkey-Specific Projects">T&uuml;rkiye'ye &Ouml;zg&uuml; Projeler</h2>
       <div class="project-grid">
 
         <!-- KAN VATAN -->
@@ -729,7 +733,7 @@
       </div>
 
       <!-- US PROJECTS -->
-      <p class="section-heading" style="margin-top:72px;" data-tr="ABD Projeleri" data-en="US Projects">ABD Projeleri</p>
+      <h2 class="section-heading" style="margin-top:72px;" data-tr="ABD Projeleri" data-en="US Projects">ABD Projeleri</h2>
       <div class="conn-grid">
         <a href="/hr" class="conn-card">
           <div class="conn-card-title">HUMAN RESOURCE</div>
@@ -851,11 +855,13 @@
     function toggleMobileMenu() {
       document.querySelector('.hamburger').classList.toggle('active');
       document.getElementById('mobileMenu').classList.toggle('active');
+      document.querySelector('.hamburger').setAttribute('aria-expanded', document.getElementById('mobileMenu').classList.contains('active'))
       document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('active') ? 'hidden' : '';
     }
     function closeMobileMenu() {
       document.querySelector('.hamburger').classList.remove('active');
       document.getElementById('mobileMenu').classList.remove('active');
+      document.querySelector('.hamburger').setAttribute('aria-expanded', document.getElementById('mobileMenu').classList.contains('active'))
       document.body.style.overflow = '';
     }
 

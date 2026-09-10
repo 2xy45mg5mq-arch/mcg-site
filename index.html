@@ -17,12 +17,13 @@
   <meta property="og:title" content="Max Coyne-Green — Writer / Producer">
   <meta property="og:description" content="Writer/Producer splitting time between İstanbul and New York. Portfolio includes Human Resource, Top Floor, Kan Vatan, and Memory Docs.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://coyne-green.com/images/hr_hero_new.webp">
+  <meta property="og:image" content="https://coyne-green.com/images/og-home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:alt" content="Max Coyne-Green - Screenwriter Portfolio">
   <meta property="og:url" content="https://coyne-green.com">
-  <meta name="twitter:image" content="https://coyne-green.com/images/hr_hero_new.webp">
+  <meta name="twitter:image" content="https://coyne-green.com/images/og-home.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Max Coyne-Green — Writer / Producer">
   <meta name="twitter:description" content="Writer/Producer splitting time between İstanbul and New York. Portfolio includes Human Resource, Top Floor, Kan Vatan, and Memory Docs.">
@@ -2569,7 +2570,7 @@ h2.t{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3.6rem,
 .hr-img,.kv-img{transition:filter .4s}
 .hr:hover .hr-img,.kv:hover .kv-img{filter:brightness(1.08)}
 .hr{background:var(--hrbg);position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
-.hr-img{position:absolute;top:0;right:0;bottom:0;width:64%;background:url("/images/hero_slide_07.webp") 60% center/cover}
+.hr-img{position:absolute;top:0;right:0;bottom:0;width:64%;background:url("/images/hero_slide_07.webp?v=3") 60% center/cover}
 .hr-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--hrbg),rgba(11,18,25,.85) 18%,transparent 48%),linear-gradient(to bottom,rgba(11,18,25,.45),transparent 25%)}
 .hr .wrap{position:relative;z-index:2;width:100%} .hr .txt{max-width:600px}
 .hr .log{font-style:italic;max-width:560px}
@@ -2615,7 +2616,7 @@ footer p+p{display:none}
 @media(max-width:860px){
  .hero{min-height:82vh}
  .hero-slideshow .hero-slide:not(:first-child){display:none!important}
- .hero-slideshow .hero-slide:first-child{opacity:1!important}
+ .hero-slideshow .hero-slide:first-child{opacity:1!important;transform:none!important;transition:none!important}
  .hr{min-height:0;display:block;padding:0;position:relative}
  .hr-img{position:absolute;inset:0;width:100%;height:100%;background-position:66% 12%;background-size:cover}
  .hr-img::before{background:linear-gradient(to bottom,rgba(11,18,25,.35) 0%,transparent 20%,rgba(11,18,25,.35) 42%,rgba(11,18,25,.9) 64%,var(--hrbg) 76%)}
@@ -2657,6 +2658,9 @@ section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255
 .kv .eyebrow{margin-right:-.16em;font-size:1.15rem;opacity:1}
 .kv h2.t{margin-right:-.14em}
 .hero .subtitle .dot{color:var(--gold)}
+section.hero,section.hr,section.tf,section.kv,section.about{transform:none!important;transition:opacity .8s cubic-bezier(.4,0,.2,1)!important}
+.nav-item:focus-within .dropdown{opacity:1;visibility:visible}
+@media(prefers-reduced-motion:reduce){html{scroll-snap-type:none;scroll-behavior:auto}*{animation:none!important;transition:none!important}.reveal,section{opacity:1!important;transform:none!important}}
   </style>
 </head>
 <body>
@@ -2686,15 +2690,15 @@ section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255
 
     <section class="hero" style="opacity:1;transform:none;">
       <div class="hero-slideshow">
-        <div class="hero-slide active" style="background-image: url('/images/hr_hero_new.webp?v=2')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_02.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_03.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_05.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_06.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_08.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_09.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_10.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/images/hero_slide_11.webp')"></div>
+        <div class="hero-slide active" style="background-image: url('/images/hr_hero_new.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_02.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_03.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_05.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_06.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_08.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_09.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_10.webp?v=3')"></div>
+        <div class="hero-slide" style="background-image: url('/images/hero_slide_11.webp?v=3')"></div>
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -2707,7 +2711,7 @@ section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255
     <section class="hr"><a class="panel-link" href="https://hrthefilm.com" target="_blank" rel="noopener noreferrer" aria-label="Human Resource"></a><div class="hr-img"></div><div class="wrap"><div class="txt">
     <p class="eyebrow">Feature · In development</p><h2 class="t">HUMAN<br>RESOURCE</h2>
     <p class="log">An HR manager makes a dangerous deal to save her <span class="nw">staff—only</span> to discover they're more replaceable than&nbsp;she&nbsp;thought.</p>
-    <p class="cta">View Site</p></div></div><div class="hr-laurels"><div class="laurels"><img class="laurel wide" src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026"><img class="laurel" src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival"><img class="laurel wide" src="/images/laurels/02_dwf.png" alt="DWF:NY 2026"><img class="laurel" src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival"><img class="laurel" src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short"><img class="laurel" src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA"><img class="laurel" src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival"><img class="laurel" src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival"><img class="laurel" src="/images/laurels/07_venice.png" alt="Venice Shorts"><img class="laurel" src="/images/laurels/04_biff.png" alt="Beloit International Film Festival"><img class="laurel wide" src="/images/laurels/10_downtown.png" alt="The Downtown Festival"><img class="laurel wide" src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival"></div></div></section>
+    <p class="cta">View Site</p></div></div><div class="hr-laurels"><div class="laurels"><img loading="lazy" decoding="async" class="laurel wide" src="/images/laurels/13_filmquest.png" alt="FilmQuest 2026"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/09_buff.png" alt="Boston Underground Film Festival"><img loading="lazy" decoding="async" class="laurel wide" src="/images/laurels/02_dwf.png" alt="DWF:NY 2026"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/01_chattanooga.png" alt="Chattanooga Film Festival"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/11_coney.png" alt="Coney Island Film Festival — Best Sci-Fi Short"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/03_screamfest.png" alt="Screamfest NOLA"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/05_bigbear.png" alt="Big Bear Film Festival"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/06_montreal.png" alt="Montreal Independent Film Festival"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/07_venice.png" alt="Venice Shorts"><img loading="lazy" decoding="async" class="laurel" src="/images/laurels/04_biff.png" alt="Beloit International Film Festival"><img loading="lazy" decoding="async" class="laurel wide" src="/images/laurels/10_downtown.png" alt="The Downtown Festival"><img loading="lazy" decoding="async" class="laurel wide" src="/images/laurels/12_piff.png" alt="Philadelphia Independent Film Festival"></div></div></section>
 
     <section class="tf"><a class="panel-link" href="/topfloor" aria-label="Top Floor"></a><div class="tf-bg"></div><div class="tf-card"><p class="eyebrow tf-eyebrow">Feature · Psychological Thriller</p><h2 class="tf-title">TOP<br>FLOOR</h2><div class="tf-log"><span>An ambitious Manhattan doorman</span><span>moves into his doppelgänger's penthouse</span><span>only to get trapped in a dangerous new identity</span></div><div class="tf-cta-wrap"><p class="cta tf-cta">View Project</p></div></div></section>
 
@@ -2736,11 +2740,13 @@ section.hr,section.tf,section.kv,section.about{border-top:1px solid rgba(255,255
     // Hero slideshow
     const heroSlides = document.querySelectorAll('.hero-slide');
     let heroIdx = 0;
-    setInterval(() => {
-      heroSlides[heroIdx].classList.remove('active');
-      heroIdx = (heroIdx + 1) % heroSlides.length;
-      heroSlides[heroIdx].classList.add('active');
-    }, 5000);
+    if (window.matchMedia('(min-width:861px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInterval(() => {
+        heroSlides[heroIdx].classList.remove('active');
+        heroIdx = (heroIdx + 1) % heroSlides.length;
+        heroSlides[heroIdx].classList.add('active');
+      }, 5000);
+    }
 
     // Nav scroll
     window.addEventListener('scroll', () => {

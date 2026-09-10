@@ -22,3 +22,7 @@ test-nav-fixes.mjs
 
 # Local design source files (not deployed)
 design/
+
+# Review artifacts / sandbox exports
+_review/
+*.zip

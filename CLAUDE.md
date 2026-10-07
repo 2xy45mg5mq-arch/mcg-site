@@ -33,6 +33,7 @@
 | `/turkiye` | turkiye.html | Turkish portfolio (bilingual) |
 | `/secret` | secret.html | Kinnikuman treatment (hidden) |
 | `/imposter` | imposter.html | Imposter Syndrome one-pager (hidden) |
+| `/kvs1` | kvs1.html | Kan Vatan season one breakdown, internal draft (hidden, noindex via meta + `_headers`; not in sitemap, robots.txt or any nav; EB Garamond only, no Bebas, by request 2026-10-07) |
 
 "All pages" = ALL of these.
 

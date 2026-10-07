@@ -53,6 +53,7 @@
 /topfloor         /topfloor.html       200
 /kanvatan         /kanvatan.html       200
 /imposter          /imposter.html       200
+/kvs1              /kvs1.html           200
 
 # SPA fallback — must be last
 /* /index.html 200

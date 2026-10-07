@@ -27,3 +27,9 @@
   Referrer-Policy: strict-origin-when-cross-origin
 /images/*
   Cache-Control: public, max-age=604800
+
+/kvs1
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/kvs1.html
+  X-Robots-Tag: noindex, nofollow, noarchive

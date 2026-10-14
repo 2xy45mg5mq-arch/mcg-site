@@ -136,13 +136,13 @@ No heading, logline, tagline, or hero text may wrap to leave 1–2 orphan words 
 ## SCREENPLAY PDFs
 
 Files in `files/` directory. Primary share links:
-- `/human-resource.pdf` — retired 2026-09-10, redirects to hrthefilm.com/read via `_redirects`. `files/HUMAN RESOURCE.pdf` stays here only as the Update Screenplay Shortcut's drop point; hrthefilm pulls its copy from this path.
+- `/human-resource.pdf` — retired 2026-09-10, redirects to hrthefilm.com/read via `_redirects`. `files/HUMAN RESOURCE.pdf` is kept in sync with the hrthefilm copy (still reachable at /files/HUMAN RESOURCE.pdf, so never leave it stale).
 - `/top-floor.pdf` → `files/TOP FLOOR.pdf`
 - `/kan-vatan.pdf` → `files/Kan Vatan.pdf`
 
 Legacy links still work as fallbacks. All PDF routing in `_redirects`. Content-Disposition headers in `_headers`.
 
-Update workflow: User runs "Update Screenplay" Mac Shortcut → copies from Latest Drafts to this repo's `files/` → then tells Code to `deploy`.
+Update workflow (Shortcut retired 2026-10-14): Claude copies the PDF from iCloud Drive/Creative/Latest Drafts straight into `files/` (Top Floor.pdf → TOP FLOOR.pdf; others same name), commits, pushes. Human Resource goes to hrthefilm.com instead (see that repo).
 
 ---
 
